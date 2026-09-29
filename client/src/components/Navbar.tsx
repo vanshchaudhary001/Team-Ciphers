@@ -211,6 +211,16 @@ export const Navbar: React.FC = () => {
                     </Link>
                   );
                 })}
+                <a
+                  href="/index.html"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-label-md font-label-md text-primary bg-primary/5 hover:bg-primary/10 transition-all duration-150 border border-primary/20"
+                  title="Open Enterprise Gateway & AI Copilot"
+                >
+                  <span className="material-symbols-outlined text-[18px] text-primary" aria-hidden="true">
+                    launch
+                  </span>
+                  <span>Gateway Portal ↗</span>
+                </a>
               </nav>
             )}
           </div>

@@ -12,10 +12,23 @@ const router = Router();
  */
 router.post('/nvidia-copilot', async (req: Request, res: Response) => {
   try {
-    const { query, role, company, branch, buddyName, hrName, currentBlocker, pendingTasks } = req.body;
+    const { query, employeeId, role, company, branch, buddyName, hrName, currentBlocker, pendingTasks } = req.body;
 
     if (!query || String(query).trim().length === 0) {
       return res.status(400).json({ success: false, error: 'A query is required' });
+    }
+
+    let datasetContext: string | undefined;
+    let employeeData: any;
+
+    if (employeeId) {
+      try {
+        const { csvDataLoader } = await import('../services/csvDataLoader.js');
+        datasetContext = await csvDataLoader.getCopilotContext(employeeId);
+        employeeData = await csvDataLoader.getEmployeeDashboard(employeeId);
+      } catch (e) {
+        // quiet fallback
+      }
     }
 
     const reply = await nvidiaClient.askOnboardingCopilot(String(query), {
@@ -26,6 +39,8 @@ router.post('/nvidia-copilot', async (req: Request, res: Response) => {
       hrName,
       currentBlocker,
       pendingTasks,
+      datasetContext,
+      employeeData,
     });
 
     return res.json({

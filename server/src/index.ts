@@ -11,6 +11,8 @@ import notificationsRouter from './routes/notifications.js';
 import helpRouter from './routes/help.js';
 import aiRouter from './routes/ai.js';
 import adminRouter from './routes/admin.js';
+import datasetRouter from './routes/datasetRoutes.js';
+import { csvDataLoader } from './services/csvDataLoader.js';
 import { logger } from './utils/logger.js';
 
 dotenv.config();
@@ -67,6 +69,10 @@ app.use('/api/v1/help', helpRouter);
 app.use('/api/v1/ai', aiRouter);
 app.use('/api/v1/admin', adminRouter);
 
+// 5 Structured Datasets API (Employees, Tasks, Progress, Resources, Contacts)
+app.use('/api', datasetRouter);
+app.use('/api/v1', datasetRouter);
+
 // Centralized error handling
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   logger.error('Unhandled Server Error:', err);
@@ -84,9 +90,15 @@ app.use((_req: Request, res: Response) => {
   });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   logger.info(`🚀 Start Smart API server listening on http://localhost:${PORT}`);
   logger.info(`👉 API Health check: http://localhost:${PORT}/api/v1/health`);
+  try {
+    await csvDataLoader.ensureLoaded();
+    logger.info('📊 All 5 structured datasets verified and synchronized with database.');
+  } catch (err: any) {
+    logger.error('Failed to initialize CSV datasets on startup:', err);
+  }
 });
 
 export default app;

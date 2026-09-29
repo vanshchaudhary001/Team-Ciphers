@@ -430,3 +430,104 @@ model TaskNote {
 
   @@index([journeyTaskId])
 }
+
+// ==============================================================
+// 5 STRUCTURED DATASETS (DATA-DRIVEN ONBOARDING ENGINE)
+// ==============================================================
+
+model DatasetEmployee {
+  employeeId   String   @id // e.g. E001
+  name         String
+  role         String
+  department   String
+  location     String
+  joiningDate  String
+  managerId    String?
+  buddyId      String?
+  email        String?  @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  progress     DatasetProgress[]
+}
+
+model DatasetResource {
+  resourceId     String   @id // e.g. R001
+  resourceName   String
+  category       String
+  applicableRole String
+  department     String
+  description    String
+  resourceType   String
+  link           String
+  createdAt      DateTime @default(now())
+
+  tasks          DatasetOnboardingTask[]
+}
+
+model DatasetChecklistTemplate {
+  checklistId    String   @id // e.g. CHK_001
+  checklistName  String
+  applicableRole String   // e.g. "Software Engineer", "All"
+  department     String   // e.g. "Engineering", "All"
+  location       String   // e.g. "Bengaluru", "All"
+  durationDays   Int      @default(30)
+  createdBy      String   @default("HR Operations")
+  status         String   @default("Draft") // Draft, Published, Archived
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  tasks          DatasetOnboardingTask[]
+}
+
+model DatasetOnboardingTask {
+  taskId         String                  @id // e.g. T001
+  checklistId    String?                 // FK to checklist_templates
+  taskName       String
+  applicableRole String
+  department     String
+  day            String
+  priority       String
+  assignedBy     String
+  deadline       String?
+  resourceId     String?
+  isMandatory    Boolean                 @default(true)
+  orderIndex     Int                     @default(0)
+  createdAt      DateTime                @default(now())
+
+  checklist      DatasetChecklistTemplate? @relation(fields: [checklistId], references: [checklistId], onDelete: Cascade)
+  resource       DatasetResource?          @relation(fields: [resourceId], references: [resourceId])
+  progress       DatasetProgress[]
+}
+
+model DatasetContact {
+  contactId    String   @id // e.g. C001
+  name         String
+  team         String
+  role         String
+  purpose      String
+  email        String
+  phone        String
+  availability String
+  escalationTo String?
+  createdAt    DateTime @default(now())
+}
+
+model DatasetProgress {
+  progressId    String                @id // e.g. P001
+  employeeId    String
+  taskId        String
+  status        String                // Pending, In Progress, Completed, Overdue
+  assignedDate  String
+  dueDate       String?
+  completedDate String?
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+
+  employee      DatasetEmployee       @relation(fields: [employeeId], references: [employeeId], onDelete: Cascade)
+  task          DatasetOnboardingTask @relation(fields: [taskId], references: [taskId], onDelete: Cascade)
+
+  @@unique([employeeId, taskId])
+  @@index([employeeId])
+  @@index([taskId])
+}

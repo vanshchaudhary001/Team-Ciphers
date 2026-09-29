@@ -147,4 +147,23 @@ export const api = {
       body: JSON.stringify({ tasks }),
     }),
   resetDemoData: () => request('/admin/reset-demo', { method: 'POST' }),
+
+  // 5 Structured Datasets API
+  getDatasetEmployees: () => request('/employees'),
+  getDatasetEmployee: (id: string) => request(`/employees/${id}`),
+  getDatasetTasks: (employeeId: string) => request(`/employees/${employeeId}/tasks`),
+  getDatasetProgress: (employeeId: string) => request(`/employees/${employeeId}/progress`),
+  getDatasetResources: (employeeId: string) => request(`/employees/${employeeId}/resources`),
+  getDatasetContacts: () => request('/contacts'),
+  updateDatasetProgress: (progressId: string, status: string, completedDate?: string) =>
+    request(`/progress/${progressId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status, completedDate }),
+    }),
+  createDatasetTask: (taskData: any) =>
+    request('/tasks', {
+      method: 'POST',
+      body: JSON.stringify(taskData),
+    }),
+  getDatasetDashboard: (id: string) => request(`/employees/${id}/dashboard`),
 };

@@ -152,6 +152,13 @@ export const HRControlCenter: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3">
+            <a
+              href="/index.html"
+              className="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors shadow-xs"
+            >
+              <span>HR Partner Workspace &amp; Checklists ↗</span>
+            </a>
+
             <button
               onClick={() => navigate('/rippleview')}
               className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors"

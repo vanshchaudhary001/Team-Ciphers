@@ -1,0 +1,21 @@
+contact_id,name,team,role,purpose,email,phone,availability,escalation_to
+C001,Rahul Mehta,IT,IT Helpdesk,"Laptop, account and software issues",it@demo-company.com,+91 80 6789 89910,"Mon-Fri, 9AM-6PM",C002
+C002,Vikram Shah,IT,IT Manager,Escalated IT and access issues,it.manager@demo-company.com,+91 80 6789 89911,"Mon-Fri, 9AM-6PM",C010
+C003,Priya Nair,Human Resources,HR Manager,"HR policies, benefits and employee queries",hr@demo-company.com,+91 80 6789 89912,"Mon-Fri, 9AM-5PM",C010
+C004,Sneha Kapoor,Human Resources,HR Executive,Onboarding documents and HR portal,hr.support@demo-company.com,+91 80 6789 89913,"Mon-Fri, 9AM-5PM",C003
+C005,Arjun Malhotra,Engineering,Engineering Lead,Technical and engineering questions,engineering@demo-company.com,+91 80 6789 89914,"Mon-Fri, 10AM-6PM",C006
+C006,Rohan Verma,Engineering,Engineering Manager,Engineering escalations and access,eng.manager@demo-company.com,+91 80 6789 89915,"Mon-Fri, 10AM-6PM",C010
+C007,Neha Sharma,Security,Security Lead,Security incidents and security access,security@demo-company.com,+91 80 6789 89916,"Mon-Fri, 9AM-6PM",C010
+C008,Ananya Gupta,Data,Data Team Lead,"Data tools, analytics and data access",data@demo-company.com,+91 80 6789 89917,"Mon-Fri, 10AM-6PM",C009
+C009,Karan Iyer,Data,Data Manager,Data access and analytics escalations,data.manager@demo-company.com,+91 80 6789 89918,"Mon-Fri, 10AM-6PM",C010
+C010,Meera Rao,Administration,Operations Manager,General workplace and administrative issues,operations@demo-company.com,+91 80 6789 89919,"Mon-Fri, 9AM-6PM",
+C011,Aditi Bansal,Design,Design Lead,Design tools and design system questions,design@demo-company.com,+91 80 6789 89920,"Mon-Fri, 10AM-6PM",C012
+C012,Kabir Joshi,Design,Design Manager,Design-related escalations,design.manager@demo-company.com,+91 80 6789 89921,"Mon-Fri, 10AM-6PM",C010
+C013,Ishita Singh,Marketing,Marketing Lead,Marketing tools and campaign questions,marketing@demo-company.com,+91 80 6789 89922,"Mon-Fri, 10AM-6PM",C014
+C014,Aditya Kapoor,Marketing,Marketing Manager,Marketing-related escalations,marketing.manager@demo-company.com,+91 80 6789 89923,"Mon-Fri, 10AM-6PM",C010
+C015,Tara Menon,Finance,Finance Executive,"Payroll, reimbursement and finance queries",finance@demo-company.com,+91 80 6789 89924,"Mon-Fri, 9AM-5PM",C016
+C016,Nikhil Jain,Finance,Finance Manager,Finance and payroll escalations,finance.manager@demo-company.com,+91 80 6789 89925,"Mon-Fri, 9AM-5PM",C010
+C017,Yash Thakur,Facilities,Facilities Coordinator,"Office access, seating and facilities",facilities@demo-company.com,+91 80 6789 89926,"Mon-Fri, 9AM-6PM",C010
+C018,Sara Khan,Learning & Development,Training Coordinator,Training and learning-related queries,training@demo-company.com,+91 80 6789 89927,"Mon-Fri, 9AM-5PM",C003
+C019,Dhruv Agarwal,Employee Support,Onboarding Buddy,General first-week guidance,buddy@demo-company.com,+91 80 6789 89928,"Mon-Fri, 10AM-6PM",C003
+C020,Myra Chawla,Employee Support,Onboarding Coordinator,New-joiner onboarding support,onboarding@demo-company.com,+91 80 6789 89929,"Mon-Fri, 9AM-6PM",C003

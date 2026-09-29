@@ -1,0 +1,21 @@
+employee_id,name,role,department,location,joining_date,manager_id,buddy_id
+E001,Aarav Sharma,Software Engineer,Engineering,Bengaluru,2026-09-29,M001,B001
+E002,Diya Singh,Data Analyst,Data,Delhi,2026-09-30,M002,B002
+E003,Rohan Kapoor,UI/UX Designer,Design,Mumbai,2026-09-30,M003,B003
+E004,Ananya Singh,HR Executive,Human Resources,Bengaluru,2026-09-30,M006,B004
+E005,Kabir Verma,Software Engineer,Engineering,Hyderabad,2026-10-01,M007,B005
+E006,Meera Iyer,Marketing Executive,Marketing,Mumbai,2026-10-01,M002,B006
+E007,Arjun Malhotra,DevOps Engineer,Engineering,Pune,2026-10-01,M009,B007
+E008,Siya Gupta,Product Analyst,Product,Delhi,2026-10-02,M002,B008
+E009,Vivaan Rao,Software Engineer,Engineering,Bengaluru,2026-10-02,M008,B009
+E010,Kavya Nair,Data Scientist,Data,Hyderabad,2026-10-02,M006,B010
+E011,Aditya Jain,Finance Executive,Finance,Mumbai,2026-10-03,M004,B011
+E012,Ishita Bansal,UI/UX Designer,Design,Delhi,2026-10-03,M009,B012
+E013,Reyansh Sethi,Software Engineer,Engineering,Pune,2026-10-03,M005,B013
+E014,Sara Khan,HR Executive,Human Resources,Hyderabad,2026-10-04,M005,B014
+E015,Dhruv Agarwal,Business Analyst,Business,Bengaluru,2026-10-04,M002,B015
+E016,Myra Chawla,Marketing Executive,Marketing,Delhi,2026-10-04,M001,B016
+E017,Yash Thakur,Cloud Engineer,Engineering,Mumbai,2026-10-05,M009,B017
+E018,Tara Menon,Data Analyst,Data,Bengaluru,2026-10-05,M003,B018
+E019,Atharv Joshi,Product Manager,Product,Pune,2026-10-05,M006,B019
+E020,Kiara Desai,Software Engineer,Engineering,Delhi,2026-10-05,M008,B020

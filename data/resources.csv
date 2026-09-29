@@ -1,0 +1,31 @@
+resource_id,resource_name,category,applicable_role,department,description,resource_type,link
+R001,Employee Handbook,HR,All,All,"General company rules, culture and employee guidelines",Document,/resources/employee-handbook
+R002,IT Setup Guide,IT,All,IT,"Guide for setting up laptop, email and basic IT access",Document,/resources/it-setup
+R003,MFA Setup Guide,Security,All,Security,Steps to activate multi-factor authentication,Guide,/resources/mfa-setup
+R004,Security Awareness Training,Training,All,Security,Mandatory security awareness training,Training,/training/security
+R005,Company Orientation,Orientation,All,HR,"Introduction to company, teams and workplace",Video,/training/orientation
+R006,Leave & Attendance Policy,HR,All,HR,"Information about leave, attendance and working hours",Document,/resources/leave-policy
+R007,Employee Benefits Guide,HR,All,HR,Information about employee benefits and facilities,Document,/resources/benefits
+R008,Workplace Safety Guide,Safety,All,HR,Workplace safety procedures and emergency information,Document,/resources/safety
+R009,GitHub Access Guide,Engineering,Software Engineer,Engineering,Steps to request and activate GitHub access,Guide,/resources/github-access
+R010,Development Environment Guide,Engineering,Software Engineer,Engineering,Setup guide for development tools and environment,Guide,/resources/dev-setup
+R011,Engineering Coding Guidelines,Engineering,Software Engineer,Engineering,Coding standards and development practices,Document,/resources/coding-guidelines
+R012,Software Architecture Guide,Engineering,Software Engineer,Engineering,Overview of the company's software architecture,Document,/resources/architecture
+R013,Engineering Repository Guide,Engineering,Software Engineer,Engineering,Instructions for accessing engineering repositories,Guide,/resources/repository
+R014,Code Security Training,Security,Software Engineer,Engineering,Secure coding and application security training,Training,/training/code-security
+R015,Data Tools Setup Guide,Data,Data Analyst,Data,Setup instructions for analytics and data tools,Guide,/resources/data-tools
+R016,Data Warehouse Access Guide,Data,Data Analyst,Data,Steps for requesting data warehouse access,Guide,/resources/data-access
+R017,Data Governance Policy,Data,Data Analyst,Data,Rules for handling and using company data,Document,/resources/data-governance
+R018,Reporting Standards Guide,Data,Data Analyst,Data,Company standards for reports and dashboards,Document,/resources/reporting
+R019,Design Tools Setup Guide,Design,UI/UX Designer,Design,Setup instructions for approved design tools,Guide,/resources/design-tools
+R020,Design Repository Guide,Design,UI/UX Designer,Design,Access instructions for design files and repositories,Guide,/resources/design-repository
+R021,Company Design System,Design,UI/UX Designer,Design,"Components, patterns and design standards",Document,/resources/design-system
+R022,Brand Guidelines,Design,UI/UX Designer,Design,Company visual identity and branding rules,Document,/resources/brand-guidelines
+R023,HR Portal Guide,HR,HR Executive,Human Resources,Guide to using the internal HR portal,Guide,/resources/hr-portal
+R024,HR Policies Guide,HR,HR Executive,Human Resources,Important HR policies and procedures,Document,/resources/hr-policies
+R025,Employee Records Guide,HR,HR Executive,Human Resources,Procedures for managing employee records,Guide,/resources/employee-records
+R026,HR Compliance Training,Training,HR Executive,Human Resources,Mandatory HR compliance training,Training,/training/hr-compliance
+R027,Marketing Tools Guide,Marketing,Marketing Executive,Marketing,Setup instructions for marketing tools,Guide,/resources/marketing-tools
+R028,Marketing Brand Guide,Marketing,Marketing Executive,Marketing,Marketing-specific brand and communication guidelines,Document,/resources/marketing-brand
+R029,Marketing Strategy Guide,Marketing,Marketing Executive,Marketing,Overview of company marketing strategy,Document,/resources/marketing-strategy
+R030,Marketing Analytics Guide,Marketing,Marketing Executive,Marketing,Instructions for accessing marketing analytics,Guide,/resources/marketing-analytics

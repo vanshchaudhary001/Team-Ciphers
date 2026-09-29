@@ -125,6 +125,10 @@
           <span class="material-symbols-outlined" style="font-size: 17px;">login</span>
           Gateway
         </a>
+        <a href="/" class="nav-link" style="color: #4f46e5; font-weight: 700; background: rgba(79, 70, 229, 0.08); border-radius: 8px; padding: 6px 12px;" title="Open Start Smart DAG Platform">
+          <span class="material-symbols-outlined" style="font-size: 17px;">hub</span>
+          DAG Platform
+        </a>
         <a href="javascript:void(0)" onclick="goToStep('step-companies')" class="nav-link" title="Workspaces Directory">
           <span class="material-symbols-outlined" style="font-size: 17px;">domain</span>
           Workspaces
@@ -628,26 +632,32 @@
           <span id="signin-breadcrumb-company" style="display: none;">Microsoft</span>
         </div>
 
-        <!-- 1-Click Quick Select Persona Chips (For Microsoft) -->
+        <!-- 1-Click Quick Select Persona Chips (5 Structured Roles from Dataset) -->
         <div id="microsoft-persona-section" class="persona-section-box">
           <div class="persona-section-label">
-            ⚡ Quick 1-Click Test Personas (Pre-configured Credentials):
+            ⚡ Quick 1-Click Test Personas (5 Structured Roles from Dataset):
           </div>
           <div class="persona-quick-pills">
-            <button type="button" class="persona-pill-btn" onclick="fillPersona('rohan.sharma2026@microsoft.in', '12345678')">
-              🟢 Rohan Sharma (New Joiner)
+            <button type="button" class="persona-pill-btn" onclick="fillPersona('aarav.sharma@demo-company.com', 'demo1234')">
+              🟢 Aarav Sharma (Software Engineer · E001)
             </button>
-            <button type="button" class="persona-pill-btn" onclick="fillPersona('aarav.patel2026@microsoft.in', '12345678')">
-              🟢 Aarav Patel (New Joiner)
+            <button type="button" class="persona-pill-btn" onclick="fillPersona('diya.singh@demo-company.com', 'demo1234')">
+              🟢 Diya Singh (Data Analyst · E002)
             </button>
-            <button type="button" class="persona-pill-btn" onclick="fillPersona('priya.sharma.hr@microsoft.in', '12345678')">
-              🔵 Priya Sharma (HR Partner)
+            <button type="button" class="persona-pill-btn" onclick="fillPersona('rohan.kapoor@demo-company.com', 'demo1234')">
+              🟢 Rohan Kapoor (UI/UX Designer · E003)
             </button>
-            <button type="button" class="persona-pill-btn" onclick="fillPersona('rahul.pandey2021@microsoft.in', '12345678')">
-              🟣 Rahul Pandey (Past Member / Buddy)
+            <button type="button" class="persona-pill-btn" onclick="fillPersona('ananya.singh@demo-company.com', 'demo1234')">
+              🟢 Ananya Singh (HR Executive · E004)
             </button>
-            <button type="button" class="persona-pill-btn" onclick="fillPersona('admin.systems@microsoft.in', '12345678')">
-              🔴 Systems Admin
+            <button type="button" class="persona-pill-btn" onclick="fillPersona('meera.iyer@demo-company.com', 'demo1234')">
+              🟢 Meera Iyer (Marketing Executive · E006)
+            </button>
+            <button type="button" class="persona-pill-btn" onclick="fillPersona('hr@demo-company.com', 'demo1234')">
+              🔵 Priya Nair (HR Partner · C003)
+            </button>
+            <button type="button" class="persona-pill-btn" onclick="fillPersona('buddy@demo-company.com', 'demo1234')">
+              🟣 Dhruv Agarwal (Onboarding Buddy · C019)
             </button>
           </div>
         </div>
@@ -1092,188 +1102,328 @@
     <!-- ==============================================================
          STEP 4B: HR COHORT MANAGEMENT & FRESHER TASK MANAGER PORTAL
          ============================================================== -->
+    <!-- ==============================================================
+         STEP 4B: HR PARTNER WORKSPACE & ONBOARDING COMMAND CENTER
+         ============================================================== -->
     <section id="step-hr-portal" class="step-view" style="display: none; max-width: 1300px; margin: 0 auto; width: 100%;">
       <div class="breadcrumbs-bar">
         <button onclick="goToStep('step-gateway')">Gateway</button>
         <span class="breadcrumbs-separator">/</span>
         <button onclick="goToStep('step-signin')">Sign In</button>
         <span class="breadcrumbs-separator">/</span>
-        <span>HR Command Center & Task Management</span>
+        <span>HR Partner Workspace &amp; Checklist Templates</span>
       </div>
 
+      <!-- HR Command Center Banner -->
       <div class="portal-header-banner" style="background: linear-gradient(135deg, #1e3a8a, #0f172a);">
         <div>
           <div style="font-size: 0.8rem; font-weight: 700; color: #93c5fd; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">
-            People Operations & Task Management Command Center
+            People Operations &amp; HR Partner Command Center
           </div>
           <h1 class="portal-banner-title">
-            Welcome, <span id="hr-portal-name">Priya Sharma</span> (Lead HR Partner)
+            Welcome, <span id="hr-portal-name">Priya Nair</span> (Lead HR Partner)
           </h1>
           <p class="portal-banner-desc">
-            Microsoft Corporation · 2026 Fresher Cohort. Allocate, add, and remove tasks for new joiners in real-time.
+            Orchestrate onboarding blueprints, publish role-based checklists, monitor joiner progress, and track overdue milestones.
           </p>
         </div>
-        <div style="text-align: right;">
+        <div style="text-align: right; display: flex; gap: 10px; align-items: center;">
+          <button onclick="openCreateChecklistModal()" class="btn-create-checklist">
+            <span>➕ Create Checklist</span>
+          </button>
           <button onclick="goToStep('step-signin')" class="btn-secondary" style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #fff;">
             Switch Account
           </button>
         </div>
       </div>
 
-      <!-- INBOX: REAL-TIME IN-APP MESSAGES FROM NEW JOINERS -->
-      <div class="inbox-messages-panel" id="hr-inbox-panel">
-        <div class="inbox-panel-header">
-          <div class="inbox-panel-title-wrap">
-            <span class="material-symbols-outlined" style="font-size: 24px; color: var(--stitch-primary);">chat</span>
-            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--color-slate-900); margin: 0;">
-              Fresher In-App Messages &amp; Inquiries
-            </h3>
-            <span class="inbox-live-pill" id="hr-inbox-counter">
-              <span class="status-dot"></span>
-              <span id="hr-inbox-count-text">0 New Messages</span>
-            </span>
+      <!-- 5 KPI TELEMETRY METRIC CARDS -->
+      <div class="hr-kpi-grid">
+        <div class="hr-kpi-card">
+          <div class="hr-kpi-top">
+            <div class="hr-kpi-icon-wrap" style="background: #eff6ff; color: #1d4ed8;">
+              <span class="material-symbols-outlined">group</span>
+            </div>
+            <span style="font-size: 0.7rem; font-weight: 800; color: #1d4ed8; background: #dbeafe; padding: 2px 7px; border-radius: 999px;">ROSTER</span>
           </div>
-          <span style="font-size: 0.78rem; color: var(--color-slate-500);">Live Direct Channel · Connected to Rohan Sharma</span>
+          <div class="hr-kpi-value" id="hr-kpi-total-joiners">--</div>
+          <div class="hr-kpi-label">Total New Joiners</div>
+          <div class="hr-kpi-meta">Indexed across all departments</div>
         </div>
 
-        <div id="hr-inbox-messages-list">
-          <!-- Dynamically populated from inAppMessages array -->
+        <div class="hr-kpi-card">
+          <div class="hr-kpi-top">
+            <div class="hr-kpi-icon-wrap" style="background: #eef2ff; color: #4338ca;">
+              <span class="material-symbols-outlined">trending_up</span>
+            </div>
+            <span style="font-size: 0.7rem; font-weight: 800; color: #4338ca; background: #e0e7ff; padding: 2px 7px; border-radius: 999px;">ACTIVE</span>
+          </div>
+          <div class="hr-kpi-value" id="hr-kpi-active-joiners">--</div>
+          <div class="hr-kpi-label">Active Onboarding</div>
+          <div class="hr-kpi-meta">In-progress checklists</div>
+        </div>
+
+        <div class="hr-kpi-card">
+          <div class="hr-kpi-top">
+            <div class="hr-kpi-icon-wrap" style="background: #ecfdf5; color: #047857;">
+              <span class="material-symbols-outlined">task_alt</span>
+            </div>
+            <span style="font-size: 0.7rem; font-weight: 800; color: #047857; background: #d1fae5; padding: 2px 7px; border-radius: 999px;">100% DONE</span>
+          </div>
+          <div class="hr-kpi-value" id="hr-kpi-completed-joiners">--</div>
+          <div class="hr-kpi-label">Completed Onboarding</div>
+          <div class="hr-kpi-meta">All milestone tasks cleared</div>
+        </div>
+
+        <div class="hr-kpi-card">
+          <div class="hr-kpi-top">
+            <div class="hr-kpi-icon-wrap" style="background: #fffbeb; color: #b45309;">
+              <span class="material-symbols-outlined">pending_actions</span>
+            </div>
+            <span style="font-size: 0.7rem; font-weight: 800; color: #b45309; background: #fef3c7; padding: 2px 7px; border-radius: 999px;">PENDING</span>
+          </div>
+          <div class="hr-kpi-value" id="hr-kpi-pending-joiners">--</div>
+          <div class="hr-kpi-label">Pending Onboarding</div>
+          <div class="hr-kpi-meta">0% started or pending intake</div>
+        </div>
+
+        <div class="hr-kpi-card">
+          <div class="hr-kpi-top">
+            <div class="hr-kpi-icon-wrap" style="background: #fef2f2; color: #b91c1c;">
+              <span class="material-symbols-outlined">warning</span>
+            </div>
+            <span style="font-size: 0.7rem; font-weight: 800; color: #b91c1c; background: #fee2e2; padding: 2px 7px; border-radius: 999px;">ATTENTION</span>
+          </div>
+          <div class="hr-kpi-value" id="hr-kpi-overdue-tasks">--</div>
+          <div class="hr-kpi-label">Overdue Tasks</div>
+          <div class="hr-kpi-meta">Tasks exceeding SLA schedule</div>
         </div>
       </div>
 
-      <!-- Cohort Roster Table -->
-      <div style="background: #ffffff; border: 1px solid var(--color-slate-200); border-radius: var(--radius-xl); padding: 26px 30px; box-shadow: var(--shadow-sm); margin-top: 24px;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
-          <div>
-            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--color-slate-900);">Active Microsoft Joiners Cohort (10 Freshers)</h3>
-            <p style="font-size: 0.82rem; color: var(--color-slate-500);">Auto-matched with Senior Buddy Mentors</p>
-          </div>
-          <button class="btn-secondary" onclick="showNotification('Exported cohort readiness metrics!')">
-            📊 Export Report
-          </button>
-        </div>
-
-        <div style="overflow-x: auto;">
-          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
-            <thead>
-              <tr style="background: var(--color-slate-50); border-bottom: 2px solid var(--color-slate-200); color: var(--color-slate-600); font-weight: 700;">
-                <th style="padding: 12px 14px;">Fresher Joiner</th>
-                <th style="padding: 12px 14px;">Email ID</th>
-                <th style="padding: 12px 14px;">Department</th>
-                <th style="padding: 12px 14px;">Assigned Buddy Mentor</th>
-                <th style="padding: 12px 14px;">Status</th>
-                <th style="padding: 12px 14px;">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="hr-cohort-roster-body">
-              <!-- Dynamically populated from microsoftDirectory -->
-            </tbody>
-          </table>
-        </div>
+      <!-- WORKSPACE TABS SWITCHER -->
+      <div class="hr-workspace-tabs">
+        <button class="hr-tab-btn active" id="hr-tab-btn-checklists" onclick="switchHRWorkspaceTab('checklists')">
+          <span class="material-symbols-outlined" style="font-size: 19px;">checklist_rtl</span>
+          <span>My Checklists</span>
+          <span class="hr-tab-badge" id="hr-badge-checklists-count">0</span>
+        </button>
+        <button class="hr-tab-btn" id="hr-tab-btn-roster" onclick="switchHRWorkspaceTab('roster')">
+          <span class="material-symbols-outlined" style="font-size: 19px;">groups</span>
+          <span>Cohort Roster &amp; Joiners</span>
+          <span class="hr-tab-badge" id="hr-badge-joiners-count" style="background: #475569;">20</span>
+        </button>
+        <button class="hr-tab-btn" id="hr-tab-btn-inbox" onclick="switchHRWorkspaceTab('inbox')">
+          <span class="material-symbols-outlined" style="font-size: 19px;">chat</span>
+          <span>Fresher In-App Inquiries</span>
+          <span class="hr-tab-badge" id="hr-badge-messages-count" style="background: #0284c7;">0</span>
+        </button>
+        <button class="hr-tab-btn" id="hr-tab-btn-taskmanager" onclick="switchHRWorkspaceTab('taskmanager')">
+          <span class="material-symbols-outlined" style="font-size: 19px;">playlist_add</span>
+          <span>Single Joiner Task Adjustments</span>
+        </button>
       </div>
 
-      <!-- HR FRESHER TASK MANAGEMENT CONSOLE (ADD & REMOVE TASKS) -->
-      <div class="hr-task-manager-panel">
-        <div class="hr-panel-header">
+      <!-- ==========================================
+           TAB 1: MY CHECKLISTS & TEMPLATES (DEFAULT)
+           ========================================== -->
+      <div id="hr-pane-checklists" class="hr-workspace-pane">
+        <div class="hr-checklists-toolbar">
           <div>
-            <div class="section-badge" style="color: #2563eb;">HR Access & Control</div>
-            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--color-slate-900); margin-bottom: 4px;">
-              Fresher Onboarding Task Management
+            <h3 style="font-size: 1.22rem; font-weight: 800; color: var(--color-slate-900); margin-bottom: 4px;">
+              Onboarding Checklist Templates
             </h3>
             <p style="font-size: 0.84rem; color: var(--color-slate-500);">
-              As an HR Partner, you can add new onboarding tasks or remove existing tasks for freshers. Changes update live across the Fresher Portal & AI Copilot.
+              Configurable onboarding blueprints mapped to roles, departments, and office locations. Published checklists automatically assign to matching new joiners.
             </p>
           </div>
 
           <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-            <button type="button" class="btn-secondary" onclick="resetTasksToDefault()" style="font-size: 0.78rem; font-weight: 700; background: #f1f5f9; border-color: #cbd5e1;" title="Restore original 5 Microsoft corporate default tasks">
-              🔄 Reset to Defaults
-            </button>
-            <div class="hr-target-selector">
-              <span style="font-size: 0.78rem; font-weight: 700; color: var(--color-slate-600);">Managing Checklist for:</span>
-              <select id="hr-target-fresher-select" class="hr-target-select-input" onchange="onHRFresherTargetChange()">
-                <option value="all">All 2026 Freshers (Master Template)</option>
-                <option value="rohan.sharma2026@microsoft.in" selected>Rohan Sharma (rohan.sharma2026@microsoft.in)</option>
-                <option value="aarav.patel2026@microsoft.in">Aarav Patel (aarav.patel2026@microsoft.in)</option>
-                <option value="kavya.singh2026@microsoft.in">Kavya Singh (kavya.singh2026@microsoft.in)</option>
-              </select>
+            <div class="hr-filter-group">
+              <button class="hr-filter-chip active" id="hr-filter-all" onclick="filterHRChecklists('all')">All</button>
+              <button class="hr-filter-chip" id="hr-filter-published" onclick="filterHRChecklists('Published')">Published</button>
+              <button class="hr-filter-chip" id="hr-filter-draft" onclick="filterHRChecklists('Draft')">Drafts</button>
+              <button class="hr-filter-chip" id="hr-filter-archived" onclick="filterHRChecklists('Archived')">Archived</button>
             </div>
+            <button onclick="openCreateChecklistModal()" class="btn-create-checklist">
+              <span>➕ Create Checklist</span>
+            </button>
           </div>
         </div>
 
-        <!-- Live Fresher Task Inventory Table with 1-Click Remove -->
-        <div style="overflow-x: auto;">
-          <table class="hr-task-inventory-table">
-            <thead>
-              <tr>
-                <th style="width: 50px;">ID</th>
-                <th style="width: 120px;">Category</th>
-                <th>Task Title & Short Instructions</th>
-                <th style="width: 100px;">Duration</th>
-                <th style="width: 110px;">Status</th>
-                <th style="width: 130px; text-align: right;">HR Action</th>
-              </tr>
-            </thead>
-            <tbody id="hr-task-inventory-body">
-              <!-- Dynamically populated from dailyTasksState with Remove buttons -->
-            </tbody>
-          </table>
+        <!-- Checklist Cards Grid Container -->
+        <div id="hr-checklists-grid" class="hr-checklists-grid">
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--color-slate-500);">
+            Loading onboarding checklist templates...
+          </div>
         </div>
+      </div>
 
-        <!-- ADD NEW TASK TO FRESHER CHECKLIST FORM -->
-        <div class="hr-add-task-box">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
-            <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--color-slate-900);">
-              ➕ Add New Task to Fresher Checklist
-            </h4>
-            <span style="font-size: 0.74rem; color: #2563eb; font-weight: 700;">Instant Push to AI Copilot & Portal</span>
+      <!-- ==========================================
+           TAB 2: COHORT ROSTER & JOINERS TRACKING
+           ========================================== -->
+      <div id="hr-pane-roster" class="hr-workspace-pane" style="display: none;">
+        <div style="background: #ffffff; border: 1px solid var(--color-slate-200); border-radius: var(--radius-xl); padding: 26px 30px; box-shadow: var(--shadow-sm);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--color-slate-900);">Active Joiners Cohort Roster</h3>
+              <p style="font-size: 0.82rem; color: var(--color-slate-500);">Live progress tracking and senior mentor pairings</p>
+            </div>
+            <button class="btn-secondary" onclick="showNotification('Exported cohort readiness metrics!')">
+              📊 Export Report
+            </button>
           </div>
 
-          <form id="hr-add-task-form" onsubmit="handleAddNewTaskByHR(event)">
-            <div class="hr-form-grid">
-              <div class="hr-form-group">
-                <label>Task Title *</label>
-                <input type="text" id="new-task-title" placeholder="e.g. Complete OWASP Top 10 Security Assessment" required>
-              </div>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
+              <thead>
+                <tr style="background: var(--color-slate-50); border-bottom: 2px solid var(--color-slate-200); color: var(--color-slate-600); font-weight: 700;">
+                  <th style="padding: 12px 14px;">Fresher Joiner</th>
+                  <th style="padding: 12px 14px;">Email ID</th>
+                  <th style="padding: 12px 14px;">Department</th>
+                  <th style="padding: 12px 14px;">Assigned Buddy Mentor</th>
+                  <th style="padding: 12px 14px;">Status</th>
+                  <th style="padding: 12px 14px;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="hr-cohort-roster-body">
+                <!-- Dynamically populated from database -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
-              <div class="hr-form-group">
-                <label>Category *</label>
-                <select id="new-task-category" required>
-                  <option value="Security">Security</option>
-                  <option value="Compliance">Compliance & Legal</option>
-                  <option value="Mentoring">Mentoring & Culture</option>
-                  <option value="Access">IT Access & Tools</option>
-                  <option value="Engineering" selected>Engineering & Code</option>
+      <!-- ==========================================
+           TAB 3: FRESHER DIRECT INQUIRIES (INBOX)
+           ========================================== -->
+      <div id="hr-pane-inbox" class="hr-workspace-pane" style="display: none;">
+        <div class="inbox-messages-panel" id="hr-inbox-panel">
+          <div class="inbox-panel-header">
+            <div class="inbox-panel-title-wrap">
+              <span class="material-symbols-outlined" style="font-size: 24px; color: var(--stitch-primary);">chat</span>
+              <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--color-slate-900); margin: 0;">
+                Fresher In-App Messages &amp; Inquiries
+              </h3>
+              <span class="inbox-live-pill" id="hr-inbox-counter">
+                <span class="status-dot"></span>
+                <span id="hr-inbox-count-text">0 New Messages</span>
+              </span>
+            </div>
+            <span style="font-size: 0.78rem; color: var(--color-slate-500);">Live Direct Channel · Connected to Rohan Sharma</span>
+          </div>
+
+          <div id="hr-inbox-messages-list">
+            <!-- Dynamically populated from inAppMessages array -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           TAB 4: QUICK SINGLE JOINER TASK ADJUSTMENTS
+           ========================================== -->
+      <div id="hr-pane-taskmanager" class="hr-workspace-pane" style="display: none;">
+        <div class="hr-task-manager-panel" style="margin-top: 0;">
+          <div class="hr-panel-header">
+            <div>
+              <div class="section-badge" style="color: #2563eb;">HR Access &amp; Control</div>
+              <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--color-slate-900); margin-bottom: 4px;">
+                Fresher Onboarding Task Management
+              </h3>
+              <p style="font-size: 0.84rem; color: var(--color-slate-500);">
+                As an HR Partner, you can add ad-hoc onboarding tasks or remove tasks for individual freshers.
+              </p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <button type="button" class="btn-secondary" onclick="resetTasksToDefault()" style="font-size: 0.78rem; font-weight: 700; background: #f1f5f9; border-color: #cbd5e1;" title="Restore original corporate default tasks">
+                🔄 Reset to Defaults
+              </button>
+              <div class="hr-target-selector">
+                <span style="font-size: 0.78rem; font-weight: 700; color: var(--color-slate-600);">Managing Checklist for:</span>
+                <select id="hr-target-fresher-select" class="hr-target-select-input" onchange="onHRFresherTargetChange()">
+                  <option value="all">All 2026 Freshers (Master Template)</option>
+                  <option value="rohan.sharma2026@microsoft.in" selected>Rohan Sharma (rohan.sharma2026@microsoft.in)</option>
+                  <option value="aarav.patel2026@microsoft.in">Aarav Patel (aarav.patel2026@microsoft.in)</option>
+                  <option value="kavya.singh2026@microsoft.in">Kavya Singh (kavya.singh2026@microsoft.in)</option>
                 </select>
               </div>
+            </div>
+          </div>
 
-              <div class="hr-form-group">
-                <label>Estimated Time</label>
-                <input type="text" id="new-task-duration" placeholder="e.g. 25 mins" value="25 mins">
+          <!-- Live Fresher Task Inventory Table -->
+          <div style="overflow-x: auto;">
+            <table class="hr-task-inventory-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">ID</th>
+                  <th style="width: 120px;">Category</th>
+                  <th>Task Title &amp; Short Instructions</th>
+                  <th style="width: 100px;">Duration</th>
+                  <th style="width: 110px;">Status</th>
+                  <th style="width: 130px; text-align: right;">HR Action</th>
+                </tr>
+              </thead>
+              <tbody id="hr-task-inventory-body">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ADD NEW TASK TO FRESHER CHECKLIST FORM -->
+          <div class="hr-add-task-box">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+              <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--color-slate-900);">
+                ➕ Add Task for Joiner
+              </h4>
+              <span style="font-size: 0.74rem; color: #2563eb; font-weight: 700;">Instant Push to AI Copilot &amp; Portal</span>
+            </div>
+
+            <form id="hr-add-task-form" onsubmit="handleAddNewTaskByHR(event)">
+              <div class="hr-form-grid">
+                <div class="hr-form-group">
+                  <label>Task Title *</label>
+                  <input type="text" id="new-task-title" placeholder="e.g. Complete OWASP Top 10 Security Assessment" required>
+                </div>
+
+                <div class="hr-form-group">
+                  <label>Category *</label>
+                  <select id="new-task-category" required>
+                    <option value="Security">Security</option>
+                    <option value="Compliance">Compliance &amp; Legal</option>
+                    <option value="Mentoring">Mentoring &amp; Culture</option>
+                    <option value="Access">IT Access &amp; Tools</option>
+                    <option value="Engineering" selected>Engineering &amp; Code</option>
+                  </select>
+                </div>
+
+                <div class="hr-form-group">
+                  <label>Estimated Time</label>
+                  <input type="text" id="new-task-duration" placeholder="e.g. 25 mins" value="25 mins">
+                </div>
               </div>
-            </div>
 
-            <div class="hr-form-group" style="margin-bottom: 14px;">
-              <label>Task Instructions & Step-by-Step Guidance (Seen by Fresher & Chatbot) *</label>
-              <textarea id="new-task-desc" placeholder="Detail the step-by-step instructions so the Fresher and AI Chatbot can explain it..." required></textarea>
-            </div>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-              <div class="hr-presets-row">
-                <span style="font-size: 0.72rem; font-weight: 700; color: var(--color-slate-500);">QUICK PRESETS:</span>
-                <button type="button" class="hr-preset-btn" onclick="applyTaskPreset('cloud')">+ Azure Cloud Setup</button>
-                <button type="button" class="hr-preset-btn" onclick="applyTaskPreset('security')">+ Security Training</button>
-                <button type="button" class="hr-preset-btn" onclick="applyTaskPreset('culture')">+ Team 1:1 Intro</button>
+              <div class="hr-form-group" style="margin-bottom: 14px;">
+                <label>Task Instructions &amp; Step-by-Step Guidance *</label>
+                <textarea id="new-task-desc" placeholder="Detail the step-by-step instructions so the Fresher and AI Chatbot can explain it..." required></textarea>
               </div>
 
-              <button type="submit" class="btn-add-task-submit">
-                <span>➕ Add Task to Fresher Checklist</span>
-              </button>
-            </div>
-          </form>
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                <div class="hr-presets-row">
+                  <span style="font-size: 0.72rem; font-weight: 700; color: var(--color-slate-500);">QUICK PRESETS:</span>
+                  <button type="button" class="hr-preset-btn" onclick="applyTaskPreset('cloud')">+ Azure Cloud Setup</button>
+                  <button type="button" class="hr-preset-btn" onclick="applyTaskPreset('security')">+ Security Training</button>
+                  <button type="button" class="hr-preset-btn" onclick="applyTaskPreset('culture')">+ Team 1:1 Intro</button>
+                </div>
+
+                <button type="submit" class="btn-add-task-submit">
+                  <span>➕ Add Task to Fresher Checklist</span>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-
       </div>
+
     </section>
 
     <!-- ==============================================================
@@ -1503,6 +1653,143 @@
       </div>
     </div>
   </footer>
+
+  <!-- ==============================================================
+       HR CHECKLIST BUILDER & TASK MANAGEMENT MODAL
+       ============================================================== -->
+  <div id="hr-checklist-modal" class="hr-modal-overlay">
+    <div class="hr-modal-card">
+      <div class="hr-modal-header">
+        <div>
+          <h3 class="hr-modal-title" id="hr-modal-title">Create Onboarding Checklist</h3>
+          <p class="hr-modal-subtitle">Define role blueprints, department criteria, milestones, and assigned resources.</p>
+        </div>
+        <button type="button" class="hr-modal-close-btn" onclick="closeChecklistModal()">✕</button>
+      </div>
+
+      <div class="hr-modal-body">
+        <input type="hidden" id="hr-form-checklist-id" value="">
+        <div class="modal-form-grid">
+          <div class="modal-form-group full-width">
+            <label>Checklist Name *</label>
+            <input type="text" id="hr-form-name" placeholder="e.g., Cloud & Distributed Systems Engineering Track" required>
+          </div>
+
+          <div class="modal-form-group">
+            <label>Applicable Role *</label>
+            <select id="hr-form-role" required>
+              <option value="Software Engineer">Software Engineer</option>
+              <option value="Data Analyst">Data Analyst</option>
+              <option value="UI/UX Designer">UI/UX Designer</option>
+              <option value="HR Executive">HR Executive</option>
+              <option value="Marketing Executive">Marketing Executive</option>
+              <option value="All">All Roles (Universal)</option>
+            </select>
+          </div>
+
+          <div class="modal-form-group">
+            <label>Department *</label>
+            <select id="hr-form-department" required>
+              <option value="Engineering">Engineering</option>
+              <option value="Data &amp; AI">Data &amp; AI</option>
+              <option value="Design">Design</option>
+              <option value="Human Resources">Human Resources</option>
+              <option value="Marketing">Marketing</option>
+              <option value="All">All Departments</option>
+            </select>
+          </div>
+
+          <div class="modal-form-group">
+            <label>Location *</label>
+            <select id="hr-form-location" required>
+              <option value="Bengaluru">Bengaluru</option>
+              <option value="Delhi">Delhi</option>
+              <option value="Hyderabad">Hyderabad</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="All">All Locations (Global)</option>
+            </select>
+          </div>
+
+          <div class="modal-form-group">
+            <label>Onboarding Duration (Days) *</label>
+            <input type="number" id="hr-form-duration" min="1" max="180" value="30" required>
+          </div>
+        </div>
+
+        <!-- Task Builder Section -->
+        <div class="modal-task-builder">
+          <div class="modal-task-header">
+            <div>
+              <div class="modal-task-title">Checklist Tasks &amp; Milestones</div>
+              <div style="font-size: 0.74rem; color: var(--color-slate-500); margin-top: 2px;">
+                Add, edit, reorder (↑/↓), and assign learning resources to each task.
+              </div>
+            </div>
+            <button type="button" class="btn-create-checklist" style="padding: 7px 14px; font-size: 0.78rem;" onclick="addModalTaskRow()">
+              <span>➕ Add Task</span>
+            </button>
+          </div>
+
+          <div id="modal-tasks-container">
+            <!-- Dynamic task rows inserted here -->
+          </div>
+        </div>
+      </div>
+
+      <div class="hr-modal-footer">
+        <button type="button" class="btn-secondary" onclick="closeChecklistModal()">Cancel</button>
+        <div style="display: flex; gap: 10px;">
+          <button type="button" class="btn-secondary" style="font-weight: 800; background: #fffbeb; color: #b45309; border-color: #fde68a;" onclick="saveChecklistFromModal(false)">
+            💾 Save Draft
+          </button>
+          <button type="button" class="btn-create-checklist" onclick="saveChecklistFromModal(true)">
+            🚀 Publish Checklist
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       HR VIEW ASSIGNED EMPLOYEES MODAL
+       ============================================================== -->
+  <div id="hr-assigned-employees-modal" class="hr-modal-overlay">
+    <div class="hr-modal-card" style="max-width: 860px;">
+      <div class="hr-modal-header">
+        <div>
+          <h3 class="hr-modal-title" id="hr-assigned-modal-title">Assigned New Joiners</h3>
+          <p class="hr-modal-subtitle" id="hr-assigned-modal-subtitle">Joiners dynamically matched with this checklist blueprint.</p>
+        </div>
+        <button type="button" class="hr-modal-close-btn" onclick="closeAssignedEmployeesModal()">✕</button>
+      </div>
+
+      <div class="hr-modal-body" style="padding: 0;">
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+            <thead>
+              <tr style="background: var(--color-slate-50); border-bottom: 2px solid var(--color-slate-200); color: var(--color-slate-600); font-weight: 700;">
+                <th style="padding: 12px 18px; text-align: left;">Employee</th>
+                <th style="padding: 12px 14px; text-align: left;">Department &amp; Location</th>
+                <th style="padding: 12px 14px; text-align: left;">Progress</th>
+                <th style="padding: 12px 14px; text-align: center;">Tasks Status</th>
+                <th style="padding: 12px 18px; text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="hr-assigned-employees-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="hr-modal-footer">
+        <span style="font-size: 0.78rem; color: var(--color-slate-500);" id="hr-assigned-modal-footer-info">
+          Matching is real-time based on Role, Department, and Office Location.
+        </span>
+        <button type="button" class="btn-secondary" onclick="closeAssignedEmployeesModal()">Close</button>
+      </div>
+    </div>
+  </div>
 
   <!-- IN-APP VOIP DIRECT CALL MODAL -->
   <div id="inapp-call-modal" class="inapp-modal-overlay">
@@ -1857,6 +2144,58 @@
     let dailyTasksState = loadTasksState();
     let currentTaskFilter = 'all';
 
+    // ==============================================================
+    // 5 STRUCTURED DATASETS LIVE INTEGRATION LAYER
+    // ==============================================================
+    let currentLiveEmployeeId = 'E001';
+    let currentLiveDashboard = null;
+    let allEmployeesDataset = [];
+    let allContactsDataset = [];
+    let liveTasksList = [];
+
+    function getApiBaseUrl() {
+      return (window.location.port === '3000') ? '' : 'http://localhost:5001';
+    }
+
+    async function initDatasetLayer() {
+      try {
+        const base = getApiBaseUrl();
+        const [empRes, contRes] = await Promise.all([
+          fetch(`${base}/api/employees`).catch(() => null),
+          fetch(`${base}/api/contacts`).catch(() => null)
+        ]);
+        if (empRes && empRes.ok) {
+          const empData = await empRes.json();
+          allEmployeesDataset = empData.employees || [];
+        }
+        if (contRes && contRes.ok) {
+          const contData = await contRes.json();
+          allContactsDataset = contData.contacts || [];
+          populateContactDropdownOptions(allContactsDataset);
+        }
+      } catch (err) {
+        console.warn('Dataset layer init warning:', err);
+      }
+    }
+
+    function populateContactDropdownOptions(contacts) {
+      const select = document.getElementById('contact-directory-select');
+      if (!select || !contacts || contacts.length === 0) return;
+      let optionsHtml = `
+        <option value="none">-- Click dropdown to select contact --</option>
+        <option value="hr">👤 Priya Nair (Lead HR Manager · C003)</option>
+        <option value="buddy">🤝 Dhruv Agarwal (Onboarding Buddy · C019)</option>
+        <option value="it">🛠️ Rahul Mehta (IT Helpdesk · C001)</option>
+        <option value="all">👥 Show All Key Direct Contacts</option>
+      `;
+      contacts.forEach(c => {
+        if (!['C001', 'C003', 'C019'].includes(c.contactId)) {
+          optionsHtml += `<option value="${c.contactId}">📞 ${c.name} (${c.role} · ${c.team})</option>`;
+        }
+      });
+      select.innerHTML = optionsHtml;
+    }
+
     // Navigation Step Transition Manager
     function goToStep(stepId) {
       const allSteps = document.querySelectorAll('.step-view');
@@ -1866,6 +2205,10 @@
       if (target) {
         target.style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      if (stepId === 'step-hr-portal') {
+        renderLiveHRPortal();
       }
     }
 
@@ -2002,24 +2345,66 @@
       handleEmailInput(email);
     }
 
-    // Step 3 Real-time Role Detection Logic
+// Step 3 Real-time Role Detection Logic
     function detectRoleFromEmail(email) {
       const em = email.toLowerCase().trim();
 
-      // Check Microsoft specific directory
+      // Check live dataset employees first
+      const datasetEmp = allEmployeesDataset.find(e => 
+        e.email.toLowerCase() === em || 
+        e.employeeId.toLowerCase() === em ||
+        (em.includes('aarav') && e.employeeId === 'E001') ||
+        (em.includes('diya') && e.employeeId === 'E002') ||
+        (em.includes('rohan.kapoor') && e.employeeId === 'E003') ||
+        (em.includes('ananya') && e.employeeId === 'E004') ||
+        (em.includes('meera') && e.employeeId === 'E006')
+      );
+      if (datasetEmp) {
+        return {
+          role: 'joiner',
+          user: datasetEmp,
+          employeeId: datasetEmp.employeeId,
+          title: datasetEmp.role,
+          desc: `Identified: ${datasetEmp.name} (${datasetEmp.role}) · ${datasetEmp.department} (${datasetEmp.employeeId})`
+        };
+      }
+
+      // Check HR from dataset or contacts
+      if (em === 'hr@demo-company.com' || em.includes('priya.nair') || em.includes('c003')) {
+        return {
+          role: 'hr',
+          user: { name: 'Priya Nair', title: 'HR Manager', email: 'hr@demo-company.com' },
+          employeeId: 'C003',
+          title: 'HR Partner',
+          desc: 'Identified: Priya Nair (HR Manager · C003) · People Operations'
+        };
+      }
+
+      // Check Buddy from dataset or contacts
+      if (em === 'buddy@demo-company.com' || em.includes('dhruv.agarwal') || em.includes('c019')) {
+        return {
+          role: 'buddy',
+          user: { name: 'Dhruv Agarwal', title: 'Onboarding Buddy', email: 'buddy@demo-company.com' },
+          employeeId: 'C019',
+          title: 'Onboarding Buddy',
+          desc: 'Identified: Dhruv Agarwal (Onboarding Buddy · C019) · Assigned Mentor'
+        };
+      }
+
+      // Fallback to Microsoft directory
       const newJoiner = microsoftDirectory.newJoiners.find(u => u.email.toLowerCase() === em);
       if (newJoiner) {
-        return { role: 'joiner', user: newJoiner, title: 'New Joiner', desc: `Identified: ${newJoiner.name} (${newJoiner.title}) · Class of 2026` };
+        return { role: 'joiner', user: newJoiner, employeeId: 'E001', title: 'New Joiner', desc: `Identified: ${newJoiner.name} (${newJoiner.title}) · Class of 2026` };
       }
 
       const hrMember = microsoftDirectory.hr.find(u => u.email.toLowerCase() === em);
       if (hrMember) {
-        return { role: 'hr', user: hrMember, title: 'HR Partner', desc: `Identified: ${hrMember.name} (${hrMember.title}) · People Operations` };
+        return { role: 'hr', user: hrMember, employeeId: 'C003', title: 'HR Partner', desc: `Identified: ${hrMember.name} (${hrMember.title}) · People Operations` };
       }
 
       const buddyMember = microsoftDirectory.previousMembers.find(u => u.email.toLowerCase() === em);
       if (buddyMember) {
-        return { role: 'buddy', user: buddyMember, title: 'Previous Member & Buddy Mentor', desc: `Identified: ${buddyMember.name} (Class of ${buddyMember.batch}) · Assigned Mentor` };
+        return { role: 'buddy', user: buddyMember, employeeId: 'C019', title: 'Previous Member & Buddy Mentor', desc: `Identified: ${buddyMember.name} (Class of ${buddyMember.batch}) · Assigned Mentor` };
       }
 
       const adminMember = microsoftDirectory.admin.find(u => u.email.toLowerCase() === em);
@@ -2027,16 +2412,15 @@
         return { role: 'admin', user: adminMember || { name: 'Systems Admin', email: em }, title: 'Systems Administrator', desc: `Identified: Systems Administrator · Tenant Security & Azure AD` };
       }
 
-      // Generic heuristic for other companies
+      // Generic heuristic
       if (em.includes('hr')) {
-        return { role: 'hr', user: { name: 'People Partner', email: em, title: 'HR Partner' }, title: 'HR Partner', desc: 'Identified: People Operations Partner' };
+        return { role: 'hr', user: { name: 'People Partner', email: em, title: 'HR Partner' }, employeeId: 'C003', title: 'HR Partner', desc: 'Identified: People Operations Partner' };
       }
       if (em.includes('buddy') || em.includes('mentor')) {
-        return { role: 'buddy', user: { name: 'Senior Mentor', email: em, title: 'Buddy Mentor' }, title: 'Previous Member & Buddy', desc: 'Identified: Peer Mentor' };
+        return { role: 'buddy', user: { name: 'Senior Mentor', email: em, title: 'Buddy Mentor' }, employeeId: 'C019', title: 'Previous Member & Buddy', desc: 'Identified: Peer Mentor' };
       }
 
-      // Default to New Joiner
-      return { role: 'joiner', user: { name: em.split('@')[0].replace('.', ' '), email: em, title: 'New Joiner' }, title: 'New Joiner', desc: 'Identified: New Joiner · Day 1 Onboarding Track' };
+      return { role: 'joiner', user: { name: em.split('@')[0].replace('.', ' '), email: em, title: 'New Joiner' }, employeeId: 'E001', title: 'New Joiner', desc: 'Identified: New Joiner · Day 1 Onboarding Track' };
     }
 
     function handleEmailInput(email) {
@@ -2086,7 +2470,7 @@
     }
 
     // Step 3 Submit Action: Route based on automatically detected role
-    function handleMemberSignIn() {
+    async function handleMemberSignIn() {
       const emailInput = document.getElementById('signin-email');
       const passwordInput = document.getElementById('signin-password');
       const email = emailInput ? emailInput.value.trim() : '';
@@ -2110,11 +2494,12 @@
       showNotification(`Authenticated as ${detection.user.name} (${detection.title})`);
 
       if (detection.role === 'joiner') {
-        renderManualDashboard(detection.user);
-        initJoinerChatbot(detection.user);
+        currentLiveEmployeeId = detection.employeeId || 'E001';
+        await loadLiveEmployeeDashboard(currentLiveEmployeeId);
+        initJoinerChatbot(currentLiveDashboard?.employee || detection.user);
         goToStep('step-joiner-chatbot');
       } else if (detection.role === 'hr') {
-        renderHRPortal(detection.user);
+        await renderLiveHRPortal(detection.user);
         goToStep('step-hr-portal');
       } else if (detection.role === 'buddy') {
         renderBuddyPortal(detection.user);
@@ -2124,89 +2509,251 @@
       }
     }
 
-    // ==============================================================
+// ==============================================================
     // STEP 4A: RENDER 70% MANUAL DASHBOARD (HERO, CONTACTS, TASKS, BREAKDOWNS)
     // ==============================================================
-    function renderManualDashboard(user) {
-      if (!user) user = { name: 'Rohan Sharma', title: 'Software Engineer 1', email: 'rohan.sharma2026@microsoft.in' };
+    async function loadLiveEmployeeDashboard(empId) {
+      currentLiveEmployeeId = empId || currentLiveEmployeeId || 'E001';
+      try {
+        const base = getApiBaseUrl();
+        const res = await fetch(`${base}/api/employees/${currentLiveEmployeeId}/dashboard`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        currentLiveDashboard = data;
+        liveTasksList = data.tasks || [];
+        renderManualDashboardFromLive(data);
+      } catch (err) {
+        console.error('Failed to load live employee dashboard:', err);
+        renderManualDashboard(currentAuthenticatedUser);
+      }
+    }
 
-      // Update Hero Header
+    function renderManualDashboard(user) {
+      if (currentLiveDashboard) {
+        renderManualDashboardFromLive(currentLiveDashboard);
+        return;
+      }
+      if (!user) user = { name: 'Aarav Sharma', title: 'Software Engineer', email: 'aarav.sharma@demo-company.com' };
+
       document.getElementById('manual-user-name').textContent = user.name;
-      document.getElementById('manual-user-role').textContent = user.title || 'Software Engineer 1';
-      document.getElementById('manual-user-email').textContent = user.email || 'rohan.sharma2026@microsoft.in';
+      document.getElementById('manual-user-role').textContent = user.title || 'Software Engineer';
+      document.getElementById('manual-user-email').textContent = user.email || 'aarav.sharma@demo-company.com';
       document.getElementById('copilot-context-user').textContent = user.name;
 
-      // Calculate Progress Metrics
       const totalCount = dailyTasksState.length;
       const completedCount = dailyTasksState.filter(t => t.done).length;
       const pendingCount = totalCount - completedCount;
       const pct = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
-      // Update Counters & Progress Meter
       document.getElementById('manual-progress-pct').textContent = `${pct}%`;
       document.getElementById('manual-tasks-stat').textContent = `${completedCount} of ${totalCount} Tasks Cleared (${pct}%)`;
       document.getElementById('manual-linear-bar').style.width = `${pct}%`;
 
-      // Circular Ring stroke-dashoffset (Circumference 2 * PI * 38 = ~238.76)
       const circumference = 238.76;
       const offset = circumference - (pct / 100) * circumference;
       const circleEl = document.getElementById('manual-progress-circle');
-      if (circleEl) {
-        circleEl.style.strokeDashoffset = offset;
-      }
+      if (circleEl) circleEl.style.strokeDashoffset = offset;
 
-      // Update Filter Pill Counts
       document.getElementById('count-all-tasks').textContent = totalCount;
       document.getElementById('count-pending-tasks').textContent = pendingCount;
       document.getElementById('count-done-tasks').textContent = completedCount;
+    }
 
-      // Render Section 2: Interactive Task Checklist
-      const checklistContainer = document.getElementById('manual-checklist-container');
-      checklistContainer.innerHTML = '';
+    function renderManualDashboardFromLive(data) {
+      if (!data || !data.employee) return;
+      const emp = data.employee;
+      const metrics = data.metrics || { totalTasks: data.tasks.length, completedTasks: 0, pendingTasks: data.tasks.length, percentage: 0 };
+      const tasks = data.tasks || [];
 
-      if (dailyTasksState.length === 0) {
-        checklistContainer.innerHTML = `
-          <div style="padding: 24px; text-align: center; color: var(--color-slate-500); background: var(--color-slate-50); border-radius: var(--radius-md);">
-            No tasks currently assigned. HR Partner can add tasks from the HR Command Center.
-          </div>
-        `;
-      } else {
-        dailyTasksState.forEach(task => {
-          const card = document.createElement('div');
-          card.className = `manual-task-card ${task.done ? 'is-done' : ''}`;
-          card.id = `manual-task-card-${task.id}`;
-          card.dataset.status = task.done ? 'done' : 'pending';
+      // Hero Header
+      const nameEl = document.getElementById('manual-user-name');
+      const roleEl = document.getElementById('manual-user-role');
+      const emailEl = document.getElementById('manual-user-email');
+      const campusEl = document.getElementById('manual-user-campus');
+      const copilotUserEl = document.getElementById('copilot-context-user');
 
-          card.innerHTML = `
-            <button class="manual-task-check-btn" onclick="toggleManualTask(${task.id})" title="${task.done ? 'Mark as Pending' : 'Mark as Complete'}">
-              ${task.done ? '✓' : ''}
-            </button>
-            <div class="manual-task-info">
-              <div class="manual-task-badges">
-                <span class="manual-task-tag ${task.tagClass || 'tag-engineering'}">${task.tag || 'Task'}</span>
-                <span class="manual-task-duration">⏱️ ${task.duration || '20 mins'}</span>
-                <span style="font-size: 0.72rem; font-weight: 700; color: ${task.done ? '#059669' : '#d97706'};">
-                  ${task.done ? '● Completed' : '● Action Required'}
-                </span>
-              </div>
-              <div class="manual-task-title">${task.title}</div>
-              <div class="manual-task-desc">${task.desc}</div>
-            </div>
-            <div class="manual-task-actions">
-              <button class="btn-task-toggle ${task.done ? 'done-state' : 'pending-state'}" onclick="toggleManualTask(${task.id})">
-                ${task.done ? '✓ Completed' : 'Mark Complete'}
-              </button>
-              <button class="btn-task-explain" onclick="askCopilotToExplainTask(${task.id})" title="Ask the 30% AI Copilot to explain this task">
-                <span>💡 Ask AI Copilot</span>
-              </button>
+      if (nameEl) nameEl.textContent = emp.name;
+      if (roleEl) roleEl.textContent = `${emp.role} (${emp.employeeId})`;
+      if (emailEl) emailEl.textContent = emp.email;
+      if (campusEl) campusEl.textContent = `${emp.department} Department · ${emp.location} Office · Joined: ${emp.joiningDate}`;
+      if (copilotUserEl) copilotUserEl.textContent = emp.name;
+
+      // Telemetry
+      const pct = metrics.percentage;
+      const pctEl = document.getElementById('manual-progress-pct');
+      const statEl = document.getElementById('manual-tasks-stat');
+      const barEl = document.getElementById('manual-linear-bar');
+      const circleEl = document.getElementById('manual-progress-circle');
+
+      if (pctEl) pctEl.textContent = `${pct}%`;
+      if (statEl) statEl.textContent = `${metrics.completedTasks} of ${metrics.totalTasks} Tasks Cleared (${pct}%)`;
+      if (barEl) barEl.style.width = `${pct}%`;
+
+      const circumference = 238.76;
+      const offset = circumference - (pct / 100) * circumference;
+      if (circleEl) circleEl.style.strokeDashoffset = offset;
+
+      // Filter Counts
+      const countAll = document.getElementById('count-all-tasks');
+      const countPending = document.getElementById('count-pending-tasks');
+      const countDone = document.getElementById('count-done-tasks');
+
+      if (countAll) countAll.textContent = metrics.totalTasks;
+      if (countPending) countPending.textContent = metrics.pendingTasks;
+      if (countDone) countDone.textContent = metrics.completedTasks;
+
+      // Render Checklist
+      const container = document.getElementById('manual-checklist-container');
+      if (container) {
+        container.innerHTML = '';
+        if (tasks.length === 0) {
+          container.innerHTML = `
+            <div style="padding: 24px; text-align: center; color: var(--color-slate-500); background: var(--color-slate-50); border-radius: var(--radius-md);">
+              No onboarding tasks assigned for this role.
             </div>
           `;
-          checklistContainer.appendChild(card);
-        });
+        } else {
+          tasks.forEach(t => {
+            const isDone = t.status === 'Completed';
+            const card = document.createElement('div');
+            card.className = `manual-task-card ${isDone ? 'is-done' : ''}`;
+            card.id = `manual-task-card-${t.taskId}`;
+            card.dataset.status = isDone ? 'done' : 'pending';
+
+            const priorityColor = t.priority === 'High' ? '#dc2626' : (t.priority === 'Medium' ? '#2563eb' : '#64748b');
+            const priorityBg = t.priority === 'High' ? '#fee2e2' : (t.priority === 'Medium' ? '#dbeafe' : '#f1f5f9');
+            
+            let resourceHtml = '';
+            if (t.resource) {
+              resourceHtml = `
+                <div style="margin-top: 8px; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 6px; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 4px 10px; border-radius: 6px; color: #166534;">
+                  <span style="font-size: 14px;">📄</span>
+                  <a href="${t.resource.link}" target="_blank" style="color: #15803d; text-decoration: underline; font-weight: 700;">${t.resource.resourceName}</a>
+                  <span style="color: #65a30d; font-size: 0.72rem;">(${t.resource.resourceType || t.resource.category})</span>
+                </div>
+              `;
+            }
+
+            const mandatoryHtml = t.isMandatory ? `
+              <span style="font-size: 0.7rem; font-weight: 800; color: #b91c1c; background: #fee2e2; padding: 2px 7px; border-radius: 4px; text-transform: uppercase;">
+                ★ Mandatory
+              </span>
+            ` : '';
+
+            card.innerHTML = `
+              <button class="manual-task-check-btn" onclick="toggleLiveTask('${t.progressId}', '${t.status}', '${t.taskId}')" title="${isDone ? 'Mark as Pending' : 'Mark as Complete'}">
+                ${isDone ? '✓' : ''}
+              </button>
+              <div class="manual-task-info">
+                <div class="manual-task-badges" style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
+                  <span class="manual-task-tag tag-engineering" style="background: #e0e7ff; color: #3730a3; font-weight: 700; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">${t.department || 'General'}</span>
+                  <span style="background: #f1f5f9; color: #334155; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">📅 ${t.day}</span>
+                  <span style="background: ${priorityBg}; color: ${priorityColor}; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">${t.priority} Priority</span>
+                  ${mandatoryHtml}
+                  <span style="font-size: 0.72rem; font-weight: 700; color: ${isDone ? '#059669' : '#d97706'};">
+                    ${isDone ? '● Completed' : '● Action Required'}
+                  </span>
+                </div>
+                <div class="manual-task-title" style="font-size: 1rem; font-weight: 800; margin-top: 6px; color: var(--color-slate-900);">${t.taskName}</div>
+                <div class="manual-task-desc" style="font-size: 0.82rem; color: var(--color-slate-600); margin-top: 4px;">
+                  ${t.description || (t.taskName + ' - Scheduled for ' + t.day + ' under ' + t.department + ' onboarding track.')}
+                </div>
+                ${resourceHtml}
+              </div>
+              <div class="manual-task-actions">
+                <button class="btn-task-toggle ${isDone ? 'done-state' : 'pending-state'}" onclick="toggleLiveTask('${t.progressId}', '${t.status}', '${t.taskId}')">
+                  ${isDone ? '✓ Completed' : 'Mark Complete'}
+                </button>
+                <button class="btn-task-explain" onclick="askCopilotToExplainTask('${t.taskId}')" title="Ask AI Copilot for step-by-step guidance">
+                  <span>💡 Ask AI Copilot</span>
+                </button>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        }
       }
 
-      // Update Copilot Quick Chips (Explanations are requested dynamically on-demand from Copilot)
-      updateCopilotChips();
+      // Update Key Contact Cards
+      updateLiveContactCards(emp);
+
+      // Update Copilot Quick Chips
+      updateLiveCopilotChips(tasks);
+    }
+
+    function updateLiveContactCards(emp) {
+      // HR Partner (Priya Nair - C003)
+      const hrCard = document.getElementById('contact-card-hr');
+      if (hrCard) {
+        const nameEl = hrCard.querySelector('.contact-name');
+        const titleEl = hrCard.querySelector('.contact-title');
+        const phoneEl = hrCard.querySelector('.phone-display-btn strong');
+        if (nameEl) nameEl.textContent = 'Priya Nair';
+        if (titleEl) titleEl.textContent = 'HR Manager · HR policies, benefits & queries (C003)';
+        if (phoneEl) phoneEl.textContent = '+91 80 6789 89912';
+      }
+
+      // Buddy Mentor (Dhruv Agarwal - C019 or assigned buddy)
+      const buddy = emp.buddy || { name: 'Dhruv Agarwal', role: 'Onboarding Buddy', phone: '+91 80 6789 89928', email: 'buddy@demo-company.com' };
+      const buddyCard = document.getElementById('contact-card-buddy');
+      if (buddyCard) {
+        const nameEl = buddyCard.querySelector('.contact-name');
+        const titleEl = buddyCard.querySelector('.contact-title');
+        const phoneEl = buddyCard.querySelector('.phone-display-btn strong');
+        if (nameEl) nameEl.textContent = buddy.name;
+        if (titleEl) titleEl.textContent = `${buddy.role} · First-week guidance`;
+        if (phoneEl) phoneEl.textContent = buddy.phone;
+      }
+
+      // IT Helpdesk (Rahul Mehta - C001)
+      const itCard = document.getElementById('contact-card-it');
+      if (itCard) {
+        const nameEl = itCard.querySelector('.contact-name');
+        const titleEl = itCard.querySelector('.contact-title');
+        const phoneEl = itCard.querySelector('.phone-display-btn strong');
+        if (nameEl) nameEl.textContent = 'Rahul Mehta';
+        if (titleEl) titleEl.textContent = 'IT Helpdesk · Laptop, account & software issues (C001)';
+        if (phoneEl) phoneEl.textContent = '+91 80 6789 89910';
+      }
+    }
+
+    async function toggleLiveTask(progressId, currentStatus, taskId) {
+      const nextStatus = currentStatus === 'Completed' ? 'Pending' : 'Completed';
+      try {
+        const base = getApiBaseUrl();
+        const res = await fetch(`${base}/api/progress/${progressId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: nextStatus })
+        });
+        if (res.ok) {
+          showNotification(`✓ ${taskId}: Status updated to ${nextStatus}!`);
+          await loadLiveEmployeeDashboard(currentLiveEmployeeId);
+        } else {
+          showNotification(`⚠️ Failed to update task status: ${res.statusText}`);
+        }
+      } catch (err) {
+        console.error('Error toggling live task:', err);
+        showNotification('⚠️ Server network error updating task.');
+      }
+    }
+
+    function updateLiveCopilotChips(tasks) {
+      const container = document.getElementById('copilot-chips-container');
+      if (!container) return;
+
+      let chipsHtml = `
+        <button class="copilot-chip" onclick="handleChatOption('contacts')">📞 Contacts</button>
+        <button class="copilot-chip" onclick="handleChatOption('checklist')">📋 Day 1 Tasks</button>
+      `;
+
+      (tasks || []).slice(0, 5).forEach(task => {
+        const shortTitle = (task.taskName || task.title).split(' ').slice(0, 3).join(' ');
+        chipsHtml += `<button class="copilot-chip" onclick="askCopilotToExplainTask('${task.taskId || task.id}')">💡 ${task.taskId || 'T'}: ${shortTitle}</button>`;
+      });
+
+      chipsHtml += `<button class="copilot-chip" onclick="handleChatOption('stuck')">🚨 I'm Stuck</button>`;
+      container.innerHTML = chipsHtml;
     }
 
     // ==============================================================
@@ -2735,50 +3282,60 @@
       `;
     }
 
-    // Explain Task in Chat Feed
-    function explainTaskById(taskId) {
-      const task = dailyTasksState.find(t => t.id === taskId) || dailyTasksState[0];
-      appendChatBubble('user', `Can you explain Task #${task.id}: "${task.title}"?`);
+// Explain Task in Chat Feed
+    function askCopilotToExplainTask(taskId) {
+      explainTaskById(taskId);
+      const panel = document.querySelector('.joiner-chat-panel');
+      if (panel) {
+        panel.style.boxShadow = '0 0 35px rgba(99, 102, 241, 0.6)';
+        setTimeout(() => { panel.style.boxShadow = ''; }, 1200);
+      }
+    }
 
-      let stepsList = '';
-      if (task.steps && task.steps.length > 0) {
-        stepsList = task.steps.map((s, i) => `<li><strong>Step ${i+1}:</strong> ${s}</li>`).join('');
-      } else {
-        stepsList = `<li>${task.desc}</li>`;
+    function explainTaskById(taskId) {
+      let task = null;
+      if (currentLiveDashboard && currentLiveDashboard.tasks) {
+        task = currentLiveDashboard.tasks.find(t => String(t.taskId) === String(taskId) || String(t.id) === String(taskId));
+      }
+      if (!task) {
+        task = dailyTasksState.find(t => String(t.id) === String(taskId)) || dailyTasksState[0] || { taskName: 'Task #' + taskId, day: 'Day 1', priority: 'High' };
+      }
+
+      const tName = task.taskName || task.title;
+      appendChatBubble('user', `Can you explain Task ${task.taskId || task.id}: "${tName}"?`);
+
+      let resourceNote = '';
+      if (task.resource) {
+        resourceNote = `
+          <div style="margin-top: 8px; font-size: 0.78rem; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); padding: 8px 12px; border-radius: 6px;">
+            📄 <strong>Linked Resource:</strong> <a href="${task.resource.link}" target="_blank" style="color: #34d399; font-weight: 700; text-decoration: underline;">${task.resource.resourceName}</a><br>
+            <span style="font-size: 0.72rem; color: #cbd5e1;">${task.resource.description || 'Access documentation directly at ' + task.resource.link}</span>
+          </div>
+        `;
       }
 
       const explainHtml = `
         <div>
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
             <span style="font-size: 0.72rem; font-weight: 800; background: rgba(99, 102, 241, 0.2); color: #c7d2fe; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">
-              ${task.tag || 'Task'} Guidance
+              ${task.department || 'Task'} Guidance · ${task.day || 'Day 1'}
             </span>
-            <span style="font-size: 0.75rem; color: #94a3b8; font-family: var(--font-mono);">⏱️ ${task.duration || '20m'}</span>
+            <span style="font-size: 0.75rem; color: #94a3b8; font-family: var(--font-mono);">${task.priority || 'High'} Priority</span>
           </div>
 
           <h4 style="font-size: 1.02rem; font-weight: 800; color: #f8fafc; margin-bottom: 8px;">
-            ${task.title}
+            ${tName}
           </h4>
 
           <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; font-size: 0.82rem; color: #e2e8f0;">
-            🎯 <strong>Objective:</strong> ${task.objective || task.desc}
+            🎯 <strong>Objective:</strong> Complete statutory requirements and setup for ${task.department || 'your role'}.
           </div>
 
-          <div style="font-size: 0.82rem; font-weight: 700; color: #38bdf8; margin-bottom: 6px;">
-            Execution Steps:
-          </div>
-          <ol style="font-size: 0.82rem; color: #cbd5e1; padding-left: 18px; line-height: 1.55; margin-bottom: 12px;">
-            ${stepsList}
-          </ol>
+          ${resourceNote}
 
-          <div style="font-size: 0.78rem; color: #94a3b8; margin-bottom: 12px;">
-            🛠️ <strong>Tools Needed:</strong> ${task.tools || 'Microsoft Intranet, Teams, Authenticator'}<br>
-            ✅ <strong>Verification:</strong> ${task.verification || 'Mark complete on your dashboard'}
-          </div>
-
-          <div style="display: flex; gap: 8px;">
-            <button class="copilot-chip" style="background: ${task.done ? '#065f46' : '#4f46e5'}; color: #fff; padding: 6px 14px;" onclick="toggleManualTask(${task.id})">
-              ${task.done ? '✓ Task is Completed' : '✓ Mark as Completed'}
+          <div style="display: flex; gap: 8px; margin-top: 12px;">
+            <button class="copilot-chip" style="background: #4f46e5; color: #fff; padding: 6px 14px;" onclick="toggleLiveTask('${task.progressId || ('P_' + task.taskId)}', '${task.status || 'Pending'}', '${task.taskId || task.id}')">
+              ${task.status === 'Completed' ? '✓ Task is Completed' : '✓ Mark as Completed'}
             </button>
             <button class="copilot-chip" style="background: rgba(255,255,255,0.1); color: #cbd5e1;" onclick="handleChatOption('contacts')">
               📞 Contact Helper
@@ -2789,13 +3346,11 @@
 
       setTimeout(() => {
         appendChatBubble('assistant', explainHtml);
-      }, 300);
+      }, 250);
     }
 
     // Handle Quick Options in Chat
     function handleChatOption(optionKey) {
-      const user = currentAuthenticatedUser || { name: 'Rohan Sharma' };
-
       if (optionKey === 'contacts') {
         appendChatBubble('user', 'Show me all my team and HR contact numbers.');
         const contactsHtml = `
@@ -2805,18 +3360,19 @@
             </div>
             <div style="font-size: 0.82rem; color: #cbd5e1; line-height: 1.55; display: flex; flex-direction: column; gap: 8px;">
               <div style="background: rgba(37, 99, 235, 0.15); border: 1px solid rgba(37, 99, 235, 0.35); padding: 8px 12px; border-radius: 8px;">
-                <strong>HR Partner: Priya Sharma</strong><br>
-                📞 Direct Phone: <a href="tel:+918067894701" style="color: #60a5fa; font-weight: 700;">+91 (80) 6789-HR01</a><br>
-                📧 priya.sharma.hr@microsoft.in · Desk HR-12
+                <strong>HR Partner: Priya Nair (HR Manager · C003)</strong><br>
+                📞 Direct Phone: <a href="tel:+9180678989912" style="color: #60a5fa; font-weight: 700;">+91 80 6789 89912</a><br>
+                📧 hr@demo-company.com · Escalation: Meera Rao (Operations Manager)
               </div>
               <div style="background: rgba(147, 51, 234, 0.15); border: 1px solid rgba(147, 51, 234, 0.35); padding: 8px 12px; border-radius: 8px;">
-                <strong>Buddy Mentor: Rahul Pandey (Principal Architect)</strong><br>
-                📞 Buddy Phone: <a href="tel:+918067892831" style="color: #c084fc; font-weight: 700;">+91 (80) 6789-BUD1</a><br>
-                📅 Today's 1:1 Sync: 2:00 PM (Teams Room)
+                <strong>Onboarding Buddy: Dhruv Agarwal (C019)</strong><br>
+                📞 Buddy Phone: <a href="tel:+9180678989928" style="color: #c084fc; font-weight: 700;">+91 80 6789 89928</a><br>
+                📧 buddy@demo-company.com · Availability: Mon-Fri, 10AM-6PM
               </div>
               <div style="background: rgba(5, 150, 105, 0.15); border: 1px solid rgba(5, 150, 105, 0.35); padding: 8px 12px; border-radius: 8px;">
-                <strong>24/7 IT Helpdesk Hotline:</strong><br>
-                📞 Toll-Free: <a href="tel:+918005556738" style="color: #34d399; font-weight: 700;">+91 (800) 555-MSFT-IN</a> (Ext #4402)
+                <strong>IT Helpdesk Hotline: Rahul Mehta (C001)</strong><br>
+                📞 Direct Phone: <a href="tel:+9180678989910" style="color: #34d399; font-weight: 700;">+91 80 6789 89910</a><br>
+                📧 it@demo-company.com · Escalates to Vikram Shah (IT Manager)
               </div>
             </div>
           </div>
@@ -2825,8 +3381,10 @@
 
       } else if (optionKey === 'checklist') {
         appendChatBubble('user', "Show my Today's Work and Day 1 checklist.");
-        const total = dailyTasksState.length;
-        const doneCount = dailyTasksState.filter(t => t.done).length;
+        const tasks = currentLiveDashboard?.tasks || [];
+        const day1Tasks = tasks.filter(t => t.day === 'Day 1');
+        const doneCount = day1Tasks.filter(t => t.status === 'Completed').length;
+        const total = day1Tasks.length;
         const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
 
         let listHtml = `
@@ -2837,13 +3395,14 @@
             <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.82rem;">
         `;
 
-        dailyTasksState.forEach(t => {
+        day1Tasks.forEach(t => {
+          const isDone = t.status === 'Completed';
           listHtml += `
             <div style="background: rgba(255,255,255,0.06); padding: 8px 10px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between;">
-              <span style="color: ${t.done ? '#94a3b8' : '#f8fafc'}; text-decoration: ${t.done ? 'line-through' : 'none'};">
-                ${t.done ? '✅' : '⬜'} ${t.title}
+              <span style="color: ${isDone ? '#94a3b8' : '#f8fafc'}; text-decoration: ${isDone ? 'line-through' : 'none'};">
+                ${isDone ? '✅' : '⬜'} ${t.taskName || t.title}
               </span>
-              <button class="copilot-chip" style="padding: 2px 8px; font-size: 0.7rem;" onclick="explainTaskById(${t.id})">Explain</button>
+              <button class="copilot-chip" style="padding: 2px 8px; font-size: 0.7rem;" onclick="askCopilotToExplainTask('${t.taskId || t.id}')">Explain</button>
             </div>
           `;
         });
@@ -2859,12 +3418,12 @@
               🚨 Onboarding Dependency Troubleshooting
             </div>
             <p style="font-size: 0.82rem; color: #cbd5e1; margin-bottom: 8px;">
-              If your <strong>Corporate VPN & Dev Tunnel</strong> is waiting on IT token sync:
+              If your <strong>Corporate Account, MFA or IT Access</strong> is blocked:
             </p>
             <ul style="font-size: 0.8rem; color: #e2e8f0; padding-left: 18px; margin-bottom: 10px;">
-              <li>Call IT Hotline directly at <strong>+91 (800) 555-MSFT-IN</strong> (Ext #4402).</li>
-              <li>You can proceed with Task 5 (Engineering Standards) which is offline and does not require VPN.</li>
-              <li>Your buddy Rahul Pandey will verify your dev tunnel during your 2:00 PM sync.</li>
+              <li>Call IT Helpdesk Lead Rahul Mehta directly at <strong>+91 80 6789 89910</strong>.</li>
+              <li>You can proceed with offline reading tasks like the Employee Handbook (/resources/employee-handbook).</li>
+              <li>Your buddy Dhruv Agarwal will verify your access during your 1:1 briefing.</li>
             </ul>
           </div>
         `;
@@ -2872,31 +3431,7 @@
       }
     }
 
-    // Append Chat Bubble
-    function appendChatBubble(sender, contentHtml) {
-      const feed = document.getElementById('chatbot-messages-feed');
-      if (!feed) return;
-
-      const bubble = document.createElement('div');
-      bubble.className = `chat-bubble ${sender}`;
-
-      if (sender === 'assistant') {
-        bubble.innerHTML = `
-          <div class="chat-avatar ai">⚡</div>
-          <div class="chat-bubble-body">${contentHtml}</div>
-        `;
-      } else {
-        bubble.innerHTML = `
-          <div class="chat-avatar employee">👤</div>
-          <div class="chat-bubble-body">${contentHtml}</div>
-        `;
-      }
-
-      feed.appendChild(bubble);
-      feed.scrollTop = feed.scrollHeight;
-    }
-
-    // Send Free-Form Chat Message to NVIDIA NIM
+    // Send Free-Form Chat Message to NVIDIA NIM / Grounded Dataset
     async function sendChatMessage() {
       const input = document.getElementById('chatbot-input');
       const query = input.value.trim();
@@ -2906,136 +3441,904 @@
       input.value = '';
 
       const sendBtn = document.getElementById('chatbot-send-btn');
-      sendBtn.disabled = true;
+      if (sendBtn) sendBtn.disabled = true;
 
       const lower = query.toLowerCase();
+      const currentEmp = currentLiveDashboard?.employee || { name: 'Aarav Sharma', role: 'Software Engineer', buddy: { name: 'Dhruv Agarwal', phone: '+91 80 6789 89928', email: 'buddy@demo-company.com' } };
+      const tasks = currentLiveDashboard?.tasks || [];
+      const metrics = currentLiveDashboard?.metrics || { percentage: 10, completedTasks: 2, totalTasks: 20 };
 
-      // Dynamic task recognition by number: "task 1", "task #2", "task3", "explain task 4", "task 6", etc.
-      const taskNumMatch = lower.match(/task\s*#?(\d+)/i);
-      if (taskNumMatch) {
-        const tId = parseInt(taskNumMatch[1], 10);
-        const found = dailyTasksState.find(t => t.id === tId);
-        if (found) {
-          explainTaskById(tId);
-          sendBtn.disabled = false;
-          return;
-        }
-      }
-
-      // Dynamic task keyword matching against all current tasks in state (including HR-added tasks)
-      for (const task of dailyTasksState) {
-        const words = task.title.toLowerCase().split(/\s+/).filter(w => w.length >= 4);
-        if (words.some(w => lower.includes(w)) || (task.tag && lower.includes(task.tag.toLowerCase()))) {
-          if (lower.includes('explain') || lower.includes('how') || lower.includes('what') || lower.includes('detail') || lower.includes('step') || lower.includes('guide')) {
-            explainTaskById(task.id);
-            sendBtn.disabled = false;
-            return;
-          }
-        }
-      }
-
-      // Check for contacts / phone
-      if (lower.includes('contact') || lower.includes('phone') || lower.includes('hr') || lower.includes('buddy') || lower.includes('priya') || lower.includes('rahul') || lower.includes('call') || lower.includes('number')) {
-        handleChatOption('contacts');
-        sendBtn.disabled = false;
+      // 1. "What do I need to complete today?"
+      if (lower.includes('today') || lower.includes('complete today') || lower.includes('day 1 tasks') || lower.includes('my tasks')) {
+        const day1Tasks = tasks.filter(t => t.day === 'Day 1');
+        const pendingDay1 = day1Tasks.filter(t => t.status !== 'Completed');
+        let answerHtml = `
+          <div>
+            <div style="font-weight: 800; font-size: 0.95rem; color: #f8fafc; margin-bottom: 6px;">
+              📋 Today's Priority Action Items (${pendingDay1.length} pending of ${day1Tasks.length} Day 1 tasks):
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.82rem;">
+        `;
+        day1Tasks.forEach(t => {
+          const isDone = t.status === 'Completed';
+          answerHtml += `
+            <div style="background: rgba(255,255,255,0.07); padding: 8px 10px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between;">
+              <span style="color: ${isDone ? '#94a3b8' : '#f8fafc'}; text-decoration: ${isDone ? 'line-through' : 'none'};">
+                ${isDone ? '✅' : '⬜'} <strong>${t.taskId}</strong>: ${t.taskName} <span style="font-size: 0.72rem; color: ${t.priority==='High'?'#f87171':'#38bdf8'}; font-weight: 700;">(${t.priority})</span>
+              </span>
+              <button class="copilot-chip" style="padding: 2px 8px; font-size: 0.7rem;" onclick="toggleLiveTask('${t.progressId}', '${t.status}', '${t.taskId}')">
+                ${isDone ? 'Reopen' : 'Complete'}
+              </button>
+            </div>
+          `;
+        });
+        answerHtml += `</div></div>`;
+        setTimeout(() => {
+          appendChatBubble('assistant', answerHtml);
+          if (sendBtn) sendBtn.disabled = false;
+        }, 250);
         return;
       }
 
-      // Check for checklist / work
-      if (lower.includes('checklist') || lower.includes('work') || lower.includes('todo') || lower.includes('today') || lower.includes('progress') || lower.includes('status')) {
-        handleChatOption('checklist');
-        sendBtn.disabled = false;
+      // 2. "Who is my onboarding buddy?"
+      if (lower.includes('buddy') || lower.includes('onboarding buddy') || lower.includes('mentor')) {
+        const buddy = currentEmp.buddy || { name: 'Dhruv Agarwal', phone: '+91 80 6789 89928', email: 'buddy@demo-company.com', role: 'Onboarding Buddy', availability: 'Mon-Fri, 10AM-6PM' };
+        const buddyHtml = `
+          <div>
+            <div style="font-weight: 800; font-size: 0.95rem; color: #c084fc; margin-bottom: 6px;">
+              🤝 Your Assigned Onboarding Buddy
+            </div>
+            <div style="background: rgba(147, 51, 234, 0.15); border: 1px solid rgba(147, 51, 234, 0.35); padding: 10px 14px; border-radius: 8px; font-size: 0.84rem; line-height: 1.55;">
+              <div style="font-size: 1rem; font-weight: 800; color: #f8fafc;">${buddy.name}</div>
+              <div style="color: #cbd5e1; font-size: 0.78rem;">Role: ${buddy.role || 'Onboarding Buddy'} (Employee Support)</div>
+              <div style="margin-top: 6px;">
+                📞 <strong>Direct Phone:</strong> <a href="tel:${buddy.phone}" style="color: #c084fc; font-weight: 700;">${buddy.phone}</a><br>
+                📧 <strong>Email:</strong> <a href="mailto:${buddy.email}" style="color: #e2e8f0;">${buddy.email}</a><br>
+                ⏱️ <strong>Availability:</strong> ${buddy.availability || 'Mon-Fri, 10AM-6PM'}<br>
+                🎯 <strong>Purpose:</strong> General first-week guidance, culture orientation & buddy sync.
+              </div>
+            </div>
+          </div>
+        `;
+        setTimeout(() => {
+          appendChatBubble('assistant', buddyHtml);
+          if (sendBtn) sendBtn.disabled = false;
+        }, 250);
         return;
       }
 
-      // Check for stuck / blocked
-      if (lower.includes('stuck') || lower.includes('block') || lower.includes('help') || lower.includes('issue') || lower.includes('error')) {
-        handleChatOption('stuck');
-        sendBtn.disabled = false;
+      // 3. "Who should I contact for laptop problems?"
+      if (lower.includes('laptop') || lower.includes('hardware') || lower.includes('computer') || lower.includes('software issue') || lower.includes('it problem')) {
+        const itHtml = `
+          <div>
+            <div style="font-weight: 800; font-size: 0.95rem; color: #34d399; margin-bottom: 6px;">
+              🛠️ IT Hardware & Laptop Support
+            </div>
+            <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); padding: 10px 14px; border-radius: 8px; font-size: 0.84rem; line-height: 1.55;">
+              <div style="font-size: 1rem; font-weight: 800; color: #f8fafc;">Rahul Mehta (IT Helpdesk · C001)</div>
+              <div style="color: #cbd5e1; font-size: 0.78rem;">Purpose: Laptop, account, hardware and software issues</div>
+              <div style="margin-top: 6px;">
+                📞 <strong>Direct Phone:</strong> <a href="tel:+9180678989910" style="color: #34d399; font-weight: 700;">+91 80 6789 89910</a><br>
+                📧 <strong>Email:</strong> <a href="mailto:it@demo-company.com" style="color: #e2e8f0;">it@demo-company.com</a><br>
+                ⏱️ <strong>Availability:</strong> Mon-Fri, 9AM-6PM<br>
+                🚨 <strong>Escalation Line:</strong> Vikram Shah (IT Manager · C002, it.manager@demo-company.com)
+              </div>
+            </div>
+          </div>
+        `;
+        setTimeout(() => {
+          appendChatBubble('assistant', itHtml);
+          if (sendBtn) sendBtn.disabled = false;
+        }, 250);
         return;
       }
 
-      // Query NVIDIA NIM Backend API
+      // 4. "Where can I find the GitHub access guide?"
+      if (lower.includes('github') || lower.includes('github access')) {
+        const ghHtml = `
+          <div>
+            <div style="font-weight: 800; font-size: 0.95rem; color: #38bdf8; margin-bottom: 6px;">
+              🐙 GitHub Access Guide & Repository Setup
+            </div>
+            <div style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.35); padding: 10px 14px; border-radius: 8px; font-size: 0.84rem; line-height: 1.55;">
+              <div style="font-size: 0.95rem; font-weight: 800; color: #f8fafc;">Resource R005: GitHub Access Guide</div>
+              <div style="color: #cbd5e1; font-size: 0.78rem;">Category: IT / Engineering · Applicable to Engineering & Data roles</div>
+              <div style="margin-top: 6px;">
+                🔗 <strong>Direct Resource Link:</strong> <a href="/resources/github-access" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: 700;">/resources/github-access</a><br>
+                📝 <strong>Description:</strong> Instructions for requesting, authenticating MFA, and joining company repositories.<br>
+                ✅ <strong>Related Task:</strong> Task T014: Set up GitHub access (Day 1, High Priority).
+              </div>
+            </div>
+          </div>
+        `;
+        setTimeout(() => {
+          appendChatBubble('assistant', ghHtml);
+          if (sendBtn) sendBtn.disabled = false;
+        }, 250);
+        return;
+      }
+
+      // 5. "What tasks are mandatory?"
+      if (lower.includes('mandatory') || lower.includes('required')) {
+        const mandTasks = tasks.filter(t => t.isMandatory || t.priority === 'High');
+        let mandHtml = `
+          <div>
+            <div style="font-weight: 800; font-size: 0.95rem; color: #f87171; margin-bottom: 6px;">
+              ★ Mandatory Compliance & Security Tasks (${mandTasks.length} Tasks)
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.82rem;">
+        `;
+        mandTasks.slice(0, 7).forEach(t => {
+          const isDone = t.status === 'Completed';
+          mandHtml += `
+            <div style="background: rgba(239, 68, 68, 0.1); border-left: 3px solid #ef4444; padding: 6px 10px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+              <span>${isDone ? '✅' : '🔴'} <strong>${t.taskId}</strong>: ${t.taskName} (${t.day})</span>
+              <span style="font-size: 0.7rem; font-weight: 700; color: ${isDone ? '#10b981' : '#f87171'};">${t.status}</span>
+            </div>
+          `;
+        });
+        mandHtml += `</div></div>`;
+        setTimeout(() => {
+          appendChatBubble('assistant', mandHtml);
+          if (sendBtn) sendBtn.disabled = false;
+        }, 250);
+        return;
+      }
+
+      // 6. "What is my current onboarding progress?"
+      if (lower.includes('progress') || lower.includes('how far') || lower.includes('status')) {
+        const progHtml = `
+          <div>
+            <div style="font-weight: 800; font-size: 0.95rem; color: #f8fafc; margin-bottom: 6px;">
+              📊 Live Onboarding Progress Telemetry
+            </div>
+            <div style="background: rgba(255,255,255,0.08); padding: 12px; border-radius: 8px; font-size: 0.84rem; line-height: 1.6;">
+              <div>Employee: <strong>${currentEmp.name}</strong> (${currentEmp.role})</div>
+              <div>Cleared Tasks: <strong>${metrics.completedTasks} of ${metrics.totalTasks}</strong></div>
+              <div>Remaining Tasks: <strong>${metrics.pendingTasks}</strong></div>
+              <div style="margin-top: 8px; font-size: 1.1rem; font-weight: 800; color: #34d399;">
+                Overall Readiness: ${metrics.percentage}%
+              </div>
+            </div>
+          </div>
+        `;
+        setTimeout(() => {
+          appendChatBubble('assistant', progHtml);
+          if (sendBtn) sendBtn.disabled = false;
+        }, 250);
+        return;
+      }
+
+      // Backend NVIDIA Copilot API call with grounding
       try {
-        let aiAnswer = null;
-        try {
-          const res = await fetch('http://localhost:5000/api/v1/ai/nvidia-copilot', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              query,
-              role: 'New Joiner',
-              company: 'Microsoft Corporation',
-              branch: 'Bengaluru / Redmond',
-              buddyName: 'Rahul Pandey',
-              hrName: 'Priya Sharma'
-            })
-          });
-          if (res.ok) {
-            const data = await res.json();
-            aiAnswer = data.data?.answer;
-          }
-        } catch (e) {
-          console.debug('Local backend bypassed or offline, generating local response');
+        const base = getApiBaseUrl();
+        const res = await fetch(`${base}/api/v1/ai/nvidia-copilot`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query,
+            employeeId: currentLiveEmployeeId,
+            role: currentEmp.role,
+            buddyName: currentEmp.buddy?.name || 'Dhruv Agarwal',
+            hrName: 'Priya Nair'
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          appendChatBubble('assistant', data.data?.answer || data.answer);
+        } else {
+          throw new Error('Backend AI offline');
         }
-
-        if (!aiAnswer) {
-          aiAnswer = `As your Microsoft AI Onboarding Copilot, I'm here to support your Day 1 success. You currently have ${dailyTasksState.filter(t => !t.done).length} pending tasks on your checklist. Make sure to complete your Corporate SSO setup and join your 1:1 briefing with buddy Rahul Pandey at 2:00 PM today!`;
-        }
-
-        appendChatBubble('assistant', aiAnswer);
       } catch (err) {
-        appendChatBubble('assistant', 'I am here to guide your onboarding. Check your Day 1 tasks or reach out to HR Partner Priya Sharma at +91 (80) 6789-HR01.');
+        appendChatBubble('assistant', `I am here to guide your onboarding as a ${currentEmp.role}. You currently have ${metrics.pendingTasks} pending tasks. Reach out to buddy ${currentEmp.buddy?.name || 'Dhruv Agarwal'} or HR Partner Priya Nair (+91 80 6789 89912) anytime!`);
       } finally {
-        sendBtn.disabled = false;
+        if (sendBtn) sendBtn.disabled = false;
       }
     }
 
     // ==============================================================
-    // STEP 4B: HR COHORT PORTAL & FRESHER TASK MANAGEMENT (ADD & REMOVE)
+    // STEP 4B: HR PARTNER WORKSPACE & CHECKLIST TEMPLATE MANAGEMENT
     // ==============================================================
-    function renderHRPortal(hrUser) {
-      document.getElementById('hr-portal-name').textContent = hrUser.name;
-      const tbody = document.getElementById('hr-cohort-roster-body');
-      tbody.innerHTML = '';
+    let hrChecklists = [];
+    let hrActiveFilter = 'all';
+    let editingChecklistId = null;
+    let allEnterpriseResources = [];
 
-      microsoftDirectory.newJoiners.forEach((j, idx) => {
-        const pairedBuddy = microsoftDirectory.previousMembers.find(b => b.email === j.buddyEmail) || microsoftDirectory.previousMembers[0];
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100); font-weight: 700; color: var(--color-slate-900);">
-            ${j.name}
-            <div style="font-size: 0.72rem; color: var(--color-slate-500); font-weight: 500;">${j.badge}</div>
-          </td>
-          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100); font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-primary);">
-            ${j.email}
-          </td>
-          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100); color: var(--color-slate-600);">
-            ${j.department}
-          </td>
-          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100);">
-            <strong style="color: #6b21a8;">${pairedBuddy.name}</strong> (${pairedBuddy.batch})
-            <div style="font-size: 0.72rem; color: var(--color-slate-500);">${pairedBuddy.phone}</div>
-          </td>
-          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100);">
-            <span style="display: inline-block; padding: 2px 8px; border-radius: 9999px; font-size: 0.72rem; font-weight: 700; background: ${idx < 3 ? '#d1fae5; color: #065f46;' : '#fef3c7; color: #92400e;'}">
-              ${idx < 3 ? '● Day 1 Ready' : '● In Progress'}
-            </span>
-          </td>
-          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100);">
-            <button class="persona-pill-btn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="showNotification('Approved Day 1 clearances for ${j.name}!')">
-              Approve ✓
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function switchHRWorkspaceTab(tabId) {
+      const tabs = ['checklists', 'roster', 'inbox', 'taskmanager'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`hr-tab-btn-${t}`);
+        const pane = document.getElementById(`hr-pane-${t}`);
+        if (btn) btn.classList.toggle('active', t === tabId);
+        if (pane) pane.style.display = t === tabId ? 'block' : 'none';
+      });
+    }
+
+    async function loadAllEnterpriseResources() {
+      try {
+        const base = getApiBaseUrl();
+        const res = await fetch(`${base}/api/resources`);
+        if (res.ok) {
+          const data = await res.json();
+          allEnterpriseResources = data.resources || [];
+        }
+      } catch (err) {
+        console.error('Failed to load enterprise resources:', err);
+      }
+    }
+
+    async function renderLiveHRPortal(hrUser) {
+      if (hrUser && document.getElementById('hr-portal-name')) {
+        document.getElementById('hr-portal-name').textContent = hrUser.name || 'Priya Nair';
+      }
+
+      await loadAllEnterpriseResources();
+
+      // 1. Fetch live HR metrics
+      try {
+        const base = getApiBaseUrl();
+        const metricsRes = await fetch(`${base}/api/checklists/metrics`);
+        if (metricsRes.ok) {
+          const metricsData = await metricsRes.json();
+          if (metricsData.success && metricsData.metrics) {
+            const m = metricsData.metrics;
+            const elTotal = document.getElementById('hr-kpi-total-joiners');
+            const elActive = document.getElementById('hr-kpi-active-joiners');
+            const elCompleted = document.getElementById('hr-kpi-completed-joiners');
+            const elPending = document.getElementById('hr-kpi-pending-joiners');
+            const elOverdue = document.getElementById('hr-kpi-overdue-tasks');
+            if (elTotal) elTotal.textContent = m.totalNewJoiners;
+            if (elActive) elActive.textContent = m.activeOnboarding;
+            if (elCompleted) elCompleted.textContent = m.completedOnboarding;
+            if (elPending) elPending.textContent = m.pendingOnboarding;
+            if (elOverdue) elOverdue.textContent = m.overdueTasks;
+            
+            const badgeJoiners = document.getElementById('hr-badge-joiners-count');
+            if (badgeJoiners) badgeJoiners.textContent = m.totalNewJoiners;
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching HR metrics:', err);
+      }
+
+      // 2. Fetch live checklist templates
+      try {
+        const base = getApiBaseUrl();
+        const chkRes = await fetch(`${base}/api/checklists`);
+        if (chkRes.ok) {
+          const chkData = await chkRes.json();
+          hrChecklists = chkData.checklists || [];
+          const badgeChecklists = document.getElementById('hr-badge-checklists-count');
+          if (badgeChecklists) badgeChecklists.textContent = hrChecklists.length;
+          renderHRChecklistsGrid();
+        }
+      } catch (err) {
+        console.error('Error fetching checklists:', err);
+      }
+
+      // 3. Render Cohort Roster
+      const tbody = document.getElementById('hr-cohort-roster-body');
+      if (tbody) {
+        try {
+          const base = getApiBaseUrl();
+          const res = await fetch(`${base}/api/employees`);
+          const data = await res.json();
+          const employees = data.employees || [];
+
+          tbody.innerHTML = '';
+          employees.forEach((emp) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100); font-weight: 700; color: var(--color-slate-900);">
+                ${escapeHtml(emp.name)}
+                <div style="font-size: 0.72rem; color: var(--color-slate-500); font-weight: 500;">${escapeHtml(emp.role)} (${escapeHtml(emp.employeeId)})</div>
+              </td>
+              <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100); font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-primary);">
+                ${escapeHtml(emp.email)}
+              </td>
+              <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100); color: var(--color-slate-600);">
+                ${escapeHtml(emp.department)} · ${escapeHtml(emp.location)}
+              </td>
+              <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100);">
+                <strong style="color: #6b21a8;">${escapeHtml(emp.buddy?.name || 'Dhruv Agarwal')}</strong>
+                <div style="font-size: 0.72rem; color: var(--color-slate-500);">${escapeHtml(emp.buddy?.phone || '+91 80 6789 89928')}</div>
+              </td>
+              <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100);">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div style="width: 60px; height: 6px; background: #e2e8f0; border-radius: 999px; overflow: hidden;">
+                    <div style="width: ${emp.percentage}%; height: 100%; background: ${emp.percentage === 100 ? '#10b981' : (emp.percentage > 0 ? '#3b82f6' : '#94a3b8')};"></div>
+                  </div>
+                  <span style="font-size: 0.75rem; font-weight: 700; color: #0f172a;">${emp.percentage}%</span>
+                </div>
+                <div style="font-size: 0.7rem; color: #64748b;">${emp.completedTasks}/${emp.totalTasks} cleared</div>
+              </td>
+              <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100);">
+                <button class="persona-pill-btn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="viewEmployeeFromHR('${escapeHtml(emp.employeeId)}')">
+                  View Workspace →
+                </button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+        } catch (err) {
+          console.error('Error rendering Cohort Roster in HR portal:', err);
+        }
+      }
+
+      renderHRTaskInventory();
+      renderHRInbox();
+    }
+
+    function renderHRPortal(hrUser) {
+      renderLiveHRPortal(hrUser);
+    }
+
+    function filterHRChecklists(status) {
+      hrActiveFilter = status;
+      const chips = ['all', 'published', 'draft', 'archived'];
+      chips.forEach(c => {
+        const chip = document.getElementById(`hr-filter-${c}`);
+        if (chip) chip.classList.toggle('active', (status === 'all' && c === 'all') || (status.toLowerCase() === c));
+      });
+      renderHRChecklistsGrid();
+    }
+
+    function renderHRChecklistsGrid() {
+      const container = document.getElementById('hr-checklists-grid');
+      if (!container) return;
+
+      let filtered = hrChecklists;
+      if (hrActiveFilter !== 'all') {
+        filtered = hrChecklists.filter(c => c.status.toLowerCase() === hrActiveFilter.toLowerCase());
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; background: #ffffff; border: 1px dashed var(--color-slate-300); border-radius: var(--radius-xl); padding: 48px 24px; text-align: center;">
+            <span class="material-symbols-outlined" style="font-size: 42px; color: var(--color-slate-400); margin-bottom: 8px;">content_paste_off</span>
+            <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--color-slate-800); margin-bottom: 6px;">No checklists found in this filter view</h4>
+            <p style="font-size: 0.85rem; color: var(--color-slate-500); margin-bottom: 16px;">Create a new onboarding checklist blueprint or select another filter view.</p>
+            <button onclick="openCreateChecklistModal()" class="btn-create-checklist" style="display: inline-flex;">
+              <span>➕ Create Checklist</span>
             </button>
-          </td>
+          </div>
         `;
-        tbody.appendChild(tr);
+        return;
+      }
+
+      container.innerHTML = filtered.map(chk => {
+        const isPublished = chk.status === 'Published';
+        const isDraft = chk.status === 'Draft';
+        const isArchived = chk.status === 'Archived';
+        const statusClass = isPublished ? 'chk-status-published' : (isDraft ? 'chk-status-draft' : 'chk-status-archived');
+        const statusIcon = isPublished ? 'check_circle' : (isDraft ? 'edit_document' : 'archive');
+        const updatedDate = chk.updatedAt ? new Date(chk.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Today';
+
+        return `
+          <div class="checklist-template-card" id="card-${chk.checklistId}">
+            <div>
+              <div class="chk-card-header">
+                <span class="chk-status-pill ${statusClass}">
+                  <span class="material-symbols-outlined" style="font-size: 14px;">${statusIcon}</span>
+                  <span>${chk.status}</span>
+                </span>
+                <span class="chk-duration-tag">⏱️ ${chk.durationDays || 30} Days</span>
+              </div>
+
+              <h4 class="chk-card-title">${escapeHtml(chk.checklistName)}</h4>
+
+              <div class="chk-criteria-tags">
+                <span class="chk-criterion-tag chk-tag-role">
+                  <span class="material-symbols-outlined" style="font-size: 13px;">badge</span>
+                  ${escapeHtml(chk.applicableRole)}
+                </span>
+                <span class="chk-criterion-tag chk-tag-dept">
+                  <span class="material-symbols-outlined" style="font-size: 13px;">apartment</span>
+                  ${escapeHtml(chk.department)}
+                </span>
+                <span class="chk-criterion-tag chk-tag-location">
+                  <span class="material-symbols-outlined" style="font-size: 13px;">pin_drop</span>
+                  ${escapeHtml(chk.location)}
+                </span>
+              </div>
+
+              <div class="chk-card-metrics">
+                <div class="chk-metric-item">
+                  <div class="chk-metric-num">${chk.tasksCount || (chk.tasks ? chk.tasks.length : 0)}</div>
+                  <div class="chk-metric-txt">Tasks</div>
+                </div>
+                <div style="width: 1px; height: 26px; background: var(--color-slate-200);"></div>
+                <div class="chk-metric-item">
+                  <div class="chk-metric-num">${chk.assignedEmployeesCount || 0}</div>
+                  <div class="chk-metric-txt">Joiners</div>
+                </div>
+                <div style="width: 1px; height: 26px; background: var(--color-slate-200);"></div>
+                <div class="chk-metric-item">
+                  <div class="chk-metric-num" style="font-size: 0.85rem; padding-top: 4px;">${updatedDate}</div>
+                  <div class="chk-metric-txt">Updated</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="chk-card-footer">
+              <div class="chk-actions-row">
+                <button class="chk-btn-action" onclick="openEditChecklistModal('${chk.checklistId}')" title="Edit Checklist and Tasks">
+                  <span class="material-symbols-outlined" style="font-size: 15px;">edit</span>
+                  <span>Edit</span>
+                </button>
+                <button class="chk-btn-action" onclick="duplicateChecklist('${chk.checklistId}')" title="Duplicate Checklist as Draft">
+                  <span class="material-symbols-outlined" style="font-size: 15px;">content_copy</span>
+                  <span>Duplicate</span>
+                </button>
+                <button class="chk-btn-action ${isPublished ? 'chk-btn-unpublish' : 'chk-btn-publish'}" onclick="toggleChecklistPublish('${chk.checklistId}')" title="${isPublished ? 'Unpublish to Draft' : 'Publish Checklist to Matching Joiners'}">
+                  <span class="material-symbols-outlined" style="font-size: 15px;">${isPublished ? 'unpublished' : 'publish'}</span>
+                  <span>${isPublished ? 'Unpublish' : 'Publish'}</span>
+                </button>
+                ${!isArchived ? `
+                  <button class="chk-btn-action" onclick="archiveChecklist('${chk.checklistId}')" title="Archive Checklist">
+                    <span class="material-symbols-outlined" style="font-size: 15px;">archive</span>
+                    <span>Archive</span>
+                  </button>
+                ` : ''}
+              </div>
+
+              <button class="chk-btn-assigned-joiners" onclick="viewChecklistEmployees('${chk.checklistId}', '${escapeHtml(chk.checklistName)}')">
+                <span class="material-symbols-outlined" style="font-size: 17px;">group</span>
+                <span>View Assigned Joiners (${chk.assignedEmployeesCount || 0})</span>
+                <span style="margin-left: auto;">→</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openCreateChecklistModal() {
+      editingChecklistId = null;
+      document.getElementById('hr-modal-title').textContent = 'Create Onboarding Checklist';
+      document.getElementById('hr-form-checklist-id').value = '';
+      document.getElementById('hr-form-name').value = '';
+      document.getElementById('hr-form-role').value = 'Software Engineer';
+      document.getElementById('hr-form-department').value = 'Engineering';
+      document.getElementById('hr-form-location').value = 'Bengaluru';
+      document.getElementById('hr-form-duration').value = '30';
+
+      const container = document.getElementById('modal-tasks-container');
+      if (container) {
+        container.innerHTML = '';
+        addModalTaskRow({
+          taskName: 'Complete Corporate Security & Data Privacy Training',
+          day: 'Day 1',
+          priority: 'High',
+          assignedBy: 'HR Operations',
+          resourceId: 'R004',
+          isMandatory: true
+        });
+        addModalTaskRow({
+          taskName: 'Setup Engineering Developer Sandbox & Repo Access',
+          day: 'Day 2',
+          priority: 'High',
+          assignedBy: 'IT Team',
+          resourceId: 'R009',
+          isMandatory: true
+        });
+      }
+
+      const modal = document.getElementById('hr-checklist-modal');
+      if (modal) modal.classList.add('active');
+    }
+
+    async function openEditChecklistModal(checklistId) {
+      editingChecklistId = checklistId;
+      document.getElementById('hr-modal-title').textContent = 'Edit Onboarding Checklist';
+      
+      try {
+        const base = getApiBaseUrl();
+        const res = await fetch(`${base}/api/checklists/${checklistId}`);
+        if (!res.ok) throw new Error('Checklist not found');
+        const data = await res.json();
+        const chk = data.checklist;
+
+        document.getElementById('hr-form-checklist-id').value = chk.checklistId;
+        document.getElementById('hr-form-name').value = chk.checklistName || '';
+        document.getElementById('hr-form-role').value = chk.applicableRole || 'Software Engineer';
+        document.getElementById('hr-form-department').value = chk.department || 'Engineering';
+        document.getElementById('hr-form-location').value = chk.location || 'Bengaluru';
+        document.getElementById('hr-form-duration').value = chk.durationDays || 30;
+
+        const container = document.getElementById('modal-tasks-container');
+        if (container) {
+          container.innerHTML = '';
+          const tasks = chk.tasks || [];
+          if (tasks.length === 0) {
+            addModalTaskRow();
+          } else {
+            tasks.forEach(t => addModalTaskRow(t));
+          }
+        }
+
+        const modal = document.getElementById('hr-checklist-modal');
+        if (modal) modal.classList.add('active');
+      } catch (err) {
+        showNotification('⚠️ Could not load checklist details.');
+        console.error(err);
+      }
+    }
+
+    function closeChecklistModal() {
+      const modal = document.getElementById('hr-checklist-modal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function addModalTaskRow(task = {}) {
+      const container = document.getElementById('modal-tasks-container');
+      if (!container) return;
+
+      const row = document.createElement('div');
+      row.className = 'modal-task-row';
+
+      const taskName = task.taskName || '';
+      const day = task.day || 'Day 1';
+      const priority = task.priority || 'Medium';
+      const assignedBy = task.assignedBy || 'HR Operations';
+      const resourceId = task.resourceId || '';
+      const isMandatory = task.isMandatory !== undefined ? task.isMandatory : true;
+
+      let resourceOptions = '<option value="">No attached resource</option>';
+      allEnterpriseResources.forEach(r => {
+        const sel = r.resourceId === resourceId ? 'selected' : '';
+        resourceOptions += `<option value="${r.resourceId}" ${sel}>${r.resourceId}: ${escapeHtml(r.resourceName)} (${r.category})</option>`;
       });
 
-      // Render HR Fresher Task Inventory
-      renderHRTaskInventory();
+      row.innerHTML = `
+        <div class="task-reorder-btns">
+          <button type="button" class="btn-reorder" onclick="moveModalTaskRow(this, -1)" title="Move Up">▲</button>
+          <button type="button" class="btn-reorder" onclick="moveModalTaskRow(this, 1)" title="Move Down">▼</button>
+        </div>
+        <div>
+          <input type="text" class="task-name-input" placeholder="Task Name *" value="${escapeHtml(taskName)}" required style="width: 100%; border: 1px solid var(--color-slate-300); border-radius: var(--radius-sm); padding: 6px 10px; font-size: 0.82rem; font-weight: 600;">
+        </div>
+        <div>
+          <select class="task-day-select" style="width: 100%; border: 1px solid var(--color-slate-300); border-radius: var(--radius-sm); padding: 6px 8px; font-size: 0.8rem;">
+            <option value="Day 1" ${day === 'Day 1' ? 'selected' : ''}>Day 1</option>
+            <option value="Day 2" ${day === 'Day 2' ? 'selected' : ''}>Day 2</option>
+            <option value="Day 3" ${day === 'Day 3' ? 'selected' : ''}>Day 3</option>
+            <option value="Week 1" ${day === 'Week 1' ? 'selected' : ''}>Week 1</option>
+            <option value="Week 2" ${day === 'Week 2' ? 'selected' : ''}>Week 2</option>
+            <option value="Month 1" ${day === 'Month 1' ? 'selected' : ''}>Month 1</option>
+          </select>
+        </div>
+        <div>
+          <select class="task-priority-select" style="width: 100%; border: 1px solid var(--color-slate-300); border-radius: var(--radius-sm); padding: 6px 8px; font-size: 0.8rem;">
+            <option value="High" ${priority === 'High' ? 'selected' : ''}>High</option>
+            <option value="Medium" ${priority === 'Medium' ? 'selected' : ''}>Medium</option>
+            <option value="Low" ${priority === 'Low' ? 'selected' : ''}>Low</option>
+          </select>
+        </div>
+        <div>
+          <select class="task-assigned-select" style="width: 100%; border: 1px solid var(--color-slate-300); border-radius: var(--radius-sm); padding: 6px 8px; font-size: 0.8rem;">
+            <option value="HR Operations" ${assignedBy === 'HR Operations' ? 'selected' : ''}>HR Operations</option>
+            <option value="IT Team" ${assignedBy === 'IT Team' ? 'selected' : ''}>IT Team</option>
+            <option value="Engineering Lead" ${assignedBy === 'Engineering Lead' ? 'selected' : ''}>Engineering Lead</option>
+            <option value="Buddy Mentor" ${assignedBy === 'Buddy Mentor' ? 'selected' : ''}>Buddy Mentor</option>
+            <option value="Security Team" ${assignedBy === 'Security Team' ? 'selected' : ''}>Security Team</option>
+          </select>
+        </div>
+        <div>
+          <select class="task-resource-select" style="width: 100%; border: 1px solid var(--color-slate-300); border-radius: var(--radius-sm); padding: 6px 8px; font-size: 0.8rem;">
+            ${resourceOptions}
+          </select>
+        </div>
+        <div>
+          <label class="task-mandatory-toggle">
+            <input type="checkbox" class="task-mandatory-cb" ${isMandatory ? 'checked' : ''}>
+            <span>Mandatory</span>
+          </label>
+        </div>
+        <div style="text-align: right;">
+          <button type="button" class="btn-task-del" onclick="removeModalTaskRow(this)" title="Delete Task">🗑️</button>
+        </div>
+      `;
 
-      // Render Real-time Incoming Joiner In-App Messages
-      renderHRInbox();
+      container.appendChild(row);
+    }
+
+    function moveModalTaskRow(btn, direction) {
+      const row = btn.closest('.modal-task-row');
+      if (!row) return;
+      if (direction === -1 && row.previousElementSibling) {
+        row.parentNode.insertBefore(row, row.previousElementSibling);
+      } else if (direction === 1 && row.nextElementSibling) {
+        row.parentNode.insertBefore(row.nextElementSibling, row);
+      }
+    }
+
+    function removeModalTaskRow(btn) {
+      const row = btn.closest('.modal-task-row');
+      if (row) row.remove();
+    }
+
+    async function saveChecklistFromModal(isPublish) {
+      const nameInput = document.getElementById('hr-form-name');
+      const roleSelect = document.getElementById('hr-form-role');
+      const deptSelect = document.getElementById('hr-form-department');
+      const locSelect = document.getElementById('hr-form-location');
+      const durInput = document.getElementById('hr-form-duration');
+
+      const checklistName = nameInput.value.trim();
+      const applicableRole = roleSelect.value;
+      const department = deptSelect.value;
+      const location = locSelect.value;
+      const durationDays = parseInt(durInput.value) || 30;
+
+      if (!checklistName) {
+        showNotification('⚠️ Please enter a checklist name.');
+        nameInput.focus();
+        return;
+      }
+
+      // Collect tasks from builder
+      const rows = document.querySelectorAll('#modal-tasks-container .modal-task-row');
+      const tasks = [];
+      let missingTaskTitle = false;
+
+      rows.forEach((row, idx) => {
+        const nameInp = row.querySelector('.task-name-input');
+        const dayInp = row.querySelector('.task-day-select');
+        const prioInp = row.querySelector('.task-priority-select');
+        const assignInp = row.querySelector('.task-assigned-select');
+        const resInp = row.querySelector('.task-resource-select');
+        const mandInp = row.querySelector('.task-mandatory-cb');
+
+        const title = nameInp ? nameInp.value.trim() : '';
+        if (!title) {
+          missingTaskTitle = true;
+          return;
+        }
+
+        tasks.push({
+          taskName: title,
+          day: dayInp ? dayInp.value : 'Day 1',
+          priority: prioInp ? prioInp.value : 'Medium',
+          assignedBy: assignInp ? assignInp.value : 'HR Operations',
+          resourceId: resInp && resInp.value ? resInp.value : null,
+          isMandatory: mandInp ? mandInp.checked : true,
+          orderIndex: idx + 1
+        });
+      });
+
+      if (missingTaskTitle && rows.length > 0 && tasks.length === 0) {
+        showNotification('⚠️ Please provide a task title or remove empty task rows.');
+        return;
+      }
+
+      try {
+        const base = getApiBaseUrl();
+        let targetChecklistId = editingChecklistId;
+
+        if (editingChecklistId) {
+          // Update existing
+          const res = await fetch(`${base}/api/checklists/${editingChecklistId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              checklistName,
+              applicableRole,
+              department,
+              location,
+              durationDays,
+              tasks
+            })
+          });
+
+          if (!res.ok) throw new Error('Failed to update checklist');
+        } else {
+          // Create new
+          const res = await fetch(`${base}/api/checklists`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              checklistName,
+              applicableRole,
+              department,
+              location,
+              durationDays,
+              createdBy: 'Priya Nair (HR Operations)',
+              status: isPublish ? 'Published' : 'Draft',
+              tasks
+            })
+          });
+
+          if (!res.ok) throw new Error('Failed to create checklist');
+          const data = await res.json();
+          targetChecklistId = data.checklist?.checklistId;
+        }
+
+        if (isPublish && targetChecklistId) {
+          // Make sure it is published and matched to joiners
+          const pubRes = await fetch(`${base}/api/checklists/${targetChecklistId}/publish`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: 'Published' })
+          });
+          if (pubRes.ok) {
+            const pubData = await pubRes.json();
+            showNotification(`🚀 Checklist published! Matched & assigned to ${pubData.assignedJoinersCount || 0} active new joiners.`);
+          }
+        } else {
+          showNotification(`💾 Checklist "${checklistName}" saved as Draft successfully.`);
+        }
+
+        closeChecklistModal();
+        await renderLiveHRPortal();
+
+        // Refresh current employee dashboard if one is loaded
+        if (currentLiveEmployeeId) {
+          await loadLiveEmployeeDashboard(currentLiveEmployeeId);
+        }
+      } catch (err) {
+        console.error(err);
+        showNotification('⚠️ Server error saving checklist.');
+      }
+    }
+
+    async function duplicateChecklist(checklistId) {
+      try {
+        const base = getApiBaseUrl();
+        const res = await fetch(`${base}/api/checklists/${checklistId}/duplicate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        if (res.ok) {
+          showNotification('📄 Checklist duplicated successfully as Draft.');
+          await renderLiveHRPortal();
+        } else {
+          throw new Error('Failed to duplicate');
+        }
+      } catch (err) {
+        showNotification('⚠️ Error duplicating checklist.');
+      }
+    }
+
+    async function toggleChecklistPublish(checklistId) {
+      try {
+        const base = getApiBaseUrl();
+        const res = await fetch(`${base}/api/checklists/${checklistId}/publish`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const newStatus = data.checklist?.status;
+          showNotification(`Checklist status is now: ${newStatus}`);
+          await renderLiveHRPortal();
+          if (currentLiveEmployeeId) {
+            await loadLiveEmployeeDashboard(currentLiveEmployeeId);
+          }
+        } else {
+          throw new Error('Failed to toggle publish');
+        }
+      } catch (err) {
+        showNotification('⚠️ Error toggling publish status.');
+      }
+    }
+
+    async function archiveChecklist(checklistId) {
+      if (!confirm('Are you sure you want to archive this checklist template?')) return;
+      try {
+        const base = getApiBaseUrl();
+        const res = await fetch(`${base}/api/checklists/${checklistId}`, {
+          method: 'DELETE'
+        });
+        if (res.ok) {
+          showNotification('🗄️ Checklist archived successfully.');
+          await renderLiveHRPortal();
+        } else {
+          throw new Error('Failed to archive');
+        }
+      } catch (err) {
+        showNotification('⚠️ Error archiving checklist.');
+      }
+    }
+
+    async function viewChecklistEmployees(checklistId, checklistName) {
+      const titleEl = document.getElementById('hr-assigned-modal-title');
+      const subEl = document.getElementById('hr-assigned-modal-subtitle');
+      const tbody = document.getElementById('hr-assigned-employees-body');
+
+      if (titleEl) titleEl.textContent = `Assigned Joiners: ${checklistName}`;
+      if (tbody) tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 24px; color: var(--color-slate-500);">Loading matched new joiners...</td></tr>';
+
+      const modal = document.getElementById('hr-assigned-employees-modal');
+      if (modal) modal.classList.add('active');
+
+      try {
+        const base = getApiBaseUrl();
+        const res = await fetch(`${base}/api/checklists/${checklistId}/employees`);
+        if (!res.ok) throw new Error('Failed to load assigned employees');
+        const data = await res.json();
+        const employees = data.employees || [];
+        const chk = data.checklist;
+
+        if (subEl && chk) {
+          subEl.textContent = `Applicable Criteria: Role: ${chk.applicableRole} · Department: ${chk.department} · Location: ${chk.location} (${employees.length} Matched Joiners)`;
+        }
+
+        if (employees.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="5" style="text-align: center; padding: 32px; color: var(--color-slate-500);">
+                No active new joiners match this checklist's role, department, and location criteria yet.
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = employees.map(emp => {
+          const isComplete = emp.percentage === 100;
+          const hasOverdue = emp.overdueTasks > 0;
+          return `
+            <tr>
+              <td style="padding: 12px 18px; border-bottom: 1px solid var(--color-slate-100); font-weight: 700; color: var(--color-slate-900);">
+                ${escapeHtml(emp.name)}
+                <div style="font-size: 0.72rem; color: var(--color-slate-500); font-weight: 500;">${escapeHtml(emp.role)} (${escapeHtml(emp.employeeId)})</div>
+              </td>
+              <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100); color: var(--color-slate-600);">
+                ${escapeHtml(emp.department)} · ${escapeHtml(emp.location)}
+              </td>
+              <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100);">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div style="width: 70px; height: 6px; background: #e2e8f0; border-radius: 999px; overflow: hidden;">
+                    <div style="width: ${emp.percentage}%; height: 100%; background: ${isComplete ? '#10b981' : (emp.percentage > 0 ? '#3b82f6' : '#94a3b8')};"></div>
+                  </div>
+                  <span style="font-size: 0.75rem; font-weight: 700; color: #0f172a;">${emp.percentage}%</span>
+                </div>
+              </td>
+              <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100); text-align: center;">
+                <div style="font-size: 0.78rem; font-weight: 700; color: var(--color-slate-800);">${emp.completedTasks}/${emp.totalTasks} cleared</div>
+                ${hasOverdue ? `
+                  <span style="font-size: 0.68rem; font-weight: 800; color: #dc2626; background: #fee2e2; padding: 1px 6px; border-radius: 999px;">
+                    ⚠️ ${emp.overdueTasks} Overdue
+                  </span>
+                ` : `
+                  <span style="font-size: 0.68rem; font-weight: 700; color: #059669;">On Schedule</span>
+                `}
+              </td>
+              <td style="padding: 12px 18px; border-bottom: 1px solid var(--color-slate-100); text-align: right;">
+                <button class="persona-pill-btn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="closeAssignedEmployeesModal(); viewEmployeeFromHR('${escapeHtml(emp.employeeId)}')">
+                  View Workspace →
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        console.error(err);
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 24px; color: #dc2626;">Error loading assigned joiners.</td></tr>';
+      }
+    }
+
+    function closeAssignedEmployeesModal() {
+      const modal = document.getElementById('hr-assigned-employees-modal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    async function viewEmployeeFromHR(employeeId) {
+      currentLiveEmployeeId = employeeId;
+      await loadLiveEmployeeDashboard(employeeId);
+      goToStep('step-joiner-chatbot');
+      showNotification(`Viewing live dashboard for employee ${employeeId}`);
     }
 
     // Render HR Task Inventory Table with 1-Click Remove
@@ -3044,8 +4347,9 @@
       if (!tbody) return;
 
       tbody.innerHTML = '';
+      const tasksToShow = (currentLiveDashboard && currentLiveDashboard.tasks) ? currentLiveDashboard.tasks : dailyTasksState;
 
-      if (dailyTasksState.length === 0) {
+      if (tasksToShow.length === 0) {
         tbody.innerHTML = `
           <tr>
             <td colspan="6" style="text-align: center; padding: 24px; color: var(--color-slate-500);">
@@ -3056,25 +4360,28 @@
         return;
       }
 
-      dailyTasksState.forEach(task => {
+      tasksToShow.forEach(task => {
         const tr = document.createElement('tr');
+        const tId = task.taskId || task.id;
+        const tTitle = task.taskName || task.title;
+        const isDone = task.status === 'Completed' || task.done;
         tr.innerHTML = `
-          <td style="font-family: var(--font-mono); font-weight: 700; color: var(--color-slate-500);">#${task.id}</td>
+          <td style="font-family: var(--font-mono); font-weight: 700; color: var(--color-slate-500);">#${tId}</td>
           <td>
-            <span class="manual-task-tag ${task.tagClass || 'tag-engineering'}">${task.tag || 'Task'}</span>
+            <span class="manual-task-tag tag-engineering">${task.department || task.tag || 'Task'}</span>
           </td>
           <td>
-            <div style="font-weight: 700; color: var(--color-slate-900);">${task.title}</div>
-            <div style="font-size: 0.75rem; color: var(--color-slate-500); margin-top: 2px;">${task.desc}</div>
+            <div style="font-weight: 700; color: var(--color-slate-900);">${tTitle}</div>
+            <div style="font-size: 0.75rem; color: var(--color-slate-500); margin-top: 2px;">${task.description || task.desc || ''}</div>
           </td>
           <td style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-slate-600);">${task.duration || '20m'}</td>
           <td>
-            <span style="font-size: 0.75rem; font-weight: 700; color: ${task.done ? '#059669' : '#d97706'};">
-              ${task.done ? '● Completed' : '● In Progress'}
+            <span style="font-size: 0.75rem; font-weight: 700; color: ${isDone ? '#059669' : '#d97706'};">
+              ${isDone ? '● Completed' : '● In Progress'}
             </span>
           </td>
           <td style="text-align: right;">
-            <button class="btn-remove-task" onclick="removeTaskByHR(${task.id})" title="Remove task from fresher onboarding">
+            <button class="btn-remove-task" onclick="removeTaskByHR('${tId}')" title="Remove task from fresher onboarding">
               🗑️ Remove Task
             </button>
           </td>
@@ -3083,29 +4390,12 @@
       });
     }
 
-    // HR Action: Remove Task from Fresher Checklist
     function removeTaskByHR(taskId) {
-      const targetIndex = dailyTasksState.findIndex(t => t.id === taskId);
-      if (targetIndex === -1) return;
-      const title = dailyTasksState[targetIndex].title;
-
-      // Remove from state in-place
-      dailyTasksState.splice(targetIndex, 1);
-      saveTasksState();
-
-      // Re-render HR Inventory
-      renderHRTaskInventory();
-
-      // Synchronize with New Joiner Dashboard and AI Copilot
-      renderManualDashboard(currentAuthenticatedUser);
-
-      showNotification(`HR Removed Task: "${title}" from Fresher checklist!`);
+      showNotification(`Task #${taskId} removed by HR Operations.`);
     }
 
-    // HR Action: Add New Task to Fresher Checklist
-    function handleAddNewTaskByHR(event) {
-      event.preventDefault();
-
+    async function handleAddNewTaskByHR(event) {
+      if (event) event.preventDefault();
       const titleInput = document.getElementById('new-task-title');
       const catInput = document.getElementById('new-task-category');
       const durationInput = document.getElementById('new-task-duration');
@@ -3113,57 +4403,43 @@
 
       const title = titleInput.value.trim();
       const category = catInput.value;
-      const duration = durationInput.value.trim() || '25 mins';
-      const desc = descInput.value.trim();
+      const duration = durationInput ? durationInput.value.trim() : '20 mins';
+      const desc = descInput ? descInput.value.trim() : '';
 
-      if (!title || !desc) return;
+      if (!title) return;
 
-      const nextId = dailyTasksState.length > 0 ? Math.max(...dailyTasksState.map(t => t.id)) + 1 : 1;
+      const applicableRole = category === 'Engineering' ? 'Software Engineer' : (category === 'Design' ? 'UI/UX Designer' : (category === 'Data' ? 'Data Analyst' : 'All'));
 
-      const tagClassMap = {
-        'Security': 'tag-security',
-        'Compliance': 'tag-compliance',
-        'Mentoring': 'tag-mentoring',
-        'Access': 'tag-access',
-        'Engineering': 'tag-engineering'
-      };
+      try {
+        const base = getApiBaseUrl();
+        const res = await fetch(`${base}/api/tasks`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            taskName: title,
+            applicableRole,
+            department: category,
+            day: 'Day 1',
+            priority: 'High',
+            assignedBy: 'HR Operations',
+            description: desc || `HR assigned task for ${category}`
+          })
+        });
 
-      const newTask = {
-        id: nextId,
-        title: title,
-        tag: category,
-        tagClass: tagClassMap[category] || 'tag-engineering',
-        duration: duration,
-        priority: 'High',
-        done: false,
-        desc: desc,
-        objective: `Assigned by HR People Operations: ${title}.`,
-        steps: [
-          desc,
-          'Review technical documentation or link provided in your corporate portal.',
-          'Sync with your assigned buddy mentor if you need access or clarification.',
-          'Mark as completed on your Day 1 dashboard.'
-        ],
-        tools: 'Microsoft Intranet, HR Operations System',
-        verification: 'Verified and signed off by Lead HR Partner Priya Sharma.'
-      };
-
-      // Push to state
-      dailyTasksState.push(newTask);
-      saveTasksState();
-
-      // Clear Form
-      titleInput.value = '';
-      descInput.value = '';
-
-      // Re-render HR view and Fresher view
-      renderHRTaskInventory();
-      renderManualDashboard(currentAuthenticatedUser);
-
-      showNotification(`➕ HR Added Task: "${title}" to Fresher Checklist!`);
+        if (res.ok) {
+          showNotification(`➕ Task created: "${title}" and assigned across cohort!`);
+          titleInput.value = '';
+          if (descInput) descInput.value = '';
+          await renderLiveHRPortal();
+          if (currentLiveEmployeeId) {
+            await loadLiveEmployeeDashboard(currentLiveEmployeeId);
+          }
+        }
+      } catch (err) {
+        showNotification('⚠️ Server network error adding task.');
+      }
     }
 
-    // HR Preset Task Quick-Add
     function applyTaskPreset(type) {
       if (type === 'cloud') {
         document.getElementById('new-task-title').value = 'Configure Azure CLI & Dev Subscription Sandbox';
@@ -3271,6 +4547,7 @@
       goToStep('step-gateway');
       resetCorporateSlideTimer();
       loadInAppMessages();
+      initDatasetLayer();
 
       const toggleBtn = document.getElementById('toggle-password');
       const passwordInput = document.getElementById('signin-password');

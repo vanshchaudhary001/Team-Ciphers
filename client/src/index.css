@@ -101,15 +101,15 @@
 
 /* Button variants */
 .btn-primary-gradient {
-  @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-label-lg font-label-lg text-white bg-gradient-to-r from-indigo-600 to-violet-600 shadow-sm hover:opacity-95 hover:shadow transition-all active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+  @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 shadow-sm hover:opacity-95 hover:shadow transition-all active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
 }
 
 .btn-secondary-outline {
-  @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-label-md font-label-md text-on-surface-variant bg-surface-container-lowest border border-outline-variant/50 hover:bg-surface-container-low transition-colors disabled:opacity-50 disabled:pointer-events-none;
+  @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-on-surface-variant bg-surface-container-lowest border border-outline-variant/50 hover:bg-surface-container-low transition-colors disabled:opacity-50 disabled:pointer-events-none;
 }
 
 .btn-danger-subtle {
-  @apply inline-flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-lg text-label-md font-label-md text-rose-700 bg-rose-50 border border-rose-200 hover:bg-rose-100 transition-colors;
+  @apply inline-flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium text-rose-700 bg-rose-50 border border-rose-200 hover:bg-rose-100 transition-colors;
 }
 
 /* Card styles */

@@ -1,0 +1,41 @@
+task_id,task_name,applicable_role,department,day,priority,assigned_by,deadline,resource_id,is_mandatory
+T001,Activate company account,All,All,Day 1,High,IT,"Day 1, 5:00 PM",R002,true
+T002,Set up MFA,All,All,Day 1,High,IT,"Day 1, 5:00 PM",R003,true
+T003,Complete employee profile,All,All,Day 1,Medium,HR,"Day 1, 5:00 PM",R001,true
+T004,Read employee handbook,All,All,Day 1,Medium,HR,"Day 1, 5:00 PM",R001,true
+T005,Complete security awareness training,All,All,Day 1,High,Security,"Day 1, 5:00 PM",R004,true
+T006,Meet onboarding buddy,All,All,Day 1,Medium,Manager,"Day 1, 5:00 PM",,true
+T007,Attend company orientation,All,All,Day 1,High,HR,"Day 1, 5:00 PM",R005,true
+T008,Set up company email,All,All,Day 1,High,IT,"Day 1, 5:00 PM",R002,true
+T009,Review leave and attendance policy,All,All,Day 2,Medium,HR,"Day 2, 5:00 PM",R006,true
+T010,Review company benefits,All,All,Day 2,Low,HR,"Day 2, 5:00 PM",R007,false
+T011,Complete workplace safety training,All,All,Day 2,Medium,HR,"Day 2, 5:00 PM",R008,true
+T012,Meet reporting manager,All,All,Day 2,High,Manager,"Day 2, 5:00 PM",,true
+T013,Join department communication channel,All,All,Day 2,Medium,Manager,"Day 2, 5:00 PM",,true
+T014,Set up GitHub access,Software Engineer,Engineering,Day 1,High,IT,"Day 1, 5:00 PM",R009,true
+T015,Set up development environment,Software Engineer,Engineering,Day 1,High,Manager,"Day 1, 5:00 PM",R010,true
+T016,Read engineering coding guidelines,Software Engineer,Engineering,Day 2,Medium,Manager,"Day 2, 5:00 PM",R011,true
+T017,Review software architecture,Software Engineer,Engineering,Day 2,Medium,Manager,"Day 2, 5:00 PM",R012,true
+T018,Join engineering repository,Software Engineer,Engineering,Day 2,High,IT,"Day 2, 5:00 PM",R013,true
+T019,Complete code security training,Software Engineer,Engineering,Day 3,High,Security,"Day 3, 5:00 PM",R014,true
+T020,Meet engineering team,Software Engineer,Engineering,Day 3,Medium,Manager,"Day 3, 5:00 PM",,true
+T021,Set up analytics tools,Data Analyst,Data,Day 1,High,Manager,"Day 1, 5:00 PM",R015,true
+T022,Get access to data warehouse,Data Analyst,Data,Day 1,High,IT,"Day 1, 5:00 PM",R016,true
+T023,Review data governance policy,Data Analyst,Data,Day 2,High,Data Lead,"Day 2, 5:00 PM",R017,true
+T024,Review reporting standards,Data Analyst,Data,Day 2,Medium,Data Lead,"Day 2, 5:00 PM",R018,true
+T025,Meet data team,Data Analyst,Data,Day 3,Medium,Manager,"Day 3, 5:00 PM",,true
+T026,Set up design tools,UI/UX Designer,Design,Day 1,High,IT,"Day 1, 5:00 PM",R019,true
+T027,Get access to design repository,UI/UX Designer,Design,Day 1,High,IT,"Day 1, 5:00 PM",R020,true
+T028,Review design system,UI/UX Designer,Design,Day 2,Medium,Design Lead,"Day 2, 5:00 PM",R021,true
+T029,Review brand guidelines,UI/UX Designer,Design,Day 2,Medium,Design Lead,"Day 2, 5:00 PM",R022,true
+T030,Meet design team,UI/UX Designer,Design,Day 3,Medium,Manager,"Day 3, 5:00 PM",,true
+T031,Get access to HR portal,HR Executive,Human Resources,Day 1,High,IT,"Day 1, 5:00 PM",R023,true
+T032,Review HR policies,HR Executive,Human Resources,Day 1,High,HR Manager,"Day 1, 5:00 PM",R024,true
+T033,Review employee records process,HR Executive,Human Resources,Day 2,High,HR Manager,"Day 2, 5:00 PM",R025,true
+T034,Complete HR compliance training,HR Executive,Human Resources,Day 2,High,HR Manager,"Day 2, 5:00 PM",R026,true
+T035,Meet HR team,HR Executive,Human Resources,Day 3,Medium,HR Manager,"Day 3, 5:00 PM",,true
+T036,Set up marketing tools,Marketing Executive,Marketing,Day 1,High,IT,"Day 1, 5:00 PM",R027,true
+T037,Review brand guidelines,Marketing Executive,Marketing,Day 1,Medium,Marketing Manager,"Day 1, 5:00 PM",R028,true
+T038,Review marketing strategy,Marketing Executive,Marketing,Day 2,Medium,Marketing Manager,"Day 2, 5:00 PM",R029,true
+T039,Get access to marketing analytics,Marketing Executive,Marketing,Day 2,High,IT,"Day 2, 5:00 PM",R030,true
+T040,Meet marketing team,Marketing Executive,Marketing,Day 3,Medium,Manager,"Day 3, 5:00 PM",,true
