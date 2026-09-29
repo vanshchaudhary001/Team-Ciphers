@@ -336,164 +336,228 @@
         </p>
       </div>
 
-      <!-- Searchable Combobox Box -->
-      <div class="directory-search-wrapper">
-        <label class="directory-search-label" for="company-filter-input">Organisation Directory</label>
-        <div class="directory-search-field">
-          <span class="material-symbols-outlined directory-search-icon">search</span>
+      <!-- Searchable Executive Directory Toolbar -->
+      <div class="directory-toolbar-container">
+        <div class="directory-search-bar">
+          <span class="material-symbols-outlined search-icon">search</span>
           <input 
             type="text" 
             id="company-filter-input" 
             class="directory-search-input" 
-            placeholder="Search or select your organisation (e.g. Microsoft, Google, AWS)..."
+            placeholder="Search enterprise directory (e.g. Microsoft, Google, AWS, FinTech)..."
             oninput="filterCompanyCards(this.value)"
+            autocomplete="off"
           >
+          <button type="button" id="clear-search-btn" class="clear-search-btn" onclick="clearCompanyFilter()" style="display: none;" title="Clear search">
+            <span class="material-symbols-outlined">close</span>
+          </button>
           <span id="result-counter-text" class="directory-counter-pill">10 available</span>
         </div>
-        <div class="directory-helper-text">
-          <span class="material-symbols-outlined" style="font-size: 14px;">info</span>
-          <span>Can't find your company? Contact your workspace administrator or HR onboarding lead.</span>
+
+        <!-- Quick Category Filter Pills -->
+        <div class="directory-category-bar">
+          <button type="button" class="filter-pill active" onclick="filterByCategory('all', this)">All (10)</button>
+          <button type="button" class="filter-pill" onclick="filterByCategory('Cloud', this)">Cloud &amp; AI</button>
+          <button type="button" class="filter-pill" onclick="filterByCategory('Hardware', this)">Hardware &amp; OS</button>
+          <button type="button" class="filter-pill" onclick="filterByCategory('FinTech', this)">FinTech &amp; Banking</button>
+          <button type="button" class="filter-pill" onclick="filterByCategory('Enterprise', this)">ERP &amp; CRM</button>
+          <button type="button" class="filter-pill" onclick="filterByCategory('Health', this)">Healthcare AI</button>
+        </div>
+
+        <div class="directory-helper-subtext">
+          <span class="material-symbols-outlined" style="font-size: 14px; color: var(--stitch-primary);">info</span>
+          <span>Can't find your organisation? Contact your workspace administrator or HR onboarding lead.</span>
         </div>
       </div>
 
       <!-- Companies Grid (Microsoft Featured First + 9 other enterprise companies) -->
-      <div class="companies-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+      <div class="companies-grid" id="companies-grid" style="grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));">
 
         <!-- Microsoft (Featured) -->
-        <div class="company-card featured-card" data-company-key="microsoft" onclick="selectCompany('microsoft')">
-          <div class="company-monogram-box" style="background: #e0f2fe; color: #0284c7;">
-            <svg width="22" height="22" viewBox="0 0 21 21" fill="none">
-              <rect x="1" y="1" width="9" height="9" fill="#F25022"/>
-              <rect x="11" y="1" width="9" height="9" fill="#7FBA00"/>
-              <rect x="1" y="11" width="9" height="9" fill="#00A4EF"/>
-              <rect x="11" y="11" width="9" height="9" fill="#FFB900"/>
-            </svg>
-          </div>
-          <div class="company-info">
-            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
-              <span>Microsoft Corporation</span>
-              <span class="company-category-chip" style="background: #e0f2fe; color: #0369a1;">Featured</span>
+        <div class="company-card featured-card" data-company-key="microsoft" data-category="Cloud" onclick="selectCompany('microsoft')">
+          <div class="company-card-header">
+            <div class="company-monogram-box" style="background: #e0f2fe; color: #0284c7;">
+              <svg width="22" height="22" viewBox="0 0 21 21" fill="none">
+                <rect x="1" y="1" width="9" height="9" fill="#F25022"/>
+                <rect x="11" y="1" width="9" height="9" fill="#7FBA00"/>
+                <rect x="1" y="11" width="9" height="9" fill="#00A4EF"/>
+                <rect x="11" y="11" width="9" height="9" fill="#FFB900"/>
+              </svg>
             </div>
-            <div class="company-meta">India / Redmond · Cloud &amp; AI · @microsoft.in</div>
+            <span class="company-category-chip featured-chip">Featured · Cloud &amp; AI</span>
           </div>
-          <div class="company-card-action">Sign In →</div>
+          <div class="company-card-body">
+            <div class="company-name">Microsoft Corporation</div>
+            <div class="company-meta">India / Redmond · @microsoft.in</div>
+          </div>
+          <div class="company-card-footer">
+            <div class="company-signin-btn">
+              <span>Sign In</span>
+              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </div>
+          </div>
         </div>
 
         <!-- Google -->
-        <div class="company-card" data-company-key="google" onclick="selectCompany('google')">
-          <div class="company-monogram-box" style="background: #fee2e2; color: #dc2626;">GO</div>
-          <div class="company-info">
-            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
-              <span>Google (Alphabet Inc.)</span>
-              <span class="company-category-chip">Cloud &amp; AI</span>
-            </div>
+        <div class="company-card" data-company-key="google" data-category="Cloud" onclick="selectCompany('google')">
+          <div class="company-card-header">
+            <div class="company-monogram-box" style="background: #fee2e2; color: #dc2626;">GO</div>
+            <span class="company-category-chip">Cloud &amp; AI</span>
+          </div>
+          <div class="company-card-body">
+            <div class="company-name">Google (Alphabet Inc.)</div>
             <div class="company-meta">Mountain View HQ · @google.com</div>
           </div>
-          <div class="company-card-action">Sign In →</div>
+          <div class="company-card-footer">
+            <div class="company-signin-btn">
+              <span>Sign In</span>
+              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </div>
+          </div>
         </div>
 
         <!-- Amazon -->
-        <div class="company-card" data-company-key="amazon" onclick="selectCompany('amazon')">
-          <div class="company-monogram-box" style="background: #fef3c7; color: #d97706;">AZ</div>
-          <div class="company-info">
-            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
-              <span>Amazon Web Services</span>
-              <span class="company-category-chip">Cloud &amp; Commerce</span>
-            </div>
-            <div class="company-meta">Seattle HQ · Cloud &amp; Retail · @amazon.com</div>
+        <div class="company-card" data-company-key="amazon" data-category="Cloud" onclick="selectCompany('amazon')">
+          <div class="company-card-header">
+            <div class="company-monogram-box" style="background: #fef3c7; color: #d97706;">AZ</div>
+            <span class="company-category-chip">Cloud &amp; Retail</span>
           </div>
-          <div class="company-card-action">Sign In →</div>
+          <div class="company-card-body">
+            <div class="company-name">Amazon Web Services</div>
+            <div class="company-meta">Seattle HQ · @amazon.com</div>
+          </div>
+          <div class="company-card-footer">
+            <div class="company-signin-btn">
+              <span>Sign In</span>
+              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </div>
+          </div>
         </div>
 
         <!-- Apple -->
-        <div class="company-card" data-company-key="apple" onclick="selectCompany('apple')">
-          <div class="company-monogram-box" style="background: #f1f5f9; color: #334155;">AP</div>
-          <div class="company-info">
-            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
-              <span>Apple Inc.</span>
-              <span class="company-category-chip">Hardware &amp; OS</span>
-            </div>
-            <div class="company-meta">Cupertino HQ · Devices &amp; Cloud · @apple.com</div>
+        <div class="company-card" data-company-key="apple" data-category="Hardware" onclick="selectCompany('apple')">
+          <div class="company-card-header">
+            <div class="company-monogram-box" style="background: #f1f5f9; color: #334155;">AP</div>
+            <span class="company-category-chip">Hardware &amp; OS</span>
           </div>
-          <div class="company-card-action">Sign In →</div>
+          <div class="company-card-body">
+            <div class="company-name">Apple Inc.</div>
+            <div class="company-meta">Cupertino HQ · @apple.com</div>
+          </div>
+          <div class="company-card-footer">
+            <div class="company-signin-btn">
+              <span>Sign In</span>
+              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </div>
+          </div>
         </div>
 
         <!-- NVIDIA -->
-        <div class="company-card" data-company-key="nvidia" onclick="selectCompany('nvidia')">
-          <div class="company-monogram-box" style="background: #dcfce7; color: #16a34a;">NV</div>
-          <div class="company-info">
-            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
-              <span>NVIDIA Corporation</span>
-              <span class="company-category-chip">AI Computing</span>
-            </div>
-            <div class="company-meta">Santa Clara HQ · AI &amp; Hardware · @nvidia.com</div>
+        <div class="company-card" data-company-key="nvidia" data-category="Hardware" onclick="selectCompany('nvidia')">
+          <div class="company-card-header">
+            <div class="company-monogram-box" style="background: #dcfce7; color: #16a34a;">NV</div>
+            <span class="company-category-chip">AI &amp; Chips</span>
           </div>
-          <div class="company-card-action">Sign In →</div>
+          <div class="company-card-body">
+            <div class="company-name">NVIDIA Corporation</div>
+            <div class="company-meta">Santa Clara HQ · @nvidia.com</div>
+          </div>
+          <div class="company-card-footer">
+            <div class="company-signin-btn">
+              <span>Sign In</span>
+              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </div>
+          </div>
         </div>
 
         <!-- Stripe -->
-        <div class="company-card" data-company-key="stripe" onclick="selectCompany('stripe')">
-          <div class="company-monogram-box" style="background: #ede9fe; color: #7c3aed;">ST</div>
-          <div class="company-info">
-            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
-              <span>Stripe Inc.</span>
-              <span class="company-category-chip">FinTech</span>
-            </div>
-            <div class="company-meta">San Francisco HQ · Payments · @stripe.com</div>
+        <div class="company-card" data-company-key="stripe" data-category="FinTech" onclick="selectCompany('stripe')">
+          <div class="company-card-header">
+            <div class="company-monogram-box" style="background: #ede9fe; color: #7c3aed;">ST</div>
+            <span class="company-category-chip">FinTech &amp; Pay</span>
           </div>
-          <div class="company-card-action">Sign In →</div>
+          <div class="company-card-body">
+            <div class="company-name">Stripe Inc.</div>
+            <div class="company-meta">San Francisco HQ · @stripe.com</div>
+          </div>
+          <div class="company-card-footer">
+            <div class="company-signin-btn">
+              <span>Sign In</span>
+              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </div>
+          </div>
         </div>
 
         <!-- Salesforce -->
-        <div class="company-card" data-company-key="salesforce" onclick="selectCompany('salesforce')">
-          <div class="company-monogram-box" style="background: #e0f2fe; color: #0284c7;">SF</div>
-          <div class="company-info">
-            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
-              <span>Salesforce</span>
-              <span class="company-category-chip">CRM &amp; Cloud</span>
-            </div>
-            <div class="company-meta">San Francisco HQ · CRM · @salesforce.com</div>
+        <div class="company-card" data-company-key="salesforce" data-category="Enterprise" onclick="selectCompany('salesforce')">
+          <div class="company-card-header">
+            <div class="company-monogram-box" style="background: #e0f2fe; color: #0284c7;">SF</div>
+            <span class="company-category-chip">CRM &amp; Cloud</span>
           </div>
-          <div class="company-card-action">Sign In →</div>
+          <div class="company-card-body">
+            <div class="company-name">Salesforce</div>
+            <div class="company-meta">San Francisco HQ · @salesforce.com</div>
+          </div>
+          <div class="company-card-footer">
+            <div class="company-signin-btn">
+              <span>Sign In</span>
+              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </div>
+          </div>
         </div>
 
         <!-- TechNova Systems -->
-        <div class="company-card" data-company-key="technova" onclick="selectCompany('technova')">
-          <div class="company-monogram-box" style="background: #eff4ff; color: #0037b0;">TN</div>
-          <div class="company-info">
-            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
-              <span>TechNova Systems</span>
-              <span class="company-category-chip">Enterprise ERP</span>
-            </div>
-            <div class="company-meta">Austin HQ · Cloud Solutions · @technova.io</div>
+        <div class="company-card" data-company-key="technova" data-category="Enterprise" onclick="selectCompany('technova')">
+          <div class="company-card-header">
+            <div class="company-monogram-box" style="background: #eff4ff; color: #0037b0;">TN</div>
+            <span class="company-category-chip">Enterprise ERP</span>
           </div>
-          <div class="company-card-action">Sign In →</div>
+          <div class="company-card-body">
+            <div class="company-name">TechNova Systems</div>
+            <div class="company-meta">Austin HQ · @technova.io</div>
+          </div>
+          <div class="company-card-footer">
+            <div class="company-signin-btn">
+              <span>Sign In</span>
+              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </div>
+          </div>
         </div>
 
         <!-- Finwise Global -->
-        <div class="company-card" data-company-key="finwise" onclick="selectCompany('finwise')">
-          <div class="company-monogram-box" style="background: #fef3c7; color: #b45309;">FW</div>
-          <div class="company-info">
-            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
-              <span>Finwise Global</span>
-              <span class="company-category-chip">Banking</span>
-            </div>
-            <div class="company-meta">New York HQ · Global Finance · @finwise.global</div>
+        <div class="company-card" data-company-key="finwise" data-category="FinTech" onclick="selectCompany('finwise')">
+          <div class="company-card-header">
+            <div class="company-monogram-box" style="background: #fef3c7; color: #b45309;">FW</div>
+            <span class="company-category-chip">Global Finance</span>
           </div>
-          <div class="company-card-action">Sign In →</div>
+          <div class="company-card-body">
+            <div class="company-name">Finwise Global</div>
+            <div class="company-meta">New York HQ · @finwise.global</div>
+          </div>
+          <div class="company-card-footer">
+            <div class="company-signin-btn">
+              <span>Sign In</span>
+              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </div>
+          </div>
         </div>
 
         <!-- MedCore Systems -->
-        <div class="company-card" data-company-key="medcore" onclick="selectCompany('medcore')">
-          <div class="company-monogram-box" style="background: #e0e7ff; color: #4338ca;">MC</div>
-          <div class="company-info">
-            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
-              <span>MedCore Systems</span>
-              <span class="company-category-chip">Health Informatics</span>
-            </div>
-            <div class="company-meta">Boston HQ · Healthcare AI · @medcore-systems.com</div>
+        <div class="company-card" data-company-key="medcore" data-category="Health" onclick="selectCompany('medcore')">
+          <div class="company-card-header">
+            <div class="company-monogram-box" style="background: #e0e7ff; color: #4338ca;">MC</div>
+            <span class="company-category-chip">Healthcare AI</span>
           </div>
-          <div class="company-card-action">Sign In →</div>
+          <div class="company-card-body">
+            <div class="company-name">MedCore Systems</div>
+            <div class="company-meta">Boston HQ · @medcore-systems.com</div>
+          </div>
+          <div class="company-card-footer">
+            <div class="company-signin-btn">
+              <span>Sign In</span>
+              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -760,19 +824,65 @@
           </div>
 
           <!-- SECTION 1: Team Members & Direct Contact Numbers (Manual View) -->
-          <div class="dashboard-section-card">
+          <div class="dashboard-section-card" id="section-contacts-directory">
             <div class="section-card-header">
               <div>
                 <div class="section-badge">Direct Access Directory</div>
-                <h2 class="section-title">Team Members & Key HR Contacts</h2>
-                <p class="section-desc">Reach out directly via phone, Microsoft Teams, or in-person desk location.</p>
+                <h2 class="section-title">Team Members &amp; Key HR Contacts</h2>
+                <p class="section-desc">Reach out directly via in-app VoIP call, in-app messaging, direct phone lines, or Microsoft Teams.</p>
               </div>
-              <span class="section-counter-badge">3 Priority Lines Active</span>
+              <span class="section-counter-badge" id="contacts-active-counter">Select from Dropdown</span>
             </div>
 
-            <div class="contacts-grid-pro">
+            <!-- Contacts Interactive Dropdown Control Bar -->
+            <div class="contacts-dropdown-control-bar">
+              <div class="contacts-dropdown-picker">
+                <label for="contact-directory-select" class="contacts-dropdown-label">
+                  <span class="material-symbols-outlined" style="font-size: 19px; color: var(--stitch-primary);">contacts</span>
+                  <span>Select Contact to Display:</span>
+                </label>
+                <div class="styled-dropdown-select-wrapper">
+                  <select id="contact-directory-select" class="styled-contact-select" onchange="onContactDropdownSelect(this.value)">
+                    <option value="none">-- Click dropdown to select contact --</option>
+                    <option value="hr">👤 Priya Sharma (Lead HR People Partner)</option>
+                    <option value="buddy">🤝 Rahul Pandey (Assigned Buddy Mentor)</option>
+                    <option value="it">🛠️ Microsoft IT Helpdesk (24/7 Operations &amp; Security)</option>
+                    <option value="all">👥 Show All Key Contacts (3)</option>
+                  </select>
+                  <span class="material-symbols-outlined select-chevron">expand_more</span>
+                </div>
+              </div>
+              <div class="contacts-quick-pills">
+                <button type="button" class="contact-pill-btn active" id="pill-none" onclick="setContactDropdownFilter('none')">📁 Collapsed</button>
+                <button type="button" class="contact-pill-btn" id="pill-hr" onclick="setContactDropdownFilter('hr')">HR Partner</button>
+                <button type="button" class="contact-pill-btn" id="pill-buddy" onclick="setContactDropdownFilter('buddy')">Buddy Mentor</button>
+                <button type="button" class="contact-pill-btn" id="pill-it" onclick="setContactDropdownFilter('it')">IT Desk</button>
+                <button type="button" class="contact-pill-btn" id="pill-all" onclick="setContactDropdownFilter('all')">View All (3)</button>
+              </div>
+            </div>
+
+            <!-- Collapsed Placeholder (Shown when 'none' is selected) -->
+            <div id="contacts-collapsed-placeholder" class="contacts-collapsed-placeholder" onclick="setContactDropdownFilter('all')">
+              <div class="placeholder-icon-ring">
+                <span class="material-symbols-outlined" style="font-size: 26px; color: var(--stitch-primary);">contact_phone</span>
+              </div>
+              <div class="placeholder-text-block">
+                <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--color-slate-900); margin-bottom: 2px;">
+                  Direct Contacts Directory Collapsed
+                </h4>
+                <p style="font-size: 0.8rem; color: var(--color-slate-500); margin: 0;">
+                  Click the dropdown above or click here to view direct phone lines, initiate an in-app VoIP call, or send an in-app message.
+                </p>
+              </div>
+              <button type="button" class="btn-open-dropdown" onclick="event.stopPropagation(); setContactDropdownFilter('all')">
+                <span>View Contacts ▼</span>
+              </button>
+            </div>
+
+            <!-- Contacts Cards Grid (Filtered dynamically by dropdown) -->
+            <div class="contacts-grid-pro" id="contacts-grid-pro" style="display: none;">
               <!-- HR Partner Card -->
-              <div class="contact-card-pro hr-glow">
+              <div class="contact-card-pro hr-glow" id="contact-card-hr">
                 <div class="contact-card-top">
                   <div class="contact-avatar hr-avatar">PS</div>
                   <div class="contact-header-info">
@@ -783,7 +893,7 @@
                 </div>
                 <div class="contact-phone-block">
                   <span class="phone-label">DIRECT PHONE LINE</span>
-                  <a href="tel:+918067894701" class="phone-display-btn">
+                  <a href="javascript:void(0)" onclick="openInAppCall('hr')" class="phone-display-btn">
                     <span class="phone-icon">📞</span>
                     <strong>+91 (80) 6789-HR01</strong>
                   </a>
@@ -799,17 +909,17 @@
                   </div>
                 </div>
                 <div class="contact-actions-row">
-                  <a href="tel:+918067894701" class="btn-contact-action btn-call">
-                    📞 Call HR
-                  </a>
-                  <button class="btn-contact-action btn-teams" onclick="showNotification('Initiating Microsoft Teams chat with Priya Sharma...')">
-                    💬 Teams Ping
+                  <button type="button" class="btn-contact-action btn-call" onclick="openInAppCall('hr')">
+                    📞 Direct Call
+                  </button>
+                  <button type="button" class="btn-contact-action btn-inapp-msg" onclick="openInAppMessenger('hr')">
+                    💬 In-App Message
                   </button>
                 </div>
               </div>
 
               <!-- Buddy Mentor Card -->
-              <div class="contact-card-pro buddy-glow">
+              <div class="contact-card-pro buddy-glow" id="contact-card-buddy">
                 <div class="contact-card-top">
                   <div class="contact-avatar buddy-avatar">RP</div>
                   <div class="contact-header-info">
@@ -820,7 +930,7 @@
                 </div>
                 <div class="contact-phone-block">
                   <span class="phone-label">BUDDY DIRECT PHONE LINE</span>
-                  <a href="tel:+918067892831" class="phone-display-btn buddy-phone">
+                  <a href="javascript:void(0)" onclick="openInAppCall('buddy')" class="phone-display-btn buddy-phone">
                     <span class="phone-icon">📞</span>
                     <strong>+91 (80) 6789-BUD1</strong>
                   </a>
@@ -836,28 +946,28 @@
                   </div>
                 </div>
                 <div class="contact-actions-row">
-                  <a href="tel:+918067892831" class="btn-contact-action btn-call-buddy">
-                    📞 Call Buddy
-                  </a>
-                  <button class="btn-contact-action btn-teams" onclick="showNotification('Opening Teams 1:1 Welcome Briefing Room with Rahul Pandey...')">
-                    📅 Join 1:1 Call
+                  <button type="button" class="btn-contact-action btn-call-buddy" onclick="openInAppCall('buddy')">
+                    📞 Direct Call
+                  </button>
+                  <button type="button" class="btn-contact-action btn-inapp-msg" onclick="openInAppMessenger('buddy')">
+                    💬 In-App Message
                   </button>
                 </div>
               </div>
 
               <!-- IT Helpdesk Card -->
-              <div class="contact-card-pro it-glow">
+              <div class="contact-card-pro it-glow" id="contact-card-it">
                 <div class="contact-card-top">
                   <div class="contact-avatar it-avatar">IT</div>
                   <div class="contact-header-info">
-                    <span class="contact-role-tag it-tag">IT Operations & Security</span>
+                    <span class="contact-role-tag it-tag">IT Operations &amp; Security</span>
                     <h3 class="contact-name">Microsoft IT Helpdesk</h3>
-                    <span class="contact-title">24/7 Identity, Hardware & VPN Support</span>
+                    <span class="contact-title">24/7 Identity, Hardware &amp; VPN Support</span>
                   </div>
                 </div>
                 <div class="contact-phone-block">
                   <span class="phone-label">TOLL-FREE IT HOTLINE</span>
-                  <a href="tel:+918005556738" class="phone-display-btn it-phone">
+                  <a href="javascript:void(0)" onclick="openInAppCall('it')" class="phone-display-btn it-phone">
                     <span class="phone-icon">📞</span>
                     <strong>+91 (800) 555-MSFT-IN</strong>
                   </a>
@@ -873,11 +983,11 @@
                   </div>
                 </div>
                 <div class="contact-actions-row">
-                  <a href="tel:+918005556738" class="btn-contact-action btn-call-it">
-                    📞 Call IT Desk
-                  </a>
-                  <button class="btn-contact-action btn-ticket" onclick="showNotification('Opened priority IT Ticket #MSFT-8831 (Token Provisioning)')">
-                    🎫 View Ticket
+                  <button type="button" class="btn-contact-action btn-call-it" onclick="openInAppCall('it')">
+                    📞 Direct Call
+                  </button>
+                  <button type="button" class="btn-contact-action btn-inapp-msg" onclick="openInAppMessenger('it')">
+                    💬 In-App Message
                   </button>
                 </div>
               </div>
@@ -890,7 +1000,7 @@
               <div>
                 <div class="section-badge">Action Required</div>
                 <h2 class="section-title">Today's Work / Day 1 Checklist</h2>
-                <p class="section-desc">Toggle tasks when completed. All changes synchronize in real-time with your AI Copilot and HR records.</p>
+                <p class="section-desc">Toggle tasks when completed. All changes synchronize in real-time with your AI Copilot and HR records. Need detailed step-by-step guidance? Ask your AI Copilot.</p>
               </div>
               <div style="display: flex; gap: 8px; align-items: center;">
                 <button class="btn-filter-pill active" id="filter-btn-all" onclick="filterManualTasks('all')">All Tasks (<span id="count-all-tasks">5</span>)</button>
@@ -902,22 +1012,6 @@
             <!-- Interactive Task List Container -->
             <div id="manual-checklist-container" class="manual-checklist-container">
               <!-- Dynamically populated from dailyTasksState -->
-            </div>
-          </div>
-
-          <!-- SECTION 3: Deep-Dive Task Breakdown & Step-by-Step Instructions -->
-          <div class="dashboard-section-card">
-            <div class="section-card-header">
-              <div>
-                <div class="section-badge">Detailed Execution Guide</div>
-                <h2 class="section-title">Task-by-Task In-Depth Instructions</h2>
-                <p class="section-desc">Comprehensive manual walk-through of every task: objectives, exact steps, prerequisites, and verification.</p>
-              </div>
-              <span style="font-size: 0.8rem; color: #818cf8; font-weight: 700;">✨ Copilot Knowledge-Base Synced</span>
-            </div>
-
-            <div id="manual-task-breakdowns" class="manual-task-breakdowns">
-              <!-- Expansive step-by-step breakdown cards for Task 1, Task 2, Task 3, Task 4, Task 5... -->
             </div>
           </div>
 
@@ -1023,6 +1117,27 @@
           <button onclick="goToStep('step-signin')" class="btn-secondary" style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #fff;">
             Switch Account
           </button>
+        </div>
+      </div>
+
+      <!-- INBOX: REAL-TIME IN-APP MESSAGES FROM NEW JOINERS -->
+      <div class="inbox-messages-panel" id="hr-inbox-panel">
+        <div class="inbox-panel-header">
+          <div class="inbox-panel-title-wrap">
+            <span class="material-symbols-outlined" style="font-size: 24px; color: var(--stitch-primary);">chat</span>
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--color-slate-900); margin: 0;">
+              Fresher In-App Messages &amp; Inquiries
+            </h3>
+            <span class="inbox-live-pill" id="hr-inbox-counter">
+              <span class="status-dot"></span>
+              <span id="hr-inbox-count-text">0 New Messages</span>
+            </span>
+          </div>
+          <span style="font-size: 0.78rem; color: var(--color-slate-500);">Live Direct Channel · Connected to Rohan Sharma</span>
+        </div>
+
+        <div id="hr-inbox-messages-list">
+          <!-- Dynamically populated from inAppMessages array -->
         </div>
       </div>
 
@@ -1189,6 +1304,27 @@
           <button onclick="goToStep('step-signin')" class="btn-secondary" style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #fff;">
             Switch Account
           </button>
+        </div>
+      </div>
+
+      <!-- INBOX: REAL-TIME IN-APP MESSAGES FROM ASSIGNED MENTEE -->
+      <div class="inbox-messages-panel" id="buddy-inbox-panel">
+        <div class="inbox-panel-header">
+          <div class="inbox-panel-title-wrap">
+            <span class="material-symbols-outlined" style="font-size: 24px; color: #7c3aed;">chat</span>
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--color-slate-900); margin: 0;">
+              Direct In-App Messages from Mentee (Rohan Sharma)
+            </h3>
+            <span class="inbox-live-pill" id="buddy-inbox-counter" style="background: #ede9fe; color: #6d28d9; border-color: #ddd6fe;">
+              <span class="status-dot" style="background-color: #7c3aed;"></span>
+              <span id="buddy-inbox-count-text">0 New Messages</span>
+            </span>
+          </div>
+          <span style="font-size: 0.78rem; color: var(--color-slate-500);">Direct Mentorship Line</span>
+        </div>
+
+        <div id="buddy-inbox-messages-list">
+          <!-- Dynamically populated from inAppMessages array -->
         </div>
       </div>
 
@@ -1367,6 +1503,91 @@
       </div>
     </div>
   </footer>
+
+  <!-- IN-APP VOIP DIRECT CALL MODAL -->
+  <div id="inapp-call-modal" class="inapp-modal-overlay">
+    <div class="inapp-modal-card">
+      <div class="call-dialog-body">
+        <div class="call-avatar-pulse" id="call-modal-avatar">PS</div>
+        <div class="call-contact-name" id="call-modal-name">Priya Sharma</div>
+        <div class="call-contact-role" id="call-modal-role">Lead HR People Partner · Microsoft</div>
+        <div class="call-status-badge" id="call-modal-status">
+          <span class="material-symbols-outlined" style="font-size: 15px; animation: spin 2s linear infinite;">sync</span>
+          <span id="call-status-label">Calling Enterprise VoIP...</span>
+        </div>
+        
+        <div class="call-actions-row">
+          <button type="button" class="btn-call-round btn-mute" id="btn-call-mute" onclick="toggleCallMute()" title="Mute Microphone">
+            <span class="material-symbols-outlined" id="call-mute-icon">mic</span>
+          </button>
+          <button type="button" class="btn-call-round btn-end-call" onclick="endInAppCall()" title="End Call">
+            <span class="material-symbols-outlined" style="font-size: 26px;">call_end</span>
+          </button>
+          <button type="button" class="btn-call-round btn-speaker" id="btn-call-speaker" onclick="toggleCallSpeaker()" title="Speaker">
+            <span class="material-symbols-outlined" id="call-speaker-icon">volume_up</span>
+          </button>
+        </div>
+
+        <div>
+          <a id="call-direct-dial-link" href="tel:+918067894701" class="call-direct-dial-link">
+            Dial Directly on Phone App (+91 80 6789-HR01)
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IN-APP DIRECT MESSENGER MODAL -->
+  <div id="inapp-message-modal" class="inapp-modal-overlay">
+    <div class="inapp-modal-card">
+      <div class="msg-dialog-header">
+        <div>
+          <div class="msg-dialog-title" id="msg-modal-title">Direct In-App Message</div>
+          <div class="msg-dialog-subtitle" id="msg-modal-subtitle">To: Priya Sharma (Lead HR Partner)</div>
+        </div>
+        <button type="button" class="msg-dialog-close" onclick="closeInAppMessenger()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="msg-dialog-body">
+        <div style="font-size: 0.76rem; font-weight: 700; color: var(--color-slate-500); margin-bottom: 6px;">
+          QUICK TOPIC TEMPLATES:
+        </div>
+        <div class="msg-chips-group">
+          <button type="button" class="msg-quick-chip" onclick="setMsgQuickTemplate('Day 1 tax and payroll documentation question.')">
+            📄 Tax / Payroll docs
+          </button>
+          <button type="button" class="msg-quick-chip" onclick="setMsgQuickTemplate('Ready for the 1:1 briefing sync call.')">
+            📅 Ready for 1:1 Sync
+          </button>
+          <button type="button" class="msg-quick-chip" onclick="setMsgQuickTemplate('Need assistance with zero-trust token provisioning.')">
+            🔑 Token / VPN Access
+          </button>
+        </div>
+
+        <label style="display: block; font-size: 0.78rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">
+          Your Message (From: Rohan Sharma):
+        </label>
+        <textarea 
+          id="inapp-msg-textarea" 
+          class="msg-textarea" 
+          placeholder="Type your message here... The recipient will receive this in their portal in real time."
+        ></textarea>
+
+        <div class="msg-dialog-footer">
+          <span style="font-size: 0.74rem; color: #16a34a; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+            <span class="material-symbols-outlined" style="font-size: 15px;">encrypted</span>
+            End-to-End Enterprise Synced
+          </span>
+          <button type="button" class="btn-send-inapp-msg" onclick="sendInAppMessage()">
+            <span>Send Message</span>
+            <span class="material-symbols-outlined" style="font-size: 17px;">send</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Toast Notification -->
   <div id="toast" class="toast-notification">
@@ -1648,17 +1869,50 @@
       }
     }
 
-    // Filter Company Cards in Step 2
+    // Filter Company Cards in Step 2 with Category and Text Search
+    let currentCategoryFilter = 'all';
+
+    function filterByCategory(category, btnEl) {
+      currentCategoryFilter = category;
+      document.querySelectorAll('.directory-category-bar .filter-pill').forEach(pill => {
+        pill.classList.remove('active');
+      });
+      if (btnEl) btnEl.classList.add('active');
+      const input = document.getElementById('company-filter-input');
+      filterCompanyCards(input ? input.value : '');
+    }
+
+    function clearCompanyFilter() {
+      const input = document.getElementById('company-filter-input');
+      if (input) {
+        input.value = '';
+        filterCompanyCards('');
+        input.focus();
+      }
+    }
+
     function filterCompanyCards(query) {
-      const q = query.toLowerCase().trim();
+      const q = (query !== undefined ? query : (document.getElementById('company-filter-input') ? document.getElementById('company-filter-input').value : '')).toLowerCase().trim();
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (clearBtn) {
+        clearBtn.style.display = q.length > 0 ? 'inline-flex' : 'none';
+      }
+
       const cards = document.querySelectorAll('#step-companies .company-card');
       let visibleCount = 0;
       cards.forEach(card => {
         const text = card.textContent.toLowerCase();
-        const matches = text.includes(q);
-        card.style.display = matches ? 'flex' : 'none';
-        if (matches) visibleCount++;
+        const cardCat = (card.getAttribute('data-category') || '').toLowerCase();
+        const matchesSearch = !q || text.includes(q);
+        const matchesCategory = currentCategoryFilter === 'all' || 
+          cardCat.includes(currentCategoryFilter.toLowerCase()) || 
+          text.includes(currentCategoryFilter.toLowerCase());
+
+        const visible = matchesSearch && matchesCategory;
+        card.style.display = visible ? 'flex' : 'none';
+        if (visible) visibleCount++;
       });
+
       const counter = document.getElementById('result-counter-text');
       if (counter) {
         counter.textContent = `${visibleCount} available`;
@@ -1951,78 +2205,431 @@
         });
       }
 
-      // Render Section 3: Deep-Dive Task Breakdowns
-      const breakdownContainer = document.getElementById('manual-task-breakdowns');
-      breakdownContainer.innerHTML = '';
+      // Update Copilot Quick Chips (Explanations are requested dynamically on-demand from Copilot)
+      updateCopilotChips();
+    }
 
-      dailyTasksState.forEach((task, index) => {
-        const bCard = document.createElement('div');
-        bCard.className = 'breakdown-card';
-        bCard.id = `breakdown-task-${task.id}`;
+    // ==============================================================
+    // CONTACTS DROPDOWN CONTROLLER
+    // ==============================================================
+    let currentContactFilter = 'none';
 
-        let stepsHtml = '';
-        if (task.steps && task.steps.length > 0) {
-          stepsHtml = task.steps.map(s => `<li>${s}</li>`).join('');
+    function onContactDropdownSelect(val) {
+      currentContactFilter = val;
+      const select = document.getElementById('contact-directory-select');
+      if (select && select.value !== val) select.value = val;
+
+      // Update Quick Pills
+      document.querySelectorAll('.contacts-quick-pills .contact-pill-btn').forEach(pill => {
+        pill.classList.toggle('active', pill.getAttribute('id') === `pill-${val}`);
+      });
+
+      const placeholder = document.getElementById('contacts-collapsed-placeholder');
+      const grid = document.getElementById('contacts-grid-pro');
+      const counter = document.getElementById('contacts-active-counter');
+      const cardHr = document.getElementById('contact-card-hr');
+      const cardBuddy = document.getElementById('contact-card-buddy');
+      const cardIt = document.getElementById('contact-card-it');
+
+      if (val === 'none') {
+        if (placeholder) placeholder.style.display = 'flex';
+        if (grid) grid.style.display = 'none';
+        if (counter) counter.textContent = 'Direct Lines Collapsed';
+      } else {
+        if (placeholder) placeholder.style.display = 'none';
+        if (grid) grid.style.display = 'grid';
+
+        if (val === 'all') {
+          if (cardHr) cardHr.style.display = 'flex';
+          if (cardBuddy) cardBuddy.style.display = 'flex';
+          if (cardIt) cardIt.style.display = 'flex';
+          if (counter) counter.textContent = '3 Priority Lines Active';
+        } else if (val === 'hr') {
+          if (cardHr) cardHr.style.display = 'flex';
+          if (cardBuddy) cardBuddy.style.display = 'none';
+          if (cardIt) cardIt.style.display = 'none';
+          if (counter) counter.textContent = 'Priya Sharma (HR) Active';
+        } else if (val === 'buddy') {
+          if (cardHr) cardHr.style.display = 'none';
+          if (cardBuddy) cardBuddy.style.display = 'flex';
+          if (cardIt) cardIt.style.display = 'none';
+          if (counter) counter.textContent = 'Rahul Pandey (Buddy) Active';
+        } else if (val === 'it') {
+          if (cardHr) cardHr.style.display = 'none';
+          if (cardBuddy) cardBuddy.style.display = 'none';
+          if (cardIt) cardIt.style.display = 'flex';
+          if (counter) counter.textContent = 'IT Desk (24/7) Active';
+        }
+      }
+    }
+
+    function setContactDropdownFilter(val) {
+      onContactDropdownSelect(val);
+    }
+
+    // ==============================================================
+    // IN-APP VOIP DIRECT CALL CONTROLLER
+    // ==============================================================
+    let activeCallTimer = null;
+    let callSeconds = 0;
+    let isCallMuted = false;
+    let isCallSpeaker = false;
+
+    function openInAppCall(roleKey) {
+      const modal = document.getElementById('inapp-call-modal');
+      const avatar = document.getElementById('call-modal-avatar');
+      const name = document.getElementById('call-modal-name');
+      const role = document.getElementById('call-modal-role');
+      const statusLabel = document.getElementById('call-status-label');
+      const directDial = document.getElementById('call-direct-dial-link');
+
+      if (roleKey === 'hr') {
+        if (avatar) avatar.textContent = 'PS';
+        if (name) name.textContent = 'Priya Sharma';
+        if (role) role.textContent = 'Lead HR People Partner · Microsoft (Floor 4, Desk HR-12)';
+        if (directDial) {
+          directDial.href = 'tel:+918067894701';
+          directDial.textContent = 'Dial Directly on Phone App (+91 (80) 6789-HR01)';
+        }
+      } else if (roleKey === 'buddy') {
+        if (avatar) avatar.textContent = 'RP';
+        if (name) name.textContent = 'Rahul Pandey';
+        if (role) role.textContent = 'Principal Solutions Architect · Technical Buddy (Cloud & AI)';
+        if (directDial) {
+          directDial.href = 'tel:+918067892831';
+          directDial.textContent = 'Dial Directly on Phone App (+91 (80) 6789-BUD1)';
+        }
+      } else if (roleKey === 'it') {
+        if (avatar) avatar.textContent = 'IT';
+        if (name) name.textContent = 'Microsoft IT Helpdesk';
+        if (role) role.textContent = '24/7 Identity, Hardware & VPN Support Hotline';
+        if (directDial) {
+          directDial.href = 'tel:+918005556738';
+          directDial.textContent = 'Dial Directly on Phone App (+91 (800) 555-MSFT-IN)';
+        }
+      }
+
+      callSeconds = 0;
+      isCallMuted = false;
+      isCallSpeaker = false;
+      const muteBtn = document.getElementById('btn-call-mute');
+      if (muteBtn) muteBtn.classList.remove('active');
+
+      if (statusLabel) statusLabel.textContent = 'Calling Enterprise VoIP line...';
+      if (modal) modal.classList.add('active');
+
+      if (activeCallTimer) clearInterval(activeCallTimer);
+      // Simulate connection pickup after 1.5 seconds
+      setTimeout(() => {
+        if (modal.classList.contains('active')) {
+          if (statusLabel) statusLabel.textContent = 'Connected · 00:01';
+          activeCallTimer = setInterval(() => {
+            callSeconds++;
+            const mins = String(Math.floor(callSeconds / 60)).padStart(2, '0');
+            const secs = String(callSeconds % 60).padStart(2, '0');
+            if (statusLabel) statusLabel.textContent = `Connected · ${mins}:${secs}`;
+          }, 1000);
+        }
+      }, 1500);
+    }
+
+    function toggleCallMute() {
+      isCallMuted = !isCallMuted;
+      const btn = document.getElementById('btn-call-mute');
+      const icon = document.getElementById('call-mute-icon');
+      if (btn) btn.classList.toggle('active', isCallMuted);
+      if (icon) icon.textContent = isCallMuted ? 'mic_off' : 'mic';
+      showNotification(isCallMuted ? 'Microphone Muted' : 'Microphone Active');
+    }
+
+    function toggleCallSpeaker() {
+      isCallSpeaker = !isCallSpeaker;
+      const btn = document.getElementById('btn-call-speaker');
+      if (btn) btn.classList.toggle('active', isCallSpeaker);
+      showNotification(isCallSpeaker ? 'HD Audio Speaker Enabled' : 'Standard Earpiece Audio');
+    }
+
+    function endInAppCall() {
+      if (activeCallTimer) {
+        clearInterval(activeCallTimer);
+        activeCallTimer = null;
+      }
+      const modal = document.getElementById('inapp-call-modal');
+      if (modal) modal.classList.remove('active');
+      showNotification(`Call ended (Duration: ${callSeconds}s). Recorded in enterprise audit log.`);
+    }
+
+    // ==============================================================
+    // IN-APP DIRECT MESSAGING & CROSS-ROLE SYNC
+    // ==============================================================
+    let currentMsgRecipientKey = 'hr';
+    let inAppMessages = [];
+
+    function loadInAppMessages() {
+      try {
+        const stored = localStorage.getItem('startsmart_in_app_messages');
+        if (stored) {
+          inAppMessages = JSON.parse(stored);
         } else {
-          stepsHtml = `<li>Follow the instructions outlined in your welcome briefing or consult your buddy.</li>`;
+          inAppMessages = [
+            {
+              id: 1727650000000,
+              recipientKey: 'hr',
+              recipientName: 'Priya Sharma',
+              recipientEmail: 'priya.sharma.hr@microsoft.in',
+              senderName: 'Rohan Sharma',
+              senderRole: 'New Joiner · Class of 2026',
+              senderEmail: 'rohan.sharma2026@microsoft.in',
+              senderAvatar: 'RS',
+              message: 'Hello Priya! I uploaded my initial tax declarations and ID verification docs. Could you please confirm if everything is cleared for Day 1?',
+              timestamp: '10:15 AM',
+              replies: [
+                {
+                  from: 'Priya Sharma (HR)',
+                  text: 'Hi Rohan! Welcome aboard. Documents verified and approved! Let me know if you need assistance with health insurance opt-in.',
+                  timestamp: '10:22 AM'
+                }
+              ]
+            }
+          ];
+          saveInAppMessages();
+        }
+      } catch(e) {
+        inAppMessages = [];
+      }
+    }
+
+    function saveInAppMessages() {
+      try {
+        localStorage.setItem('startsmart_in_app_messages', JSON.stringify(inAppMessages));
+      } catch(e) {}
+    }
+
+    function openInAppMessenger(roleKey) {
+      currentMsgRecipientKey = roleKey;
+      const modal = document.getElementById('inapp-message-modal');
+      const subtitle = document.getElementById('msg-modal-subtitle');
+      const textarea = document.getElementById('inapp-msg-textarea');
+
+      if (roleKey === 'hr') {
+        if (subtitle) subtitle.textContent = 'To: Priya Sharma (Lead HR People Partner · priya.sharma.hr@microsoft.in)';
+      } else if (roleKey === 'buddy') {
+        if (subtitle) subtitle.textContent = 'To: Rahul Pandey (Assigned Buddy Mentor · rahul.pandey2021@microsoft.in)';
+      } else if (roleKey === 'it') {
+        if (subtitle) subtitle.textContent = 'To: Microsoft IT Helpdesk (operations.support@microsoft.in)';
+      }
+
+      if (textarea) textarea.value = '';
+      if (modal) modal.classList.add('active');
+      if (textarea) textarea.focus();
+    }
+
+    function closeInAppMessenger() {
+      const modal = document.getElementById('inapp-message-modal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function setMsgQuickTemplate(text) {
+      const textarea = document.getElementById('inapp-msg-textarea');
+      if (textarea) {
+        textarea.value = text;
+        textarea.focus();
+      }
+    }
+
+    function sendInAppMessage() {
+      const textarea = document.getElementById('inapp-msg-textarea');
+      const text = textarea ? textarea.value.trim() : '';
+
+      if (!text) {
+        showNotification('⚠️ Please enter a message before sending.');
+        if (textarea) textarea.focus();
+        return;
+      }
+
+      const recipientName = currentMsgRecipientKey === 'hr' ? 'Priya Sharma' : (currentMsgRecipientKey === 'buddy' ? 'Rahul Pandey' : 'IT Helpdesk');
+      const recipientEmail = currentMsgRecipientKey === 'hr' ? 'priya.sharma.hr@microsoft.in' : (currentMsgRecipientKey === 'buddy' ? 'rahul.pandey2021@microsoft.in' : 'operations.support@microsoft.in');
+      const sender = currentAuthenticatedUser || { name: 'Rohan Sharma', email: 'rohan.sharma2026@microsoft.in' };
+
+      const newMsg = {
+        id: Date.now(),
+        recipientKey: currentMsgRecipientKey,
+        recipientName: recipientName,
+        recipientEmail: recipientEmail,
+        senderName: sender.name,
+        senderRole: 'New Joiner · Class of 2026 (Cloud & AI)',
+        senderEmail: sender.email,
+        senderAvatar: sender.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase(),
+        message: text,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        replies: []
+      };
+
+      inAppMessages.unshift(newMsg);
+      saveInAppMessages();
+
+      closeInAppMessenger();
+      showNotification(`✉️ In-app message sent to ${recipientName}! They can view and reply in their portal.`);
+
+      // Also append notice into AI Copilot feed
+      if (typeof appendChatBubble === 'function') {
+        appendChatBubble('assistant', `<em>[In-App Messenger] You sent a direct message to <strong>${recipientName}</strong>:</em><br>"${text}"`);
+      }
+
+      // Re-render inboxes
+      renderHRInbox();
+      renderBuddyInbox();
+    }
+
+    // Render HR Incoming Messages List
+    function renderHRInbox() {
+      const list = document.getElementById('hr-inbox-messages-list');
+      const counterText = document.getElementById('hr-inbox-count-text');
+      if (!list) return;
+
+      const msgs = inAppMessages.filter(m => m.recipientKey === 'hr' || m.recipientEmail === 'priya.sharma.hr@microsoft.in');
+
+      if (counterText) {
+        counterText.textContent = `${msgs.length} Message${msgs.length === 1 ? '' : 's'} from Joiners`;
+      }
+
+      if (msgs.length === 0) {
+        list.innerHTML = `
+          <div style="padding: 20px; text-align: center; color: var(--color-slate-500); background: #f8fafc; border-radius: var(--radius-md); font-size: 0.84rem;">
+            No incoming messages from new joiners yet. When Rohan Sharma or freshers click "In-App Message", inquiries appear here in real time.
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      msgs.forEach(m => {
+        let repliesHtml = '';
+        if (m.replies && m.replies.length > 0) {
+          repliesHtml = m.replies.map(r => `
+            <div style="background: #eff6ff; border-left: 3px solid #2563eb; padding: 8px 12px; border-radius: 4px; margin-top: 8px; font-size: 0.8rem; color: #1e3a8a;">
+              <strong>${r.from}:</strong> ${r.text} <span style="font-size: 0.7rem; color: #64748b; margin-left: 6px;">(${r.timestamp})</span>
+            </div>
+          `).join('');
         }
 
-        bCard.innerHTML = `
-          <div class="breakdown-header">
-            <div class="breakdown-header-left">
-              <div class="breakdown-task-num ${task.done ? 'completed' : ''}">${task.done ? '✓' : (index + 1)}</div>
-              <div>
-                <span class="manual-task-tag ${task.tagClass || 'tag-engineering'}" style="margin-bottom: 2px;">${task.tag || 'Task'}</span>
-                <div class="breakdown-title-text">${task.title}</div>
+        html += `
+          <div class="inbox-msg-card">
+            <div class="inbox-msg-card-top">
+              <div class="inbox-sender-info">
+                <div class="inbox-sender-avatar">${m.senderAvatar || 'RS'}</div>
+                <div>
+                  <div style="font-weight: 800; font-size: 0.9rem; color: var(--color-slate-900);">${m.senderName}</div>
+                  <div style="font-size: 0.72rem; color: var(--color-slate-500);">${m.senderRole} · ${m.senderEmail}</div>
+                </div>
               </div>
+              <span style="font-size: 0.75rem; color: var(--color-slate-500); font-family: var(--font-mono);">${m.timestamp}</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 0.75rem; color: var(--color-slate-500); font-family: var(--font-mono);">Est: ${task.duration || '25m'}</span>
-              <button class="btn-task-explain" onclick="askCopilotToExplainTask(${task.id})">
-                <span>⚡ Explain with AI</span>
+
+            <div class="inbox-msg-body">
+              ${m.message}
+            </div>
+
+            ${repliesHtml}
+
+            <div class="inbox-reply-box" style="margin-top: 10px;">
+              <input type="text" id="reply-input-${m.id}" class="inbox-reply-input" placeholder="Type quick reply to ${m.senderName}..." onkeydown="if(event.key==='Enter'){ sendReplyFromRole(${m.id}, 'hr'); }">
+              <button type="button" class="btn-send-reply" onclick="sendReplyFromRole(${m.id}, 'hr')">
+                Reply ↩
               </button>
             </div>
           </div>
+        `;
+      });
+      list.innerHTML = html;
+    }
 
-          <div class="breakdown-body">
-            <div>
-              <div class="breakdown-field-label">1. Primary Objective & Purpose:</div>
-              <p style="color: var(--color-slate-700);">${task.objective || task.desc}</p>
-            </div>
+    // Render Buddy Incoming Messages List
+    function renderBuddyInbox() {
+      const list = document.getElementById('buddy-inbox-messages-list');
+      const counterText = document.getElementById('buddy-inbox-count-text');
+      if (!list) return;
 
-            <div>
-              <div class="breakdown-field-label">2. Step-by-Step Execution Protocol:</div>
-              <ol class="breakdown-steps-list">
-                ${stepsHtml}
-              </ol>
-            </div>
+      const msgs = inAppMessages.filter(m => m.recipientKey === 'buddy' || m.recipientEmail === 'rahul.pandey2021@microsoft.in');
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; background: var(--color-slate-50); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--color-slate-200);">
-              <div>
-                <div class="breakdown-field-label">Tools & Resources:</div>
-                <span style="font-size: 0.78rem; color: var(--color-slate-700);">${task.tools || 'Microsoft 365, Teams, Azure Portal'}</span>
-              </div>
-              <div>
-                <div class="breakdown-field-label">Completion Verification:</div>
-                <span style="font-size: 0.78rem; color: #047857; font-weight: 600;">${task.verification || 'Signed off upon verification'}</span>
-              </div>
-            </div>
-          </div>
+      if (counterText) {
+        counterText.textContent = `${msgs.length} Message${msgs.length === 1 ? '' : 's'} from Mentee`;
+      }
 
-          <div class="breakdown-footer">
-            <div style="font-size: 0.75rem; color: var(--color-slate-500);">
-              Status: <strong style="color: ${task.done ? '#059669' : '#d97706'}">${task.done ? 'Verified & Completed' : 'Pending Action'}</strong>
-            </div>
-            <button class="btn-task-toggle ${task.done ? 'done-state' : 'pending-state'}" onclick="toggleManualTask(${task.id})">
-              ${task.done ? '✓ Mark as Pending' : 'Mark Task as Completed'}
-            </button>
+      if (msgs.length === 0) {
+        list.innerHTML = `
+          <div style="padding: 20px; text-align: center; color: var(--color-slate-500); background: #f8fafc; border-radius: var(--radius-md); font-size: 0.84rem;">
+            No incoming messages from Rohan Sharma yet. Direct messages sent to Buddy will appear here instantly.
           </div>
         `;
-        breakdownContainer.appendChild(bCard);
+        return;
+      }
+
+      let html = '';
+      msgs.forEach(m => {
+        let repliesHtml = '';
+        if (m.replies && m.replies.length > 0) {
+          repliesHtml = m.replies.map(r => `
+            <div style="background: #fdf4ff; border-left: 3px solid #9333ea; padding: 8px 12px; border-radius: 4px; margin-top: 8px; font-size: 0.8rem; color: #581c87;">
+              <strong>${r.from}:</strong> ${r.text} <span style="font-size: 0.7rem; color: #64748b; margin-left: 6px;">(${r.timestamp})</span>
+            </div>
+          `).join('');
+        }
+
+        html += `
+          <div class="inbox-msg-card">
+            <div class="inbox-msg-card-top">
+              <div class="inbox-sender-info">
+                <div class="inbox-sender-avatar" style="background: linear-gradient(135deg, #7c3aed, #a855f7);">${m.senderAvatar || 'RS'}</div>
+                <div>
+                  <div style="font-weight: 800; font-size: 0.9rem; color: var(--color-slate-900);">${m.senderName}</div>
+                  <div style="font-size: 0.72rem; color: var(--color-slate-500);">${m.senderRole} · ${m.senderEmail}</div>
+                </div>
+              </div>
+              <span style="font-size: 0.75rem; color: var(--color-slate-500); font-family: var(--font-mono);">${m.timestamp}</span>
+            </div>
+
+            <div class="inbox-msg-body">
+              ${m.message}
+            </div>
+
+            ${repliesHtml}
+
+            <div class="inbox-reply-box" style="margin-top: 10px;">
+              <input type="text" id="reply-input-${m.id}" class="inbox-reply-input" placeholder="Type reply to ${m.senderName}..." onkeydown="if(event.key==='Enter'){ sendReplyFromRole(${m.id}, 'buddy'); }">
+              <button type="button" class="btn-send-reply" style="background: #7c3aed;" onclick="sendReplyFromRole(${m.id}, 'buddy')">
+                Reply ↩
+              </button>
+            </div>
+          </div>
+        `;
+      });
+      list.innerHTML = html;
+    }
+
+    // Role Sends Reply
+    function sendReplyFromRole(messageId, roleKey) {
+      const input = document.getElementById(`reply-input-${messageId}`);
+      const text = input ? input.value.trim() : '';
+      if (!text) return;
+
+      const targetMsg = inAppMessages.find(m => m.id === messageId);
+      if (!targetMsg) return;
+
+      if (!targetMsg.replies) targetMsg.replies = [];
+
+      const senderTitle = roleKey === 'hr' ? 'Priya Sharma (Lead HR Partner)' : 'Rahul Pandey (Assigned Buddy)';
+      targetMsg.replies.push({
+        from: senderTitle,
+        text: text,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       });
 
-      // Update Copilot Quick Chips
-      updateCopilotChips();
+      saveInAppMessages();
+      showNotification(`Reply sent to ${targetMsg.senderName}!`);
+
+      if (roleKey === 'hr') renderHRInbox();
+      if (roleKey === 'buddy') renderBuddyInbox();
     }
 
     // Filter Manual Tasks
@@ -2426,6 +3033,9 @@
 
       // Render HR Fresher Task Inventory
       renderHRTaskInventory();
+
+      // Render Real-time Incoming Joiner In-App Messages
+      renderHRInbox();
     }
 
     // Render HR Task Inventory Table with 1-Click Remove
@@ -2590,6 +3200,9 @@
       document.getElementById('mentee-display-dept').textContent = `${mentee.title} · ${mentee.department}`;
       document.getElementById('mentee-display-email').textContent = mentee.email;
       document.getElementById('mentee-avatar-box').textContent = mentee.name.split(' ').map(w => w[0]).join('');
+
+      // Render Real-time Incoming Mentee In-App Messages
+      renderBuddyInbox();
     }
 
     // Embedded Company Registration
@@ -2657,6 +3270,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       goToStep('step-gateway');
       resetCorporateSlideTimer();
+      loadInAppMessages();
 
       const toggleBtn = document.getElementById('toggle-password');
       const passwordInput = document.getElementById('signin-password');
