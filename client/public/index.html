@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Enterprise Onboarding Portal — Gateway</title>
-  <meta name="description" content="Enterprise Onboarding Gateway. Choose your enrolled company or register a new company, select your role as New Joiner, HR, or Admin, and access your daily onboarding checklist and contacts.">
+  <meta name="description" content="Enterprise Onboarding Gateway. Choose your enrolled company or register a new company, sign in with automatic role detection, and access your interactive AI Onboarding Chatbot, daily checklist, and contacts.">
   
-  <!-- Modern Typography (Inter) -->
+  <!-- Modern Typography (Inter & JetBrains Mono) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -68,7 +68,7 @@
         <div class="brand-text">
           <div class="brand-title">
             Enterprise<span>Portal</span>
-            <span class="brand-badge">ERP Gateway</span>
+            <span class="brand-badge">Gateway</span>
           </div>
           <span class="brand-tagline">Intelligent Employee Onboarding & Organization Gateway</span>
         </div>
@@ -94,7 +94,7 @@
   <main class="main-content">
 
     <!-- ==============================================================
-         STEP 1: PRIMARY GATEWAY (2 OPTIONS: My Company vs Register Company)
+         STEP 1: PRIMARY GATEWAY (2 OPTIONS: Already a Member vs Register a Company)
          ============================================================== -->
     <section id="step-gateway" class="step-view">
       <div class="gateway-hero">
@@ -112,21 +112,21 @@
         </h1>
 
         <p class="hero-subtitle">
-          Select whether you are joining an existing enrolled organization, or registering a brand-new corporate workspace.
+          Select whether you are an employee/member of an enrolled company, or registering a brand-new organization workspace.
         </p>
       </div>
 
       <!-- The Two Primary Options Grid -->
       <div class="two-options-grid" aria-label="Primary Gateway Options">
 
-        <!-- Option 1: My Company -->
+        <!-- Option 1: Already a Company Member / My Company -->
         <div 
           class="role-card" 
           data-role="existing-company" 
           onclick="goToStep('step-companies')"
           tabindex="0" 
           role="button" 
-          aria-label="My Company - Select your enrolled organization"
+          aria-label="Already a Company Member - Select your enrolled organization"
         >
           <div>
             <div class="card-header-top">
@@ -145,27 +145,27 @@
                   <path d="M8 14h.01"></path>
                 </svg>
               </div>
-              <span class="role-badge-tag">Enrolled Tenant</span>
+              <span class="role-badge-tag">Already a Member</span>
             </div>
 
             <div class="card-body">
-              <h2 class="card-title">My Company</h2>
+              <h2 class="card-title">Already a Company Member</h2>
               <p class="card-description">
-                I am an employee or staff member joining an enrolled organization. Select your company (Amazon, Google, Microsoft, etc.) to access your role workspace.
+                I am an employee, HR partner, mentor buddy, or administrator of an enrolled organization (Microsoft, Amazon, Google, etc.).
               </p>
 
               <ul class="card-features">
                 <li>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  Select from verified enterprise companies
+                  Select from enrolled companies (Microsoft, Amazon, Google)
                 </li>
                 <li>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  Choose role: New Joiner, HR, or Admin
+                  Automatic role detection (Joiner, HR, Buddy, Admin)
                 </li>
                 <li>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  Access numbers, contacts & daily tasks
+                  Interactive AI Onboarding Chatbot for new joiners
                 </li>
               </ul>
             </div>
@@ -295,7 +295,7 @@
     </section>
 
     <!-- ==============================================================
-         STEP 2: SELECT COMPANY (Amazon, Google, Microsoft, etc.)
+         STEP 2: SELECT COMPANY (Microsoft, Amazon, Google, etc.)
          ============================================================== -->
     <section id="step-companies" class="step-view" style="display: none;">
       <div class="breadcrumbs-bar">
@@ -309,7 +309,7 @@
           Select <span class="highlight">Your Company</span>
         </h2>
         <p class="hero-subtitle">
-          Click your enrolled organization to identify whether you are a New Joiner, HR Partner, or Administrator.
+          Click your enrolled organization to proceed to sign in. The system will automatically detect your role.
         </p>
       </div>
 
@@ -324,20 +324,30 @@
         >
       </div>
 
-      <!-- Companies Grid -->
+      <!-- Companies Grid (Microsoft Featured First) -->
       <div class="companies-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
 
-        <!-- Amazon (Highlighted as per audio) -->
+        <!-- Microsoft (Featured as requested) -->
+        <div class="company-card" data-company-key="microsoft" onclick="selectCompany('microsoft')" style="border-color: #00a4ef; box-shadow: 0 4px 14px rgba(0, 164, 239, 0.15);">
+          <div class="company-logo" style="background: linear-gradient(135deg, #00A4EF, #7FBA00);">M</div>
+          <div class="company-info">
+            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
+              <span>Microsoft Corporation</span>
+              <span style="font-size: 0.65rem; background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px; font-weight: 700;">Featured</span>
+            </div>
+            <div class="company-meta">India / Redmond · Cloud & AI · @microsoft.in</div>
+          </div>
+          <div style="color: #00a4ef; font-weight: 700; font-size: 0.82rem;">Sign In →</div>
+        </div>
+
+        <!-- Amazon -->
         <div class="company-card" data-company-key="amazon" onclick="selectCompany('amazon')">
           <div class="company-logo" style="background: linear-gradient(135deg, #FF9900, #146EB4);">A</div>
           <div class="company-info">
-            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
-              <span>Amazon Web Services</span>
-              <span style="font-size: 0.65rem; background: #fff3cd; color: #856404; padding: 2px 6px; border-radius: 4px; font-weight: 700;">Featured</span>
-            </div>
+            <div class="company-name">Amazon Web Services</div>
             <div class="company-meta">Seattle HQ · Cloud & Retail · @amazon.com</div>
           </div>
-          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Select →</div>
+          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Sign In →</div>
         </div>
 
         <!-- Google -->
@@ -347,17 +357,7 @@
             <div class="company-name">Google (Alphabet Inc.)</div>
             <div class="company-meta">Mountain View HQ · Cloud & AI · @google.com</div>
           </div>
-          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Select →</div>
-        </div>
-
-        <!-- Microsoft -->
-        <div class="company-card" data-company-key="microsoft" onclick="selectCompany('microsoft')">
-          <div class="company-logo" style="background: linear-gradient(135deg, #00A4EF, #7FBA00);">M</div>
-          <div class="company-info">
-            <div class="company-name">Microsoft Corporation</div>
-            <div class="company-meta">Redmond HQ · Cloud & AI · @microsoft.com</div>
-          </div>
-          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Select →</div>
+          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Sign In →</div>
         </div>
 
         <!-- Stripe -->
@@ -367,7 +367,7 @@
             <div class="company-name">Stripe Inc.</div>
             <div class="company-meta">San Francisco HQ · Payments · @stripe.com</div>
           </div>
-          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Select →</div>
+          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Sign In →</div>
         </div>
 
         <!-- Salesforce -->
@@ -377,7 +377,7 @@
             <div class="company-name">Salesforce</div>
             <div class="company-meta">San Francisco HQ · CRM · @salesforce.com</div>
           </div>
-          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Select →</div>
+          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Sign In →</div>
         </div>
 
         <!-- TechNova Systems -->
@@ -387,608 +387,409 @@
             <div class="company-name">TechNova Systems</div>
             <div class="company-meta">Austin HQ · Enterprise ERP · @technova.io</div>
           </div>
-          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Select →</div>
+          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Sign In →</div>
         </div>
 
       </div>
     </section>
 
     <!-- ==============================================================
-         STEP 3: ROLE SELECTION (New Joiner vs HR vs Admin)
+         STEP 3: MEMBER SIGN IN WITH AUTOMATIC ROLE DETECTION
          ============================================================== -->
-    <section id="step-roles" class="step-view" style="display: none;">
+    <section id="step-signin" class="step-view" style="display: none; max-width: 680px; margin: 0 auto; width: 100%;">
       <div class="breadcrumbs-bar">
         <button onclick="goToStep('step-gateway')">Gateway</button>
         <span class="breadcrumbs-separator">/</span>
         <button onclick="goToStep('step-companies')">Companies</button>
         <span class="breadcrumbs-separator">/</span>
-        <span id="role-breadcrumb-company-name">Amazon</span>
+        <span id="signin-breadcrumb-company">Microsoft</span>
       </div>
 
-      <div class="gateway-hero" style="margin-bottom: 36px;">
-        <div class="hero-pill" id="selected-company-pill">
-          Amazon Web Services
-        </div>
-
-        <h2 class="hero-heading" style="font-size: 2.2rem;">
-          Identify Your Role at <span class="highlight" id="role-heading-company-name">Amazon</span>
-        </h2>
-        <p class="hero-subtitle">
-          Select your role to access your tailored workspace, day-one contacts, and daily checklists:
-        </p>
-      </div>
-
-      <!-- 3 Roles Grid: New Joiner, HR, Admin -->
-      <div class="three-options-grid">
-
-        <!-- Role 1: New Joiner -->
-        <div 
-          class="role-card" 
-          data-role="new-joiner" 
-          onclick="selectRole('new-joiner')"
-          tabindex="0" 
-          role="button" 
-          aria-label="New Joiner - Employee onboarding, contacts, and daily checklist"
-        >
-          <div>
-            <div class="card-header-top">
-              <div class="card-icon-wrapper">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                  <line x1="19" y1="8" x2="19" y2="14"></line>
-                  <line x1="22" y1="11" x2="16" y2="11"></line>
-                </svg>
-              </div>
-              <span class="role-badge-tag">Employee Track</span>
-            </div>
-
-            <div class="card-body">
-              <h3 class="card-title">New Joiner</h3>
-              <p class="card-description">
-                Access your Day 1 onboarding command center with HR contacts, team & buddy phone numbers, and daily task checklist.
-              </p>
-
-              <ul class="card-features">
-                <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  Direct phone numbers of HR & Buddy
-                </li>
-                <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  Interactive daily task checklist
-                </li>
-                <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  NVIDIA AI Onboarding Copilot
-                </li>
-              </ul>
-            </div>
+      <div class="signin-card">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <div class="hero-pill" id="signin-company-pill" style="margin-bottom: 12px;">
+            Microsoft Corporation
           </div>
-
-          <div class="card-footer">
-            <span class="action-label">Enter as New Joiner</span>
-            <div class="action-arrow">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        <!-- Role 2: HR -->
-        <div 
-          class="role-card" 
-          data-role="buddy-admin" 
-          onclick="selectRole('hr')"
-          tabindex="0" 
-          role="button" 
-          aria-label="HR - People operations, mentee cohort, and blocker resolution"
-        >
-          <div>
-            <div class="card-header-top">
-              <div class="card-icon-wrapper">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-              </div>
-              <span class="role-badge-tag">HR Partner</span>
-            </div>
-
-            <div class="card-body">
-              <h3 class="card-title">HR</h3>
-              <p class="card-description">
-                Monitor onboarding cohorts, resolve access bottlenecks, track SLA response timers, and manage employee escalations.
-              </p>
-
-              <ul class="card-features">
-                <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  Active blocker escalation queue
-                </li>
-                <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  Cohort progress & readiness metrics
-                </li>
-                <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  1-click access approvals
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <span class="action-label">Open HR Dashboard</span>
-            <div class="action-arrow">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        <!-- Role 3: Admin -->
-        <div 
-          class="role-card" 
-          data-role="existing-company" 
-          onclick="selectRole('admin')"
-          tabindex="0" 
-          role="button" 
-          aria-label="Admin - System configuration, security, and directory sync"
-        >
-          <div>
-            <div class="card-header-top">
-              <div class="card-icon-wrapper">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                </svg>
-              </div>
-              <span class="role-badge-tag">Tenant Admin</span>
-            </div>
-
-            <div class="card-body">
-              <h3 class="card-title">Admin</h3>
-              <p class="card-description">
-                Configure corporate identity integrations (Okta, Azure AD), role definitions, workflow rules, and audit logs.
-              </p>
-
-              <ul class="card-features">
-                <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  SAML 2.0 & SSO identity mapping
-                </li>
-                <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  Department tracks & task blueprint
-                </li>
-                <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  Enterprise audit & security logs
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <span class="action-label">Open Admin Portal</span>
-            <div class="action-arrow">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ==============================================================
-         STEP 4: NEW JOINER PORTAL (Contacts of HR, Team & Buddy + Daily Tasks)
-         ============================================================== -->
-    <section id="step-joiner-portal" class="step-view" style="display: none; max-width: 1200px; margin: 0 auto; width: 100%;">
-      
-      <!-- Breadcrumb Bar -->
-      <div class="breadcrumbs-bar">
-        <button onclick="goToStep('step-gateway')">Gateway</button>
-        <span class="breadcrumbs-separator">/</span>
-        <button onclick="goToStep('step-companies')">Companies</button>
-        <span class="breadcrumbs-separator">/</span>
-        <button onclick="goToStep('step-roles')" id="joiner-breadcrumb-company">Amazon</button>
-        <span class="breadcrumbs-separator">/</span>
-        <span>New Joiner Workspace</span>
-      </div>
-
-      <!-- Welcome Banner -->
-      <div class="portal-header-banner">
-        <div>
-          <div style="font-size: 0.8rem; font-weight: 700; color: #818cf8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">
-            Personalized Day-One Workspace
-          </div>
-          <h1 class="portal-banner-title" id="joiner-display-title">
-            Welcome to <span id="portal-company-name">Amazon Web Services</span>!
-          </h1>
-          <p class="portal-banner-desc" id="joiner-display-desc">
-            You are enrolled as a <strong id="portal-user-role">New Joiner</strong>. Here are the direct phone numbers and contacts for your HR, your team & buddy, and your interactive daily checklist.
+          <h2 class="form-title" style="font-size: 1.8rem;">
+            Sign In to <span class="highlight" id="signin-company-title">Microsoft</span>
+          </h2>
+          <p class="form-subtitle" style="margin-bottom: 18px;">
+            Enter your email ID and password. The system will <strong>automatically detect your role</strong> (New Joiner, HR, Past Member / Buddy, or Admin).
           </p>
+        </div>
 
-          <div class="portal-meta-badges">
-            <span class="meta-chip">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              Day 1 Kickoff
-            </span>
-            <span class="meta-chip">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              SSO Authenticated
-            </span>
-            <button onclick="goToStep('step-companies')" style="background: none; border: none; color: #a5b4fc; text-decoration: underline; font-size: 0.78rem; font-weight: 600; cursor: pointer; margin-left: 10px;">
-              Switch Company
+        <!-- 1-Click Quick Select Persona Chips (For Microsoft) -->
+        <div id="microsoft-persona-section" style="background: var(--color-slate-50); border: 1px solid var(--color-slate-200); border-radius: var(--radius-md); padding: 14px; margin-bottom: 20px;">
+          <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-slate-500); letter-spacing: 0.05em; margin-bottom: 8px;">
+            ⚡ Quick 1-Click Test Personas (Pre-configured Credentials):
+          </div>
+          <div class="persona-quick-pills">
+            <button type="button" class="persona-pill-btn" onclick="fillPersona('rohan.sharma2026@microsoft.in', '12345678')">
+              🟢 Rohan Sharma (New Joiner)
+            </button>
+            <button type="button" class="persona-pill-btn" onclick="fillPersona('aarav.patel2026@microsoft.in', '12345678')">
+              🟢 Aarav Patel (New Joiner)
+            </button>
+            <button type="button" class="persona-pill-btn" onclick="fillPersona('priya.sharma.hr@microsoft.in', '12345678')">
+              🔵 Priya Sharma (HR Partner)
+            </button>
+            <button type="button" class="persona-pill-btn" onclick="fillPersona('rahul.pandey2021@microsoft.in', '12345678')">
+              🟣 Rahul Pandey (Past Member / Buddy)
+            </button>
+            <button type="button" class="persona-pill-btn" onclick="fillPersona('admin.systems@microsoft.in', '12345678')">
+              🔴 Systems Admin
             </button>
           </div>
         </div>
 
-        <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
-          <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em;">Joiner Badge</div>
-          <div id="joiner-badge-number" style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.15);">
-            EMP-2026-AWS
+        <form id="member-signin-form" onsubmit="event.preventDefault(); handleMemberSignIn();">
+          <div class="form-group">
+            <label class="input-label" for="signin-email">Corporate Email ID *</label>
+            <input 
+              type="email" 
+              id="signin-email" 
+              class="styled-input" 
+              placeholder="e.g. rohan.sharma2026@microsoft.in" 
+              value="rohan.sharma2026@microsoft.in"
+              required 
+              oninput="handleEmailInput(this.value)"
+            >
           </div>
+
+          <div class="form-group">
+            <label class="input-label" for="signin-password">Password *</label>
+            <input 
+              type="password" 
+              id="signin-password" 
+              class="styled-input" 
+              value="12345678" 
+              required
+            >
+          </div>
+
+          <!-- Real-Time Automatic Role Detection Feedback Box -->
+          <div id="signin-detected-badge" class="role-detect-badge joiner">
+            <span style="font-size: 1.1rem;">🟢</span>
+            <div>
+              <div id="detected-role-title" style="font-size: 0.85rem; font-weight: 700;">
+                Detected Role: New Joiner
+              </div>
+              <div id="detected-role-desc" style="font-size: 0.74rem; opacity: 0.85;">
+                Identified: Rohan Sharma (Software Engineer) · Routes to AI Onboarding Chatbot
+              </div>
+            </div>
+          </div>
+
+          <button 
+            type="submit" 
+            id="signin-submit-btn" 
+            class="confirm-launch-btn" 
+            style="margin-top: 22px; width: 100%; background: linear-gradient(135deg, #4f46e5, #7c3aed); font-size: 1rem; padding: 14px 24px;"
+          >
+            <span id="signin-btn-text">Sign In & Open AI Chatbot →</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ==============================================================
+         STEP 4A: NEW JOINER INTERACTIVE AI CHATBOT WORKSPACE
+         ============================================================== -->
+    <section id="step-joiner-chatbot" class="step-view" style="display: none; width: 100%;">
+      <div class="breadcrumbs-bar" style="max-width: 960px; margin: 0 auto 14px;">
+        <button onclick="goToStep('step-gateway')">Gateway</button>
+        <span class="breadcrumbs-separator">/</span>
+        <button onclick="goToStep('step-companies')">Companies</button>
+        <span class="breadcrumbs-separator">/</span>
+        <button onclick="goToStep('step-signin')">Sign In</button>
+        <span class="breadcrumbs-separator">/</span>
+        <span>AI Onboarding Copilot</span>
+      </div>
+
+      <div class="chatbot-workspace">
+        <!-- Chatbot Top Header -->
+        <div class="chatbot-header">
+          <div class="chatbot-header-info">
+            <div class="chatbot-avatar-badge">⚡</div>
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <span style="font-weight: 800; font-size: 1.05rem;">Start Smart | AI Onboarding Copilot</span>
+                <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); padding: 2px 8px; border-radius: 9999px; font-size: 0.68rem; font-weight: 700;">
+                  NVIDIA NIM Active
+                </span>
+              </div>
+              <div style="font-size: 0.76rem; color: #94a3b8; margin-top: 2px;">
+                <strong id="chatbot-user-name" style="color: #f1f5f9;">Rohan Sharma</strong> · <span id="chatbot-day-badge" style="color: #818cf8; font-weight: 700;">Day 1 Kickoff</span> · <span id="chatbot-company-name">Microsoft Corporation</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <button onclick="goToStep('step-signin')" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #cbd5e1; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; cursor: pointer;">
+              Switch User
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat Messages Container -->
+        <div id="chatbot-messages-feed" class="chatbot-messages-feed">
+          
+          <!-- Message 1: Personalized AI Greeting & Question Prompts -->
+          <div class="chat-bubble assistant">
+            <div class="chat-avatar ai">⚡</div>
+            <div class="chat-bubble-body">
+              <div id="chatbot-greeting-text" style="font-size: 0.95rem; font-weight: 600; color: var(--color-slate-900); margin-bottom: 8px;">
+                Hi Rohan! 👋 Welcome to Microsoft!
+              </div>
+              <p style="color: var(--color-slate-600); margin-bottom: 12px;">
+                Today is <strong>Day 1</strong> of your onboarding journey as a <strong>Software Engineer</strong>. I'm your interactive AI Copilot. I'll help you find your team, complete your daily checklist, and answer any questions.
+              </p>
+              <div style="font-size: 0.82rem; font-weight: 700; color: var(--color-primary); margin-bottom: 8px;">
+                What would you like to explore first? Click an option below:
+              </div>
+
+              <!-- Suggested Questions / Actions -->
+              <div class="chat-options-group">
+                <button class="chat-action-chip" onclick="handleChatOption('contacts')">
+                  📞 Team Members & HR Contact Numbers
+                </button>
+                <button class="chat-action-chip" onclick="handleChatOption('checklist')">
+                  📋 Today's Work / Day 1 Checklist (5 Tasks)
+                </button>
+                <button class="chat-action-chip" onclick="handleChatOption('explain-first')">
+                  💡 Explain My First Task
+                </button>
+                <button class="chat-action-chip" onclick="handleChatOption('stuck')">
+                  🚨 I'm Stuck / Help
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Chat Input Composer -->
+        <div class="chat-composer-bar">
+          <input 
+            type="text" 
+            id="chatbot-input" 
+            class="styled-input" 
+            placeholder="Ask me anything about your onboarding, tasks, or team (e.g. 'How do I contact my manager?')..."
+            style="flex: 1;"
+            onkeydown="if(event.key==='Enter') sendChatMessage();"
+          >
+          <button 
+            id="chatbot-send-btn" 
+            class="confirm-launch-btn" 
+            style="margin-top: 0; width: auto; background: linear-gradient(135deg, #4f46e5, #7c3aed); padding: 10px 22px; font-size: 0.88rem; white-space: nowrap;"
+            onclick="sendChatMessage()"
+          >
+            <span>Ask AI</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================================
+         STEP 4B: HR COHORT MANAGEMENT PORTAL
+         ============================================================== -->
+    <section id="step-hr-portal" class="step-view" style="display: none; max-width: 1100px; margin: 0 auto; width: 100%;">
+      <div class="breadcrumbs-bar">
+        <button onclick="goToStep('step-gateway')">Gateway</button>
+        <span class="breadcrumbs-separator">/</span>
+        <button onclick="goToStep('step-signin')">Sign In</button>
+        <span class="breadcrumbs-separator">/</span>
+        <span>HR Command Center</span>
+      </div>
+
+      <div class="portal-header-banner" style="background: linear-gradient(135deg, #1e3a8a, #0f172a);">
+        <div>
+          <div style="font-size: 0.8rem; font-weight: 700; color: #93c5fd; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">
+            People Operations Command Center
+          </div>
+          <h1 class="portal-banner-title">
+            Welcome, <span id="hr-portal-name">Priya Sharma</span> (HR Partner)
+          </h1>
+          <p class="portal-banner-desc">
+            Microsoft Corporation · New Joiner Cohort of 2026. Monitor readiness, paired buddy mentors, and approve clearances.
+          </p>
+        </div>
+        <div style="text-align: right;">
+          <button onclick="goToStep('step-signin')" class="btn-secondary" style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #fff;">
+            Switch Account
+          </button>
         </div>
       </div>
 
-      <!-- Main Layout: Left Column (Numbers & Contacts of HR, Team & IT) | Right Column (Daily Checklist + NVIDIA AI) -->
-      <div class="joiner-dashboard-grid">
-
-        <!-- Column 1: DIRECTORY OF NUMBERS & CONTACTS -->
-        <div class="contacts-column">
-          
-          <div style="font-size: 1.05rem; font-weight: 800; color: var(--color-slate-900); display: flex; align-items: center; gap: 8px;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.2">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-            </svg>
-            Key Contacts & Direct Phone Numbers
+      <!-- Cohort Roster Table -->
+      <div style="background: #ffffff; border: 1px solid var(--color-slate-200); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow-sm); margin-top: 24px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+          <div>
+            <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--color-slate-900);">Active Microsoft Joiners Cohort (10 Members)</h3>
+            <p style="font-size: 0.8rem; color: var(--color-slate-500);">Auto-matched with Senior Buddy Mentors</p>
           </div>
-
-          <!-- 1. HR Partner Contact Card -->
-          <div class="contact-card-highlight card-hr">
-            <div class="contact-header">
-              <div class="contact-avatar" id="hr-avatar-box" style="background: linear-gradient(135deg, #2563eb, #60a5fa); color: #fff;">
-                PN
-              </div>
-              <div class="contact-info">
-                <span class="contact-role-badge" style="background: #eff6ff; color: #1d4ed8;">Assigned HR Partner</span>
-                <h3 class="contact-name" id="hr-display-name">Priya Nair</h3>
-                <p class="contact-title" id="hr-display-title">Lead HR People Partner — AWS Infrastructure</p>
-              </div>
-            </div>
-
-            <div class="contact-details-list">
-              <!-- Direct Phone Number (Highlighted) -->
-              <div class="contact-detail-item" style="background: var(--color-slate-50); padding: 8px 12px; border-radius: var(--radius-sm); border: 1px dashed var(--color-slate-200);">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                </svg>
-                <div style="flex: 1;">
-                  <div style="font-size: 0.72rem; color: var(--color-slate-500); font-weight: 600;">DIRECT PHONE NUMBER</div>
-                  <a id="hr-phone-link" href="tel:+12065550192" class="phone-call-btn" style="margin-top: 2px;">
-                    📞 <span id="hr-display-phone">+1 (206) 555-0192 (Ext. 441)</span>
-                  </a>
-                </div>
-              </div>
-
-              <div class="contact-detail-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                <span id="hr-display-email">priya.nair@amazon-people.demo</span>
-              </div>
-              <div class="contact-detail-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                <span id="hr-display-desk">Doppler Tower, 14th Floor, Seattle WA</span>
-              </div>
-              <div class="contact-detail-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                <span>Day 1 SLA: Guaranteed response &lt; 20 mins</span>
-              </div>
-            </div>
-
-            <div class="contact-actions">
-              <button class="btn-secondary" onclick="showNotification('Calling HR Partner direct line...')">
-                📞 Call HR
-              </button>
-              <button class="btn-secondary" onclick="showNotification('Opening HR escalation ticket form...')">
-                🚨 Escalate Blocker
-              </button>
-            </div>
-          </div>
-
-          <!-- 2. Team & Buddy Contact Card -->
-          <div class="contact-card-highlight card-buddy">
-            <div class="contact-header">
-              <div class="contact-avatar" id="buddy-avatar-box" style="background: linear-gradient(135deg, #9333ea, #c084fc); color: #fff;">
-                MV
-              </div>
-              <div class="contact-info">
-                <span class="contact-role-badge" style="background: #faf5ff; color: #7e22ce;">My Team & Buddy</span>
-                <h3 class="contact-name" id="buddy-display-name">Marcus Vance</h3>
-                <p class="contact-title" id="buddy-display-title">Principal Solutions Architect (Technical Buddy)</p>
-              </div>
-            </div>
-
-            <div class="contact-details-list">
-              <!-- Direct Phone Number (Highlighted) -->
-              <div class="contact-detail-item" style="background: var(--color-slate-50); padding: 8px 12px; border-radius: var(--radius-sm); border: 1px dashed var(--color-slate-200);">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                </svg>
-                <div style="flex: 1;">
-                  <div style="font-size: 0.72rem; color: var(--color-slate-500); font-weight: 600;">BUDDY DIRECT PHONE</div>
-                  <a id="buddy-phone-link" href="tel:+12065550144" class="phone-call-btn" style="background: #faf5ff; border-color: #d8b4fe; color: #7e22ce; margin-top: 2px;">
-                    📞 <span id="buddy-display-phone">+1 (206) 555-0144</span>
-                  </a>
-                </div>
-              </div>
-
-              <div class="contact-detail-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
-                  <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
-                  <line x1="6" y1="6" x2="6.01" y2="6"></line>
-                  <line x1="6" y1="18" x2="6.01" y2="18"></line>
-                </svg>
-                <span>Chat: <strong id="buddy-display-chat">@marcus.vance</strong> (Status: Online)</span>
-              </div>
-              <div class="contact-detail-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                <span id="buddy-display-email">marcus.v@aws-internal.demo</span>
-              </div>
-            </div>
-
-            <!-- Today's 1:1 Session Highlight -->
-            <div class="contact-highlight-box">
-              <div class="contact-highlight-title" style="color: #6b21a8;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6b21a8" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                Today's 1:1 Welcome Session
-              </div>
-              <div id="buddy-session-time">2:00 PM – 2:45 PM Today (Chime / Meet Room provisioned)</div>
-              <div style="font-size: 0.72rem; color: var(--color-slate-500); margin-top: 4px;">Architecture orientation, code repos & team introduction.</div>
-            </div>
-
-            <div class="contact-actions">
-              <button class="btn-secondary" onclick="showNotification('Connecting to direct chat room...')">
-                💬 Message Chat
-              </button>
-              <button class="btn-secondary" onclick="showNotification('Virtual meeting link copied to clipboard!')">
-                🎥 Join 2PM Sync
-              </button>
-            </div>
-          </div>
-
-          <!-- 3. IT & Emergency Contacts Card -->
-          <div class="emergency-directory-box">
-            <div class="emergency-directory-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-              IT Support & Emergency Hotlines
-            </div>
-            <div class="emergency-grid">
-              <div class="emergency-card">
-                <div style="font-weight: 700; font-size: 0.8rem; color: var(--color-slate-800);">IT Helpdesk (24/7)</div>
-                <a id="it-phone-link" href="tel:+18005554833" style="font-weight: 700; font-size: 0.82rem; color: var(--color-primary);">📞 +1 (800) 555-IT-DESK</a>
-                <div style="font-size: 0.72rem; color: var(--color-slate-500);">Token & VPN approvals</div>
-              </div>
-              <div class="emergency-card">
-                <div style="font-weight: 700; font-size: 0.8rem; color: var(--color-slate-800);">Security & Badging</div>
-                <a href="tel:+18005557328" style="font-weight: 700; font-size: 0.82rem; color: var(--color-primary);">📞 +1 (800) 555-SEC-KEY</a>
-                <div style="font-size: 0.72rem; color: var(--color-slate-500);">Hardware key enrollment</div>
-              </div>
-            </div>
-          </div>
-
+          <button class="btn-secondary" onclick="showNotification('Exported cohort readiness metrics!')">
+            📊 Export Report
+          </button>
         </div>
 
-        <!-- Column 2: DAILY CHECKLIST / DAILY TASKS ("Work for Today") + NVIDIA AI -->
-        <div class="work-column">
-          <div class="work-header">
-            <div class="work-title-group">
-              <h2>Daily Checklist — Day 1 Tasks</h2>
-              <p>Essential daily tasks and verification gates to achieve full day-one productivity.</p>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
+            <thead>
+              <tr style="background: var(--color-slate-50); border-bottom: 2px solid var(--color-slate-200); color: var(--color-slate-600); font-weight: 700;">
+                <th style="padding: 12px 14px;">Joiner Name & Badge</th>
+                <th style="padding: 12px 14px;">Email ID</th>
+                <th style="padding: 12px 14px;">Department</th>
+                <th style="padding: 12px 14px;">Assigned Buddy Mentor</th>
+                <th style="padding: 12px 14px;">Status</th>
+                <th style="padding: 12px 14px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="hr-cohort-roster-body">
+              <!-- Dynamically populated from microsoftDirectory -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================================
+         STEP 4C: BUDDY / MENTOR PORTAL
+         ============================================================== -->
+    <section id="step-buddy-portal" class="step-view" style="display: none; max-width: 900px; margin: 0 auto; width: 100%;">
+      <div class="breadcrumbs-bar">
+        <button onclick="goToStep('step-gateway')">Gateway</button>
+        <span class="breadcrumbs-separator">/</span>
+        <button onclick="goToStep('step-signin')">Sign In</button>
+        <span class="breadcrumbs-separator">/</span>
+        <span>Buddy Mentorship Portal</span>
+      </div>
+
+      <div class="portal-header-banner" style="background: linear-gradient(135deg, #581c87, #0f172a);">
+        <div>
+          <div style="font-size: 0.8rem; font-weight: 700; color: #d8b4fe; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">
+            Senior Member & Buddy Portal
+          </div>
+          <h1 class="portal-banner-title">
+            Welcome, <span id="buddy-mentor-name">Rahul Pandey</span>
+          </h1>
+          <p class="portal-banner-desc" id="buddy-mentor-role-badge">
+            Senior Member & Technical Buddy (Class of 2021) · Microsoft Cloud & Architecture
+          </p>
+        </div>
+        <div style="text-align: right;">
+          <button onclick="goToStep('step-signin')" class="btn-secondary" style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #fff;">
+            Switch Account
+          </button>
+        </div>
+      </div>
+
+      <!-- Assigned Mentee Card -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 24px;">
+        <div class="contact-card-highlight card-buddy">
+          <div class="contact-header">
+            <div class="contact-avatar" id="mentee-avatar-box" style="background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff;">
+              RS
             </div>
-            <button class="btn-secondary" id="reset-daily-tasks-btn" onclick="resetDailyChecklist()">
-              Reset Checklist
+            <div class="contact-info">
+              <span class="contact-role-badge" style="background: #ecfdf5; color: #065f46;">Assigned Mentee</span>
+              <h3 class="contact-name" id="mentee-display-name">Rohan Sharma</h3>
+              <p class="contact-title" id="mentee-display-dept">Software Engineer · Class of 2026</p>
+            </div>
+          </div>
+          <div class="contact-details-list">
+            <div class="contact-detail-item">
+              <span>📧 <strong id="mentee-display-email">rohan.sharma2026@microsoft.in</strong></span>
+            </div>
+            <div class="contact-highlight-box" style="margin-top: 8px;">
+              <div class="contact-highlight-title" style="color: #6b21a8;">
+                📅 Scheduled 1:1 Welcome Session
+              </div>
+              <div id="mentee-session-time">2:00 PM – 2:45 PM Today (Teams Room Provisioned)</div>
+            </div>
+          </div>
+          <div class="contact-actions" style="margin-top: 14px;">
+            <button class="btn-secondary" onclick="showNotification('Teams meeting opened with Rohan Sharma!')">
+              🎥 Launch 2:00 PM Sync
+            </button>
+            <button class="btn-secondary" onclick="showNotification('Sent welcome chat to Rohan!')">
+              💬 Teams Chat
             </button>
           </div>
-
-          <!-- Progress Widget -->
-          <div class="progress-widget">
-            <div class="progress-meta">
-              <span class="progress-label">Today's Daily Completion</span>
-              <span class="progress-percent" id="daily-progress-text">2 of 5 Tasks Completed (40%)</span>
-            </div>
-            <div class="progress-track">
-              <div class="progress-bar" id="daily-progress-bar" style="width: 40%;"></div>
-            </div>
-          </div>
-
-          <!-- Checklist Items -->
-          <div class="checklist-container" id="daily-tasks-list">
-
-            <!-- Task 1 (Done) -->
-            <div class="task-item completed" onclick="toggleTask(this)">
-              <div class="custom-checkbox" role="checkbox" aria-checked="true">✓</div>
-              <div class="task-content">
-                <div class="task-title-row">
-                  <span class="task-title">Enroll Corporate SSO & Hardware 2FA Key</span>
-                  <span class="task-tag tag-security">Security</span>
-                </div>
-                <p class="task-desc">Set up corporate multi-factor authentication and register security key for intranet services.</p>
-                <div class="task-meta-info">
-                  <span>⏱ 15 min estimated</span>
-                  <span>🔒 Prerequisite Satisfied</span>
-                  <span style="color: var(--color-emerald-600); font-weight: 600;">Status: Completed</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Task 2 (Done) -->
-            <div class="task-item completed" onclick="toggleTask(this)">
-              <div class="custom-checkbox" role="checkbox" aria-checked="true">✓</div>
-              <div class="task-content">
-                <div class="task-title-row">
-                  <span class="task-title">Digitally Sign Employment Agreement & NDA</span>
-                  <span class="task-tag tag-compliance">Compliance</span>
-                </div>
-                <p class="task-desc">Completed DocuSign packet submitted directly to HR Legal onboarding repository.</p>
-                <div class="task-meta-info">
-                  <span>⏱ 10 min estimated</span>
-                  <span>📄 Legal Document signed</span>
-                  <span style="color: var(--color-emerald-600); font-weight: 600;">Status: Completed</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Task 3 (Pending) -->
-            <div class="task-item" onclick="toggleTask(this)">
-              <div class="custom-checkbox" role="checkbox" aria-checked="false"></div>
-              <div class="task-content">
-                <div class="task-title-row">
-                  <span class="task-title">1:1 Welcome & Alignment Sync with Assigned Buddy</span>
-                  <span class="task-tag tag-mentor">Mentoring</span>
-                </div>
-                <p class="task-desc">Meet your buddy at 2:00 PM for team introduction, repository architecture tour, and norms.</p>
-                <div class="task-meta-info">
-                  <span>⏱ 45 min · Scheduled 2:00 PM Today</span>
-                  <span>👤 Assigned Buddy Sync</span>
-                  <span style="color: var(--color-amber-600); font-weight: 600;">Action Required Today</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Task 4 (Pending) -->
-            <div class="task-item" onclick="toggleTask(this)">
-              <div class="custom-checkbox" role="checkbox" aria-checked="false"></div>
-              <div class="task-content">
-                <div class="task-title-row">
-                  <span class="task-title">Clone Department Repositories & Verify Local Containers</span>
-                  <span class="task-tag tag-tech">Engineering</span>
-                </div>
-                <p class="task-desc">Pull team monorepos, verify Docker environment, and complete the local development build.</p>
-                <div class="task-meta-info">
-                  <span>⏱ 30 min estimated</span>
-                  <span>💻 Terminal & Docker Setup</span>
-                  <span style="color: var(--color-primary); font-weight: 600;">In Progress</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Task 5 (Pending) -->
-            <div class="task-item" onclick="toggleTask(this)">
-              <div class="custom-checkbox" role="checkbox" aria-checked="false"></div>
-              <div class="task-content">
-                <div class="task-title-row">
-                  <span class="task-title">Day 1 Check-in & Benefits Briefing with HR Partner</span>
-                  <span class="task-tag tag-hr">HR & People</span>
-                </div>
-                <p class="task-desc">Wrap up Day 1 with your HR Partner to review benefits, insurance enrollment, and equipment stipends.</p>
-                <div class="task-meta-info">
-                  <span>⏱ 30 min · Scheduled 4:30 PM Today</span>
-                  <span>👤 HR Partner Check-in</span>
-                  <span style="color: var(--color-slate-600); font-weight: 600;">Pending Schedule</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- NVIDIA AI ONBOARDING COPILOT (Inference Microservice) -->
-          <div style="margin-top: 32px; background: linear-gradient(135deg, #090d16, #0f172a); border: 1px solid #1e293b; border-radius: var(--radius-xl); padding: 26px; color: #ffffff; box-shadow: var(--shadow-lg);">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
-              <div style="display: flex; align-items: center; gap: 14px;">
-                <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: linear-gradient(135deg, #76b900, #4c7c00); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem; color: #fff; box-shadow: 0 4px 14px rgba(118, 185, 0, 0.4);">
-                  ⚡
-                </div>
-                <div>
-                  <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                    <h3 style="font-size: 1.15rem; font-weight: 800; color: #ffffff;">NVIDIA AI Onboarding Copilot</h3>
-                    <span style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; background: rgba(118, 185, 0, 0.15); color: #76b900; border: 1px solid rgba(118, 185, 0, 0.35); padding: 2px 10px; border-radius: 9999px;">
-                      NVIDIA NIM Active · meta/llama-3.2-11b
-                    </span>
-                  </div>
-                  <p style="font-size: 0.78rem; color: #94a3b8; margin-top: 2px;">
-                    Ask any question about your daily checklist, buddy meetings, or company policies:
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Quick Prompt Chips -->
-            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;">
-              <button class="copilot-chip" onclick="askCopilot('What are my top priorities for Day 1 as a New Joiner?')">
-                🚀 Day 1 Priorities
-              </button>
-              <button class="copilot-chip" onclick="askCopilot('How should I prepare for my 2:00 PM sync with my buddy?')">
-                🤝 Prep for 2:00 PM Buddy Sync
-              </button>
-              <button class="copilot-chip" onclick="askCopilot('My VPN token is pending. What high-value tasks can I do right now?')">
-                🛡️ VPN Blocker & SideQuests
-              </button>
-              <button class="copilot-chip" onclick="askCopilot('What questions should I ask HR during the 4:30 PM briefing?')">
-                💼 HR Briefing Questions
-              </button>
-            </div>
-
-            <!-- Input Bar -->
-            <div style="display: flex; gap: 10px; margin-bottom: 14px;">
-              <input 
-                type="text" 
-                id="copilot-input" 
-                class="styled-input" 
-                placeholder="Ask NVIDIA AI anything about your daily onboarding tasks or contacts..."
-                style="background: #1e293b; border-color: #334155; color: #ffffff; flex: 1;"
-                onkeydown="if(event.key==='Enter') sendCopilotQuery();"
-              >
-              <button 
-                id="copilot-submit-btn" 
-                onclick="sendCopilotQuery()" 
-                class="confirm-launch-btn" 
-                style="margin-top: 0; width: auto; background: linear-gradient(135deg, #76b900, #5c9300); padding: 12px 22px; font-size: 0.88rem; white-space: nowrap;"
-              >
-                <span>Ask AI</span>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-              </button>
-            </div>
-
-            <!-- Response Box -->
-            <div id="copilot-response-box" style="display: none; background: rgba(15, 23, 42, 0.85); border: 1px solid #334155; border-radius: var(--radius-lg); padding: 18px;">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                <span style="font-size: 0.72rem; font-weight: 700; color: #76b900; text-transform: uppercase; letter-spacing: 0.05em;">
-                  ⚡ NVIDIA NIM Response
-                </span>
-                <span id="copilot-model-tag" style="font-size: 0.7rem; color: #94a3b8; font-family: var(--font-mono);">
-                  meta/llama-3.2-11b-vision-instruct
-                </span>
-              </div>
-              <div id="copilot-answer-text" style="font-size: 0.88rem; color: #f1f5f9; line-height: 1.6; white-space: pre-wrap;">
-              </div>
-            </div>
-          </div>
-
         </div>
 
+        <!-- Mentorship Checklist -->
+        <div style="background: #ffffff; border: 1px solid var(--color-slate-200); border-radius: var(--radius-xl); padding: 22px; box-shadow: var(--shadow-sm);">
+          <h3 style="font-size: 1rem; font-weight: 800; color: var(--color-slate-900); margin-bottom: 12px;">
+            Buddy Day 1 Checklist for Rohan
+          </h3>
+          <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem;">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" checked> Introduce to Cloud & AI sprint team
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" checked> Verify local repository build & Git setup
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox"> Architecture overview & repo tour (2:00 PM)
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox"> Pair on first Starter Pull Request
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================================
+         STEP 4D: ADMIN PORTAL
+         ============================================================== -->
+    <section id="step-admin-portal" class="step-view" style="display: none; max-width: 900px; margin: 0 auto; width: 100%;">
+      <div class="breadcrumbs-bar">
+        <button onclick="goToStep('step-gateway')">Gateway</button>
+        <span class="breadcrumbs-separator">/</span>
+        <button onclick="goToStep('step-signin')">Sign In</button>
+        <span class="breadcrumbs-separator">/</span>
+        <span>Systems Administration</span>
+      </div>
+
+      <div class="portal-header-banner" style="background: linear-gradient(135deg, #991b1b, #0f172a);">
+        <div>
+          <div style="font-size: 0.8rem; font-weight: 700; color: #fca5a5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">
+            Enterprise Systems Administration
+          </div>
+          <h1 class="portal-banner-title">
+            Microsoft Corporation Systems Command
+          </h1>
+          <p class="portal-banner-desc">
+            Administrator: admin.systems@microsoft.in · Azure AD Tenant & Security Policies
+          </p>
+        </div>
+        <div style="text-align: right;">
+          <button onclick="goToStep('step-signin')" class="btn-secondary" style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #fff;">
+            Switch Account
+          </button>
+        </div>
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid var(--color-slate-200); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow-sm); margin-top: 24px;">
+        <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 12px;">Directory & SSO Configurations</h3>
+        <p style="font-size: 0.85rem; color: var(--color-slate-600); margin-bottom: 16px;">
+          Corporate Domain: <strong style="font-family: var(--font-mono);">@microsoft.in</strong> · Status: <span style="color: #059669; font-weight: 700;">Verified Active</span>
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button class="btn-secondary" onclick="showNotification('Azure AD Sync Triggered: 24 users in sync')">
+            🔄 Sync Azure AD Directory
+          </button>
+          <button class="btn-secondary" onclick="showNotification('Audit log downloaded')">
+            📜 Download Audit Log
+          </button>
+        </div>
       </div>
     </section>
 
@@ -1016,7 +817,7 @@
             </div>
             <div class="input-group">
               <label class="input-label">Corporate Domain *</label>
-              <input type="text" id="reg-company-domain" class="styled-input" placeholder="e.g. apex.io" value="apextech.io" required>
+              <input type="text" id="reg-company-domain" class="styled-input" placeholder="e.g. apextech.io" value="apextech.io" required>
             </div>
           </div>
 
@@ -1071,157 +872,83 @@
 
   <!-- Dynamic Controller Script for the Multi-Step Onboarding Architecture -->
   <script>
-    // Registered Companies Dataset with Contacts, Direct Phone Numbers, and Daily Tasks
+    // Microsoft Corporation Members Dataset
+    const microsoftDirectory = {
+      admin: [
+        { email: 'admin.systems@microsoft.in', name: 'Systems Administration Lead', role: 'admin' }
+      ],
+      hr: [
+        { email: 'priya.sharma.hr@microsoft.in', name: 'Priya Sharma', title: 'Lead HR People Partner', phone: '+91 (80) 6789-HR01', desk: 'Building 34, Floor 4, Bengaluru / Redmond', role: 'hr' },
+        { email: 'rohan.kapoor.hr@microsoft.in', name: 'Rohan Kapoor', title: 'Senior HR Operations Lead', phone: '+91 (80) 6789-HR02', desk: 'Building 34, Floor 4, Bengaluru / Redmond', role: 'hr' },
+        { email: 'ananya.mishra.hr@microsoft.in', name: 'Ananya Mishra', title: 'People Operations Specialist', phone: '+91 (80) 6789-HR03', desk: 'Building 34, Floor 4, Bengaluru / Redmond', role: 'hr' }
+      ],
+      newJoiners: [
+        { email: 'rohan.sharma2026@microsoft.in', name: 'Rohan Sharma', title: 'Software Engineer', badge: 'MSFT-2026-001', department: 'Software Engineering', buddyEmail: 'rahul.pandey2021@microsoft.in' },
+        { email: 'aarav.patel2026@microsoft.in', name: 'Aarav Patel', title: 'Cloud Solutions Engineer', badge: 'MSFT-2026-002', department: 'Azure Infrastructure', buddyEmail: 'vineet.sharma2023@microsoft.in' },
+        { email: 'kavya.singh2026@microsoft.in', name: 'Kavya Singh', title: 'Frontend Engineer', badge: 'MSFT-2026-003', department: 'Core Applications', buddyEmail: 'neha.chawla2022@microsoft.in' },
+        { email: 'vihaan.gupta2026@microsoft.in', name: 'Vihaan Gupta', title: 'Backend Systems Engineer', badge: 'MSFT-2026-004', department: 'Distributed Systems', buddyEmail: 'kunal.bhatia2025@microsoft.in' },
+        { email: 'ananya.reddy2026@microsoft.in', name: 'Ananya Reddy', title: 'Data & AI Engineer', badge: 'MSFT-2026-005', department: 'Applied AI', buddyEmail: 'aditya.rao2020@microsoft.in' },
+        { email: 'ishaan.verma2026@microsoft.in', name: 'Ishaan Verma', title: 'DevOps & SRE', badge: 'MSFT-2026-006', department: 'Site Reliability Engineering', buddyEmail: 'shweta.reddy2024@microsoft.in' },
+        { email: 'myra.desai2026@microsoft.in', name: 'Myra Desai', title: 'Product Engineer', badge: 'MSFT-2026-007', department: 'Microsoft 365 Core', buddyEmail: 'varun.mehra2023@microsoft.in' },
+        { email: 'aditya.rao2026@microsoft.in', name: 'Aditya Rao', title: 'Security Engineer', badge: 'MSFT-2026-008', department: 'Enterprise Security', buddyEmail: 'ishita.bansal2025@microsoft.in' },
+        { email: 'riya.kapoor2026@microsoft.in', name: 'Riya Kapoor', title: 'Full Stack Developer', badge: 'MSFT-2026-009', department: 'Developer Division', buddyEmail: 'deepesh.singhal2022@microsoft.in' },
+        { email: 'arjun.nair2026@microsoft.in', name: 'Arjun Nair', title: 'Systems Engineer', badge: 'MSFT-2026-010', department: 'Cloud & Infrastructure', buddyEmail: 'simran.kaur2020@microsoft.in' }
+      ],
+      previousMembers: [
+        { email: 'rahul.pandey2021@microsoft.in', name: 'Rahul Pandey', batch: '2021', title: 'Principal Solutions Architect', phone: '+91 (80) 6789-BUD1', menteeEmail: 'rohan.sharma2026@microsoft.in' },
+        { email: 'vineet.sharma2023@microsoft.in', name: 'Vineet Sharma', batch: '2023', title: 'Senior Cloud Engineer', phone: '+91 (80) 6789-BUD2', menteeEmail: 'aarav.patel2026@microsoft.in' },
+        { email: 'neha.chawla2022@microsoft.in', name: 'Neha Chawla', batch: '2022', title: 'Staff SRE', phone: '+91 (80) 6789-BUD3', menteeEmail: 'kavya.singh2026@microsoft.in' },
+        { email: 'kunal.bhatia2025@microsoft.in', name: 'Kunal Bhatia', batch: '2025', title: 'Senior Software Engineer', phone: '+91 (80) 6789-BUD4', menteeEmail: 'vihaan.gupta2026@microsoft.in' },
+        { email: 'aditya.rao2020@microsoft.in', name: 'Aditya Rao Sr.', batch: '2020', title: 'Principal Engineer', phone: '+91 (80) 6789-BUD5', menteeEmail: 'ananya.reddy2026@microsoft.in' },
+        { email: 'shweta.reddy2024@microsoft.in', name: 'Shweta Reddy', batch: '2024', title: 'Cloud Architect', phone: '+91 (80) 6789-BUD6', menteeEmail: 'ishaan.verma2026@microsoft.in' },
+        { email: 'varun.mehra2023@microsoft.in', name: 'Varun Mehra', batch: '2023', title: 'Senior Backend Engineer', phone: '+91 (80) 6789-BUD7', menteeEmail: 'myra.desai2026@microsoft.in' },
+        { email: 'ishita.bansal2025@microsoft.in', name: 'Ishita Bansal', batch: '2025', title: 'Senior Data Engineer', phone: '+91 (80) 6789-BUD8', menteeEmail: 'aditya.rao2026@microsoft.in' },
+        { email: 'deepesh.singhal2022@microsoft.in', name: 'Deepesh Singhal', batch: '2022', title: 'Staff Security Engineer', phone: '+91 (80) 6789-BUD9', menteeEmail: 'riya.kapoor2026@microsoft.in' },
+        { email: 'simran.kaur2020@microsoft.in', name: 'Simran Kaur', batch: '2020', title: 'Partner Engineering Lead', phone: '+91 (80) 6789-BUD10', menteeEmail: 'arjun.nair2026@microsoft.in' }
+      ]
+    };
+
+    // Registered Companies Metadata
     const companiesDatabase = {
+      microsoft: {
+        name: "Microsoft",
+        fullName: "Microsoft Corporation",
+        badge: "EMP-2026-MSFT",
+        domain: "@microsoft.in",
+        location: "Bengaluru Technology Center / Redmond Campus",
+        itPhone: "+91 (800) 555-MSFT-IN"
+      },
       amazon: {
         name: "Amazon Web Services",
         fullName: "Amazon Web Services (AWS)",
         badge: "EMP-2026-AWS",
         domain: "@amazon.com",
         location: "Seattle Cloud Campus (Doppler Tower)",
-        hr: {
-          name: "Priya Nair",
-          title: "Lead HR People Partner — AWS Infrastructure",
-          phone: "+1 (206) 555-0192 (Ext. 441)",
-          phoneRaw: "+12065550192",
-          email: "priya.nair@amazon-people.demo",
-          desk: "Doppler Tower, 14th Floor, Seattle WA",
-          initials: "PN",
-          color: "linear-gradient(135deg, #146EB4, #4298db)"
-        },
-        buddy: {
-          name: "Marcus Vance",
-          title: "Principal Solutions Architect (Technical Buddy)",
-          phone: "+1 (206) 555-0144",
-          phoneRaw: "+12065550144",
-          chat: "@marcus.vance (Amazon Chime)",
-          email: "marcus.v@aws-internal.demo",
-          session: "2:00 PM – 2:45 PM Today (Chime Meeting room provisioned)",
-          initials: "MV",
-          color: "linear-gradient(135deg, #ff9900, #ffba59)"
-        },
-        itPhone: "+1 (800) 555-AWS-DESK",
-        itPhoneRaw: "+18005552973"
+        itPhone: "+1 (800) 555-AWS-DESK"
       },
       google: {
         name: "Google",
         fullName: "Google (Alphabet Inc.)",
         badge: "EMP-2026-GOOG",
         domain: "@google.com",
-        location: "Bangalore Global Tech Center / Mountain View HQ",
-        hr: {
-          name: "Sarah Jenkins",
-          title: "Senior People Partner & Escalation Officer",
-          phone: "+1 (650) 253-0199 (Ext. 201)",
-          phoneRaw: "+16502530199",
-          email: "sarah.jenkins@google-people.demo",
-          desk: "Building 43, Desk 3-A, Mountain View CA",
-          initials: "SJ",
-          color: "linear-gradient(135deg, #2563eb, #60a5fa)"
-        },
-        buddy: {
-          name: "Devon Vance",
-          title: "Principal Staff Architect (Core Tech Platforms)",
-          phone: "+1 (650) 253-0142",
-          phoneRaw: "+16502530142",
-          chat: "@devon.vance (Google Chat)",
-          email: "devon.vance@google-internal.demo",
-          session: "2:00 PM – 2:45 PM Today (Google Meet room provisioned)",
-          initials: "DV",
-          color: "linear-gradient(135deg, #9333ea, #c084fc)"
-        },
-        itPhone: "+1 (800) 555-GOOG-IT",
-        itPhoneRaw: "+18005554664"
-      },
-      microsoft: {
-        name: "Microsoft",
-        fullName: "Microsoft Corporation",
-        badge: "EMP-2026-MSFT",
-        domain: "@microsoft.com",
-        location: "Redmond Campus (Building 34)",
-        hr: {
-          name: "Rachel Green",
-          title: "HR Director — Cloud & AI Division",
-          phone: "+1 (425) 882-8080 (Ext. 112)",
-          phoneRaw: "+14258828080",
-          email: "rachel.green@microsoft.demo",
-          desk: "Building 34, 4th Floor, Redmond WA",
-          initials: "RG",
-          color: "linear-gradient(135deg, #107c41, #27c375)"
-        },
-        buddy: {
-          name: "Liam Gallagher",
-          title: "Partner Software Engineering Lead",
-          phone: "+1 (425) 882-8012",
-          phoneRaw: "+14258828012",
-          chat: "@liam.gallagher (Microsoft Teams)",
-          email: "liam.gallagher@microsoft.demo",
-          session: "2:00 PM – 2:45 PM Today (Teams Meeting provisioned)",
-          initials: "LG",
-          color: "linear-gradient(135deg, #0078d4, #50e6ff)"
-        },
-        itPhone: "+1 (800) 555-MSFT-OPS",
-        itPhoneRaw: "+18005556738"
+        location: "Mountain View HQ",
+        itPhone: "+1 (800) 555-GOOG-IT"
       },
       stripe: {
         name: "Stripe",
         fullName: "Stripe Inc.",
         badge: "EMP-2026-STRP",
         domain: "@stripe.com",
-        location: "San Francisco HQ (Market Street)",
-        hr: {
-          name: "David Kim",
-          title: "Global People Operations Lead",
-          phone: "+1 (415) 555-0177",
-          phoneRaw: "+14155550177",
-          email: "david.kim@stripe.demo",
-          desk: "Market St Campus, Level 5",
-          initials: "DK",
-          color: "linear-gradient(135deg, #00d4aa, #7ee787)"
-        },
-        buddy: {
-          name: "Elena Rostova",
-          title: "Staff Infrastructure Engineer",
-          phone: "+1 (415) 555-0128",
-          phoneRaw: "+14155550128",
-          chat: "@elena.rostova (Slack)",
-          email: "elena.r@stripe-internal.demo",
-          session: "2:00 PM – 2:45 PM Today (Huddle provisioned)",
-          initials: "ER",
-          color: "linear-gradient(135deg, #635bff, #9b87f5)"
-        },
-        itPhone: "+1 (888) 555-STRIPE",
-        itPhoneRaw: "+18885557874"
+        location: "San Francisco HQ",
+        itPhone: "+1 (888) 555-STRIPE"
       },
       salesforce: {
         name: "Salesforce",
         fullName: "Salesforce",
         badge: "EMP-2026-CRM",
         domain: "@salesforce.com",
-        location: "Salesforce Tower, San Francisco CA",
-        hr: {
-          name: "Amina Al-Mansoor",
-          title: "Senior People Success Partner",
-          phone: "+1 (415) 555-0199",
-          phoneRaw: "+14155550199",
-          email: "amina.m@salesforce.demo",
-          desk: "Salesforce Tower, 30th Floor",
-          initials: "AM",
-          color: "linear-gradient(135deg, #ec4899, #f472b6)"
-        },
-        buddy: {
-          name: "Carlos Rivera",
-          title: "VP of Enterprise Architecture",
-          phone: "+1 (415) 555-0165",
-          phoneRaw: "+14155550165",
-          chat: "@carlos.rivera (Slack)",
-          email: "carlos.r@salesforce.demo",
-          session: "2:00 PM – 2:45 PM Today (Slack Huddle)",
-          initials: "CR",
-          color: "linear-gradient(135deg, #00a1e0, #0070d2)"
-        },
-        itPhone: "+1 (800) 555-CRM-HELP",
-        itPhoneRaw: "+18005552764"
+        location: "Salesforce Tower, SF",
+        itPhone: "+1 (800) 555-CRM-HELP"
       },
       technova: {
         name: "TechNova Systems",
@@ -1229,34 +956,22 @@
         badge: "EMP-2026-TN",
         domain: "@technova.io",
         location: "Austin Tech Center",
-        hr: {
-          name: "Priya Sharma",
-          title: "Head of People & Culture",
-          phone: "+1 (512) 555-0199",
-          phoneRaw: "+15125550199",
-          email: "priya@technova.demo",
-          desk: "Austin HQ, Floor 3",
-          initials: "PS",
-          color: "linear-gradient(135deg, #059669, #34d399)"
-        },
-        buddy: {
-          name: "Vikram Malhotra",
-          title: "Lead Infrastructure Architect",
-          phone: "+1 (512) 555-0122",
-          phoneRaw: "+15125550122",
-          chat: "@vikram.malhotra (Slack)",
-          email: "vikram@technova.demo",
-          session: "2:00 PM – 2:45 PM Today (Meet Room)",
-          initials: "VM",
-          color: "linear-gradient(135deg, #4f46e5, #818cf8)"
-        },
-        itPhone: "+1 (800) 555-TECHNOVA",
-        itPhoneRaw: "+18005558324"
+        itPhone: "+1 (800) 555-TECHNOVA"
       }
     };
 
-    let currentSelectedCompany = 'amazon';
-    let currentSelectedRole = 'new-joiner';
+    let currentSelectedCompany = 'microsoft';
+    let currentAuthenticatedUser = null;
+    let detectedRoleKey = 'joiner';
+
+    // Checklist state for active session (5 tasks)
+    let dailyTasksState = [
+      { id: 1, title: 'Enroll Corporate SSO & Hardware 2FA Key', desc: 'Set up corporate multi-factor authentication and register security key for intranet services.', done: true, tag: 'Security' },
+      { id: 2, title: 'Digitally Sign Employment Agreement & NDA', desc: 'Completed DocuSign packet submitted directly to HR Legal onboarding repository.', done: true, tag: 'Compliance' },
+      { id: 3, title: '1:1 Welcome Briefing with Buddy Rahul Pandey', desc: 'Meet your buddy at 2:00 PM for team introduction, repository architecture tour, and norms.', done: false, tag: 'Mentoring' },
+      { id: 4, title: 'Corporate VPN & Azure Dev Tunnel Request', desc: 'Request encrypted VPN profile and Azure Dev Tunnel credentials for private cluster access.', done: false, tag: 'Access' },
+      { id: 5, title: 'Review Engineering Standards & Team Guidelines', desc: 'Read code review guidelines, PR SLAs, and development branch etiquette handbook.', done: false, tag: 'Engineering' }
+    ];
 
     // Navigation Step Transition Manager
     function goToStep(stepId) {
@@ -1280,106 +995,537 @@
       });
     }
 
-    // Step 2 Action: Select Company
+    // Step 2 Action: Select Company -> Routes directly to Step 3 Sign In
     function selectCompany(companyKey) {
       currentSelectedCompany = companyKey;
-      const comp = companiesDatabase[companyKey] || companiesDatabase.amazon;
+      const comp = companiesDatabase[companyKey] || companiesDatabase.microsoft;
 
-      // Update Step 3 Header & Breadcrumbs
-      document.getElementById('role-breadcrumb-company-name').textContent = comp.name;
-      document.getElementById('selected-company-pill').textContent = comp.fullName;
-      document.getElementById('role-heading-company-name').textContent = comp.name;
+      // Update Sign In Header & Breadcrumbs
+      document.getElementById('signin-breadcrumb-company').textContent = comp.name;
+      document.getElementById('signin-company-pill').textContent = comp.fullName;
+      document.getElementById('signin-company-title').textContent = comp.name;
+
+      // Show/hide persona pills section based on company
+      const personaSection = document.getElementById('microsoft-persona-section');
+      if (companyKey === 'microsoft') {
+        personaSection.style.display = 'block';
+        fillPersona('rohan.sharma2026@microsoft.in', '12345678');
+      } else {
+        personaSection.style.display = 'none';
+        document.getElementById('signin-email').value = `user@${comp.domain.replace('@', '')}`;
+        handleEmailInput(document.getElementById('signin-email').value);
+      }
 
       showNotification(`Selected ${comp.fullName}`);
-      goToStep('step-roles');
+      goToStep('step-signin');
     }
 
-    // Step 3 Action: Select Role (New Joiner / HR / Admin)
-    function selectRole(roleKey) {
-      currentSelectedRole = roleKey;
-      const comp = companiesDatabase[currentSelectedCompany] || companiesDatabase.amazon;
+    // 1-Click Persona Filler
+    function fillPersona(email, password) {
+      document.getElementById('signin-email').value = email;
+      document.getElementById('signin-password').value = password;
+      handleEmailInput(email);
+    }
 
-      if (roleKey === 'new-joiner') {
-        renderJoinerPortal(comp);
-        goToStep('step-joiner-portal');
-      } else if (roleKey === 'hr') {
-        showNotification(`Routing to HR Control Center for ${comp.name}...`);
-        setTimeout(() => { window.location.href = 'buddy.html'; }, 300);
-      } else if (roleKey === 'admin') {
-        showNotification(`Routing to Administration Portal for ${comp.name}...`);
-        setTimeout(() => { window.location.href = 'existing-company.html'; }, 300);
+    // Step 3 Real-time Role Detection Logic
+    function detectRoleFromEmail(email) {
+      const em = email.toLowerCase().trim();
+
+      // Check Microsoft specific directory
+      const newJoiner = microsoftDirectory.newJoiners.find(u => u.email.toLowerCase() === em);
+      if (newJoiner) {
+        return { role: 'joiner', user: newJoiner, title: 'New Joiner', desc: `Identified: ${newJoiner.name} (${newJoiner.title}) · Class of 2026` };
+      }
+
+      const hrMember = microsoftDirectory.hr.find(u => u.email.toLowerCase() === em);
+      if (hrMember) {
+        return { role: 'hr', user: hrMember, title: 'HR Partner', desc: `Identified: ${hrMember.name} (${hrMember.title}) · People Operations` };
+      }
+
+      const buddyMember = microsoftDirectory.previousMembers.find(u => u.email.toLowerCase() === em);
+      if (buddyMember) {
+        return { role: 'buddy', user: buddyMember, title: 'Previous Member & Buddy Mentor', desc: `Identified: ${buddyMember.name} (Class of ${buddyMember.batch}) · Assigned Mentor` };
+      }
+
+      const adminMember = microsoftDirectory.admin.find(u => u.email.toLowerCase() === em);
+      if (adminMember || em.includes('admin')) {
+        return { role: 'admin', user: adminMember || { name: 'Systems Admin', email: em }, title: 'Systems Administrator', desc: `Identified: Systems Administrator · Tenant Security & Azure AD` };
+      }
+
+      // Generic heuristic for other companies
+      if (em.includes('hr')) {
+        return { role: 'hr', user: { name: 'People Partner', email: em, title: 'HR Partner' }, title: 'HR Partner', desc: 'Identified: People Operations Partner' };
+      }
+      if (em.includes('buddy') || em.includes('mentor')) {
+        return { role: 'buddy', user: { name: 'Senior Mentor', email: em, title: 'Buddy Mentor' }, title: 'Previous Member & Buddy', desc: 'Identified: Peer Mentor' };
+      }
+
+      // Default to New Joiner
+      return { role: 'joiner', user: { name: em.split('@')[0].replace('.', ' '), email: em, title: 'New Joiner' }, title: 'New Joiner', desc: 'Identified: New Joiner · Day 1 Onboarding Track' };
+    }
+
+    function handleEmailInput(email) {
+      const detection = detectRoleFromEmail(email);
+      detectedRoleKey = detection.role;
+      currentAuthenticatedUser = detection.user;
+
+      const badge = document.getElementById('signin-detected-badge');
+      const title = document.getElementById('detected-role-title');
+      const desc = document.getElementById('detected-role-desc');
+      const btnText = document.getElementById('signin-btn-text');
+
+      badge.className = `role-detect-badge ${detection.role}`;
+
+      if (detection.role === 'joiner') {
+        badge.querySelector('span').textContent = '🟢';
+        title.textContent = `Detected Role: ${detection.title}`;
+        desc.textContent = `${detection.desc} · Routes to AI Onboarding Chatbot`;
+        btnText.textContent = 'Sign In & Open AI Chatbot →';
+      } else if (detection.role === 'hr') {
+        badge.querySelector('span').textContent = '🔵';
+        title.textContent = `Detected Role: ${detection.title}`;
+        desc.textContent = `${detection.desc} · Routes to HR Cohort Command`;
+        btnText.textContent = 'Sign In to HR Command →';
+      } else if (detection.role === 'buddy') {
+        badge.querySelector('span').textContent = '🟣';
+        title.textContent = `Detected Role: ${detection.title}`;
+        desc.textContent = `${detection.desc} · Routes to Buddy Mentorship Portal`;
+        btnText.textContent = 'Sign In to Buddy Dashboard →';
+      } else if (detection.role === 'admin') {
+        badge.querySelector('span').textContent = '🔴';
+        title.textContent = `Detected Role: ${detection.title}`;
+        desc.textContent = `${detection.desc} · Routes to Systems Administration`;
+        btnText.textContent = 'Sign In to Admin Portal →';
       }
     }
 
-    // Render Step 4 New Joiner Portal with Specific Numbers, Contacts & Tasks
-    function renderJoinerPortal(comp) {
-      document.getElementById('joiner-breadcrumb-company').textContent = comp.name;
-      document.getElementById('portal-company-name').textContent = comp.fullName;
-      document.getElementById('joiner-badge-number').textContent = comp.badge;
+    // Step 3 Submit Action: Route based on automatically detected role
+    function handleMemberSignIn() {
+      const email = document.getElementById('signin-email').value;
+      const detection = detectRoleFromEmail(email);
+      currentAuthenticatedUser = detection.user;
+      detectedRoleKey = detection.role;
 
-      // HR Details & Phone
-      document.getElementById('hr-display-name').textContent = comp.hr.name;
-      document.getElementById('hr-display-title').textContent = comp.hr.title;
-      document.getElementById('hr-display-phone').textContent = comp.hr.phone;
-      document.getElementById('hr-phone-link').href = `tel:${comp.hr.phoneRaw}`;
-      document.getElementById('hr-display-email').textContent = comp.hr.email;
-      document.getElementById('hr-display-desk').textContent = comp.hr.desk;
-      document.getElementById('hr-avatar-box').textContent = comp.hr.initials;
-      document.getElementById('hr-avatar-box').style.background = comp.hr.color;
+      showNotification(`Authenticated as ${detection.user.name} (${detection.title})`);
 
-      // Buddy Details & Phone
-      document.getElementById('buddy-display-name').textContent = comp.buddy.name;
-      document.getElementById('buddy-display-title').textContent = comp.buddy.title;
-      document.getElementById('buddy-display-phone').textContent = comp.buddy.phone;
-      document.getElementById('buddy-phone-link').href = `tel:${comp.buddy.phoneRaw}`;
-      document.getElementById('buddy-display-chat').textContent = comp.buddy.chat;
-      document.getElementById('buddy-display-email').textContent = comp.buddy.email;
-      document.getElementById('buddy-session-time').textContent = comp.buddy.session;
-      document.getElementById('buddy-avatar-box').textContent = comp.buddy.initials;
-      document.getElementById('buddy-avatar-box').style.background = comp.buddy.color;
-
-      // IT Hotline
-      document.getElementById('it-phone-link').textContent = `📞 ${comp.itPhone}`;
-      document.getElementById('it-phone-link').href = `tel:${comp.itPhoneRaw}`;
-    }
-
-    // Daily Checklist Interactive Handler
-    function toggleTask(el) {
-      el.classList.toggle('completed');
-      const isDone = el.classList.contains('completed');
-      const checkbox = el.querySelector('.custom-checkbox');
-      checkbox.textContent = isDone ? '✓' : '';
-      checkbox.setAttribute('aria-checked', isDone ? 'true' : 'false');
-      
-      updateDailyProgress();
-
-      const title = el.querySelector('.task-title').textContent;
-      showNotification(isDone ? `Completed: "${title}"` : `Marked pending: "${title}"`);
-    }
-
-    function updateDailyProgress() {
-      const items = document.querySelectorAll('#daily-tasks-list .task-item');
-      const total = items.length;
-      const completed = document.querySelectorAll('#daily-tasks-list .task-item.completed').length;
-      const pct = Math.round((completed / total) * 100);
-
-      document.getElementById('daily-progress-bar').style.width = `${pct}%`;
-      document.getElementById('daily-progress-text').textContent = `${completed} of ${total} Tasks Completed (${pct}%)`;
-
-      if (pct === 100) {
-        showNotification('🎉 Outstanding! All Day-1 tasks are complete!');
+      if (detection.role === 'joiner') {
+        initJoinerChatbot(detection.user);
+        goToStep('step-joiner-chatbot');
+      } else if (detection.role === 'hr') {
+        renderHRPortal(detection.user);
+        goToStep('step-hr-portal');
+      } else if (detection.role === 'buddy') {
+        renderBuddyPortal(detection.user);
+        goToStep('step-buddy-portal');
+      } else if (detection.role === 'admin') {
+        goToStep('step-admin-portal');
       }
     }
 
-    function resetDailyChecklist() {
-      const items = document.querySelectorAll('#daily-tasks-list .task-item');
-      items.forEach(item => {
-        item.classList.remove('completed');
-        item.querySelector('.custom-checkbox').textContent = '';
-        item.querySelector('.custom-checkbox').setAttribute('aria-checked', 'false');
+    // Initialize Step 4A: New Joiner AI Chatbot
+    function initJoinerChatbot(user) {
+      document.getElementById('chatbot-user-name').textContent = user.name;
+      document.getElementById('chatbot-company-name').textContent = companiesDatabase[currentSelectedCompany]?.fullName || 'Microsoft Corporation';
+      document.getElementById('chatbot-greeting-text').textContent = `Hi ${user.name.split(' ')[0]}! 👋 Welcome to ${companiesDatabase[currentSelectedCompany]?.name || 'Microsoft'}!`;
+
+      // Reset messages container to initial greeting
+      const feed = document.getElementById('chatbot-messages-feed');
+      feed.innerHTML = `
+        <div class="chat-bubble assistant">
+          <div class="chat-avatar ai">⚡</div>
+          <div class="chat-bubble-body">
+            <div style="font-size: 0.95rem; font-weight: 700; color: var(--color-slate-900); margin-bottom: 6px;">
+              Hi ${user.name.split(' ')[0]}! 👋 Welcome to Microsoft!
+            </div>
+            <p style="color: var(--color-slate-600); margin-bottom: 12px;">
+              Today is <strong>Day 1</strong> of your onboarding journey as a <strong>${user.title || 'Software Engineer'}</strong>. I'm your AI Onboarding Copilot. I'll help you get to know your team, view your contact numbers, and complete your Day 1 work checklist.
+            </p>
+            <div style="font-size: 0.82rem; font-weight: 700; color: var(--color-primary); margin-bottom: 8px;">
+              What would you like to explore first? Click an option below:
+            </div>
+            <div class="chat-options-group">
+              <button class="chat-action-chip" onclick="handleChatOption('contacts')">
+                📞 Team Members & HR Contact Numbers
+              </button>
+              <button class="chat-action-chip" onclick="handleChatOption('checklist')">
+                📋 Today's Work / Day 1 Checklist (5 Tasks)
+              </button>
+              <button class="chat-action-chip" onclick="handleChatOption('explain-first')">
+                💡 Explain My First Task
+              </button>
+              <button class="chat-action-chip" onclick="handleChatOption('stuck')">
+                🚨 I'm Stuck / Help
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Handle Quick Chat Options Click
+    function handleChatOption(optionKey) {
+      const feed = document.getElementById('chatbot-messages-feed');
+      const user = currentAuthenticatedUser || { name: 'Rohan Sharma' };
+
+      if (optionKey === 'contacts') {
+        // User bubble
+        appendChatBubble('user', 'Who are my team members and HR contact numbers?');
+
+        // Assistant response with phone numbers and cards
+        const buddy = microsoftDirectory.previousMembers.find(b => b.menteeEmail === user.email) || microsoftDirectory.previousMembers[0];
+        const hr = microsoftDirectory.hr[0];
+
+        const contactsHtml = `
+          <div>
+            <p style="margin-bottom: 12px; font-weight: 600;">
+              Here are the direct phone numbers and contacts for your assigned HR Partner, Buddy Mentor, and IT Helpdesk:
+            </p>
+
+            <div class="chat-card-contacts">
+              <!-- HR Card -->
+              <div class="chat-contact-mini" style="border-top: 3px solid #2563eb;">
+                <div style="font-size: 0.72rem; font-weight: 700; color: #2563eb; text-transform: uppercase;">Assigned HR Partner</div>
+                <div style="font-size: 0.95rem; font-weight: 800; color: var(--color-slate-900); margin: 2px 0;">${hr.name}</div>
+                <div style="font-size: 0.76rem; color: var(--color-slate-500); margin-bottom: 8px;">${hr.title}</div>
+                
+                <div style="background: var(--color-slate-50); padding: 8px 10px; border-radius: var(--radius-sm); border: 1px dashed var(--color-slate-200); margin-bottom: 8px;">
+                  <div style="font-size: 0.7rem; color: var(--color-slate-500); font-weight: 600;">DIRECT PHONE</div>
+                  <a href="tel:${hr.phone.replace(/[^0-9+]/g, '')}" class="phone-call-btn" style="margin-top: 2px; font-size: 0.8rem; padding: 4px 8px;">
+                    📞 ${hr.phone}
+                  </a>
+                </div>
+                <div style="font-size: 0.74rem; color: var(--color-slate-600);">📧 ${hr.email}</div>
+                <div style="font-size: 0.74rem; color: var(--color-slate-500); margin-top: 2px;">📍 ${hr.desk}</div>
+              </div>
+
+              <!-- Buddy Mentor Card -->
+              <div class="chat-contact-mini" style="border-top: 3px solid #9333ea;">
+                <div style="font-size: 0.72rem; font-weight: 700; color: #9333ea; text-transform: uppercase;">Technical Buddy (Mentor)</div>
+                <div style="font-size: 0.95rem; font-weight: 800; color: var(--color-slate-900); margin: 2px 0;">${buddy.name}</div>
+                <div style="font-size: 0.76rem; color: var(--color-slate-500); margin-bottom: 8px;">${buddy.title} (Class of ${buddy.batch})</div>
+                
+                <div style="background: var(--color-slate-50); padding: 8px 10px; border-radius: var(--radius-sm); border: 1px dashed var(--color-slate-200); margin-bottom: 8px;">
+                  <div style="font-size: 0.7rem; color: var(--color-slate-500); font-weight: 600;">BUDDY DIRECT PHONE</div>
+                  <a href="tel:${buddy.phone.replace(/[^0-9+]/g, '')}" class="phone-call-btn" style="background: #faf5ff; border-color: #d8b4fe; color: #7e22ce; margin-top: 2px; font-size: 0.8rem; padding: 4px 8px;">
+                    📞 ${buddy.phone}
+                  </a>
+                </div>
+                <div style="font-size: 0.74rem; color: var(--color-slate-600);">📧 ${buddy.email}</div>
+                <div style="font-size: 0.74rem; color: #6b21a8; font-weight: 600; margin-top: 4px;">📅 Today's 1:1 Sync: 2:00 PM (Teams Room)</div>
+              </div>
+
+              <!-- IT Support Hotline -->
+              <div class="chat-contact-mini" style="border-top: 3px solid #059669;">
+                <div style="font-size: 0.72rem; font-weight: 700; color: #059669; text-transform: uppercase;">IT Helpdesk & Access</div>
+                <div style="font-size: 0.95rem; font-weight: 800; color: var(--color-slate-900); margin: 2px 0;">Microsoft IT Operations</div>
+                <div style="font-size: 0.76rem; color: var(--color-slate-500); margin-bottom: 8px;">24/7 Global Identity & Hardware Support</div>
+                <div style="background: var(--color-slate-50); padding: 8px 10px; border-radius: var(--radius-sm); border: 1px dashed var(--color-slate-200);">
+                  <div style="font-size: 0.7rem; color: var(--color-slate-500); font-weight: 600;">IT HOTLINE</div>
+                  <a href="tel:+918005556738" class="phone-call-btn" style="margin-top: 2px; font-size: 0.8rem; padding: 4px 8px;">
+                    📞 +91 (800) 555-MSFT-IN
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        appendChatBubble('assistant', contactsHtml);
+
+      } else if (optionKey === 'checklist') {
+        // User bubble
+        appendChatBubble('user', "Show me my today's work and Day 1 checklist.");
+
+        // Render 5 Tasks Checklist inside Chat
+        const completedCount = dailyTasksState.filter(t => t.done).length;
+        const totalCount = dailyTasksState.length;
+        const pct = Math.round((completedCount / totalCount) * 100);
+
+        let checklistHtml = `
+          <div class="chat-card-checklist">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+              <div>
+                <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--color-slate-900);">Day 1 Checklist (5 Tasks)</h4>
+                <p style="font-size: 0.75rem; color: var(--color-slate-500);">Complete these tasks today to achieve 100% Day-1 activation</p>
+              </div>
+              <span id="chat-progress-counter" style="font-size: 0.8rem; font-weight: 700; color: var(--color-primary); font-family: var(--font-mono);">
+                ${completedCount} of ${totalCount} Done (${pct}%)
+              </span>
+            </div>
+
+            <!-- Progress Bar -->
+            <div style="width: 100%; height: 6px; background: var(--color-slate-200); border-radius: var(--radius-full); overflow: hidden; margin-bottom: 16px;">
+              <div id="chat-checklist-progressbar" style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, #4f46e5, #10b981); border-radius: var(--radius-full); transition: width 0.3s ease;"></div>
+            </div>
+
+            <div id="chat-tasks-container">
+        `;
+
+        dailyTasksState.forEach(task => {
+          checklistHtml += `
+            <div class="chat-task-row ${task.done ? 'done' : ''}" id="chat-task-${task.id}">
+              <div style="display: flex; align-items: flex-start; gap: 10px; flex: 1;">
+                <span style="font-size: 1.1rem; line-height: 1;">${task.done ? '✅' : '⬜'}</span>
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 700; color: var(--color-slate-800); text-decoration: ${task.done ? 'line-through' : 'none'};">
+                    ${task.title}
+                  </div>
+                  <div style="font-size: 0.74rem; color: var(--color-slate-500); margin-top: 2px;">
+                    ${task.desc}
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 6px; shrink: 0; margin-left: 10px;">
+                <button class="persona-pill-btn" style="padding: 4px 10px; font-size: 0.74rem; ${task.done ? 'background: #d1fae5; color: #065f46; border-color: #a7f3d0;' : 'background: #4f46e5; color: #fff; border-color: #4f46e5;'}" onclick="toggleChatTask(${task.id})">
+                  ${task.done ? '✓ Done' : 'Mark Complete'}
+                </button>
+                <button class="persona-pill-btn" style="padding: 4px 10px; font-size: 0.74rem;" onclick="explainTaskById(${task.id})">
+                  💡 Explain
+                </button>
+              </div>
+            </div>
+          `;
+        });
+
+        checklistHtml += `</div></div>`;
+        appendChatBubble('assistant', checklistHtml);
+
+      } else if (optionKey === 'explain-first') {
+        appendChatBubble('user', 'Can you explain my first task?');
+        explainTaskById(1);
+
+      } else if (optionKey === 'stuck') {
+        appendChatBubble('user', "I'm stuck. Can you help me?");
+        const stuckHtml = `
+          <div>
+            <p style="font-weight: 600; margin-bottom: 8px;">
+              No worries, ${user.name.split(' ')[0]}! Let's inspect your onboarding dependencies:
+            </p>
+            <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-md); padding: 12px; font-size: 0.82rem; color: #92400e; margin-bottom: 10px;">
+              🔍 <strong>Blocker Diagnosis:</strong> Your Corporate VPN Access is currently waiting on hardware token verification from <strong>IT Operations</strong> (SLA &lt; 2 hrs).
+            </div>
+            <p style="font-size: 0.82rem; color: var(--color-slate-600); margin-bottom: 8px;">
+              While IT is approving your token, you can complete independent tasks that do not require VPN:
+            </p>
+            <ul style="font-size: 0.8rem; color: var(--color-slate-700); padding-left: 20px; margin-bottom: 10px;">
+              <li>Reviewing Engineering Standards & Guidelines (Task 5)</li>
+              <li>Syncing with your buddy Rahul Pandey at 2:00 PM (Task 3)</li>
+            </ul>
+            <div style="display: flex; gap: 8px;">
+              <a href="tel:+918005556738" class="phone-call-btn" style="font-size: 0.78rem;">
+                📞 Call IT Hotline (+91 800 555-MSFT-IN)
+              </a>
+            </div>
+          </div>
+        `;
+        appendChatBubble('assistant', stuckHtml);
+      }
+    }
+
+    // Toggle Task Complete in Chat Checklist
+    function toggleChatTask(taskId) {
+      const task = dailyTasksState.find(t => t.id === taskId);
+      if (!task) return;
+
+      task.done = !task.done;
+
+      const completedCount = dailyTasksState.filter(t => t.done).length;
+      const totalCount = dailyTasksState.length;
+      const pct = Math.round((completedCount / totalCount) * 100);
+
+      // Re-render checklist inside chat
+      handleChatOption('checklist');
+
+      if (task.done) {
+        showNotification(`Completed: "${task.title}"! (${completedCount}/${totalCount})`);
+      }
+    }
+
+    // Explain a specific task inside the chat
+    function explainTaskById(taskId) {
+      const task = dailyTasksState.find(t => t.id === taskId) || dailyTasksState[0];
+      const explainHtml = `
+        <div style="background: #f8fafc; border: 1px solid var(--color-slate-200); border-radius: var(--radius-md); padding: 14px; font-size: 0.85rem;">
+          <div style="font-weight: 800; font-size: 0.95rem; color: var(--color-primary); margin-bottom: 8px;">
+            💡 Task Breakdown: ${task.title}
+          </div>
+          <div style="margin-bottom: 8px;">
+            <strong>1. What does this mean?</strong><br>
+            <span style="color: var(--color-slate-600);">${task.desc}</span>
+          </div>
+          <div style="margin-bottom: 8px;">
+            <strong>2. Why is it necessary?</strong><br>
+            <span style="color: var(--color-slate-600);">Ensures your Microsoft enterprise account conforms to zero-trust security and grants secure access to internal Azure and GitHub systems.</span>
+          </div>
+          <div style="margin-bottom: 8px;">
+            <strong>3. Step-by-step instructions:</strong><br>
+            <ol style="padding-left: 20px; color: var(--color-slate-600); font-size: 0.82rem;">
+              <li>Log into Microsoft Authenticator with your verified email (${currentAuthenticatedUser?.email || 'rohan.sharma2026@microsoft.in'}).</li>
+              <li>Scan the corporate security QR code issued in your HR welcome kit.</li>
+              <li>Confirm prompt and verify hardware key registration.</li>
+            </ol>
+          </div>
+          <div>
+            <strong>4. Completion verification:</strong><br>
+            <span style="color: var(--color-slate-600);">Mark this task as complete once you receive the green confirmation checkmark on the portal.</span>
+          </div>
+        </div>
+      `;
+      appendChatBubble('assistant', explainHtml);
+    }
+
+    // Append Chat Bubble Helper
+    function appendChatBubble(sender, contentHtml) {
+      const feed = document.getElementById('chatbot-messages-feed');
+      const bubble = document.createElement('div');
+      bubble.className = `chat-bubble ${sender}`;
+
+      if (sender === 'assistant') {
+        bubble.innerHTML = `
+          <div class="chat-avatar ai">⚡</div>
+          <div class="chat-bubble-body">${contentHtml}</div>
+        `;
+      } else {
+        bubble.innerHTML = `
+          <div class="chat-avatar employee">👤</div>
+          <div class="chat-bubble-body">${contentHtml}</div>
+        `;
+      }
+
+      feed.appendChild(bubble);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    // Send Free-Form Chat Message
+    async function sendChatMessage() {
+      const input = document.getElementById('chatbot-input');
+      const query = input.value.trim();
+      if (!query) return;
+
+      appendChatBubble('user', query);
+      input.value = '';
+
+      const sendBtn = document.getElementById('chatbot-send-btn');
+      sendBtn.disabled = true;
+      sendBtn.innerHTML = '<span>Thinking...</span> ⏳';
+
+      const lower = query.toLowerCase();
+
+      // Check instant canned matches
+      if (lower.includes('contact') || lower.includes('phone') || lower.includes('team') || lower.includes('hr') || lower.includes('buddy') || lower.includes('manager')) {
+        setTimeout(() => {
+          handleChatOption('contacts');
+          sendBtn.disabled = false;
+          sendBtn.innerHTML = '<span>Ask AI</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
+        }, 400);
+        return;
+      }
+
+      if (lower.includes('task') || lower.includes('checklist') || lower.includes('work') || lower.includes('today') || lower.includes('todo')) {
+        setTimeout(() => {
+          handleChatOption('checklist');
+          sendBtn.disabled = false;
+          sendBtn.innerHTML = '<span>Ask AI</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
+        }, 400);
+        return;
+      }
+
+      if (lower.includes('stuck') || lower.includes('help') || lower.includes('blocked') || lower.includes('vpn') || lower.includes('issue')) {
+        setTimeout(() => {
+          handleChatOption('stuck');
+          sendBtn.disabled = false;
+          sendBtn.innerHTML = '<span>Ask AI</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
+        }, 400);
+        return;
+      }
+
+      // Query NVIDIA NIM Backend API
+      try {
+        let aiAnswer = null;
+        try {
+          const res = await fetch('http://localhost:5000/api/v1/ai/nvidia-copilot', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              query,
+              role: 'New Joiner',
+              company: 'Microsoft Corporation',
+              branch: 'Bengaluru / Redmond',
+              buddyName: 'Rahul Pandey',
+              hrName: 'Priya Sharma'
+            })
+          });
+          if (res.ok) {
+            const data = await res.json();
+            aiAnswer = data.data?.answer;
+          }
+        } catch (e) {
+          console.debug('Backend fetch skipped');
+        }
+
+        if (!aiAnswer) {
+          aiAnswer = `As a New Joiner at Microsoft Corporation, your primary goals for Day 1 are completing your documentation, setting up your corporate credentials, and connecting with your technical buddy Rahul Pandey during your 1:1 welcome session at 2:00 PM today!`;
+        }
+
+        appendChatBubble('assistant', aiAnswer);
+      } catch (err) {
+        appendChatBubble('assistant', `As a New Joiner at Microsoft, remember to verify your security keys and reach out to your HR Partner Priya Sharma (+91 (80) 6789-HR01) for any assistance.`);
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.innerHTML = '<span>Ask AI</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
+      }
+    }
+
+    // Render Step 4B: HR Cohort Portal
+    function renderHRPortal(hrUser) {
+      document.getElementById('hr-portal-name').textContent = hrUser.name;
+      const tbody = document.getElementById('hr-cohort-roster-body');
+      tbody.innerHTML = '';
+
+      microsoftDirectory.newJoiners.forEach((j, idx) => {
+        const pairedBuddy = microsoftDirectory.previousMembers.find(b => b.email === j.buddyEmail) || microsoftDirectory.previousMembers[0];
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100); font-weight: 700; color: var(--color-slate-900);">
+            ${j.name}
+            <div style="font-size: 0.72rem; color: var(--color-slate-500); font-weight: 500;">${j.badge}</div>
+          </td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100); font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-primary);">
+            ${j.email}
+          </td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100); color: var(--color-slate-600);">
+            ${j.department}
+          </td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100);">
+            <strong style="color: #6b21a8;">${pairedBuddy.name}</strong> (${pairedBuddy.batch})
+            <div style="font-size: 0.72rem; color: var(--color-slate-500);">${pairedBuddy.phone}</div>
+          </td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100);">
+            <span style="display: inline-block; padding: 2px 8px; border-radius: 9999px; font-size: 0.72rem; font-weight: 700; background: ${idx < 3 ? '#d1fae5; color: #065f46;' : '#fef3c7; color: #92400e;'}">
+              ${idx < 3 ? '● Day 1 Ready' : '● In Progress (40%)'}
+            </span>
+          </td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100);">
+            <button class="persona-pill-btn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="showNotification('Approved Day 1 clearances for ${j.name}!')">
+              Approve ✓
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
       });
-      updateDailyProgress();
-      showNotification('Daily checklist reset.');
+    }
+
+    // Render Step 4C: Buddy / Mentor Portal
+    function renderBuddyPortal(buddyUser) {
+      document.getElementById('buddy-mentor-name').textContent = buddyUser.name;
+      document.getElementById('buddy-mentor-role-badge').textContent = `Senior Member & Technical Buddy (Class of ${buddyUser.batch || '2021'}) · Microsoft Cloud & Architecture`;
+
+      // Find paired mentee
+      const mentee = microsoftDirectory.newJoiners.find(j => j.buddyEmail === buddyUser.email) || microsoftDirectory.newJoiners[0];
+      document.getElementById('mentee-display-name').textContent = mentee.name;
+      document.getElementById('mentee-display-dept').textContent = `${mentee.title} · ${mentee.department}`;
+      document.getElementById('mentee-display-email').textContent = mentee.email;
+      document.getElementById('mentee-avatar-box').textContent = mentee.name.split(' ').map(w => w[0]).join('');
     }
 
     // Embedded Company Registration
@@ -1392,114 +1538,21 @@
       }, 1200);
     }
 
-    // NVIDIA AI Copilot Handlers
-    async function askCopilot(queryText) {
-      const input = document.getElementById('copilot-input');
-      if (queryText) {
-        input.value = queryText;
-      }
-      await sendCopilotQuery();
-    }
-
-    async function sendCopilotQuery() {
-      const input = document.getElementById('copilot-input');
-      const btn = document.getElementById('copilot-submit-btn');
-      const responseBox = document.getElementById('copilot-response-box');
-      const answerText = document.getElementById('copilot-answer-text');
-      const modelTag = document.getElementById('copilot-model-tag');
-
-      const query = input.value.trim();
-      if (!query) return;
-
-      btn.disabled = true;
-      btn.innerHTML = '<span>Thinking...</span> ⏳';
-      responseBox.style.display = 'block';
-      answerText.innerHTML = '<span style="color: #94a3b8;">Querying NVIDIA NIM meta/llama-3.2-11b microservice...</span>';
-
-      try {
-        const comp = companiesDatabase[currentSelectedCompany] || companiesDatabase.amazon;
-        let result = null;
-
-        // Try backend endpoint first
-        try {
-          const res = await fetch('http://localhost:5000/api/v1/ai/nvidia-copilot', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              query,
-              role: 'New Joiner',
-              company: comp.fullName,
-              branch: comp.location,
-              buddyName: comp.buddy.name,
-              hrName: comp.hr.name,
-              currentBlocker: 'VPN token approval pending with IT Operations'
-            })
-          });
-          if (res.ok) {
-            const data = await res.json();
-            result = data.data;
-          }
-        } catch (e) {
-          console.debug('Backend unavailable, falling back to direct NVIDIA NIM API call');
-        }
-
-        // Direct fallback to NVIDIA NIM API if custom key is provided
-        if (!result) {
-          const directApiKey = window.__NVIDIA_API_KEY__ || localStorage.getItem('NVIDIA_API_KEY');
-          if (directApiKey) {
-            const directRes = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
-              method: 'POST',
-              headers: {
-                'Authorization': `Bearer ${directApiKey}`,
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                model: 'meta/llama-3.2-11b-vision-instruct',
-                messages: [
-                  {
-                    role: 'system',
-                    content: `You are Start Smart AI Onboarding Copilot powered by NVIDIA NIM inference. Help a New Joiner at ${comp.fullName} (${comp.location}). Assigned buddy is ${comp.buddy.name} (Phone: ${comp.buddy.phone}), HR partner is ${comp.hr.name} (Phone: ${comp.hr.phone}). Keep answers concise, helpful, and under 120 words.`
-                  },
-                  { role: 'user', content: query }
-                ],
-                max_tokens: 220
-              })
-            });
-            if (directRes.ok) {
-              const directData = await directRes.json();
-              result = {
-                answer: directData.choices[0].message.content,
-                model: 'meta/llama-3.2-11b-vision-instruct',
-                poweredBy: 'NVIDIA NIM (Microservice Inference)'
-              };
-            }
-          }
-        }
-
-        if (result && result.answer) {
-          answerText.textContent = result.answer;
-          modelTag.textContent = `${result.model} · ${result.poweredBy || 'NVIDIA NIM'}`;
-          showNotification('NVIDIA AI Copilot responded');
-        } else {
-          answerText.textContent = `As a New Joiner at ${comp.fullName}, your primary focus today is completing identity setup, syncing with your buddy ${comp.buddy.name} at 2:00 PM, and connecting with HR Partner ${comp.hr.name}.`;
-        }
-      } catch (err) {
-        answerText.textContent = `Error connecting to NVIDIA AI: ${err.message}. Please verify network connectivity.`;
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<span>Ask AI</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
-      }
-    }
-
-    // Toast Helper
+    // Toast Notification Helper
     function showNotification(msg) {
       const toast = document.getElementById('toast');
-      toast.textContent = msg;
+      const text = document.getElementById('toast-text');
+      text.textContent = msg;
       toast.classList.add('show');
       setTimeout(() => {
         toast.classList.remove('show');
       }, 3000);
     }
+
+    // Initialize on load: set Step 1 Gateway active
+    window.addEventListener('DOMContentLoaded', () => {
+      goToStep('step-gateway');
+    });
   </script>
 </body>
 </html>
