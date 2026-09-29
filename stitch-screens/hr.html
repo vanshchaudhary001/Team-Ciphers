@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Start Smart - HR Control Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "on-tertiary-fixed": "#002113",
+          "primary-fixed": "#e2dfff",
+          "surface": "#f8f9ff",
+          "on-tertiary-container": "#67f4b7",
+          "on-primary-fixed-variant": "#3323cc",
+          "on-error": "#ffffff",
+          "surface-dim": "#cbdbf5",
+          "inverse-primary": "#c3c0ff",
+          "tertiary-fixed-dim": "#4edea3",
+          "outline": "#777587",
+          "on-primary": "#ffffff",
+          "error-container": "#ffdad6",
+          "on-tertiary-fixed-variant": "#005236",
+          "on-secondary": "#ffffff",
+          "on-error-container": "#93000a",
+          "background": "#f8f9ff",
+          "on-secondary-fixed-variant": "#5a00c6",
+          "on-background": "#0b1c30",
+          "outline-variant": "#c7c4d8",
+          "on-primary-container": "#dad7ff",
+          "surface-container-low": "#eff4ff",
+          "secondary": "#712ae2",
+          "inverse-surface": "#213145",
+          "surface-container-lowest": "#ffffff",
+          "tertiary-fixed": "#6ffbbe",
+          "secondary-fixed-dim": "#d2bbff",
+          "on-primary-fixed": "#0f0069",
+          "primary": "#3525cd",
+          "surface-container": "#e5eeff",
+          "tertiary-container": "#006e4b",
+          "on-tertiary": "#ffffff",
+          "surface-bright": "#f8f9ff",
+          "on-secondary-fixed": "#25005a",
+          "on-surface-variant": "#464555",
+          "tertiary": "#005338",
+          "on-secondary-container": "#fffbff",
+          "secondary-container": "#8a4cfc",
+          "surface-variant": "#d3e4fe",
+          "surface-tint": "#4d44e3",
+          "primary-fixed-dim": "#c3c0ff",
+          "error": "#ba1a1a",
+          "surface-container-high": "#dce9ff",
+          "inverse-on-surface": "#eaf1ff",
+          "surface-container-highest": "#d3e4fe",
+          "secondary-fixed": "#eaddff",
+          "primary-container": "#4f46e5",
+          "on-surface": "#0b1c30"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "margin-desktop": "3rem",
+          "gutter-lg": "2rem",
+          "space-3xl": "4.5rem",
+          "margin-mobile": "1rem",
+          "gutter-sm": "1rem",
+          "gutter": "1.5rem",
+          "space-lg": "1.5rem",
+          "space-xl": "2rem",
+          "space-xs": "0.25rem",
+          "space-2xl": "3rem",
+          "margin": "2rem",
+          "space-sm": "0.5rem",
+          "space-2xs": "0.125rem",
+          "space-md": "1rem"
+        },
+        "fontFamily": {
+          "headline-xl-mobile": ["Inter"],
+          "headline-sm": ["Inter"],
+          "label-md": ["Inter"],
+          "headline-lg": ["Inter"],
+          "body-sm": ["Inter"],
+          "headline-xl": ["Inter"],
+          "label-caps": ["Inter"],
+          "display-lg-mobile": ["Inter"],
+          "label-lg": ["Inter"],
+          "display-lg": ["Inter"],
+          "body-md": ["Inter"],
+          "code-inline": ["JetBrains Mono"],
+          "body-lg": ["Inter"]
+        },
+        "fontSize": {
+          "headline-xl-mobile": ["1.75rem", {"lineHeight": "2.25rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+          "headline-sm": ["1.125rem", {"lineHeight": "1.5rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+          "label-md": ["0.75rem", {"lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "600"}],
+          "headline-lg": ["1.5rem", {"lineHeight": "2rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+          "body-sm": ["0.75rem", {"lineHeight": "1.125rem", "letterSpacing": "0", "fontWeight": "400"}],
+          "headline-xl": ["2.25rem", {"lineHeight": "2.75rem", "letterSpacing": "-0.025em", "fontWeight": "600"}],
+          "label-caps": ["0.6875rem", {"lineHeight": "0.875rem", "letterSpacing": "0.06em", "fontWeight": "700"}],
+          "display-lg-mobile": ["2.25rem", {"lineHeight": "2.75rem", "letterSpacing": "-0.025em", "fontWeight": "700"}],
+          "label-lg": ["0.875rem", {"lineHeight": "1.25rem", "letterSpacing": "-0.005em", "fontWeight": "600"}],
+          "display-lg": ["3.5rem", {"lineHeight": "4rem", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+          "body-md": ["0.875rem", {"lineHeight": "1.375rem", "letterSpacing": "-0.005em", "fontWeight": "400"}],
+          "code-inline": ["0.8125rem", {"lineHeight": "1.125rem", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+          "body-lg": ["1rem", {"lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "400"}]
+        }
+      }
+    }
+  }
+</script>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased selection:bg-primary-container selection:text-on-primary">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-margin-desktop h-16 w-full bg-surface-container-lowest/80 backdrop-blur-md shadow-sm border-b border-outline-variant/50">
+<div class="flex items-center gap-space-lg">
+<span class="text-headline-sm font-headline-sm tracking-tight text-on-surface font-bold">START SMART - HR CONTROL CENTER</span>
+<div class="hidden md:flex items-center bg-surface-container-low px-3 py-1.5 rounded-lg border border-outline-variant/30 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm mr-2 text-primary" data-icon="search">search</span>
+<span>Quick search candidates, workflows...</span>
+<span class="ml-4 px-1.5 py-0.5 bg-surface rounded text-code-inline border border-outline-variant/40">⌘K</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="hidden lg:flex items-center gap-2 px-3 py-1 bg-surface-container-low rounded-full border border-outline-variant/20">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="text-label-md font-label-md text-on-surface-variant">Engine Status: Operational</span>
+</div>
+<button aria-label="Notifications" class="p-2 rounded-full hover:bg-surface-container-high transition-colors relative">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<button aria-label="Help" class="p-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="help">help</span>
+</button>
+<button aria-label="Terminal" class="p-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="terminal">terminal</span>
+</button>
+<div class="h-6 w-px bg-outline-variant/40 mx-1"></div>
+<div class="flex items-center gap-3">
+<img class="w-9 h-9 rounded-full object-cover border border-primary/20" data-alt="Corporate headshot of Priya Sharma, Director of People and Operations, smiling professionally against a bright, modern office backdrop with soft natural lighting and glass architectural elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaKRnwG8FM1EJYAhn6s6fa1UeN9z6Rd--b2ceOP80EDEZwhfOsm8yKC4brDT-rtUDnH8RdB9T3R0c5IX1S-_lPnzUnX6U4cFvMrXea3UD98skZ1vSNDw7bdcsH36e9GVQ7C1eblm6RtqhOO6s61DGUCbKyDvREwpxIL3IdmwarIyqlc2wahI3HKi9YpOZQNNA3jY3S4Dts5GvwHVYVupXDRMz5EoFXhqi2Mtip-N0hjpl4jeFU31MgtsElnPyjbIbtrR99LnCMlr8"/>
+<div class="hidden md:block text-left">
+<div class="text-label-lg font-label-lg text-on-surface leading-none">Priya Sharma</div>
+<div class="text-body-sm text-on-surface-variant mt-0.5">Director of People & Ops</div>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed top-16 left-0 bottom-0 w-64 flex flex-col justify-between p-space-md z-30 bg-surface-container-lowest border-r border-outline-variant/40">
+<div class="space-y-6">
+<!-- Workspace Info -->
+<div class="flex items-center gap-3 p-2 bg-surface-container-low rounded-xl border border-outline-variant/20">
+<img class="w-10 h-10 rounded-lg object-cover" data-alt="Minimalist enterprise organization badge logo featuring geometric indigo and violet shapes on a pure white background, representing Acme Corp Global workspace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRyfFQ_t-2k5y-fOfwEwNsufOZtL328z3vrtCLXsGM7iyxA4Yd5x0ps67nTrTztZ09tIk1JT1a6esYMLyLTiNKwsaBJSxOswIjd9fthB07qa-5Wdb5JG2yO6YjGRqwSW0XxSpeM5ppv4bBq3apWI6XlTj7aDvaQlb35M2LViX7YThbTAxwAQQWRv45jHJsb05XWwj5EBBKihWGl6_cC5pf246FAgg_Jr71CCpC6VOrk4ZmG9PAYFYyQl6VbHAydITap4LnG0ruiOQ"/>
+<div class="overflow-hidden">
+<div class="text-headline-sm font-headline-sm text-primary font-bold truncate">Acme Corp Global</div>
+<div class="text-body-sm text-on-surface-variant truncate">Cohort 2025.1 • Fast Track</div>
+</div>
+</div>
+<!-- Nav Links -->
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span>My Playbook</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+<span>Dependency DAG</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 bg-primary-container text-on-primary rounded-lg font-label-md text-label-md shadow-sm" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span>Team Network</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span>Compliance</span>
+</a>
+</nav>
+</div>
+<div class="space-y-4">
+<button class="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary-container to-secondary-container text-on-primary py-2.5 px-4 rounded-lg font-label-lg text-label-lg shadow-sm hover:opacity-95 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+<span>New Detour Request</span>
+</button>
+<div class="pt-4 border-t border-outline-variant/30 flex items-center justify-between text-on-surface-variant">
+<a class="flex items-center gap-2 text-body-sm hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-base" data-icon="menu_book">menu_book</span>
+<span>Docs</span>
+</a>
+<a class="flex items-center gap-2 text-body-sm hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-base" data-icon="headset_mic">headset_mic</span>
+<span>Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="pl-64 pt-16 min-h-screen bg-surface">
+<div class="max-w-7xl mx-auto p-margin-desktop space-y-8">
+<!-- Page Header & Actions -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h1 class="text-headline-xl font-headline-xl text-on-surface">HR Control Center</h1>
+<p class="text-body-lg text-on-surface-variant mt-1">Real-time telemetry and orchestration for incoming 2025 cohort joiners.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 bg-surface-container-lowest border border-outline-variant/40 rounded-lg text-label-lg font-label-lg text-on-surface hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+<span>Export Report</span>
+</button>
+<button class="px-4 py-2 bg-primary-container text-on-primary rounded-lg text-label-lg font-label-lg hover:opacity-95 transition-all flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-sm" data-icon="refresh">refresh</span>
+<span>Sync Pipelines</span>
+</button>
+</div>
+</div>
+<!-- 1. Cohort Health Metrics (3 Large Stat Cards) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1: FLOWING -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm relative overflow-hidden group hover:border-primary/40 transition-all">
+<div class="absolute top-0 left-0 bottom-0 w-1.5 bg-emerald-500"></div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="text-label-caps font-label-caps text-emerald-700 tracking-wider">FLOWING</span>
+</div>
+<span class="text-headline-lg font-headline-lg text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">24</span>
+</div>
+<div class="mt-4">
+<div class="text-display-lg-mobile font-display-lg-mobile text-on-surface">24 Joiners</div>
+<p class="text-body-md text-on-surface-variant mt-1">All tasks on schedule, zero root blockers across onboarding nodes.</p>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant/20 flex items-center justify-between text-body-sm text-on-surface-variant">
+<span>Velocity: Optimal</span>
+<a class="text-primary font-label-md flex items-center gap-1 hover:underline" href="#">View Stream <span class="material-symbols-outlined text-xs" data-icon="arrow_forward">arrow_forward</span></a>
+</div>
+</div>
+<!-- Card 2: DETOURING -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm relative overflow-hidden group hover:border-amber-500/40 transition-all">
+<div class="absolute top-0 left-0 bottom-0 w-1.5 bg-amber-500"></div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-amber-500"></span>
+<span class="text-label-caps font-label-caps text-amber-700 tracking-wider">DETOURING</span>
+</div>
+<span class="text-headline-lg font-headline-lg text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">7</span>
+</div>
+<div class="mt-4">
+<div class="text-display-lg-mobile font-display-lg-mobile text-on-surface">7 Joiners</div>
+<p class="text-body-md text-on-surface-variant mt-1">Blocked on IT/facilities gates, but joiners doing active SideQuests.</p>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant/20 flex items-center justify-between text-body-sm text-on-surface-variant">
+<span>Avg Wait: 14h</span>
+<a class="text-primary font-label-md flex items-center gap-1 hover:underline" href="#">Manage Detours <span class="material-symbols-outlined text-xs" data-icon="arrow_forward">arrow_forward</span></a>
+</div>
+</div>
+<!-- Card 3: STALLED -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm relative overflow-hidden group hover:border-rose-500/40 transition-all">
+<div class="absolute top-0 left-0 bottom-0 w-1.5 bg-rose-500"></div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-rose-500"></span>
+<span class="text-label-caps font-label-caps text-rose-700 tracking-wider">STALLED</span>
+</div>
+<span class="text-headline-lg font-headline-lg text-rose-700 bg-rose-50 px-3 py-1 rounded-full border border-rose-200">2</span>
+</div>
+<div class="mt-4">
+<div class="text-display-lg-mobile font-display-lg-mobile text-on-surface">2 Joiners</div>
+<p class="text-body-md text-on-surface-variant mt-1">No tasks available, urgent HR escalation required immediately.</p>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant/20 flex items-center justify-between text-body-sm text-on-surface-variant">
+<span>Action Required</span>
+<a class="text-primary font-label-md flex items-center gap-1 hover:underline" href="#">Resolve Blockers <span class="material-symbols-outlined text-xs" data-icon="arrow_forward">arrow_forward</span></a>
+</div>
+</div>
+</div>
+<!-- 2. Active Cohort Blockers Table -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-outline-variant/30 flex items-center justify-between flex-wrap gap-4">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Active Cohort Blockers</h2>
+<p class="text-body-sm text-on-surface-variant mt-0.5">Real-time tracking of dependencies stalling candidate pipeline velocity.</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 bg-surface-container-low rounded-lg text-label-md font-label-md text-on-surface-variant border border-outline-variant/30">Showing 2 Critical Blockers</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50 border-b border-outline-variant/30 text-label-caps font-label-caps text-on-surface-variant">
+<th class="py-3 px-6">Candidate / Role</th>
+<th class="py-3 px-6">Blocker</th>
+<th class="py-3 px-6">Owner</th>
+<th class="py-3 px-6">Wait Time</th>
+<th class="py-3 px-6">Impact</th>
+<th class="py-3 px-6">Status</th>
+<th class="py-3 px-6 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 text-body-md">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-label-md">AS</div>
+<div>
+<div class="font-label-lg text-on-surface">Aarav Sharma</div>
+<div class="text-body-sm text-on-surface-variant">Software Engineer</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-code-inline bg-surface-container-low px-2 py-1 rounded text-on-surface border border-outline-variant/30">VPN Approval</span>
+</td>
+<td class="py-4 px-6">
+<span class="text-on-surface font-label-md">IT Operations</span>
+</td>
+<td class="py-4 px-6">
+<span class="text-amber-700 font-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span> 8h waiting
+                </span>
+</td>
+<td class="py-4 px-6">
+<span class="text-on-surface-variant">4 tasks locked</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-label-md bg-amber-50 text-amber-700 border border-amber-200">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5 animate-pulse"></span> At Risk
+                </span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="px-2.5 py-1.5 text-label-md font-label-md bg-surface-container-lowest border border-outline-variant/40 rounded hover:bg-surface-container-low text-on-surface transition-colors">View DAG</button>
+<button class="px-2.5 py-1.5 text-label-md font-label-md bg-surface-container-lowest border border-outline-variant/40 rounded hover:bg-surface-container-low text-primary transition-colors">Nudge IT</button>
+<button class="px-2.5 py-1.5 text-label-md font-label-md bg-rose-50 text-rose-700 border border-rose-200 rounded hover:bg-rose-100 transition-colors">Escalate</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary/10 text-secondary flex items-center justify-center font-label-md">MN</div>
+<div>
+<div class="font-label-lg text-on-surface">Meera Nair</div>
+<div class="text-body-sm text-on-surface-variant">Product Designer</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-code-inline bg-surface-container-low px-2 py-1 rounded text-on-surface border border-outline-variant/30">Laptop Delivery</span>
+</td>
+<td class="py-4 px-6">
+<span class="text-on-surface font-label-md">Facilities</span>
+</td>
+<td class="py-4 px-6">
+<span class="text-rose-700 font-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="error">error</span> 26h waiting
+                </span>
+</td>
+<td class="py-4 px-6">
+<span class="text-on-surface-variant">6 tasks locked</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-label-md bg-rose-50 text-rose-700 border border-rose-200">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5 animate-pulse"></span> Stalled
+                </span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="px-2.5 py-1.5 text-label-md font-label-md bg-surface-container-lowest border border-outline-variant/40 rounded hover:bg-surface-container-low text-on-surface transition-colors">View DAG</button>
+<button class="px-2.5 py-1.5 text-label-md font-label-md bg-surface-container-lowest border border-outline-variant/40 rounded hover:bg-surface-container-low text-primary transition-colors">Nudge</button>
+<button class="px-2.5 py-1.5 text-label-md font-label-md bg-rose-50 text-rose-700 border border-rose-200 rounded hover:bg-rose-100 transition-colors">Escalate</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- 3. Pre-Join Readiness Matrix -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-sm overflow-hidden mb-12">
+<div class="p-6 border-b border-outline-variant/30 flex items-center justify-between flex-wrap gap-4">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Pre-Join Readiness Matrix</h2>
+<p class="text-body-sm text-on-surface-variant mt-0.5">Upcoming candidates checklist covering essential provisioning milestones.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="inline-block w-3 h-3 bg-emerald-500 rounded-sm"></span> Provisioned
+            <span class="inline-block w-3 h-3 bg-amber-400 rounded-sm ml-2"></span> In Progress
+            <span class="inline-block w-3 h-3 bg-rose-400 rounded-sm ml-2"></span> Pending
+          </div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50 border-b border-outline-variant/30 text-label-caps font-label-caps text-on-surface-variant">
+<th class="py-3 px-6">Candidate</th>
+<th class="py-3 px-6 text-center">Laptop</th>
+<th class="py-3 px-6 text-center">SSO</th>
+<th class="py-3 px-6 text-center">VPN</th>
+<th class="py-3 px-6 text-center">Documents</th>
+<th class="py-3 px-6 text-center">Buddy Assignment</th>
+<th class="py-3 px-6 text-right">Overall Readiness</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 text-body-md">
+<!-- Candidate 1 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-4 px-6 font-label-lg text-on-surface">
+<div>Karan Verma</div>
+<div class="text-body-sm text-on-surface-variant font-normal">Backend Engineer • Starts Mon</div>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex p-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200" title="Provisioned">
+<span class="material-symbols-outlined text-base" data-icon="check">check</span>
+</span>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex p-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200" title="Provisioned">
+<span class="material-symbols-outlined text-base" data-icon="check">check</span>
+</span>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex p-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200" title="Provisioned">
+<span class="material-symbols-outlined text-base" data-icon="check">check</span>
+</span>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex p-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200" title="Provisioned">
+<span class="material-symbols-outlined text-base" data-icon="check">check</span>
+</span>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex p-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200" title="Assigned">
+<span class="material-symbols-outlined text-base" data-icon="check">check</span>
+</span>
+</td>
+<td class="py-4 px-6 text-right">
+<span class="font-label-lg text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">100% Ready</span>
+</td>
+</tr>
+<!-- Candidate 2 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-4 px-6 font-label-lg text-on-surface">
+<div>Neha Gupta</div>
+<div class="text-body-sm text-on-surface-variant font-normal">Data Scientist • Starts Mon</div>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex p-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200" title="Provisioned">
+<span class="material-symbols-outlined text-base" data-icon="check">check</span>
+</span>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex p-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200" title="Provisioned">
+<span class="material-symbols-outlined text-base" data-icon="check">check</span>
+</span>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex p-1 bg-amber-50 text-amber-700 rounded-full border border-amber-200" title="In Progress">
+<span class="material-symbols-outlined text-base" data-icon="pending">pending</span>
+</span>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex p-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200" title="Provisioned">
+<span class="material-symbols-outlined text-base" data-icon="check">check</span>
+</span>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex p-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200" title="Assigned">
+<span class="material-symbols-outlined text-base" data-icon="check">check</span>
+</span>
+</td>
+<td class="py-4 px-6 text-right">
+<span class="font-label-lg text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">80% Ready</span>
+</td>
+</tr>
+<!-- Candidate 3 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-4 px-6 font-label-lg text-on-surface">
+<div>Rohan Joshi</div>
+<div class="text-body-sm text-on-surface-variant font-normal">Account Executive • Starts Wed</div>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex p-1 bg-rose-50 text-rose-700 rounded-full border border-rose-200" title="Pending">
+<span class="material-symbols-outlined text-base" data-icon="close">close</span>
+</span>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex p-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200" title="Provisioned">
+<span class="material-symbols-outlined text-base" data-icon="check">check</span>
+</span>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex p-1 bg-rose-50 text-rose-700 rounded-full border border-rose-200" title="Pending">
+<span class="material-symbols-outlined text-base" data-icon="close">close</span>
+</span>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex p-1 bg-amber-50 text-amber-700 rounded-full border border-amber-200" title="In Progress">
+<span class="material-symbols-outlined text-base" data-icon="pending">pending</span>
+</span>
+</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex p-1 bg-rose-50 text-rose-700 rounded-full border border-rose-200" title="Pending">
+<span class="material-symbols-outlined text-base" data-icon="close">close</span>
+</span>
+</td>
+<td class="py-4 px-6 text-right">
+<span class="font-label-lg text-rose-700 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200">30% Ready</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,379 @@
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>START SMART - Desktop Dashboard &amp; Root Blocker Diagnosis</title>
+<!-- Tailwind CSS Script -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+              "primary-fixed": "#e2dfff",
+              "on-background": "#0b1c30",
+              "on-surface": "#0b1c30",
+              "surface-container-lowest": "#ffffff",
+              "on-surface-variant": "#464555",
+              "error": "#ba1a1a",
+              "tertiary-fixed": "#6ffbbe",
+              "tertiary-container": "#006e4b",
+              "surface-container-highest": "#d3e4fe",
+              "outline": "#777587",
+              "surface-variant": "#d3e4fe",
+              "primary-container": "#4f46e5",
+              "secondary-fixed-dim": "#d2bbff",
+              "on-error-container": "#93000a",
+              "secondary": "#712ae2",
+              "primary": "#3525cd",
+              "on-error": "#ffffff",
+              "primary-fixed-dim": "#c3c0ff",
+              "on-tertiary": "#ffffff",
+              "background": "#f8f9ff",
+              "on-tertiary-fixed-variant": "#005236",
+              "surface-container-low": "#eff4ff",
+              "error-container": "#ffdad6",
+              "on-secondary-fixed": "#25005a",
+              "tertiary-fixed-dim": "#4edea3",
+              "on-tertiary-container": "#67f4b7",
+              "surface": "#f8f9ff",
+              "on-primary-container": "#dad7ff",
+              "surface-bright": "#f8f9ff",
+              "on-tertiary-fixed": "#002113",
+              "surface-container": "#e5eeff",
+              "on-primary-fixed": "#0f0069",
+              "surface-container-high": "#dce9ff",
+              "on-secondary": "#ffffff",
+              "inverse-surface": "#213145",
+              "surface-dim": "#cbdbf5",
+              "inverse-on-surface": "#eaf1ff",
+              "surface-tint": "#4d44e3",
+              "on-primary-fixed-variant": "#3323cc",
+              "on-primary": "#ffffff",
+              "on-secondary-fixed-variant": "#5a00c6",
+              "inverse-primary": "#c3c0ff",
+              "secondary-fixed": "#eaddff",
+              "tertiary": "#005338",
+              "secondary-container": "#8a4cfc",
+              "outline-variant": "#c7c4d8",
+              "on-secondary-container": "#fffbff"
+            },
+            "borderRadius": {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+            "spacing": {
+              "space-xs": "0.25rem",
+              "space-2xl": "3rem",
+              "margin-mobile": "1rem",
+              "space-2xs": "0.125rem",
+              "gutter-sm": "1rem",
+              "space-sm": "0.5rem",
+              "gutter-lg": "2rem",
+              "space-lg": "1.5rem",
+              "space-3xl": "4.5rem",
+              "space-xl": "2rem",
+              "margin": "2rem",
+              "gutter": "1.5rem",
+              "space-md": "1rem",
+              "margin-desktop": "3rem"
+            },
+            "fontFamily": {
+              "body-lg": ["Inter"],
+              "code-inline": ["JetBrains Mono"],
+              "display-lg": ["Inter"],
+              "display-lg-mobile": ["Inter"],
+              "headline-sm": ["Inter"],
+              "headline-xl-mobile": ["Inter"],
+              "body-md": ["Inter"],
+              "label-md": ["Inter"],
+              "body-sm": ["Inter"],
+              "label-caps": ["Inter"],
+              "label-lg": ["Inter"],
+              "headline-xl": ["Inter"],
+              "headline-lg": ["Inter"]
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-surface text-on-background font-body-md antialiased min-h-screen selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="bg-surface-container-lowest/80 backdrop-blur-md fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-space-2xl h-16 w-full shadow-sm border-b border-outline-variant/50">
+<div class="flex items-center gap-8">
+<div class="text-headline-sm font-headline-sm tracking-tight text-on-surface font-bold">START SMART</div>
+<nav class="hidden md:flex items-center space-x-6">
+<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-on-surface transition-colors duration-150" href="#">Dashboard</a>
+<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-on-surface transition-colors duration-150" href="#">Workflows</a>
+<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-on-surface transition-colors duration-150" href="#">Cohorts</a>
+<a class="text-primary font-label-lg text-label-lg border-b-2 border-primary pb-1" href="#">Analytics</a>
+<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-on-surface transition-colors duration-150" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex items-center space-x-4">
+<button class="hidden md:inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-outline-variant/40 text-on-surface-variant text-label-md font-label-md hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="terminal">terminal</span>
+                Engine Status: Operational
+            </button>
+<button class="hidden md:inline-flex items-center gap-2 bg-primary-container text-on-primary px-4 py-2 rounded-lg text-label-lg font-label-lg shadow-sm hover:opacity-95 transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm" data-icon="person_add">person_add</span>
+                Invite Member
+            </button>
+<div class="flex items-center space-x-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant/40 ml-2">
+<img class="w-full h-full object-cover" data-alt="A detailed professional headshot portrait of a tech enterprise team leader with warm lighting, neutral gray studio background, wearing a smart casual navy blazer, capturing an approachable and experienced demeanor." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb3cIOiOy-25c5Dn2PUSbDuAS18M_DyhgC81MJKHeierrIUUOdgts9KHQ401S2XOP3PXpGuOZO9rlUY2woZf1XT2Troh78AXr84FpelT6Zkh57pfIfBB0bq3aF7ca_yOiwiqAnYMefBNFQ2Od1Bxy2NuMjR5ZqkgGu5fXZPRsjbpTKFpuJ8Y9lrnS-J685qEcFU9upaIgySXfGIX_gQlqUNqj7QDuZ1tzRTk9YbPgxU1b6XoIW89q2o6j1K0MX6Unx8xKifxGHVe4"/>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed top-16 left-0 bottom-0 w-64 flex flex-col justify-between p-space-md z-30 bg-surface-container-lowest border-r border-outline-variant/40">
+<div class="space-y-6">
+<div class="flex items-center space-x-3 p-2 bg-surface-container-low rounded-xl border border-outline-variant/20">
+<div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary flex items-center justify-center font-bold">
+                    AC
+                </div>
+<div>
+<h2 class="text-headline-sm font-headline-sm text-primary text-sm font-bold">Acme Corp Global</h2>
+<p class="text-body-sm text-on-surface-variant">Cohort 2025.1 • Fast Track</p>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center space-x-3 px-3 py-2.5 text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center space-x-3 px-3 py-2.5 text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="account_tree">account_tree</span>
+<span>My Playbook</span>
+</a>
+<a class="flex items-center space-x-3 px-3 py-2.5 bg-primary-container text-on-primary rounded-lg font-label-md text-label-md shadow-sm" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="hub">hub</span>
+<span>Dependency DAG</span>
+</a>
+<a class="flex items-center space-x-3 px-3 py-2.5 text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="group">group</span>
+<span>Team Network</span>
+</a>
+<a class="flex items-center space-x-3 px-3 py-2.5 text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="verified_user">verified_user</span>
+<span>Compliance</span>
+</a>
+</nav>
+</div>
+<div class="space-y-4">
+<button class="w-full py-2.5 px-4 bg-primary text-on-primary rounded-lg text-label-md font-label-md shadow-sm hover:opacity-90 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                New Detour Request
+            </button>
+<div class="pt-4 border-t border-outline-variant/30 flex items-center justify-between text-on-surface-variant px-2">
+<a class="flex items-center space-x-1 text-label-md hover:text-primary" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="menu_book">menu_book</span>
+<span>Docs</span>
+</a>
+<a class="flex items-center space-x-1 text-label-md hover:text-primary" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="headset_mic">headset_mic</span>
+<span>Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas (Blurred Background State) -->
+<main class="pl-64 pt-16 min-h-screen bg-surface filter blur-[2px] pointer-events-none select-none">
+<div class="p-8 max-w-7xl mx-auto space-y-6">
+<!-- Header Banner -->
+<div class="flex items-center justify-between">
+<div>
+<h1 class="text-headline-xl font-headline-xl text-on-background">Enterprise Onboarding Topology</h1>
+<p class="text-body-lg text-on-surface-variant">Real-time dependency graphs and blocker intelligence for cohort pipelines.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="px-3 py-1.5 bg-surface-container-high rounded-lg text-label-lg font-label-lg text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="monitoring">monitoring</span>
+                        Velocity: 94.2%
+                    </div>
+</div>
+</div>
+<!-- Bento Grid Dashboard Mock -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-label-lg font-label-lg text-on-surface">Active Pipeline Progress</span>
+<span class="material-symbols-outlined text-primary" data-icon="trending_up">trending_up</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Step 4 of 12</span>
+<span>33% Complete</span>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="w-1/3 h-full bg-primary-container rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-label-lg font-label-lg text-on-surface">Support Network Latency</span>
+<span class="material-symbols-outlined text-amber-600" data-icon="support_agent">support_agent</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-700 font-bold">2.4h</div>
+<div>
+<p class="text-body-md font-semibold">Average Response Time</p>
+<p class="text-body-sm text-on-surface-variant">IT Operations queue is currently congested</p>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-label-lg font-label-lg text-on-surface">Dependency DAG Nodes</span>
+<span class="material-symbols-outlined text-rose-600" data-icon="error">error</span>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-headline-lg font-headline-lg text-rose-600">1 Blocker</p>
+<p class="text-body-sm text-on-surface-variant">Halt condition on Git provisioning</p>
+</div>
+<span class="px-2.5 py-1 bg-rose-50 text-rose-700 border border-rose-200 rounded-full text-label-md">Critical</span>
+</div>
+</div>
+</div>
+<!-- Visualization Canvas Area -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm h-96 flex flex-col items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 opacity-10 bg-[radial-gradient(#3525cd_1px,transparent_1px)] [background-size:16px_16px]"></div>
+<div class="text-center space-y-3 z-10">
+<span class="material-symbols-outlined text-4xl text-primary animate-pulse" data-icon="schema">schema</span>
+<h3 class="text-headline-sm font-headline-sm">Dependency Topology Graph Rendering</h3>
+<p class="text-body-md text-on-surface-variant max-w-md mx-auto">DAG traversal engine active. Analyzing downstream blockers and synchronizing team network state.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Active Centered Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/30 backdrop-blur-md">
+<div class="backdrop-blur-md bg-white/95 dark:bg-slate-900/95 rounded-2xl shadow-2xl border border-slate-200/80 p-6 max-w-2xl w-full mx-auto relative animate-in fade-in zoom-in-95 duration-200">
+<!-- Modal Header -->
+<div class="flex items-center justify-between pb-4 border-b border-outline-variant/20 mb-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Start Smart AI - Root Blocker Diagnosis</h2>
+</div>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="close">close</span>
+</button>
+</div>
+<!-- Query Bubble -->
+<div class="mb-5 flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center font-bold text-xs text-primary shrink-0">
+                    AS
+                </div>
+<div class="bg-surface-container-low rounded-xl p-3.5 border border-outline-variant/30 text-on-surface text-body-md">
+<p class="font-medium text-primary mb-0.5">Aarav</p>
+<p>"I can't access GitHub."</p>
+</div>
+</div>
+<!-- Diagnosis Card -->
+<div class="bg-red-50/50 dark:bg-red-950/20 border border-red-200/60 rounded-xl p-4 mb-6 space-y-3">
+<div class="flex items-center gap-2 font-semibold text-rose-700 text-label-lg">
+<span>🔴</span>
+<span>I found what's blocking you.</span>
+</div>
+<div class="text-body-md text-on-surface pl-6 space-y-1">
+<p><strong class="font-semibold text-on-background">Root Blocker:</strong> VPN Approval <span class="text-on-surface-variant">(Owner: IT Operations - Vikram IT · 8h waiting · SLA At Risk)</span></p>
+</div>
+<div class="pl-6 pt-2">
+<p class="text-label-md font-label-md text-on-surface-variant mb-2">Locked downstream tasks:</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-2.5 py-1 bg-white/80 border border-rose-200/60 text-rose-800 rounded-md text-label-md font-label-md shadow-2xs">GitHub Access</span>
+<span class="px-2.5 py-1 bg-white/80 border border-rose-200/60 text-rose-800 rounded-md text-label-md font-label-md shadow-2xs">Repository Clone</span>
+<span class="px-2.5 py-1 bg-white/80 border border-rose-200/60 text-rose-800 rounded-md text-label-md font-label-md shadow-2xs">Dev Environment</span>
+<span class="px-2.5 py-1 bg-white/80 border border-rose-200/60 text-rose-800 rounded-md text-label-md font-label-md shadow-2xs">First PR</span>
+</div>
+</div>
+</div>
+<!-- SideQuest Recommendations Section -->
+<div class="space-y-3 mb-6">
+<h3 class="text-label-lg font-label-lg text-on-surface">Recommended SideQuests while you wait</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+<!-- Quest 1 -->
+<div class="p-3 bg-surface-container-low border border-outline-variant/30 rounded-xl flex items-center justify-between hover:border-primary/50 transition-colors cursor-pointer">
+<div class="flex items-center gap-2.5">
+<span class="text-emerald-600 text-sm">🟢</span>
+<div>
+<p class="text-label-md font-label-md text-on-surface">Security Training</p>
+<p class="text-body-sm text-on-surface-variant">15 min</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Quest 2 -->
+<div class="p-3 bg-surface-container-low border border-outline-variant/30 rounded-xl flex items-center justify-between hover:border-primary/50 transition-colors cursor-pointer">
+<div class="flex items-center gap-2.5">
+<span class="text-emerald-600 text-sm">🟢</span>
+<div>
+<p class="text-label-md font-label-md text-on-surface">Engineering Orientation</p>
+<p class="text-body-sm text-on-surface-variant">20 min</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Quest 3 -->
+<div class="p-3 bg-surface-container-low border border-outline-variant/30 rounded-xl flex items-center justify-between hover:border-primary/50 transition-colors cursor-pointer">
+<div class="flex items-center gap-2.5">
+<span class="text-emerald-600 text-sm">🟢</span>
+<div>
+<p class="text-label-md font-label-md text-on-surface">Meet Your Buddy</p>
+<p class="text-body-sm text-on-surface-variant">15 min</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Interactive Action Buttons -->
+<div class="flex flex-col sm:flex-row items-center justify-end gap-3 pt-4 border-t border-outline-variant/20">
+<button class="w-full sm:w-auto px-4 py-2.5 bg-surface-container-low hover:bg-surface-container-high border border-outline-variant/40 text-on-surface rounded-lg text-label-lg font-label-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="chat">chat</span>
+                    [ 💬 Ask My Buddy ]
+                </button>
+<button class="w-full sm:w-auto px-4 py-2.5 bg-surface-container-low hover:bg-surface-container-high border border-outline-variant/40 text-on-surface rounded-lg text-label-lg font-label-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="map">map</span>
+                    [ 🗺️ View Dependency DAG ]
+                </button>
+<button class="w-full sm:w-auto px-5 py-2.5 bg-primary-container text-on-primary rounded-lg text-label-lg font-label-lg shadow-sm hover:opacity-95 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="notifications_active">notifications_active</span>
+                    [ 🔔 Nudge IT Operations ]
+                </button>
+</div>
+</div>
+</div>
+<!-- Material Symbols Dynamic Font Inserter Script -->
+<script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll("[data-icon]").forEach(el => {
+          const iconName = el.getAttribute("data-icon");
+          el.textContent = iconName;
+        });
+      });
+    </script>
+</body></html>

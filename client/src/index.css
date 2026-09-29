@@ -6,15 +6,36 @@
   :root {
     --background: 210 40% 98%;
     --foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
+    --primary: 238.7 83.5% 58.4%;
     --primary-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
   }
 
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased;
+    @apply bg-background text-on-background font-sans antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
+}
+
+/* Material Symbols Outlined treatment from Stitch */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.material-symbols-outlined.fill {
+  font-variation-settings: 'FILL' 1;
 }
 
 /* Custom scrollbars */
@@ -52,3 +73,83 @@
 .pulsing-blocker-node {
   animation: pulse-ring 2s infinite;
 }
+
+/* ==========================================================================
+   Stitch "Executive Precision" Component Styles (Ready for Reusability)
+   ========================================================================== */
+
+/* Status Badge variants */
+.badge-done {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-label-caps bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold;
+}
+
+.badge-available {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-label-caps bg-indigo-50 text-indigo-700 border border-indigo-200 font-semibold;
+}
+
+.badge-waiting {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-label-caps bg-amber-50 text-amber-700 border border-amber-200 font-semibold;
+}
+
+.badge-locked {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-label-caps bg-slate-100 text-slate-500 border border-slate-200 font-medium;
+}
+
+.badge-blocker {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-label-caps bg-rose-50 text-rose-700 border border-rose-200 font-semibold animate-pulse;
+}
+
+/* Button variants */
+.btn-primary-gradient {
+  @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-label-lg font-label-lg text-white bg-gradient-to-r from-indigo-600 to-violet-600 shadow-sm hover:opacity-95 hover:shadow transition-all active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+}
+
+.btn-secondary-outline {
+  @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-label-md font-label-md text-on-surface-variant bg-surface-container-lowest border border-outline-variant/50 hover:bg-surface-container-low transition-colors disabled:opacity-50 disabled:pointer-events-none;
+}
+
+.btn-danger-subtle {
+  @apply inline-flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-lg text-label-md font-label-md text-rose-700 bg-rose-50 border border-rose-200 hover:bg-rose-100 transition-colors;
+}
+
+/* Card styles */
+.card-stitch {
+  @apply bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-space-md shadow-stitch-card;
+}
+
+.card-stitch-hover {
+  @apply card-stitch hover:border-primary/40 hover:shadow-stitch-hover transition-all duration-200;
+}
+
+/* Input styles */
+.input-stitch {
+  @apply w-full h-10 px-3.5 rounded-lg bg-surface-container-lowest border border-outline-variant/60 text-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all;
+}
+
+/* Table styles */
+.table-stitch-th {
+  @apply px-4 py-3 text-left text-label-caps text-on-surface-variant uppercase tracking-wider font-semibold border-b border-outline-variant/40 bg-surface-container-low;
+}
+
+.table-stitch-td {
+  @apply px-4 py-3.5 text-body-md text-on-surface border-b border-outline-variant/20;
+}
+
+/* Progress indicator styles */
+.progress-track-stitch {
+  @apply w-full h-2 bg-surface-container-high rounded-full overflow-hidden;
+}
+
+.progress-bar-stitch {
+  @apply h-full bg-gradient-to-r from-primary to-secondary rounded-full transition-all duration-300;
+}
+
+/* Drawer styles */
+.drawer-backdrop {
+  @apply fixed inset-0 z-50 bg-slate-900/30 backdrop-blur-sm transition-opacity;
+}
+
+.drawer-panel {
+  @apply fixed inset-y-0 right-0 z-50 w-full max-w-xl bg-surface-container-lowest border-l border-outline-variant/40 shadow-stitch-drawer overflow-y-auto p-space-lg;
+}
+

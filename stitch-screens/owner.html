@@ -1,0 +1,392 @@
+<html><head><meta charset="utf-8"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "on-surface-variant": "#464555",
+          "outline-variant": "#c7c4d8",
+          "on-error-container": "#93000a",
+          "tertiary-fixed-dim": "#4edea3",
+          "surface-container-highest": "#d3e4fe",
+          "surface-container-lowest": "#ffffff",
+          "on-error": "#ffffff",
+          "secondary-fixed": "#eaddff",
+          "secondary-fixed-dim": "#d2bbff",
+          "outline": "#777587",
+          "on-primary-container": "#dad7ff",
+          "surface": "#f8f9ff",
+          "on-secondary": "#ffffff",
+          "surface-container": "#e5eeff",
+          "error-container": "#ffdad6",
+          "primary": "#3525cd",
+          "error": "#ba1a1a",
+          "background": "#f8f9ff",
+          "on-secondary-fixed": "#25005a",
+          "on-surface": "#0b1c30",
+          "on-tertiary": "#ffffff",
+          "on-primary-fixed": "#0f0069",
+          "tertiary": "#005338",
+          "surface-bright": "#f8f9ff",
+          "inverse-primary": "#c3c0ff",
+          "on-tertiary-fixed-variant": "#005236",
+          "surface-tint": "#4d44e3",
+          "on-primary": "#ffffff",
+          "secondary": "#712ae2",
+          "tertiary-container": "#006e4b",
+          "on-tertiary-fixed": "#002113",
+          "on-tertiary-container": "#67f4b7"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-md": "1rem",
+          "margin-desktop": "3rem",
+          "gutter-sm": "1rem",
+          "space-2xs": "0.125rem",
+          "gutter": "1.5rem",
+          "gutter-lg": "2rem",
+          "space-lg": "1.5rem",
+          "space-sm": "0.5rem",
+          "space-xs": "0.25rem",
+          "space-3xl": "4.5rem",
+          "margin-mobile": "1rem",
+          "space-xl": "2rem",
+          "space-2xl": "3rem",
+          "margin": "2rem"
+        },
+        "fontFamily": {
+          "label-md": ["Inter"],
+          "headline-xl-mobile": ["Inter"],
+          "display-lg-mobile": ["Inter"],
+          "label-caps": ["Inter"],
+          "code-inline": ["JetBrains Mono"],
+          "headline-sm": ["Inter"],
+          "body-sm": ["Inter"],
+          "body-lg": ["Inter"],
+          "body-md": ["Inter"],
+          "label-lg": ["Inter"],
+          "headline-lg": ["Inter"],
+          "display-lg": ["Inter"],
+          "headline-xl": ["Inter"]
+        },
+        "fontSize": {
+          "label-md": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "600" }],
+          "headline-xl-mobile": ["1.75rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+          "display-lg-mobile": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.025em", "fontWeight": "700" }],
+          "label-caps": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.06em", "fontWeight": "700" }],
+          "code-inline": ["0.8125rem", { "lineHeight": "1.125rem", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+          "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+          "body-sm": ["0.75rem", { "lineHeight": "1.125rem", "letterSpacing": "0", "fontWeight": "400" }],
+          "body-lg": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+          "body-md": ["0.875rem", { "lineHeight": "1.375rem", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+          "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+          "headline-lg": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+          "display-lg": ["3.5rem", { "lineHeight": "4rem", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+          "headline-xl": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.025em", "fontWeight": "600" }]
+        }
+      }
+    }
+  }
+</script>
+</head><body class="bg-surface text-on-surface font-body-md min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-3 md:px-margin-desktop h-16 w-full bg-surface-container-lowest/80 dark:bg-inverse-surface/80 backdrop-blur-md shadow-sm border-b border-outline-variant/50">
+<div class="flex items-center gap-6">
+<div class="text-headline-sm font-headline-sm tracking-tight text-on-surface dark:text-inverse-on-surface font-bold">START SMART</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-on-surface transition-colors" href="#">Dashboard</a>
+<a class="text-primary font-label-lg text-label-lg border-b-2 border-primary pb-1" href="#">Workflows</a>
+<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-on-surface transition-colors" href="#">Cohorts</a>
+<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-on-surface transition-colors" href="#">Analytics</a>
+<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-on-surface transition-colors" href="#">Settings</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="hidden lg:inline-flex text-xs px-2.5 py-1 rounded-full bg-tertiary/10 text-tertiary font-medium">Engine Status: Operational</span>
+<button class="p-2 rounded-lg hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-2 rounded-lg hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined">help</span></button>
+<button class="p-2 rounded-lg hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined">terminal</span></button>
+<div class="h-6 w-px bg-outline-variant/40"></div>
+<button class="flex items-center gap-3 bg-surface-container-low px-3 py-1.5 rounded-xl border border-outline-variant/30 hover:bg-surface-container-high transition-colors">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="A professional high-resolution portrait photograph of a smiling IT operations engineer with short black hair wearing a modern navy blue button-down shirt. The subject is posed against a brightly lit, out-of-focus tech office background with a clean, high-key corporate aesthetic and soft natural window light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTlFYFRMxiSQDA6HDNIUagylpCE3g-iblfqPlP70XHnrdTPlR960GhUFmW2Qa9lumXKTovwuJuIB3s9p_jLgc747oTCV1nhdYrk9G_1iR0yjbX9eaHKRiOt-3A2DFcBqvv6_Qxtk6DuC0HPsYKKu1XX2JHC06fsMzCHGyB5-1mMd1OKVlsGHtUeTAFq__Jy-iq1R-ChqNjg6xL3QNQfswrV3E2WT_aznARWEAlEn7ni7ZPtrjzVJP2PlRyw_vk8Xn1tZndb4wFcQM"/>
+<div class="text-left hidden sm:block">
+<div class="font-label-md text-label-md leading-tight">Vikram IT</div>
+<div class="text-[10px] text-on-surface-variant">IT Operations</div>
+</div>
+</button>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed top-16 left-0 bottom-0 w-64 flex flex-col justify-between p-space-md z-30 bg-surface-container-lowest dark:bg-inverse-surface border-r border-outline-variant/40 hidden md:flex">
+<div class="flex flex-col gap-6">
+<div class="flex items-center gap-3 p-2 bg-surface-container-low rounded-xl border border-outline-variant/20">
+<img class="w-10 h-10 rounded-lg object-cover" data-alt="A sleek corporate workspace badge icon featuring geometric interlocking shapes in indigo and teal colors on a pristine white surface, representing a global enterprise technology company workspace with high-end modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxZHxDAwVpxvHG5l_aeEiTdly721AuqBZcI06tLacCh3mCoSaq6LMWB-mL6x43mKj5FPmBPWU5Mi2hE29bniynOoaQ5NeKbhjfEe083Nub5EjOcrRn_jSloWn-ZbOnhmupaciDIM3J0TIcsG2YnwAu7_z9X-X64StR0SZeU6LPIzkqlBs_xmLr6G7uECY8uCp7cuY8liBEe14tCgKDUXUVHVStwVXXrl0ht1bg6SHPwC14wzl8bxlidMsZ29XAVfQBtyoMv0-jTZc"/>
+<div>
+<div class="font-headline-sm text-headline-sm text-primary font-bold leading-snug">Acme Corp Global</div>
+<div class="text-body-sm text-on-surface-variant">Cohort 2025.1 • Fast Track</div>
+</div>
+</div>
+<nav class="flex flex-col gap-1.5">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors font-label-md" href="#"><span class="material-symbols-outlined">dashboard</span>Overview</a>
+<a class="flex items-center gap-3 px-3 py-2.5 bg-primary-container text-on-primary rounded-lg font-label-md shadow-sm" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_tree</span>My Playbook</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors font-label-md" href="#"><span class="material-symbols-outlined">hub</span>Dependency DAG</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors font-label-md" href="#"><span class="material-symbols-outlined">group</span>Team Network</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors font-label-md" href="#"><span class="material-symbols-outlined">verified_user</span>Compliance</a>
+</nav>
+</div>
+<div class="flex flex-col gap-4">
+<button class="w-full flex items-center justify-center gap-2 bg-primary text-on-primary py-2.5 px-4 rounded-xl font-label-md shadow-sm hover:opacity-95 transition-all">
+<span class="material-symbols-outlined text-sm">add</span>New Detour Request
+      </button>
+<div class="pt-4 border-t border-outline-variant/30 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg text-body-sm font-medium" href="#"><span class="material-symbols-outlined text-sm">menu_book</span>Docs</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg text-body-sm font-medium" href="#"><span class="material-symbols-outlined text-sm">headset_mic</span>Support</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:pl-64 pt-24 pb-16 px-4 md:px-margin-desktop max-w-[1440px] mx-auto">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+<div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight">Task Owner Fulfillment Desk - IT Operations</h1>
+<p class="text-body-md text-on-surface-variant mt-1">Manage blocking provisioning requests, accelerate team onboarding gates, and oversee live deployments.</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center gap-2 px-3 py-1.5 bg-surface-container-lowest border border-outline-variant/40 rounded-xl text-body-md font-medium shadow-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          Owner: <strong class="text-on-surface">Vikram IT</strong>
+</span>
+</div>
+</div>
+<!-- Queue Metrics Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-5 rounded-xl shadow-sm hover:border-primary/50 transition-all">
+<div class="flex items-center justify-between mb-3">
+<span class="text-label-md text-on-surface-variant uppercase tracking-wider">Urgent Blocker</span>
+<span class="p-2 bg-error/10 text-error rounded-lg"><span class="material-symbols-outlined">warning</span></span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-xl font-headline-xl text-error">1</span>
+<span class="text-body-sm text-error font-medium">SLA At Risk</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-5 rounded-xl shadow-sm hover:border-primary/50 transition-all">
+<div class="flex items-center justify-between mb-3">
+<span class="text-label-md text-on-surface-variant uppercase tracking-wider">Pending Requests</span>
+<span class="p-2 bg-secondary/10 text-secondary rounded-lg"><span class="material-symbols-outlined">hourglass_top</span></span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-xl font-headline-xl text-on-surface">4</span>
+<span class="text-body-sm text-on-surface-variant">In queue</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-5 rounded-xl shadow-sm hover:border-primary/50 transition-all">
+<div class="flex items-center justify-between mb-3">
+<span class="text-label-md text-on-surface-variant uppercase tracking-wider">Avg Resolution</span>
+<span class="p-2 bg-tertiary/10 text-tertiary rounded-lg"><span class="material-symbols-outlined">schedule</span></span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-xl font-headline-xl text-on-surface">2.1h</span>
+<span class="text-body-sm text-tertiary font-medium">-15m vs yesterday</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-5 rounded-xl shadow-sm hover:border-primary/50 transition-all">
+<div class="flex items-center justify-between mb-3">
+<span class="text-label-md text-on-surface-variant uppercase tracking-wider">Completed Today</span>
+<span class="p-2 bg-emerald-500/10 text-emerald-700 rounded-lg"><span class="material-symbols-outlined">check_circle</span></span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-xl font-headline-xl text-on-surface">18</span>
+<span class="text-body-sm text-emerald-700 font-medium">100% SLA met</span>
+</div>
+</div>
+</div>
+<!-- Priority Blocker Card -->
+<div class="bg-surface-container-lowest border-2 border-error/40 rounded-2xl p-6 shadow-md mb-8 relative overflow-hidden">
+<div class="absolute top-0 right-0 bg-error text-on-error px-4 py-1 text-label-md rounded-bl-xl font-bold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">error</span>CRITICAL BLOCKER
+      </div>
+<div class="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
+<div class="space-y-4 max-w-2xl">
+<div>
+<div class="text-label-caps text-error mb-1">REQ-4091: HIGH PRIORITY ACCESS GATE</div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface font-bold">VPN Approval - Aarav Sharma</h2>
+</div>
+<!-- Nudge Alert Banner -->
+<div class="bg-error/10 border border-error/30 p-3 rounded-xl flex items-center gap-3 text-error">
+<span class="material-symbols-outlined animate-bounce">bolt</span>
+<span class="font-label-lg text-label-lg">Priority Nudge Received from Aarav Sharma</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+<div class="flex items-center gap-3 bg-surface-container-low p-3 rounded-xl border border-outline-variant/20">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="A professional passport style photo of a young male software engineer named Aarav Sharma smiling gently, wearing a casual grey t-shirt against a clean white studio backdrop, reflecting an energetic startup culture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnmFoEa_O8IJ8-2nD5PYl3v5SZieK6YCixGSI9Guzgi-iKpjZGDhAWqxVnrP6aWBYyZiA1rrBmuIZZ0qDpPvV4b2ppGeIiatxdTf4IZMROKMHMa69y9-ngiErgv-tBa2SXO0cnGX5bLubNCmHgPfYPniHQZScqwX1NCqHytASUWzj3XFer_jThsxP-wQCfpZ-Nzy01BUVS45il46Os5gUKSGUj6kvEWoYBgd6o9Why1Nntns0vXDXCkFQncICuFGon9qfF_AYW8z8"/>
+<div>
+<div class="font-label-lg text-label-lg text-on-surface">Aarav Sharma</div>
+<div class="text-body-sm text-on-surface-variant">Software Engineer · Bengaluru · Day 1</div>
+</div>
+</div>
+<div class="bg-error-container/40 p-3 rounded-xl border border-error/30 flex flex-col justify-center">
+<span class="text-label-md text-on-error-container uppercase">Waiting Time</span>
+<span class="text-headline-sm font-headline-sm text-error font-bold">8 hours (SLA At Risk)</span>
+</div>
+</div>
+<!-- Downstream Impact -->
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30 space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-label-md text-on-surface font-bold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-error text-sm">lock</span>Downstream Impact: 4 Tasks Locked
+              </span>
+<span class="text-body-sm text-error font-medium">Cascade Failure Risk</span>
+</div>
+<div class="flex flex-wrap gap-2 pt-1">
+<span class="px-2.5 py-1 bg-surface-container-lowest border border-outline-variant/40 rounded-lg text-body-sm font-code-inline">GitHub Access</span>
+<span class="px-2.5 py-1 bg-surface-container-lowest border border-outline-variant/40 rounded-lg text-body-sm font-code-inline">Repo Clone</span>
+<span class="px-2.5 py-1 bg-surface-container-lowest border border-outline-variant/40 rounded-lg text-body-sm font-code-inline">Dev Env</span>
+<span class="px-2.5 py-1 bg-surface-container-lowest border border-outline-variant/40 rounded-lg text-body-sm font-code-inline">First PR</span>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-3 min-w-[240px] lg:border-l lg:border-outline-variant/30 lg:pl-6 justify-center">
+<button class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-on-primary py-3 px-4 rounded-xl font-label-lg shadow-sm transition-all">
+<span class="material-symbols-outlined">check_circle</span>Approve &amp; Live Unlock
+          </button>
+<button class="w-full flex items-center justify-center gap-2 bg-surface-container-low hover:bg-surface-container-high text-on-surface py-3 px-4 rounded-xl font-label-lg border border-outline-variant/40 transition-all">
+<span class="material-symbols-outlined">hourglass_disabled</span>Log Delay
+          </button>
+<button class="w-full flex items-center justify-center gap-2 bg-surface-container-low hover:bg-surface-container-high text-on-surface py-3 px-4 rounded-xl font-label-lg border border-outline-variant/40 transition-all">
+<span class="material-symbols-outlined">person_search</span>Reassign
+          </button>
+</div>
+</div>
+</div>
+<!-- Fulfilled History Table Section -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-2xl shadow-sm overflow-hidden">
+<div class="p-6 border-b border-outline-variant/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold">Fulfilled Access History</h2>
+<p class="text-body-md text-on-surface-variant mt-0.5">Recently completed access grants, provisioning tickets, and security clearances.</p>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-sm">search</span>
+<input class="pl-9 pr-4 py-2 bg-surface-container-low border border-outline-variant/40 rounded-xl text-body-md focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary w-full sm:w-64" placeholder="Search access logs..." type="text"/>
+</div>
+<button class="p-2 bg-surface-container-low border border-outline-variant/40 rounded-xl hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant text-label-md uppercase tracking-wider border-b border-outline-variant/30">
+<th class="py-3.5 px-6 font-semibold">Request ID &amp; Grant</th>
+<th class="py-3.5 px-6 font-semibold">Joiner Name</th>
+<th class="py-3.5 px-6 font-semibold">Fulfillment Time</th>
+<th class="py-3.5 px-6 font-semibold">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 text-body-md">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-4 px-6">
+<div class="font-label-lg text-on-surface">REQ-4089</div>
+<div class="text-body-sm text-on-surface-variant font-code-inline">GitHub Access (Enterprise Seat)</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center text-xs">PN</div>
+<span class="font-medium text-on-surface">Priya Nair</span>
+</div>
+</td>
+<td class="py-4 px-6 text-on-surface-variant">12 mins ago</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Fulfilled
+                </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-4 px-6">
+<div class="font-label-lg text-on-surface">REQ-4085</div>
+<div class="text-body-sm text-on-surface-variant font-code-inline">Jira Workspace Provisioning</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-secondary/10 text-secondary font-bold flex items-center justify-center text-xs">RK</div>
+<span class="font-medium text-on-surface">Rahul Kapoor</span>
+</div>
+</td>
+<td class="py-4 px-6 text-on-surface-variant">45 mins ago</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Fulfilled
+                </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-4 px-6">
+<div class="font-label-lg text-on-surface">REQ-4080</div>
+<div class="text-body-sm text-on-surface-variant font-code-inline">AWS IAM Role: Dev-Cluster-A</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-tertiary/10 text-tertiary font-bold flex items-center justify-center text-xs">SM</div>
+<span class="font-medium text-on-surface">Sneha Menon</span>
+</div>
+</td>
+<td class="py-4 px-6 text-on-surface-variant">1 hour ago</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Fulfilled
+                </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-4 px-6">
+<div class="font-label-lg text-on-surface">REQ-4076</div>
+<div class="text-body-sm text-on-surface-variant font-code-inline">Docker Registry Credentials</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center text-xs">VK</div>
+<span class="font-medium text-on-surface">Vikram Kumar</span>
+</div>
+</td>
+<td class="py-4 px-6 text-on-surface-variant">2 hours ago</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Fulfilled
+                </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-outline-variant/30 flex items-center justify-between text-body-sm text-on-surface-variant">
+<span>Showing 4 of 18 completed fulfillment items today</span>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1 bg-surface-container-low border border-outline-variant/30 rounded-lg hover:bg-surface-container-high transition-colors">Previous</button>
+<button class="px-3 py-1 bg-primary text-on-primary rounded-lg">1</button>
+<button class="px-3 py-1 bg-surface-container-low border border-outline-variant/30 rounded-lg hover:bg-surface-container-high transition-colors">2</button>
+<button class="px-3 py-1 bg-surface-container-low border border-outline-variant/30 rounded-lg hover:bg-surface-container-high transition-colors">Next</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

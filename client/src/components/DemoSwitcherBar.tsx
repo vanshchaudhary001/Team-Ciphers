@@ -3,7 +3,14 @@ import { useAuth } from '../context/AuthContext.js';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api.js';
-import { UserCheck, RefreshCw, Sparkles, Building2, CheckCircle, ShieldAlert } from 'lucide-react';
+
+interface DemoPersona {
+  name: string;
+  roleTitle: string;
+  email: string;
+  icon: string;
+  route: string;
+}
 
 export const DemoSwitcherBar: React.FC = () => {
   const { user, switchDemoUser } = useAuth();
@@ -12,46 +19,40 @@ export const DemoSwitcherBar: React.FC = () => {
   const [resetting, setResetting] = useState(false);
   const [notificationMsg, setNotificationMsg] = useState<string | null>(null);
 
-  const personas = [
+  const personas: DemoPersona[] = [
     {
       name: 'Aarav Sharma',
-      role: 'Employee',
+      roleTitle: 'New Joiner',
       email: 'aarav@technova.demo',
-      icon: '👤',
+      icon: 'person',
       route: '/dashboard',
-      color: 'bg-indigo-50 border-indigo-200 text-indigo-700 hover:bg-indigo-100',
-      activeColor: 'bg-indigo-600 text-white shadow-sm ring-2 ring-indigo-300',
     },
     {
       name: 'Priya Sharma',
-      role: 'HR Admin',
+      roleTitle: 'HR Admin',
       email: 'hr@technova.demo',
-      icon: '📋',
+      icon: 'badge',
       route: '/hr',
-      color: 'bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100',
-      activeColor: 'bg-emerald-600 text-white shadow-sm ring-2 ring-emerald-300',
     },
     {
       name: 'Vikram IT',
-      role: 'IT Task Owner',
+      roleTitle: 'IT Task Owner',
       email: 'it.owner@technova.demo',
-      icon: '⚙️',
+      icon: 'support_agent',
       route: '/owner',
-      color: 'bg-amber-50 border-amber-200 text-amber-700 hover:bg-amber-100',
-      activeColor: 'bg-amber-600 text-white shadow-sm ring-2 ring-amber-300',
     },
     {
       name: 'Neha Admin',
-      role: 'Company Admin',
+      roleTitle: 'Company Admin',
       email: 'admin@technova.demo',
-      icon: '👑',
+      icon: 'shield_person',
       route: '/admin',
-      color: 'bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100',
-      activeColor: 'bg-purple-600 text-white shadow-sm ring-2 ring-purple-300',
     },
   ];
 
-  const handleSelectPersona = async (p: typeof personas[0]) => {
+  const currentPersona = personas.find((p) => p.email === user?.email) || personas[0];
+
+  const handleSelectPersona = async (p: DemoPersona) => {
     try {
       await switchDemoUser(p.email);
       queryClient.invalidateQueries();
@@ -62,86 +63,118 @@ export const DemoSwitcherBar: React.FC = () => {
   };
 
   const handleResetDemo = async () => {
-    if (!window.confirm('Reset demo state back to the initial scenario (VPN blocked, 4 downstream tasks locked)?')) {
+    if (!window.confirm('Reset demo state back to the initial scenario (Aarav blocked on VPN, 4 downstream tasks locked)?')) {
       return;
     }
     setResetting(true);
     try {
       const res = await api.resetDemoData();
-      await switchDemoUser('aarav@technova.demo');
-      queryClient.invalidateQueries();
-      navigate('/dashboard');
-      setNotificationMsg('Demo database reset to initial blocked VPN scenario!');
-      setTimeout(() => setNotificationMsg(null), 4000);
+      if (res.success) {
+        await switchDemoUser('aarav@technova.demo');
+        queryClient.invalidateQueries();
+        navigate('/dashboard');
+        setNotificationMsg('Demo environment reset to initial blocked VPN scenario');
+        setTimeout(() => setNotificationMsg(null), 3500);
+      }
     } catch (err: any) {
-      alert('Error resetting demo: ' + err.message);
+      alert('Error resetting demo: ' + (err.message || 'Server error'));
     } finally {
       setResetting(false);
     }
   };
 
   return (
-    <div className="bg-slate-900 text-slate-100 border-b border-slate-800 text-xs py-2 px-4 shadow-inner sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-        {/* Left: Hackathon Judge Persona Switcher Label */}
-        <div className="flex items-center gap-2">
-          <span className="flex items-center gap-1.5 font-semibold text-indigo-400 bg-indigo-950/80 px-2 py-1 rounded border border-indigo-800/60">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-            Judge Persona Switcher:
+    <aside
+      aria-label="Demo Environment Switcher"
+      className="bg-slate-900 text-slate-200 border-b border-slate-800 text-xs py-1.5 px-3 sm:px-6 sticky top-0 z-50 select-none"
+    >
+      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2.5">
+        {/* Left: Environment, Company & Active Persona Summary */}
+        <div className="flex items-center gap-2 text-label-caps flex-wrap">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-mono text-[10px] font-bold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
+            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+            Demo Environment
           </span>
-          <span className="hidden sm:inline-flex items-center gap-1 text-slate-400">
-            <Building2 className="w-3 h-3 text-slate-400" />
-            Org: <strong className="text-slate-200">TechNova Solutions</strong>
+
+          <span className="text-slate-500 hidden sm:inline">•</span>
+
+          <span className="hidden sm:inline-flex items-center gap-1 text-slate-300 font-sans">
+            <span className="text-slate-400">Org:</span>
+            <strong className="font-semibold text-white">
+              {user?.company?.name || 'TechNova Solutions'}
+            </strong>
+          </span>
+
+          <span className="text-slate-500 hidden md:inline">•</span>
+
+          <span className="hidden md:inline-flex items-center gap-1.5 text-slate-300 font-sans">
+            <span className="text-slate-400">Active:</span>
+            <span className="text-white font-medium">{user?.name || currentPersona.name}</span>
+            <span className="text-slate-500 font-mono text-[10px]">({user?.role?.replace('_', ' ') || currentPersona.roleTitle})</span>
           </span>
         </div>
 
-        {/* Center: Persona Quick Action Buttons */}
-        <div className="flex items-center flex-wrap gap-1.5">
+        {/* Center: Compact Persona Switcher Chips */}
+        <div className="flex items-center flex-wrap gap-1">
           {personas.map((p) => {
             const isActive = user?.email === p.email;
             return (
               <button
                 key={p.email}
+                type="button"
                 onClick={() => handleSelectPersona(p)}
-                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded font-medium transition-all text-xs border ${
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium transition-all border ${
                   isActive
-                    ? p.activeColor
-                    : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:bg-slate-700 hover:text-white'
+                    ? 'bg-primary text-white border-primary shadow-xs font-semibold ring-1 ring-primary/40'
+                    : 'bg-slate-800/80 text-slate-300 border-slate-700/80 hover:bg-slate-700 hover:text-white'
                 }`}
-                title={`Switch active persona to ${p.name} (${p.role})`}
+                title={`Switch active persona to ${p.name} (${p.roleTitle})`}
               >
-                <span>{p.icon}</span>
-                <span>{p.name}</span>
-                <span className={`text-[10px] uppercase font-bold px-1.5 py-0.2 rounded ${
-                  isActive ? 'bg-black/20 text-white' : 'bg-slate-700 text-slate-400'
-                }`}>
-                  {p.role}
+                <span className="material-symbols-outlined text-[13px] leading-none" aria-hidden="true">
+                  {p.icon}
                 </span>
-                {isActive && <CheckCircle className="w-3 h-3 text-white ml-0.5" />}
+                <span>{p.name.split(' ')[0]}</span>
+                <span
+                  className={`text-[9px] font-mono uppercase px-1 py-0.2 rounded ${
+                    isActive ? 'bg-black/25 text-white' : 'bg-slate-700/80 text-slate-400'
+                  }`}
+                >
+                  {p.roleTitle}
+                </span>
               </button>
             );
           })}
         </div>
 
-        {/* Right: Reset Demo State Button */}
+        {/* Right: Reset Demo Scenario Button */}
         <div className="flex items-center gap-2">
           <button
+            type="button"
             onClick={handleResetDemo}
             disabled={resetting}
-            className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-semibold bg-rose-950/80 text-rose-300 border border-rose-800/70 hover:bg-rose-900 transition-colors disabled:opacity-50"
-            title="Reset scenario to Aarav blocked on VPN"
+            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-300 bg-slate-800 hover:bg-rose-950/70 hover:text-rose-200 border border-slate-700 hover:border-rose-800/60 transition-colors disabled:opacity-50"
+            title="Reset scenario to initial state (Aarav blocked on VPN approval)"
           >
-            <RefreshCw className={`w-3 h-3 ${resetting ? 'animate-spin' : ''}`} />
-            {resetting ? 'Resetting...' : 'Reset Demo'}
+            <span
+              className={`material-symbols-outlined text-[13px] leading-none ${
+                resetting ? 'animate-spin text-rose-400' : 'text-slate-400'
+              }`}
+              aria-hidden="true"
+            >
+              restart_alt
+            </span>
+            <span>{resetting ? 'Resetting...' : 'Reset Scenario'}</span>
           </button>
         </div>
       </div>
 
       {notificationMsg && (
-        <div className="bg-emerald-600 text-white text-center py-1 font-medium text-xs mt-1 rounded">
+        <div className="max-w-7xl mx-auto mt-1 px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-800 text-emerald-200 text-center text-[11px] font-medium animate-in fade-in duration-150">
           {notificationMsg}
         </div>
       )}
-    </div>
+    </aside>
   );
 };
+
+export default DemoSwitcherBar;
