@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enterprise Onboarding Portal — Gateway</title>
-  <meta name="description" content="Enterprise Onboarding Gateway. Choose your enrolled company or register a new company, sign in with automatic role detection, and access your interactive AI Onboarding Chatbot, daily checklist, and contacts.">
+  <title>StartSmart — Enterprise Onboarding Portal</title>
+  <meta name="description" content="StartSmart Enterprise Onboarding Portal. Choose your enrolled company or register a new company, sign in with automatic role detection, and access your interactive AI Onboarding Chatbot, daily checklist, and contacts.">
   
-  <!-- Modern Typography (Inter & JetBrains Mono) -->
+  <!-- Modern Typography (Inter & JetBrains Mono) & Google Material Symbols -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
   
   <link rel="stylesheet" href="styles.css">
   <style>
@@ -30,8 +31,8 @@
       right: 0;
       height: 4px;
     }
-    .contact-card-highlight.card-hr::before { background: linear-gradient(90deg, #2563eb, #38bdf8); }
-    .contact-card-highlight.card-buddy::before { background: linear-gradient(90deg, #9333ea, #c084fc); }
+    .contact-card-highlight.card-hr::before { background: linear-gradient(90deg, #0037b0, #38bdf8); }
+    .contact-card-highlight.card-buddy::before { background: linear-gradient(90deg, #712ae2, #c084fc); }
     .contact-card-highlight.card-it::before { background: linear-gradient(90deg, #059669, #34d399); }
     
     .phone-call-btn {
@@ -56,36 +57,81 @@
 </head>
 <body>
 
-  <!-- Sticky Enterprise Header -->
+  <!-- ==============================================================
+       EXECUTIVE CORPORATE BACKGROUND SLIDESHOW (10 Sliding Architecture Photos)
+       ============================================================== -->
+  <div id="corporate-bg-carousel" class="corporate-bg-carousel" aria-hidden="true">
+    <div id="corporate-bg-track" class="corporate-bg-track">
+      <div class="corporate-bg-slide" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=80');" title="Enterprise Corporate Tower"></div>
+      <div class="corporate-bg-slide" style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2000&q=80');" title="Modern Corporate Office Interior"></div>
+      <div class="corporate-bg-slide" style="background-image: url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=2000&q=80');" title="Corporate Headquarters Atrium"></div>
+      <div class="corporate-bg-slide" style="background-image: url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=2000&q=80');" title="Executive Boardroom Suite"></div>
+      <div class="corporate-bg-slide" style="background-image: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=2000&q=80');" title="Financial District Corporate Towers"></div>
+      <div class="corporate-bg-slide" style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2000&q=80');" title="Collaborative Innovation Workspace"></div>
+      <div class="corporate-bg-slide" style="background-image: url('https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=2000&q=80');" title="Enterprise Technology Campus"></div>
+      <div class="corporate-bg-slide" style="background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=2000&q=80');" title="Modern Corporate Tech Hub"></div>
+      <div class="corporate-bg-slide" style="background-image: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=2000&q=80');" title="Executive Strategy Conference Suite"></div>
+      <div class="corporate-bg-slide" style="background-image: url('https://images.unsplash.com/photo-1517502884422-41eaead166d4?auto=format&fit=crop&w=2000&q=80');" title="Skyscraper Glass Architecture"></div>
+    </div>
+    <!-- Ambient Dual Overlay for Crystal-Clear Text Contrast -->
+    <div class="corporate-bg-overlay"></div>
+  </div>
+
+  <!-- Ambient Corporate Carousel Floating Navigator -->
+  <div class="bg-carousel-control" aria-label="Corporate background controls">
+    <button type="button" class="bg-carousel-nav-btn prev" onclick="prevCorporateSlide()" aria-label="Previous corporate background">
+      <span class="material-symbols-outlined" style="font-size: 15px;">chevron_left</span>
+    </button>
+    <div class="bg-carousel-indicators" id="bg-carousel-dots">
+      <span class="bg-carousel-dot active" onclick="setCorporateSlide(0)"></span>
+      <span class="bg-carousel-dot" onclick="setCorporateSlide(1)"></span>
+      <span class="bg-carousel-dot" onclick="setCorporateSlide(2)"></span>
+      <span class="bg-carousel-dot" onclick="setCorporateSlide(3)"></span>
+      <span class="bg-carousel-dot" onclick="setCorporateSlide(4)"></span>
+      <span class="bg-carousel-dot" onclick="setCorporateSlide(5)"></span>
+      <span class="bg-carousel-dot" onclick="setCorporateSlide(6)"></span>
+      <span class="bg-carousel-dot" onclick="setCorporateSlide(7)"></span>
+      <span class="bg-carousel-dot" onclick="setCorporateSlide(8)"></span>
+      <span class="bg-carousel-dot" onclick="setCorporateSlide(9)"></span>
+    </div>
+    <span class="bg-carousel-counter" id="bg-carousel-counter">01 / 10</span>
+    <button type="button" class="bg-carousel-nav-btn next" onclick="nextCorporateSlide()" aria-label="Next corporate background">
+      <span class="material-symbols-outlined" style="font-size: 15px;">chevron_right</span>
+    </button>
+  </div>
+
+  <!-- Sticky Google Stitch Enterprise Header -->
   <header class="app-header">
     <div class="header-container">
       <div class="brand-wrapper">
-        <a href="javascript:void(0)" onclick="goToStep('step-gateway')" class="brand-icon" title="Return to Portal Gateway">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-          </svg>
+        <a href="javascript:void(0)" onclick="goToStep('step-gateway')" class="brand-icon" title="Return to StartSmart Gateway">
+          <span class="material-symbols-outlined" style="font-size: 20px; color: #ffffff;">verified</span>
         </a>
         <div class="brand-text">
           <div class="brand-title">
-            Enterprise<span>Portal</span>
-            <span class="brand-badge">Gateway</span>
+            Start<span>Smart</span>
+            <span class="brand-badge">Enterprise</span>
           </div>
-          <span class="brand-tagline">Intelligent Employee Onboarding & Organization Gateway</span>
+          <span class="brand-tagline">Intelligent Enterprise Onboarding &amp; Organization Gateway</span>
         </div>
       </div>
 
       <div class="header-nav">
         <div class="nav-status-pill">
           <span class="status-dot"></span>
-          <span>NVIDIA AI Active</span>
+          <span>Enterprise Auth Guard</span>
         </div>
         <a href="javascript:void(0)" onclick="goToStep('step-gateway')" class="nav-link" title="Gateway Home">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-          </svg>
-          Gateway Home
+          <span class="material-symbols-outlined" style="font-size: 17px;">login</span>
+          Gateway
         </a>
+        <a href="javascript:void(0)" onclick="goToStep('step-companies')" class="nav-link" title="Workspaces Directory">
+          <span class="material-symbols-outlined" style="font-size: 17px;">domain</span>
+          Workspaces
+        </a>
+        <div class="user-avatar-pill" title="Security Active">
+          <span class="material-symbols-outlined" style="font-size: 16px;">shield</span>
+        </div>
       </div>
     </div>
   </header>
@@ -130,22 +176,10 @@
         >
           <div>
             <div class="card-header-top">
-              <div class="card-icon-wrapper">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
-                  <path d="M9 22v-4h6v4"></path>
-                  <path d="M8 6h.01"></path>
-                  <path d="M16 6h.01"></path>
-                  <path d="M12 6h.01"></path>
-                  <path d="M12 10h.01"></path>
-                  <path d="M12 14h.01"></path>
-                  <path d="M16 10h.01"></path>
-                  <path d="M16 14h.01"></path>
-                  <path d="M8 10h.01"></path>
-                  <path d="M8 14h.01"></path>
-                </svg>
+              <div class="card-icon-wrapper" style="background: var(--surface-container); color: var(--stitch-primary);">
+                <span class="material-symbols-outlined" style="font-size: 28px;">domain</span>
               </div>
-              <span class="role-badge-tag">Already a Member</span>
+              <span class="role-badge-tag">Enrolled Organization</span>
             </div>
 
             <div class="card-body">
@@ -156,15 +190,15 @@
 
               <ul class="card-features">
                 <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span class="material-symbols-outlined" style="font-size: 16px; color: var(--color-emerald-600); margin-right: 6px;">check_circle</span>
                   Select from enrolled companies (Microsoft, Amazon, Google)
                 </li>
                 <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span class="material-symbols-outlined" style="font-size: 16px; color: var(--color-emerald-600); margin-right: 6px;">check_circle</span>
                   Automatic role detection (Joiner, HR, Buddy, Admin)
                 </li>
                 <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span class="material-symbols-outlined" style="font-size: 16px; color: var(--color-emerald-600); margin-right: 6px;">check_circle</span>
                   Interactive AI Onboarding Chatbot for new joiners
                 </li>
               </ul>
@@ -174,10 +208,7 @@
           <div class="card-footer">
             <span class="action-label">Select Your Company</span>
             <div class="action-arrow">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
+              <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
             </div>
           </div>
         </div>
@@ -193,12 +224,8 @@
         >
           <div>
             <div class="card-header-top">
-              <div class="card-icon-wrapper">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="12" y1="8" x2="12" y2="16"></line>
-                  <line x1="8" y1="12" x2="16" y2="12"></line>
-                </svg>
+              <div class="card-icon-wrapper" style="background: var(--surface-container); color: var(--stitch-secondary);">
+                <span class="material-symbols-outlined" style="font-size: 28px;">add_business</span>
               </div>
               <span class="role-badge-tag">New Organization</span>
             </div>
@@ -211,15 +238,15 @@
 
               <ul class="card-features">
                 <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span class="material-symbols-outlined" style="font-size: 16px; color: var(--color-emerald-600); margin-right: 6px;">check_circle</span>
                   Configure company domain & admin account
                 </li>
                 <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span class="material-symbols-outlined" style="font-size: 16px; color: var(--color-emerald-600); margin-right: 6px;">check_circle</span>
                   Engineering, Sales, & Corporate blueprints
                 </li>
                 <li>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span class="material-symbols-outlined" style="font-size: 16px; color: var(--color-emerald-600); margin-right: 6px;">check_circle</span>
                   14-day enterprise pilot trial
                 </li>
               </ul>
@@ -229,10 +256,7 @@
           <div class="card-footer">
             <span class="action-label">Register New Workspace</span>
             <div class="action-arrow">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
+              <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
             </div>
           </div>
         </div>
@@ -242,11 +266,8 @@
       <!-- Trust & Security Strip -->
       <section class="trust-section" aria-label="Platform metrics">
         <div class="trust-stat">
-          <div class="stat-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
+          <div class="stat-icon" style="background: #ecfdf5; color: #059669;">
+            <span class="material-symbols-outlined" style="font-size: 22px;">task_alt</span>
           </div>
           <div class="stat-details">
             <span class="stat-value">99.8%</span>
@@ -255,11 +276,8 @@
         </div>
         <div class="trust-divider"></div>
         <div class="trust-stat">
-          <div class="stat-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"></circle>
-              <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
+          <div class="stat-icon" style="background: #eff4ff; color: #0037b0;">
+            <span class="material-symbols-outlined" style="font-size: 22px;">timer</span>
           </div>
           <div class="stat-details">
             <span class="stat-value">&lt; 15 mins</span>
@@ -268,11 +286,8 @@
         </div>
         <div class="trust-divider"></div>
         <div class="trust-stat">
-          <div class="stat-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-            </svg>
+          <div class="stat-icon" style="background: #faf5ff; color: #712ae2;">
+            <span class="material-symbols-outlined" style="font-size: 22px;">corporate_fare</span>
           </div>
           <div class="stat-details">
             <span class="stat-value">500+</span>
@@ -281,14 +296,12 @@
         </div>
         <div class="trust-divider"></div>
         <div class="trust-stat">
-          <div class="stat-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            </svg>
+          <div class="stat-icon" style="background: #e0f2fe; color: #006398;">
+            <span class="material-symbols-outlined" style="font-size: 22px;">verified_user</span>
           </div>
           <div class="stat-details">
             <span class="stat-value">SOC-2 Type II</span>
-            <span class="stat-label">ISO 27001 & GDPR Compliant</span>
+            <span class="stat-label">ISO 27001 &amp; GDPR Compliant</span>
           </div>
         </div>
       </section>
@@ -297,130 +310,263 @@
     <!-- ==============================================================
          STEP 2: SELECT COMPANY (Microsoft, Amazon, Google, etc.)
          ============================================================== -->
-    <section id="step-companies" class="step-view" style="display: none;">
+    <!-- ==============================================================
+         STEP 2: SELECT COMPANY (Microsoft, Amazon, Google, etc.)
+         ============================================================== -->
+    <section id="step-companies" class="step-view" style="display: none; max-width: 1200px; margin: 0 auto; width: 100%;">
       <div class="breadcrumbs-bar">
-        <button onclick="goToStep('step-gateway')">← Gateway</button>
+        <button onclick="goToStep('step-gateway')" style="display: inline-flex; align-items: center; gap: 4px;">
+          <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
+          <span>Gateway</span>
+        </button>
         <span class="breadcrumbs-separator">/</span>
         <span>Select Company</span>
       </div>
 
       <div class="gateway-hero" style="margin-bottom: 28px;">
+        <div class="hero-pill" style="margin-bottom: 12px;">
+          <span class="material-symbols-outlined" style="font-size: 15px; color: var(--stitch-primary);">domain</span>
+          Verified Enterprise Directories
+        </div>
         <h2 class="hero-heading" style="font-size: 2.2rem;">
-          Select <span class="highlight">Your Company</span>
+          Welcome to <span class="highlight">StartSmart</span>
         </h2>
         <p class="hero-subtitle">
-          Click your enrolled organization to proceed to sign in. The system will automatically detect your role.
+          Select your organisation to continue. The system will automatically configure your workspace and detect your role.
         </p>
       </div>
 
-      <!-- Search Input -->
-      <div style="max-width: 460px; margin: 0 auto 24px; width: 100%;">
-        <input 
-          type="text" 
-          id="company-filter-input" 
-          class="styled-input" 
-          placeholder="Search by company name, domain, or location..."
-          oninput="filterCompanyCards(this.value)"
-        >
+      <!-- Searchable Combobox Box -->
+      <div class="directory-search-wrapper">
+        <label class="directory-search-label" for="company-filter-input">Organisation Directory</label>
+        <div class="directory-search-field">
+          <span class="material-symbols-outlined directory-search-icon">search</span>
+          <input 
+            type="text" 
+            id="company-filter-input" 
+            class="directory-search-input" 
+            placeholder="Search or select your organisation (e.g. Microsoft, Google, AWS)..."
+            oninput="filterCompanyCards(this.value)"
+          >
+          <span id="result-counter-text" class="directory-counter-pill">10 available</span>
+        </div>
+        <div class="directory-helper-text">
+          <span class="material-symbols-outlined" style="font-size: 14px;">info</span>
+          <span>Can't find your company? Contact your workspace administrator or HR onboarding lead.</span>
+        </div>
       </div>
 
-      <!-- Companies Grid (Microsoft Featured First) -->
+      <!-- Companies Grid (Microsoft Featured First + 9 other enterprise companies) -->
       <div class="companies-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
 
-        <!-- Microsoft (Featured as requested) -->
-        <div class="company-card" data-company-key="microsoft" onclick="selectCompany('microsoft')" style="border-color: #00a4ef; box-shadow: 0 4px 14px rgba(0, 164, 239, 0.15);">
-          <div class="company-logo" style="background: linear-gradient(135deg, #00A4EF, #7FBA00);">M</div>
+        <!-- Microsoft (Featured) -->
+        <div class="company-card featured-card" data-company-key="microsoft" onclick="selectCompany('microsoft')">
+          <div class="company-monogram-box" style="background: #e0f2fe; color: #0284c7;">
+            <svg width="22" height="22" viewBox="0 0 21 21" fill="none">
+              <rect x="1" y="1" width="9" height="9" fill="#F25022"/>
+              <rect x="11" y="1" width="9" height="9" fill="#7FBA00"/>
+              <rect x="1" y="11" width="9" height="9" fill="#00A4EF"/>
+              <rect x="11" y="11" width="9" height="9" fill="#FFB900"/>
+            </svg>
+          </div>
           <div class="company-info">
             <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
               <span>Microsoft Corporation</span>
-              <span style="font-size: 0.65rem; background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px; font-weight: 700;">Featured</span>
+              <span class="company-category-chip" style="background: #e0f2fe; color: #0369a1;">Featured</span>
             </div>
-            <div class="company-meta">India / Redmond · Cloud & AI · @microsoft.in</div>
+            <div class="company-meta">India / Redmond · Cloud &amp; AI · @microsoft.in</div>
           </div>
-          <div style="color: #00a4ef; font-weight: 700; font-size: 0.82rem;">Sign In →</div>
-        </div>
-
-        <!-- Amazon -->
-        <div class="company-card" data-company-key="amazon" onclick="selectCompany('amazon')">
-          <div class="company-logo" style="background: linear-gradient(135deg, #FF9900, #146EB4);">A</div>
-          <div class="company-info">
-            <div class="company-name">Amazon Web Services</div>
-            <div class="company-meta">Seattle HQ · Cloud & Retail · @amazon.com</div>
-          </div>
-          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Sign In →</div>
+          <div class="company-card-action">Sign In →</div>
         </div>
 
         <!-- Google -->
         <div class="company-card" data-company-key="google" onclick="selectCompany('google')">
-          <div class="company-logo" style="background: linear-gradient(135deg, #4285F4, #EA4335);">G</div>
+          <div class="company-monogram-box" style="background: #fee2e2; color: #dc2626;">GO</div>
           <div class="company-info">
-            <div class="company-name">Google (Alphabet Inc.)</div>
-            <div class="company-meta">Mountain View HQ · Cloud & AI · @google.com</div>
+            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
+              <span>Google (Alphabet Inc.)</span>
+              <span class="company-category-chip">Cloud &amp; AI</span>
+            </div>
+            <div class="company-meta">Mountain View HQ · @google.com</div>
           </div>
-          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Sign In →</div>
+          <div class="company-card-action">Sign In →</div>
+        </div>
+
+        <!-- Amazon -->
+        <div class="company-card" data-company-key="amazon" onclick="selectCompany('amazon')">
+          <div class="company-monogram-box" style="background: #fef3c7; color: #d97706;">AZ</div>
+          <div class="company-info">
+            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
+              <span>Amazon Web Services</span>
+              <span class="company-category-chip">Cloud &amp; Commerce</span>
+            </div>
+            <div class="company-meta">Seattle HQ · Cloud &amp; Retail · @amazon.com</div>
+          </div>
+          <div class="company-card-action">Sign In →</div>
+        </div>
+
+        <!-- Apple -->
+        <div class="company-card" data-company-key="apple" onclick="selectCompany('apple')">
+          <div class="company-monogram-box" style="background: #f1f5f9; color: #334155;">AP</div>
+          <div class="company-info">
+            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
+              <span>Apple Inc.</span>
+              <span class="company-category-chip">Hardware &amp; OS</span>
+            </div>
+            <div class="company-meta">Cupertino HQ · Devices &amp; Cloud · @apple.com</div>
+          </div>
+          <div class="company-card-action">Sign In →</div>
+        </div>
+
+        <!-- NVIDIA -->
+        <div class="company-card" data-company-key="nvidia" onclick="selectCompany('nvidia')">
+          <div class="company-monogram-box" style="background: #dcfce7; color: #16a34a;">NV</div>
+          <div class="company-info">
+            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
+              <span>NVIDIA Corporation</span>
+              <span class="company-category-chip">AI Computing</span>
+            </div>
+            <div class="company-meta">Santa Clara HQ · AI &amp; Hardware · @nvidia.com</div>
+          </div>
+          <div class="company-card-action">Sign In →</div>
         </div>
 
         <!-- Stripe -->
         <div class="company-card" data-company-key="stripe" onclick="selectCompany('stripe')">
-          <div class="company-logo" style="background: linear-gradient(135deg, #635BFF, #00D4AA);">S</div>
+          <div class="company-monogram-box" style="background: #ede9fe; color: #7c3aed;">ST</div>
           <div class="company-info">
-            <div class="company-name">Stripe Inc.</div>
+            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
+              <span>Stripe Inc.</span>
+              <span class="company-category-chip">FinTech</span>
+            </div>
             <div class="company-meta">San Francisco HQ · Payments · @stripe.com</div>
           </div>
-          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Sign In →</div>
+          <div class="company-card-action">Sign In →</div>
         </div>
 
         <!-- Salesforce -->
         <div class="company-card" data-company-key="salesforce" onclick="selectCompany('salesforce')">
-          <div class="company-logo" style="background: linear-gradient(135deg, #00A1E0, #1589EE);">SF</div>
+          <div class="company-monogram-box" style="background: #e0f2fe; color: #0284c7;">SF</div>
           <div class="company-info">
-            <div class="company-name">Salesforce</div>
+            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
+              <span>Salesforce</span>
+              <span class="company-category-chip">CRM &amp; Cloud</span>
+            </div>
             <div class="company-meta">San Francisco HQ · CRM · @salesforce.com</div>
           </div>
-          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Sign In →</div>
+          <div class="company-card-action">Sign In →</div>
         </div>
 
         <!-- TechNova Systems -->
         <div class="company-card" data-company-key="technova" onclick="selectCompany('technova')">
-          <div class="company-logo" style="background: linear-gradient(135deg, #4F46E5, #8B5CF6);">TN</div>
+          <div class="company-monogram-box" style="background: #eff4ff; color: #0037b0;">TN</div>
           <div class="company-info">
-            <div class="company-name">TechNova Systems</div>
-            <div class="company-meta">Austin HQ · Enterprise ERP · @technova.io</div>
+            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
+              <span>TechNova Systems</span>
+              <span class="company-category-chip">Enterprise ERP</span>
+            </div>
+            <div class="company-meta">Austin HQ · Cloud Solutions · @technova.io</div>
           </div>
-          <div style="color: var(--color-primary); font-weight: 700; font-size: 0.82rem;">Sign In →</div>
+          <div class="company-card-action">Sign In →</div>
         </div>
 
+        <!-- Finwise Global -->
+        <div class="company-card" data-company-key="finwise" onclick="selectCompany('finwise')">
+          <div class="company-monogram-box" style="background: #fef3c7; color: #b45309;">FW</div>
+          <div class="company-info">
+            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
+              <span>Finwise Global</span>
+              <span class="company-category-chip">Banking</span>
+            </div>
+            <div class="company-meta">New York HQ · Global Finance · @finwise.global</div>
+          </div>
+          <div class="company-card-action">Sign In →</div>
+        </div>
+
+        <!-- MedCore Systems -->
+        <div class="company-card" data-company-key="medcore" onclick="selectCompany('medcore')">
+          <div class="company-monogram-box" style="background: #e0e7ff; color: #4338ca;">MC</div>
+          <div class="company-info">
+            <div class="company-name" style="display: flex; align-items: center; gap: 6px;">
+              <span>MedCore Systems</span>
+              <span class="company-category-chip">Health Informatics</span>
+            </div>
+            <div class="company-meta">Boston HQ · Healthcare AI · @medcore-systems.com</div>
+          </div>
+          <div class="company-card-action">Sign In →</div>
+        </div>
+
+      </div>
+
+      <!-- Secondary SSO Protocol Clarification & Trust Indicators -->
+      <div class="directory-trust-footer">
+        <div class="sso-protocol-badge">
+          <span class="material-symbols-outlined" style="font-size: 15px; color: var(--stitch-secondary);">verified_user</span>
+          <span>SAML 2.0 / Okta / Azure AD ready</span>
+        </div>
+        <div>
+          <span>StartSmart Identity Router v2.4.9 · SOC 2 Type II Certified</span>
+        </div>
       </div>
     </section>
 
     <!-- ==============================================================
          STEP 3: MEMBER SIGN IN WITH AUTOMATIC ROLE DETECTION
          ============================================================== -->
-    <section id="step-signin" class="step-view" style="display: none; max-width: 680px; margin: 0 auto; width: 100%;">
-      <div class="breadcrumbs-bar">
-        <button onclick="goToStep('step-gateway')">Gateway</button>
-        <span class="breadcrumbs-separator">/</span>
-        <button onclick="goToStep('step-companies')">Companies</button>
-        <span class="breadcrumbs-separator">/</span>
-        <span id="signin-breadcrumb-company">Microsoft</span>
+    <section id="step-signin" class="step-view" style="display: none; max-width: 540px; margin: 32px auto; width: 100%;">
+      <!-- Top Step / Back Link Context -->
+      <div class="signin-nav-bar">
+        <a href="javascript:void(0)" onclick="goToStep('step-companies')" class="signin-back-link">
+          <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
+          <span>Change organisation</span>
+        </a>
+        <div class="signin-step-badge">
+          <span>STEP 02/03</span>
+        </div>
       </div>
 
       <div class="signin-card">
-        <div style="text-align: center; margin-bottom: 24px;">
-          <div class="hero-pill" id="signin-company-pill" style="margin-bottom: 12px;">
+        <!-- Tenant Badge Section -->
+        <div class="tenant-badge-section">
+          <div class="tenant-badge-left">
+            <div class="tenant-logo-box" id="tenant-logo-container">
+              <svg width="22" height="22" viewBox="0 0 21 21" fill="none">
+                <rect x="1" y="1" width="9" height="9" fill="#F25022"/>
+                <rect x="11" y="1" width="9" height="9" fill="#7FBA00"/>
+                <rect x="1" y="11" width="9" height="9" fill="#00A4EF"/>
+                <rect x="11" y="11" width="9" height="9" fill="#FFB900"/>
+              </svg>
+            </div>
+            <div class="tenant-text-info">
+              <div class="tenant-name-row">
+                <span id="signin-tenant-badge-name" class="tenant-name">Microsoft Corporation</span>
+                <span class="material-symbols-outlined tenant-verified-check">verified</span>
+              </div>
+              <span id="signin-tenant-id" class="tenant-sub-id">Tenant ID: msft-corp-in-prod</span>
+            </div>
+          </div>
+          <span class="tenant-protocol-badge">
+            <span class="tenant-dot"></span>
+            Entra ID
+          </span>
+        </div>
+
+        <!-- Auth Header Text -->
+        <div class="signin-header-block">
+          <div class="hero-pill" id="signin-company-pill" style="margin-bottom: 12px; display: none;">
             Microsoft Corporation
           </div>
-          <h2 class="form-title" style="font-size: 1.8rem;">
-            Sign In to <span class="highlight" id="signin-company-title">Microsoft</span>
-          </h2>
-          <p class="form-subtitle" style="margin-bottom: 18px;">
-            Enter your email ID and password. The system will <strong>automatically detect your role</strong> (New Joiner, HR, Past Member / Buddy, or Admin).
+          <h1 class="signin-title">Sign in to your organisation</h1>
+          <p class="signin-subtitle">
+            Enter your corporate credentials to access your onboarding workspace and role-assigned portal.
           </p>
+          <span id="signin-company-title" style="display: none;">Microsoft</span>
+          <span id="signin-breadcrumb-company" style="display: none;">Microsoft</span>
         </div>
 
         <!-- 1-Click Quick Select Persona Chips (For Microsoft) -->
-        <div id="microsoft-persona-section" style="background: var(--color-slate-50); border: 1px solid var(--color-slate-200); border-radius: var(--radius-md); padding: 14px; margin-bottom: 20px;">
-          <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-slate-500); letter-spacing: 0.05em; margin-bottom: 8px;">
+        <div id="microsoft-persona-section" class="persona-section-box">
+          <div class="persona-section-label">
             ⚡ Quick 1-Click Test Personas (Pre-configured Credentials):
           </div>
           <div class="persona-quick-pills">
@@ -444,55 +590,100 @@
 
         <form id="member-signin-form" onsubmit="event.preventDefault(); handleMemberSignIn();">
           <div class="form-group">
-            <label class="input-label" for="signin-email">Corporate Email ID *</label>
-            <input 
-              type="email" 
-              id="signin-email" 
-              class="styled-input" 
-              placeholder="e.g. rohan.sharma2026@microsoft.in" 
-              value="rohan.sharma2026@microsoft.in"
-              required 
-              oninput="handleEmailInput(this.value)"
-            >
+            <div class="field-header-row">
+              <label class="input-label" for="signin-email">Work Email</label>
+              <span class="input-sub-badge">Active Directory</span>
+            </div>
+            <div class="input-with-icon">
+              <span class="material-symbols-outlined input-prefix-icon">mail</span>
+              <input 
+                type="email" 
+                id="signin-email" 
+                class="styled-input-icon" 
+                placeholder="alias@microsoft.com" 
+                value="rohan.sharma2026@microsoft.in" 
+                required 
+                oninput="handleEmailInput(this.value)"
+              >
+            </div>
+            <span class="field-help-text">Use your corporate account address.</span>
           </div>
 
-          <div class="form-group">
-            <label class="input-label" for="signin-password">Password *</label>
-            <input 
-              type="password" 
-              id="signin-password" 
-              class="styled-input" 
-              value="12345678" 
-              required
-            >
+          <div class="form-group" style="margin-top: 14px;">
+            <div class="field-header-row">
+              <label class="input-label" for="signin-password">Password</label>
+              <a href="javascript:void(0)" onclick="showNotification('Password reset instructions sent.')" class="forgot-link">Forgot password?</a>
+            </div>
+            <div class="input-with-icon">
+              <span class="material-symbols-outlined input-prefix-icon">key</span>
+              <input 
+                type="password" 
+                id="signin-password" 
+                class="styled-input-icon" 
+                value="12345678" 
+                required
+              >
+              <button type="button" id="toggle-password" class="password-eye-btn" aria-label="Toggle password visibility">
+                <span class="material-symbols-outlined" id="eye-icon">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Workstation Trust Checkbox -->
+          <div class="workstation-trust-row">
+            <input type="checkbox" id="remember-device" class="workstation-checkbox" checked>
+            <label for="remember-device" class="workstation-label">
+              Keep me signed in on this trusted workstation for 8 hours
+            </label>
           </div>
 
           <!-- Real-Time Automatic Role Detection Feedback Box -->
-          <div id="signin-detected-badge" class="role-detect-badge joiner">
-            <span style="font-size: 1.1rem;">🟢</span>
+          <div id="signin-detected-badge" class="role-detect-badge joiner" style="margin-top: 16px;">
+            <span class="material-symbols-outlined role-detect-icon" style="color: #059669; font-size: 20px;">sync_saved_locally</span>
             <div>
-              <div id="detected-role-title" style="font-size: 0.85rem; font-weight: 700;">
+              <div id="detected-role-title" style="font-size: 0.86rem; font-weight: 700;">
                 Detected Role: New Joiner
               </div>
-              <div id="detected-role-desc" style="font-size: 0.74rem; opacity: 0.85;">
-                Identified: Rohan Sharma (Software Engineer) · Routes to AI Onboarding Chatbot
+              <div id="detected-role-desc" style="font-size: 0.74rem; opacity: 0.88;">
+                Identified: Rohan Sharma (Software Engineer) · Routes to 70/30 Onboarding Workspace & AI Copilot
               </div>
             </div>
           </div>
 
+          <!-- Primary Submit Button -->
           <button 
             type="submit" 
             id="signin-submit-btn" 
-            class="confirm-launch-btn" 
-            style="margin-top: 22px; width: 100%; background: linear-gradient(135deg, #4f46e5, #7c3aed); font-size: 1rem; padding: 14px 24px;"
+            class="signin-primary-btn"
           >
-            <span id="signin-btn-text">Sign In & Open AI Chatbot →</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
+            <span id="signin-btn-text">Sign In to Microsoft</span>
+            <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+          </button>
+
+          <!-- SSO Divider -->
+          <div class="sso-divider-row">
+            <div class="sso-line"></div>
+            <span class="sso-divider-text">or single sign-on</span>
+            <div class="sso-line"></div>
+          </div>
+
+          <!-- SSO Federation Button -->
+          <button type="button" class="sso-federation-btn" onclick="handleMemberSignIn()">
+            <svg width="18" height="18" viewBox="0 0 21 21" fill="none">
+              <rect x="1" y="1" width="9" height="9" fill="#F25022"/>
+              <rect x="11" y="1" width="9" height="9" fill="#7FBA00"/>
+              <rect x="1" y="11" width="9" height="9" fill="#00A4EF"/>
+              <rect x="11" y="11" width="9" height="9" fill="#FFB900"/>
             </svg>
+            <span id="signin-sso-btn-text">Continue with Microsoft Entra ID</span>
           </button>
         </form>
+
+        <!-- MFA Guarantee Footer Micro-Card -->
+        <div class="mfa-trust-footer">
+          <span class="material-symbols-outlined" style="font-size: 16px; color: var(--stitch-secondary);">shield_with_heart</span>
+          <span>Protected by Enterprise FIDO2 &amp; Multi-Factor Authentication (MFA)</span>
+        </div>
       </div>
     </section>
 
@@ -1269,6 +1460,38 @@
         domain: "@technova.io",
         location: "Austin Tech Center",
         itPhone: "+1 (800) 555-TECHNOVA"
+      },
+      apple: {
+        name: "Apple",
+        fullName: "Apple Inc.",
+        badge: "EMP-2026-AAPL",
+        domain: "@apple.com",
+        location: "Apple Park, Cupertino",
+        itPhone: "+1 (800) 555-APPL-IT"
+      },
+      nvidia: {
+        name: "NVIDIA",
+        fullName: "NVIDIA Corporation",
+        badge: "EMP-2026-NVDA",
+        domain: "@nvidia.com",
+        location: "Santa Clara HQ / AI Supercomputing Center",
+        itPhone: "+1 (800) 555-NVDA-OPS"
+      },
+      finwise: {
+        name: "Finwise",
+        fullName: "Finwise Global",
+        badge: "EMP-2026-FNWS",
+        domain: "@finwise.global",
+        location: "New York Financial Hub",
+        itPhone: "+1 (800) 555-FINWISE"
+      },
+      medcore: {
+        name: "MedCore",
+        fullName: "MedCore Health Systems",
+        badge: "EMP-2026-MCOR",
+        domain: "@medcore-systems.com",
+        location: "Boston Medical Informatics Center",
+        itPhone: "+1 (800) 555-MEDCORE"
       }
     };
 
@@ -1429,10 +1652,17 @@
     function filterCompanyCards(query) {
       const q = query.toLowerCase().trim();
       const cards = document.querySelectorAll('#step-companies .company-card');
+      let visibleCount = 0;
       cards.forEach(card => {
         const text = card.textContent.toLowerCase();
-        card.style.display = text.includes(q) ? 'flex' : 'none';
+        const matches = text.includes(q);
+        card.style.display = matches ? 'flex' : 'none';
+        if (matches) visibleCount++;
       });
+      const counter = document.getElementById('result-counter-text');
+      if (counter) {
+        counter.textContent = `${visibleCount} available`;
+      }
     }
 
     // Step 2 Action: Select Company -> Routes directly to Step 3 Sign In
@@ -1440,24 +1670,75 @@
       currentSelectedCompany = companyKey;
       const comp = companiesDatabase[companyKey] || companiesDatabase.microsoft;
 
-      // Update Sign In Header & Breadcrumbs
-      document.getElementById('signin-breadcrumb-company').textContent = comp.name;
-      document.getElementById('signin-company-pill').textContent = comp.fullName;
-      document.getElementById('signin-company-title').textContent = comp.name;
+      // Update Sign In Header, Tenant Badge & Breadcrumbs
+      const breadcrumb = document.getElementById('signin-breadcrumb-company');
+      if (breadcrumb) breadcrumb.textContent = comp.name;
+      const pill = document.getElementById('signin-company-pill');
+      if (pill) pill.textContent = comp.fullName;
+      const title = document.getElementById('signin-company-title');
+      if (title) title.textContent = comp.name;
+      const tenantBadge = document.getElementById('signin-tenant-badge-name');
+      if (tenantBadge) tenantBadge.textContent = comp.fullName;
+      const tenantId = document.getElementById('signin-tenant-id');
+      if (tenantId) tenantId.textContent = `Tenant ID: ${companyKey}-corp-${companyKey === 'microsoft' ? 'in-prod' : 'us-prod'}`;
+      const ssoBtn = document.getElementById('signin-sso-btn-text');
+      if (ssoBtn) ssoBtn.textContent = `Continue with ${comp.name} SSO`;
+      const submitBtn = document.getElementById('signin-btn-text');
+      if (submitBtn) submitBtn.textContent = `Sign In to ${comp.name}`;
+
+      // Update Logo in Tenant Box
+      const logoBox = document.getElementById('tenant-logo-container');
+      if (logoBox) {
+        if (companyKey === 'microsoft') {
+          logoBox.innerHTML = `
+            <svg width="22" height="22" viewBox="0 0 21 21" fill="none">
+              <rect x="1" y="1" width="9" height="9" fill="#F25022"/>
+              <rect x="11" y="1" width="9" height="9" fill="#7FBA00"/>
+              <rect x="1" y="11" width="9" height="9" fill="#00A4EF"/>
+              <rect x="11" y="11" width="9" height="9" fill="#FFB900"/>
+            </svg>`;
+        } else {
+          const initials = comp.name.slice(0, 2).toUpperCase();
+          logoBox.innerHTML = `<span style="font-family: var(--font-mono); font-weight: 700; font-size: 13px; color: var(--stitch-primary);">${initials}</span>`;
+        }
+      }
+
+      // Clear inputs to ask user for corporate login credentials
+      const emailInput = document.getElementById('signin-email');
+      const passwordInput = document.getElementById('signin-password');
+      if (emailInput) {
+        emailInput.value = '';
+        emailInput.placeholder = companyKey === 'microsoft' ? 'e.g. rohan.sharma2026@microsoft.in' : `alias@${comp.domain.replace('@', '')}`;
+      }
+      if (passwordInput) {
+        passwordInput.value = '';
+        passwordInput.placeholder = 'Enter corporate password';
+      }
+
+      // Reset role detection prompt
+      const badge = document.getElementById('signin-detected-badge');
+      const detTitle = document.getElementById('detected-role-title');
+      const detDesc = document.getElementById('detected-role-desc');
+      if (badge && detTitle && detDesc) {
+        badge.className = 'role-detect-badge prompt';
+        const span = badge.querySelector('span');
+        if (span) span.textContent = 'help';
+        detTitle.textContent = 'Enter Corporate Credentials';
+        detDesc.textContent = `Type your @${comp.domain.replace('@', '')} email or click a quick persona to sign in.`;
+      }
 
       // Show/hide persona pills section based on company
       const personaSection = document.getElementById('microsoft-persona-section');
-      if (companyKey === 'microsoft') {
-        personaSection.style.display = 'block';
-        fillPersona('rohan.sharma2026@microsoft.in', '12345678');
-      } else {
-        personaSection.style.display = 'none';
-        document.getElementById('signin-email').value = `user@${comp.domain.replace('@', '')}`;
-        handleEmailInput(document.getElementById('signin-email').value);
+      if (personaSection) {
+        personaSection.style.display = companyKey === 'microsoft' ? 'block' : 'none';
       }
 
       showNotification(`Selected ${comp.fullName}`);
       goToStep('step-signin');
+
+      setTimeout(() => {
+        if (emailInput) emailInput.focus();
+      }, 150);
     }
 
     // 1-Click Persona Filler
@@ -1505,43 +1786,69 @@
     }
 
     function handleEmailInput(email) {
-      const detection = detectRoleFromEmail(email);
-      detectedRoleKey = detection.role;
-      currentAuthenticatedUser = detection.user;
-
+      const em = (email || '').toLowerCase().trim();
       const badge = document.getElementById('signin-detected-badge');
       const title = document.getElementById('detected-role-title');
       const desc = document.getElementById('detected-role-desc');
       const btnText = document.getElementById('signin-btn-text');
 
-      badge.className = `role-detect-badge ${detection.role}`;
+      if (!em) {
+        if (badge) badge.className = 'role-detect-badge prompt';
+        const span = badge ? badge.querySelector('span') : null;
+        if (span) span.textContent = 'help';
+        if (title) title.textContent = 'Enter Corporate Credentials';
+        if (desc) desc.textContent = 'Type your work email above to automatically detect your role.';
+        if (btnText) btnText.textContent = 'Sign In to Workspace';
+        return;
+      }
+
+      const detection = detectRoleFromEmail(email);
+      detectedRoleKey = detection.role;
+      currentAuthenticatedUser = detection.user;
+
+      if (badge) badge.className = `role-detect-badge ${detection.role}`;
 
       if (detection.role === 'joiner') {
-        badge.querySelector('span').textContent = '🟢';
-        title.textContent = `Detected Role: ${detection.title}`;
-        desc.textContent = `${detection.desc} · Routes to 70/30 Onboarding Workspace & AI Copilot`;
-        btnText.textContent = 'Sign In to Workspace & AI Copilot →';
+        if (badge && badge.querySelector('span')) badge.querySelector('span').textContent = '🟢';
+        if (title) title.textContent = `Detected Role: ${detection.title}`;
+        if (desc) desc.textContent = `${detection.desc} · Routes to 70/30 Onboarding Workspace & AI Copilot`;
+        if (btnText) btnText.textContent = 'Sign In to Workspace & AI Copilot →';
       } else if (detection.role === 'hr') {
-        badge.querySelector('span').textContent = '🔵';
-        title.textContent = `Detected Role: ${detection.title}`;
-        desc.textContent = `${detection.desc} · Routes to HR Command & Task Management`;
-        btnText.textContent = 'Sign In to HR Command →';
+        if (badge && badge.querySelector('span')) badge.querySelector('span').textContent = '🔵';
+        if (title) title.textContent = `Detected Role: ${detection.title}`;
+        if (desc) desc.textContent = `${detection.desc} · Routes to HR Command & Task Management`;
+        if (btnText) btnText.textContent = 'Sign In to HR Command →';
       } else if (detection.role === 'buddy') {
-        badge.querySelector('span').textContent = '🟣';
-        title.textContent = `Detected Role: ${detection.title}`;
-        desc.textContent = `${detection.desc} · Routes to Buddy Mentorship Portal`;
-        btnText.textContent = 'Sign In to Buddy Dashboard →';
+        if (badge && badge.querySelector('span')) badge.querySelector('span').textContent = '🟣';
+        if (title) title.textContent = `Detected Role: ${detection.title}`;
+        if (desc) desc.textContent = `${detection.desc} · Routes to Buddy Mentorship Portal`;
+        if (btnText) btnText.textContent = 'Sign In to Buddy Dashboard →';
       } else if (detection.role === 'admin') {
-        badge.querySelector('span').textContent = '🔴';
-        title.textContent = `Detected Role: ${detection.title}`;
-        desc.textContent = `${detection.desc} · Routes to Systems Administration`;
-        btnText.textContent = 'Sign In to Admin Portal →';
+        if (badge && badge.querySelector('span')) badge.querySelector('span').textContent = '🔴';
+        if (title) title.textContent = `Detected Role: ${detection.title}`;
+        if (desc) desc.textContent = `${detection.desc} · Routes to Systems Administration`;
+        if (btnText) btnText.textContent = 'Sign In to Admin Portal →';
       }
     }
 
     // Step 3 Submit Action: Route based on automatically detected role
     function handleMemberSignIn() {
-      const email = document.getElementById('signin-email').value;
+      const emailInput = document.getElementById('signin-email');
+      const passwordInput = document.getElementById('signin-password');
+      const email = emailInput ? emailInput.value.trim() : '';
+      const password = passwordInput ? passwordInput.value : '';
+
+      if (!email) {
+        showNotification('⚠️ Please enter your corporate work email.');
+        if (emailInput) emailInput.focus();
+        return;
+      }
+      if (!password) {
+        showNotification('⚠️ Please enter your password to authenticate.');
+        if (passwordInput) passwordInput.focus();
+        return;
+      }
+
       const detection = detectRoleFromEmail(email);
       currentAuthenticatedUser = detection.user;
       detectedRoleKey = detection.role;
@@ -2306,9 +2613,62 @@
       }, 3000);
     }
 
-    // Initialize on load: set Step 1 Gateway active
+    // ==============================================================
+    // Corporate Background Slideshow Carousel Controller
+    // ==============================================================
+    let currentCorporateSlide = 0;
+    const totalCorporateSlides = 10;
+    let corporateSlideTimer = null;
+
+    function setCorporateSlide(index) {
+      currentCorporateSlide = (index + totalCorporateSlides) % totalCorporateSlides;
+      const track = document.getElementById('corporate-bg-track');
+      if (track) {
+        track.style.transform = `translate3d(-${currentCorporateSlide * 100}vw, 0, 0)`;
+      }
+      const counter = document.getElementById('bg-carousel-counter');
+      if (counter) {
+        counter.textContent = `${String(currentCorporateSlide + 1).padStart(2, '0')} / 10`;
+      }
+      const dots = document.querySelectorAll('.bg-carousel-dot');
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === currentCorporateSlide);
+      });
+    }
+
+    function nextCorporateSlide() {
+      setCorporateSlide(currentCorporateSlide + 1);
+      resetCorporateSlideTimer();
+    }
+
+    function prevCorporateSlide() {
+      setCorporateSlide(currentCorporateSlide - 1);
+      resetCorporateSlideTimer();
+    }
+
+    function resetCorporateSlideTimer() {
+      if (corporateSlideTimer) clearInterval(corporateSlideTimer);
+      corporateSlideTimer = setInterval(() => {
+        setCorporateSlide(currentCorporateSlide + 1);
+      }, 5500);
+    }
+
+    // Initialize on load: set Step 1 Gateway active & attach interactive listeners
     window.addEventListener('DOMContentLoaded', () => {
       goToStep('step-gateway');
+      resetCorporateSlideTimer();
+
+      const toggleBtn = document.getElementById('toggle-password');
+      const passwordInput = document.getElementById('signin-password');
+      const eyeIcon = document.getElementById('eye-icon');
+
+      if (toggleBtn && passwordInput && eyeIcon) {
+        toggleBtn.addEventListener('click', function() {
+          const isPassword = passwordInput.getAttribute('type') === 'password';
+          passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+          eyeIcon.textContent = isPassword ? 'visibility_off' : 'visibility';
+        });
+      }
     });
   </script>
 </body>

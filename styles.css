@@ -1,28 +1,53 @@
 /* ==========================================================================
-   Enterprise Onboarding Portal - Design System & Modern ERP Styling
+   Enterprise Onboarding Portal - Google Stitch Design System & Modern ERP Styling
    ========================================================================== */
 
 :root {
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Colors */
-  --color-primary: #4f46e5;
-  --color-primary-hover: #4338ca;
-  --color-primary-light: #eef2ff;
-  --color-primary-border: #c7d2fe;
-  --color-primary-glow: rgba(79, 70, 229, 0.16);
+  /* Google Stitch "Executive Precision" Color Palette */
+  --bg-surface: #f8f9ff;
+  --surface: #f8f9ff;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #eff4ff;
+  --surface-container: #e5eeff;
+  --surface-container-high: #dce9ff;
+  --surface-container-highest: #d3e4fe;
 
-  --color-slate-50: #f8fafc;
-  --color-slate-100: #f1f5f9;
+  --stitch-primary: #0037b0;
+  --stitch-primary-container: #1d4ed8;
+  --stitch-on-primary: #ffffff;
+  --stitch-primary-glow: rgba(0, 55, 176, 0.16);
+
+  --stitch-secondary: #006398;
+  --stitch-secondary-accent: #712ae2;
+  --stitch-secondary-container: #5bb8fe;
+
+  --stitch-outline: #747686;
+  --stitch-outline-variant: #c4c5d7;
+  --stitch-outline-subtle: rgba(196, 197, 215, 0.45);
+
+  --stitch-on-surface: #0b1c30;
+  --stitch-on-surface-variant: #434655;
+
+  /* Legacy & Semantic Color Tokens */
+  --color-primary: #0037b0;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-light: #eff4ff;
+  --color-primary-border: #c4c5d7;
+  --color-primary-glow: rgba(0, 55, 176, 0.16);
+
+  --color-slate-50: #f8f9ff;
+  --color-slate-100: #eff4ff;
   --color-slate-200: #e2e8f0;
-  --color-slate-300: #cbd5e1;
+  --color-slate-300: #c4c5d7;
   --color-slate-400: #94a3b8;
   --color-slate-500: #64748b;
-  --color-slate-600: #475569;
+  --color-slate-600: #434655;
   --color-slate-700: #334155;
   --color-slate-800: #1e293b;
-  --color-slate-900: #0f172a;
+  --color-slate-900: #0b1c30;
 
   --color-emerald-50: #ecfdf5;
   --color-emerald-100: #d1fae5;
@@ -35,32 +60,32 @@
   --color-amber-500: #f59e0b;
   --color-amber-600: #d97706;
 
-  --color-blue-50: #eff6ff;
+  --color-blue-50: #eff4ff;
   --color-blue-500: #3b82f6;
-  --color-blue-600: #2563eb;
+  --color-blue-600: #0037b0;
 
   --color-purple-50: #faf5ff;
   --color-purple-500: #a855f7;
-  --color-purple-600: #9333ea;
+  --color-purple-600: #712ae2;
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
-  --shadow-card-hover: 0 20px 30px -10px rgba(79, 70, 229, 0.18), 0 8px 16px -6px rgba(15, 23, 42, 0.08);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 10px -1px rgba(11, 28, 48, 0.06), 0 2px 4px -2px rgba(11, 28, 48, 0.04);
+  --shadow-lg: 0 10px 20px -3px rgba(11, 28, 48, 0.08), 0 4px 6px -4px rgba(11, 28, 48, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(11, 28, 48, 0.08), 0 8px 10px -6px rgba(11, 28, 48, 0.04);
+  --shadow-card-hover: 0 14px 28px -6px rgba(0, 55, 176, 0.12), 0 6px 12px -4px rgba(11, 28, 48, 0.04);
 
   /* Radius */
   --radius-sm: 6px;
   --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
   --radius-full: 9999px;
 
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 250ms cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-bounce: 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-normal: 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ==========================================================================
@@ -77,7 +102,7 @@ html {
   font-family: var(--font-sans);
   font-size: 16px;
   color: var(--color-slate-900);
-  background-color: var(--color-slate-50);
+  background-color: #0b0f19;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
@@ -87,10 +112,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: 
-    radial-gradient(1000px circle at 50% -100px, rgba(99, 102, 241, 0.08), transparent 70%),
-    radial-gradient(800px circle at 90% 80%, rgba(16, 185, 129, 0.05), transparent 70%),
-    var(--color-slate-50);
+  background: transparent !important;
   overflow-x: hidden;
 }
 
@@ -110,24 +132,29 @@ button {
    Header & Navigation
    ========================================================================== */
 
+/* ==========================================================================
+   Header & Navigation (Google Stitch Executive Precision)
+   ========================================================================== */
+
 .app-header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--color-slate-200);
-  height: 68px;
+  background: rgba(248, 249, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--stitch-outline-subtle);
+  height: 64px;
   display: flex;
   align-items: center;
+  box-shadow: 0 1px 8px rgba(11, 28, 48, 0.03);
 }
 
 .header-container {
-  max-width: 1280px;
+  max-width: 1440px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -140,15 +167,21 @@ button {
 }
 
 .brand-icon {
-  width: 38px;
-  height: 38px;
-  background: linear-gradient(135deg, var(--color-primary), #6366f1);
-  border-radius: var(--radius-md);
+  width: 34px;
+  height: 34px;
+  background: var(--stitch-primary);
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+  box-shadow: 0 2px 6px rgba(0, 55, 176, 0.25);
+  transition: all var(--transition-fast);
+}
+
+.brand-icon:hover {
+  background: var(--stitch-primary-container);
+  transform: translateY(-1px);
 }
 
 .brand-text {
@@ -158,18 +191,17 @@ button {
 
 .brand-title {
   font-size: 1.15rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--color-slate-900);
+  color: var(--stitch-on-surface);
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
 .brand-title span {
-  background: linear-gradient(135deg, var(--color-primary), #818cf8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--stitch-primary);
+  font-weight: 800;
 }
 
 .brand-badge {
@@ -177,30 +209,30 @@ button {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  background: var(--color-slate-100);
-  color: var(--color-slate-600);
-  padding: 2px 6px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--color-slate-200);
+  background: var(--surface-container);
+  color: var(--stitch-primary);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--stitch-outline-subtle);
 }
 
 .brand-tagline {
   font-size: 0.72rem;
-  color: var(--color-slate-500);
+  color: var(--stitch-on-surface-variant);
   font-weight: 500;
 }
 
 .header-nav {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .nav-link {
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--color-slate-600);
-  padding: 8px 14px;
+  color: var(--stitch-on-surface-variant);
+  padding: 6px 12px;
   border-radius: var(--radius-md);
   transition: var(--transition-fast);
   display: flex;
@@ -209,8 +241,8 @@ button {
 }
 
 .nav-link:hover {
-  color: var(--color-slate-900);
-  background: var(--color-slate-100);
+  color: var(--stitch-on-surface);
+  background: var(--surface-container);
 }
 
 .nav-status-pill {
@@ -221,9 +253,21 @@ button {
   font-weight: 600;
   color: var(--color-emerald-700);
   background: var(--color-emerald-50);
-  padding: 6px 12px;
+  padding: 5px 12px;
   border-radius: var(--radius-full);
-  border: 1px solid var(--color-emerald-100);
+  border: 1px solid var(--color-emerald-200);
+}
+
+.user-avatar-pill {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--stitch-primary);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
 }
 
 .status-dot {
@@ -3007,6 +3051,797 @@ button {
 .hr-preset-btn:hover {
   background: var(--color-primary-light);
   border-color: var(--color-primary-border);
+}
+
+/* ==========================================================================
+   GOOGLE STITCH "EXECUTIVE PRECISION" REDESIGN ENHANCEMENTS
+   ========================================================================== */
+
+/* Material Symbols Helper */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  vertical-align: middle;
+}
+
+/* Step 2: Stitch Directory Combobox & Search */
+.directory-search-wrapper {
+  max-width: 520px;
+  margin: 0 auto 32px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.directory-search-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--stitch-on-surface-variant);
+}
+
+.directory-search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--stitch-outline-variant);
+  border-radius: var(--radius-md);
+  padding: 4px 12px;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.directory-search-field:focus-within {
+  border-color: var(--stitch-primary-container);
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+}
+
+.directory-search-icon {
+  color: var(--stitch-outline);
+  font-size: 20px;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.directory-search-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 8px 0;
+  font-size: 0.92rem;
+  font-family: inherit;
+  color: var(--stitch-on-surface);
+  outline: none;
+}
+
+.directory-search-input::placeholder {
+  color: var(--stitch-outline);
+  font-size: 0.88rem;
+}
+
+.directory-counter-pill {
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  color: var(--stitch-outline);
+  background: var(--surface-container);
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.directory-helper-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--stitch-outline);
+  margin-top: 4px;
+}
+
+/* Step 2: Company Card Elevated Stitch Styling */
+.company-card {
+  background: #ffffff !important;
+  border: 1px solid var(--stitch-outline-variant) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 18px 20px !important;
+  cursor: pointer;
+  transition: all var(--transition-normal) !important;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.company-card:hover {
+  background: #ffffff !important;
+  border-color: var(--stitch-primary) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--shadow-card-hover) !important;
+}
+
+.company-card.featured-card {
+  border-color: #00a4ef !important;
+  box-shadow: 0 4px 14px rgba(0, 164, 239, 0.12) !important;
+}
+
+.company-monogram-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: var(--surface-container-high);
+  color: var(--stitch-primary);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(0, 55, 176, 0.1);
+}
+
+.company-category-chip {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-container);
+  color: var(--stitch-on-surface-variant);
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.company-card-action {
+  color: var(--stitch-primary);
+  font-weight: 700;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.company-card:hover .company-card-action {
+  transform: translateX(3px);
+}
+
+.directory-trust-footer {
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid var(--stitch-outline-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.76rem;
+  color: var(--stitch-outline);
+}
+
+.sso-protocol-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Step 3: Stitch Company Login Elevated Styling */
+.signin-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.signin-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--stitch-on-surface-variant);
+  transition: color var(--transition-fast);
+}
+
+.signin-back-link:hover {
+  color: var(--stitch-primary);
+}
+
+.signin-step-badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--stitch-outline);
+  letter-spacing: 0.05em;
+  background: var(--surface-container);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.tenant-badge-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface-container-low);
+  border: 1px solid var(--stitch-outline-subtle);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+}
+
+.tenant-badge-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.tenant-logo-box {
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 6px;
+}
+
+.tenant-text-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.tenant-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tenant-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--stitch-on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tenant-verified-check {
+  font-size: 16px;
+  color: var(--stitch-secondary);
+}
+
+.tenant-sub-id {
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  color: var(--stitch-outline);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tenant-protocol-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--stitch-secondary);
+  border: 1px solid var(--stitch-outline-subtle);
+  flex-shrink: 0;
+}
+
+.tenant-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--stitch-secondary);
+}
+
+.signin-header-block {
+  margin-bottom: 24px;
+}
+
+.signin-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--stitch-on-surface);
+  margin-bottom: 6px;
+}
+
+.signin-subtitle {
+  font-size: 0.88rem;
+  color: var(--stitch-on-surface-variant);
+  line-height: 1.5;
+}
+
+.persona-section-box {
+  background: var(--surface-container-low);
+  border: 1px solid var(--stitch-outline-subtle);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 22px;
+}
+
+.persona-section-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--stitch-on-surface-variant);
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.field-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.input-sub-badge {
+  font-size: 0.72rem;
+  color: var(--stitch-outline);
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-prefix-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--stitch-outline);
+  font-size: 19px;
+  pointer-events: none;
+}
+
+.styled-input-icon {
+  width: 100%;
+  height: 42px;
+  padding-left: 40px;
+  padding-right: 40px;
+  background: var(--surface-container-low);
+  border: 1px solid var(--stitch-outline-variant);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--stitch-on-surface);
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.styled-input-icon:focus {
+  background: #ffffff;
+  border-color: var(--stitch-primary-container);
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+}
+
+.password-eye-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--stitch-outline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  transition: color var(--transition-fast);
+}
+
+.password-eye-btn:hover {
+  color: var(--stitch-on-surface);
+}
+
+.field-help-text {
+  display: block;
+  font-size: 0.74rem;
+  color: var(--stitch-outline);
+  margin-top: 4px;
+}
+
+.forgot-link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--stitch-primary);
+  transition: color var(--transition-fast);
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+.workstation-trust-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  user-select: none;
+}
+
+.workstation-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--stitch-primary);
+  cursor: pointer;
+}
+
+.workstation-label {
+  font-size: 0.82rem;
+  color: var(--stitch-on-surface);
+  cursor: pointer;
+}
+
+.signin-primary-btn {
+  width: 100%;
+  height: 44px;
+  background: var(--stitch-primary);
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  font-size: 0.92rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 55, 176, 0.25);
+  margin-top: 20px;
+  transition: all var(--transition-fast);
+}
+
+.signin-primary-btn:hover {
+  background: var(--stitch-primary-container);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 55, 176, 0.35);
+}
+
+.signin-primary-btn:active {
+  transform: translateY(0);
+}
+
+.sso-divider-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 18px 0;
+  position: relative;
+}
+
+.sso-line {
+  flex: 1;
+  height: 1px;
+  background: var(--surface-container-high);
+}
+
+.sso-divider-text {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--stitch-outline);
+  font-weight: 600;
+}
+
+.sso-federation-btn {
+  width: 100%;
+  height: 42px;
+  background: var(--surface-container-low);
+  border: 1px solid var(--stitch-outline-subtle);
+  border-radius: var(--radius-md);
+  color: var(--stitch-on-surface);
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sso-federation-btn:hover {
+  background: var(--surface-container);
+  border-color: var(--stitch-outline-variant);
+}
+
+.mfa-trust-footer {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.74rem;
+  color: var(--stitch-outline);
+  text-align: center;
+}
+
+/* ==========================================================================
+   Corporate Background Slideshow Carousel (10 Architectural Photos)
+   ========================================================================== */
+.corporate-bg-carousel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -3;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.corporate-bg-track {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 1000vw;
+  height: 100vh;
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.corporate-bg-slide {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  filter: brightness(0.92);
+}
+
+.corporate-bg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  /* Balanced ambient tint overlay: exposes corporate architecture while keeping high text contrast */
+  background: 
+    radial-gradient(ellipse at 50% 18%, rgba(15, 23, 42, 0.40) 0%, rgba(2, 6, 23, 0.70) 100%),
+    linear-gradient(180deg, rgba(248, 250, 252, 0.14) 0%, rgba(15, 23, 42, 0.60) 100%);
+  pointer-events: none;
+}
+
+/* Discrete Floating Carousel Controls (Bottom Right) */
+.bg-carousel-control {
+  position: fixed;
+  bottom: 20px;
+  right: 24px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.68);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 9999px;
+  padding: 6px 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  user-select: none;
+}
+
+.bg-carousel-nav-btn {
+  color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.bg-carousel-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+.bg-carousel-indicators {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bg-carousel-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.38);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.bg-carousel-dot:hover {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.bg-carousel-dot.active {
+  width: 18px;
+  border-radius: 4px;
+  background: #38bdf8;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+}
+
+.bg-carousel-counter {
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #f1f5f9;
+  margin-left: 4px;
+}
+
+/* ==========================================================================
+   Stitch 30% - 40% Transparent Glassmorphism Precision Styles
+   ========================================================================== */
+
+/* Main Header */
+.app-header {
+  background: rgba(255, 255, 255, 0.76) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.65) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Gateway Hero Glass Plaque */
+.gateway-hero {
+  background: rgba(255, 255, 255, 0.74) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  border-radius: var(--radius-xl) !important;
+  padding: 34px 38px !important;
+  box-shadow: 0 16px 44px -8px rgba(0, 0, 0, 0.14), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+  margin-bottom: 34px !important;
+}
+
+/* Step 1 Role Cards (30% transparency frosted glass) */
+.role-card {
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.9) !important;
+}
+
+.role-card:hover {
+  background: rgba(255, 255, 255, 0.86) !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 0 24px 50px -10px rgba(0, 55, 176, 0.18), inset 0 1px 2px rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Trust Section Strip */
+.trust-section {
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Step 2 Search Combobox */
+.directory-search-wrapper {
+  background: rgba(255, 255, 255, 0.74) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  box-shadow: 0 12px 34px -8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Step 2 Enterprise Company Cards */
+.company-card {
+  background: rgba(255, 255, 255, 0.74) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.09), inset 0 1px 1px rgba(255, 255, 255, 0.85) !important;
+}
+
+.company-card:hover {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-color: var(--stitch-primary) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 18px 40px -6px rgba(0, 55, 176, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.95) !important;
+}
+
+.company-card.featured-card {
+  border-color: #00a4ef !important;
+  background: rgba(255, 255, 255, 0.78) !important;
+  box-shadow: 0 14px 36px -4px rgba(0, 164, 239, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+}
+
+.directory-trust-footer {
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Step 3 Sign-In Card (30% - 40% Transparent Precision Frosted Card) */
+.signin-card {
+  background: rgba(255, 255, 255, 0.76) !important;
+  backdrop-filter: blur(30px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(200%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.82) !important;
+  box-shadow: 0 28px 65px -12px rgba(0, 0, 0, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.95) !important;
+  border-radius: 20px !important;
+  padding: 38px 36px !important;
+}
+
+.tenant-badge-section {
+  background: rgba(239, 244, 255, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(196, 197, 215, 0.6) !important;
+}
+
+.breadcrumbs-bar {
+  background: rgba(255, 255, 255, 0.70) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  padding: 8px 16px !important;
+  border-radius: var(--radius-md) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+/* Role Detection Notice Prompts */
+.role-detect-badge.prompt {
+  background: rgba(241, 245, 249, 0.85);
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+
+/* Step 4 Workspace Components */
+.manual-workspace,
+.copilot-sidebar,
+.hr-portal-grid > div,
+.buddy-portal-card,
+.admin-card {
+  background: rgba(255, 255, 255, 0.76) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.72) !important;
+  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.85) !important;
 }
 
 
