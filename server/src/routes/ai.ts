@@ -1,10 +1,43 @@
-import { Router, Response } from 'express';
+import { Router, Request, Response } from 'express';
 import { prisma } from '../prisma.js';
 import { authenticateToken, AuthenticatedRequest } from '../middleware/auth.js';
 import { aiService } from '../services/aiService.js';
+import { nvidiaClient } from '../services/nvidiaClient.js';
 
 const router = Router();
 
+/**
+ * Public: POST /api/v1/ai/nvidia-copilot
+ * Intelligent day-one onboarding copilot powered by NVIDIA NIM
+ */
+router.post('/nvidia-copilot', async (req: Request, res: Response) => {
+  try {
+    const { query, role, company, branch, buddyName, hrName, currentBlocker, pendingTasks } = req.body;
+
+    if (!query || String(query).trim().length === 0) {
+      return res.status(400).json({ success: false, error: 'A query is required' });
+    }
+
+    const reply = await nvidiaClient.askOnboardingCopilot(String(query), {
+      role,
+      company,
+      branch,
+      buddyName,
+      hrName,
+      currentBlocker,
+      pendingTasks,
+    });
+
+    return res.json({
+      success: true,
+      data: reply,
+    });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Authenticated routes below
 router.use(authenticateToken);
 
 // POST /api/v1/ai/ask

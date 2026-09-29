@@ -1444,3 +1444,27 @@ button {
     grid-template-columns: 1fr;
   }
 }
+
+/* NVIDIA AI Copilot Styles */
+.copilot-chip {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #cbd5e1;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.copilot-chip:hover {
+  background: rgba(118, 185, 0, 0.22);
+  border-color: #76b900;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+

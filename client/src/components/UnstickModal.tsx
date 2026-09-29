@@ -182,9 +182,14 @@ export const UnstickModal: React.FC<UnstickModalProps> = ({
               {/* Answer summary box */}
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 leading-relaxed flex items-start gap-3">
                 <Sparkles className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-xs text-indigo-950 uppercase tracking-wide mb-1">
-                    Intelligence Diagnosis
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+                    <span className="font-semibold text-xs text-indigo-950 uppercase tracking-wide">
+                      Intelligence Diagnosis
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-2xs">
+                      ⚡ Powered by {result.aiProvider || 'NVIDIA NIM (meta/llama-3.2-11b)'}
+                    </span>
                   </div>
                   <p className="text-slate-700 text-xs sm:text-sm">{result.answer}</p>
                 </div>

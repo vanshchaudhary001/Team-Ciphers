@@ -1,6 +1,7 @@
 import { prisma } from '../prisma.js';
 import { logger } from '../utils/logger.js';
 import { BlockerAnalysis, diagnoseBlocker } from './dependencyEngine.js';
+import { nvidiaClient } from './nvidiaClient.js';
 
 export interface AIUnstickResponse {
   answer: string;
@@ -17,11 +18,13 @@ export interface AIUnstickResponse {
   requiresHumanHandoff: boolean;
   handoffTarget?: string;
   isAiGrounded: boolean;
+  aiProvider?: string;
+  aiModel?: string;
 }
 
 export class AIService {
   /**
-   * Process natural-language UNSTICK query for an employee
+   * Process natural-language UNSTICK query for an employee using NVIDIA NIM AI
    */
   async processUnstickQuery(
     employeeUserId: string,
@@ -102,10 +105,12 @@ export class AIService {
       diagnosis = await diagnoseBlocker(targetTask.id, query);
     }
 
-    // 4. Formulate the response
+    // 4. Formulate the response using NVIDIA AI
     let answer = '';
     let requiresHumanHandoff = false;
     let handoffTarget: string | undefined;
+    let aiProvider = 'Deterministic Rule Engine';
+    let aiModel = 'StartSmart-v1';
 
     const isSensitive =
       lowerQuery.includes('salary') ||
@@ -120,19 +125,55 @@ export class AIService {
       handoffTarget = 'HR_ADMIN';
       answer =
         'This request involves sensitive personal or company policy matters. For your privacy and security, I am routing this directly to HR Administration for confidential human assistance.';
-    } else if (diagnosis && diagnosis.rootBlockerId !== diagnosis.affectedTaskId) {
-      // Upstream blocker detected!
-      answer = `You are currently blocked on "${diagnosis.affectedTaskTitle}" because its prerequisite "${diagnosis.rootBlockerTitle}" is waiting on ${diagnosis.responsibleOwnerGroupName}. ${diagnosis.downstreamImpactCount} downstream tasks are currently affected. While waiting, you can complete available SideQuests like ${diagnosis.availableSideQuests.map((s) => s.title).join(', ') || 'Security Training'}.`;
-    } else if (matchingSources.length > 0) {
-      const topSource = matchingSources[0];
-      answer = `According to verified documentation "${topSource.title}": ${topSource.excerpt}`;
     } else {
-      // No verified source found - record knowledge gap
-      await this.recordKnowledgeGap(companyId, query, targetTask?.id);
-      requiresHumanHandoff = true;
-      handoffTarget = 'MANAGER';
-      answer =
-        "I couldn't find an approved company resource that answers this question. I have logged this knowledge gap for HR, and you can connect with your Buddy or Manager for direct help.";
+      // Prepare NVIDIA NIM prompt
+      const promptContext = `Employee question: "${query}"
+Context:
+- Affected Task: ${diagnosis ? diagnosis.affectedTaskTitle : targetTask?.title || 'Onboarding'}
+${
+  diagnosis && diagnosis.rootBlockerId !== diagnosis.affectedTaskId
+    ? `- Root Blocker: "${diagnosis.rootBlockerTitle}" is waiting with ${diagnosis.responsibleOwnerGroupName}.
+- Downstream Tasks Locked: ${diagnosis.downstreamImpactCount} tasks.
+- Recommended Available SideQuests: ${diagnosis.availableSideQuests.map((s) => s.title).join(', ') || 'Security Training, Corporate Orientation'}.`
+    : ''
+}
+${
+  matchingSources.length > 0
+    ? `- Verified Company Documentation: ${matchingSources.map((s) => `"${s.title}": ${s.excerpt}`).join('; ')}`
+    : ''
+}
+
+Instructions:
+1. Explain why the employee is blocked or what they should do next.
+2. If waiting on an upstream dependency, encourage them to complete the available SideQuests with zero dependencies.
+3. Keep the tone helpful, concise, and professional (under 90 words).`;
+
+      const nvidiaReply = await nvidiaClient.generateCompletion([
+        {
+          role: 'system',
+          content:
+            'You are Start Smart AI Onboarding Assistant powered by NVIDIA NIM inference. Help employees resolve blockers and take immediate action.',
+        },
+        { role: 'user', content: promptContext },
+      ], 180, 0.4);
+
+      if (nvidiaReply) {
+        answer = nvidiaReply;
+        aiProvider = 'NVIDIA NIM (Microservice Inference)';
+        aiModel = 'meta/llama-3.2-11b-vision-instruct';
+      } else if (diagnosis && diagnosis.rootBlockerId !== diagnosis.affectedTaskId) {
+        // Fallback
+        answer = `You are currently blocked on "${diagnosis.affectedTaskTitle}" because its prerequisite "${diagnosis.rootBlockerTitle}" is waiting on ${diagnosis.responsibleOwnerGroupName}. ${diagnosis.downstreamImpactCount} downstream tasks are currently affected. While waiting, you can complete available SideQuests like ${diagnosis.availableSideQuests.map((s) => s.title).join(', ') || 'Security Training'}.`;
+      } else if (matchingSources.length > 0) {
+        const topSource = matchingSources[0];
+        answer = `According to verified documentation "${topSource.title}": ${topSource.excerpt}`;
+      } else {
+        await this.recordKnowledgeGap(companyId, query, targetTask?.id);
+        requiresHumanHandoff = true;
+        handoffTarget = 'MANAGER';
+        answer =
+          "I couldn't find an approved company resource that answers this question. I have logged this knowledge gap for HR, and you can connect with your Buddy or Manager for direct help.";
+      }
     }
 
     const citedSources = matchingSources.slice(0, 3).map((s) => ({
@@ -152,6 +193,8 @@ export class AIService {
       requiresHumanHandoff,
       handoffTarget,
       isAiGrounded: matchingSources.length > 0 || !!diagnosis,
+      aiProvider,
+      aiModel,
     };
   }
 

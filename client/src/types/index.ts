@@ -146,6 +146,8 @@ export interface AIUnstickResponse {
   requiresHumanHandoff: boolean;
   handoffTarget?: string;
   isAiGrounded: boolean;
+  aiProvider?: string;
+  aiModel?: string;
 }
 
 export interface AppNotification {
