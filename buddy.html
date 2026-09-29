@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Mentoring & Management Dashboard — Buddy & HR Portal</title>
+  <meta name="description" content="Dedicated management portal for onboarding buddies, managers, and HR administrators to oversee mentees, resolve bottlenecks, and track day-one milestones.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .kpi-card {
+      background: #ffffff;
+      border: 1px solid var(--color-slate-200);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .kpi-num {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--color-slate-900);
+      line-height: 1.1;
+      margin-top: 6px;
+    }
+    .kpi-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--color-slate-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .mentees-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+    .mentees-table th {
+      background: var(--color-slate-50);
+      color: var(--color-slate-600);
+      font-weight: 700;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--color-slate-200);
+    }
+    .mentees-table td {
+      padding: 16px;
+      border-bottom: 1px solid var(--color-slate-100);
+      vertical-align: middle;
+      color: var(--color-slate-800);
+    }
+    .mentees-table tr:hover td {
+      background: var(--color-slate-50);
+    }
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+    }
+    .status-warning { background: #fef3c7; color: #b45309; }
+    .status-success { background: #d1fae5; color: #047857; }
+    .status-info { background: #dbeafe; color: #1d4ed8; }
+
+    @media (max-width: 900px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-wrapper">
+        <a href="index.html" class="brand-icon" style="background: linear-gradient(135deg, #9333ea, #a855f7);" title="Return to Gateway">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </a>
+        <div class="brand-text">
+          <div class="brand-title">
+            Enterprise<span>Portal</span>
+            <span class="brand-badge" style="color: var(--color-purple-700); background: var(--color-purple-50); border-color: #e9d5ff;">Staff Command</span>
+          </div>
+          <span class="brand-tagline">Mentoring, Escalations & HR Admin Operations</span>
+        </div>
+      </div>
+
+      <div class="header-nav">
+        <a href="index.html" class="back-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Back to Gateway
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard Container -->
+  <main class="portal-container">
+
+    <!-- Banner -->
+    <div class="portal-header-banner" style="background: linear-gradient(135deg, #1e1b4b, #312e81);">
+      <div>
+        <div style="font-size: 0.8rem; font-weight: 700; color: #c084fc; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">
+          Staff Mentoring & Operations
+        </div>
+        <h1 class="portal-banner-title">
+          Buddy & HR Admin Command Dashboard
+        </h1>
+        <p class="portal-banner-desc">
+          Manage assigned new hires, resolve cross-department dependency blockers, and ensure flawless day-one onboarding velocity.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 12px;">
+        <button class="btn-secondary" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.25);" onclick="showToast('Syncing real-time mentee status with Workday API...')">
+          🔄 Sync Directory
+        </button>
+      </div>
+    </div>
+
+    <!-- KPI Overview Strip -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Active Joiners Mentored</div>
+        <div class="kpi-num" style="color: var(--color-purple-600);">8 Hires</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Pending Escalation</div>
+        <div class="kpi-num" style="color: var(--color-amber-600);" id="active-blockers-count">1 Blocker</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">1:1 Sessions Today</div>
+        <div class="kpi-num" style="color: var(--color-primary);">3 Syncs</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Onboarding SLA Rate</div>
+        <div class="kpi-num" style="color: var(--color-emerald-600);">98.8%</div>
+      </div>
+    </div>
+
+    <!-- Active Blocker Resolution Banner -->
+    <div id="blocker-banner" style="background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: gap: 16px;">
+      <div style="display: flex; align-items: flex-start; gap: 16px;">
+        <div style="width: 40px; height: 40px; border-radius: 50%; background: #fef3c7; color: #b45309; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.2rem;">
+          ⚠️
+        </div>
+        <div>
+          <div style="font-weight: 800; font-size: 0.95rem; color: #92400e; margin-bottom: 2px;">
+            High Priority Escalation: VPN Certificate Required for New Joiner
+          </div>
+          <div style="font-size: 0.82rem; color: #78350f;">
+            <strong>Aarav Sharma (Core Tech Head)</strong> is waiting on IT Operations VPN token. Blocks 4 downstream engineering tasks.
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <button class="confirm-launch-btn" style="background: #059669; padding: 10px 18px; font-size: 0.85rem; margin-top: 0; width: auto;" onclick="resolveBlocker()">
+          ✓ Approve & Unlock Tasks
+        </button>
+      </div>
+    </div>
+
+    <!-- Assigned Mentees Table -->
+    <div style="background: #ffffff; border: 1px solid var(--color-slate-200); border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: 32px;">
+      <div style="padding: 20px 24px; border-bottom: 1px solid var(--color-slate-200); display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <h2 style="font-size: 1.15rem; font-weight: 800; color: var(--color-slate-900);">Assigned Cohort & Mentees</h2>
+          <p style="font-size: 0.78rem; color: var(--color-slate-500);">Current week joiners under your mentorship and HR jurisdiction.</p>
+        </div>
+        <span style="font-size: 0.78rem; font-weight: 600; color: var(--color-slate-500);">Showing 4 of 8</span>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="mentees-table">
+          <thead>
+            <tr>
+              <th>Employee Name & Role</th>
+              <th>Organization & Branch</th>
+              <th>Phase</th>
+              <th>Status</th>
+              <th>Assigned Buddy</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div style="font-weight: 700; color: var(--color-slate-900);">Aarav Sharma</div>
+                <div style="font-size: 0.75rem; color: var(--color-slate-500);">Core Tech Head · Bangalore</div>
+              </td>
+              <td>Google Inc. (Bangalore Center)</td>
+              <td>Day 1 (Kickoff)</td>
+              <td>
+                <span class="badge-status status-warning" id="aarav-status-badge">VPN Blocker (Pending)</span>
+              </td>
+              <td>Devon Vance</td>
+              <td>
+                <button class="btn-secondary" style="padding: 6px 12px; font-size: 0.75rem;" onclick="showToast('Opened 1:1 notes for Aarav Sharma')">1:1 Notes</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div style="font-weight: 700; color: var(--color-slate-900);">Elena Rostova</div>
+                <div style="font-size: 0.75rem; color: var(--color-slate-500);">Lead Infrastructure Engineer</div>
+              </td>
+              <td>Microsoft (Redmond Campus)</td>
+              <td>Day 2 (Environment Setup)</td>
+              <td>
+                <span class="badge-status status-success">All Clear · 80% Complete</span>
+              </td>
+              <td>Liam Gallagher</td>
+              <td>
+                <button class="btn-secondary" style="padding: 6px 12px; font-size: 0.75rem;" onclick="showToast('Opened 1:1 notes for Elena Rostova')">1:1 Notes</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div style="font-weight: 700; color: var(--color-slate-900);">Marcus Chen</div>
+                <div style="font-size: 0.75rem; color: var(--color-slate-500);">Principal Product Designer</div>
+              </td>
+              <td>Stripe Inc. (San Francisco HQ)</td>
+              <td>Day 1 (Kickoff)</td>
+              <td>
+                <span class="badge-status status-info">Meeting at 3:00 PM</span>
+              </td>
+              <td>Elena Rostova</td>
+              <td>
+                <button class="btn-secondary" style="padding: 6px 12px; font-size: 0.75rem;" onclick="showToast('Joined Marcus Chen sync room')">Join Sync</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div style="font-weight: 700; color: var(--color-slate-900);">Sarah Wu</div>
+                <div style="font-size: 0.75rem; color: var(--color-slate-500);">Data Science & AI Specialist</div>
+              </td>
+              <td>AWS (Seattle Cloud Campus)</td>
+              <td>Day 3 (First PR Phase)</td>
+              <td>
+                <span class="badge-status status-success">PR #124 Submitted</span>
+              </td>
+              <td>Marcus Vance</td>
+              <td>
+                <button class="btn-secondary" style="padding: 6px 12px; font-size: 0.75rem;" onclick="showToast('Reviewed PR #124')">View PR</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <div id="toast" class="toast-notification">
+    <span id="toast-text">Action completed</span>
+  </div>
+
+  <script>
+    function resolveBlocker() {
+      const banner = document.getElementById('blocker-banner');
+      const badge = document.getElementById('aarav-status-badge');
+      const count = document.getElementById('active-blockers-count');
+
+      badge.className = 'badge-status status-success';
+      badge.textContent = 'VPN Approved · Unlocked';
+      count.textContent = '0 Blockers';
+      count.style.color = 'var(--color-emerald-600)';
+
+      banner.style.background = '#ecfdf5';
+      banner.style.borderColor = '#a7f3d0';
+      banner.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 12px; color: #047857; font-weight: 700; font-size: 0.95rem;">
+          <span>🎉</span>
+          <span>VPN access provisioned! All 4 downstream engineering tasks unlocked for Aarav Sharma.</span>
+        </div>
+      `;
+
+      showToast('Blocker resolved! Notification dispatched to Aarav Sharma & IT Operations.');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const text = document.getElementById('toast-text');
+      text.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
