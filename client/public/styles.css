@@ -319,6 +319,123 @@ button {
   margin-bottom: 48px;
 }
 
+/* Two Options Grid (Initial Landing: My Company vs Register Company) */
+.two-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto 48px;
+}
+
+/* Three Options Grid (Role Selection: New Joiner vs HR vs Admin) */
+.three-options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 48px;
+}
+
+.step-view {
+  width: 100%;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.breadcrumbs-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-slate-500);
+}
+
+.breadcrumbs-bar a, .breadcrumbs-bar button {
+  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-weight: 600;
+  font-size: inherit;
+  padding: 0;
+}
+
+.breadcrumbs-bar a:hover, .breadcrumbs-bar button:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbs-separator {
+  color: var(--color-slate-300);
+}
+
+.contact-phone-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--color-emerald-50);
+  border: 1px solid var(--color-emerald-200);
+  color: var(--color-emerald-700);
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.contact-phone-badge:hover {
+  background: var(--color-emerald-100);
+  transform: translateY(-1px);
+}
+
+.emergency-directory-box {
+  background: #ffffff;
+  border: 1px solid var(--color-slate-200);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  margin-top: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.emergency-directory-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--color-slate-900);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.emergency-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.emergency-card {
+  background: var(--color-slate-50);
+  border: 1px solid var(--color-slate-200);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+
 /* Card Container */
 .role-card {
   position: relative;
@@ -702,6 +819,10 @@ button {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
+  .three-options-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
   .trust-section {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -732,6 +853,14 @@ button {
     font-size: 1.85rem;
   }
   .roles-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .two-options-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .three-options-grid {
     grid-template-columns: 1fr;
     gap: 16px;
   }
