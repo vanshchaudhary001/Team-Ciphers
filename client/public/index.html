@@ -497,126 +497,335 @@
     </section>
 
     <!-- ==============================================================
-         STEP 4A: NEW JOINER INTERACTIVE AI CHATBOT WORKSPACE
+         STEP 4A: NEW JOINER INTERACTIVE WORKSPACE (70% MANUAL DASHBOARD + 30% AI COPILOT)
          ============================================================== -->
-    <section id="step-joiner-chatbot" class="step-view" style="display: none; width: 100%;">
-      <div class="breadcrumbs-bar" style="max-width: 960px; margin: 0 auto 14px;">
+    <section id="step-joiner-chatbot" class="step-view" style="display: none; width: 100%; max-width: 1600px; margin: 0 auto;">
+      <div class="breadcrumbs-bar" style="margin-bottom: 16px;">
         <button onclick="goToStep('step-gateway')">Gateway</button>
         <span class="breadcrumbs-separator">/</span>
         <button onclick="goToStep('step-companies')">Companies</button>
         <span class="breadcrumbs-separator">/</span>
         <button onclick="goToStep('step-signin')">Sign In</button>
         <span class="breadcrumbs-separator">/</span>
-        <span>AI Onboarding Copilot</span>
+        <span style="color: var(--color-slate-900); font-weight: 700;">New Joiner Onboarding Hub & AI Copilot</span>
       </div>
 
-      <div class="chatbot-workspace">
-        <!-- Chatbot Top Header -->
-        <div class="chatbot-header">
-          <div class="chatbot-header-info">
-            <div class="chatbot-avatar-badge">⚡</div>
-            <div>
-              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                <span style="font-weight: 800; font-size: 1.05rem;">Start Smart | AI Onboarding Copilot</span>
-                <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); padding: 2px 8px; border-radius: 9999px; font-size: 0.68rem; font-weight: 700;">
-                  NVIDIA NIM Active
-                </span>
+      <!-- 70% / 30% Split Workspace Container -->
+      <div class="joiner-split-container">
+
+        <!-- ==========================================================
+             LEFT 70%: MANUAL ONBOARDING HUB & EXECUTIVE DASHBOARD
+             ========================================================== -->
+        <div class="joiner-main-dashboard">
+
+          <!-- Welcome Hero Card with Progress Telemetry -->
+          <div class="dashboard-hero-card">
+            <div class="hero-card-left">
+              <div class="hero-badge-pill">
+                <span class="pulse-dot-emerald"></span>
+                <span>Day 1 Onboarding · Live Session</span>
               </div>
-              <div style="font-size: 0.76rem; color: #94a3b8; margin-top: 2px;">
-                <strong id="chatbot-user-name" style="color: #f1f5f9;">Rohan Sharma</strong> · <span id="chatbot-day-badge" style="color: #818cf8; font-weight: 700;">Day 1 Kickoff</span> · <span id="chatbot-company-name">Microsoft Corporation</span>
+              <h1 class="hero-welcome-title">
+                Welcome to Microsoft, <span id="manual-user-name">Rohan Sharma</span>! 👋
+              </h1>
+              <p class="hero-welcome-subtitle">
+                <strong id="manual-user-role">Software Engineer 1</strong> · Azure Core & Cloud Infrastructure · <span id="manual-user-campus">Microsoft IDC Bangalore & Hyderabad</span>
+              </p>
+              <div class="hero-meta-tags">
+                <span class="hero-meta-chip">📧 <span id="manual-user-email">rohan.sharma2026@microsoft.in</span></span>
+                <span class="hero-meta-chip">🆔 Emp ID: <strong>MSFT-2026-8841</strong></span>
+                <span class="hero-meta-chip">🤝 Buddy Mentor: <strong>Rahul Pandey</strong></span>
+                <span class="hero-meta-chip">💼 HR Partner: <strong>Priya Sharma</strong></span>
+              </div>
+            </div>
+
+            <!-- Progress Ring & Linear Meter -->
+            <div class="hero-card-progress">
+              <div class="progress-ring-box">
+                <div class="progress-circle-wrap">
+                  <svg class="progress-ring-svg" width="90" height="90">
+                    <circle stroke="rgba(255,255,255,0.12)" stroke-width="8" fill="transparent" r="38" cx="45" cy="45"/>
+                    <circle id="manual-progress-circle" class="progress-ring-bar" stroke="url(#progressGradient)" stroke-width="8" stroke-linecap="round" fill="transparent" r="38" cx="45" cy="45" stroke-dasharray="238.76" stroke-dashoffset="143.25"/>
+                    <defs>
+                      <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#34d399"/>
+                        <stop offset="100%" stop-color="#38bdf8"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <div class="progress-ring-text">
+                    <span id="manual-progress-pct" class="progress-pct-number">40%</span>
+                    <span class="progress-pct-label">Day 1</span>
+                  </div>
+                </div>
+              </div>
+              <div class="progress-stat-sub">
+                <span id="manual-tasks-stat">2 of 5 Tasks Cleared</span>
+                <div class="progress-linear-track">
+                  <div id="manual-linear-bar" class="progress-linear-fill" style="width: 40%;"></div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <button onclick="goToStep('step-signin')" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #cbd5e1; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; cursor: pointer;">
-              Switch User
+          <!-- SECTION 1: Team Members & Direct Contact Numbers (Manual View) -->
+          <div class="dashboard-section-card">
+            <div class="section-card-header">
+              <div>
+                <div class="section-badge">Direct Access Directory</div>
+                <h2 class="section-title">Team Members & Key HR Contacts</h2>
+                <p class="section-desc">Reach out directly via phone, Microsoft Teams, or in-person desk location.</p>
+              </div>
+              <span class="section-counter-badge">3 Priority Lines Active</span>
+            </div>
+
+            <div class="contacts-grid-pro">
+              <!-- HR Partner Card -->
+              <div class="contact-card-pro hr-glow">
+                <div class="contact-card-top">
+                  <div class="contact-avatar hr-avatar">PS</div>
+                  <div class="contact-header-info">
+                    <span class="contact-role-tag hr-tag">People Operations (HR)</span>
+                    <h3 class="contact-name">Priya Sharma</h3>
+                    <span class="contact-title">Lead HR People Partner · Class of 2020</span>
+                  </div>
+                </div>
+                <div class="contact-phone-block">
+                  <span class="phone-label">DIRECT PHONE LINE</span>
+                  <a href="tel:+918067894701" class="phone-display-btn">
+                    <span class="phone-icon">📞</span>
+                    <strong>+91 (80) 6789-HR01</strong>
+                  </a>
+                </div>
+                <div class="contact-details-list">
+                  <div class="contact-detail-row">
+                    <span class="detail-icon">📧</span>
+                    <span>priya.sharma.hr@microsoft.in</span>
+                  </div>
+                  <div class="contact-detail-row">
+                    <span class="detail-icon">🏢</span>
+                    <span>Executive Tower, Level 4, Desk HR-12</span>
+                  </div>
+                </div>
+                <div class="contact-actions-row">
+                  <a href="tel:+918067894701" class="btn-contact-action btn-call">
+                    📞 Call HR
+                  </a>
+                  <button class="btn-contact-action btn-teams" onclick="showNotification('Initiating Microsoft Teams chat with Priya Sharma...')">
+                    💬 Teams Ping
+                  </button>
+                </div>
+              </div>
+
+              <!-- Buddy Mentor Card -->
+              <div class="contact-card-pro buddy-glow">
+                <div class="contact-card-top">
+                  <div class="contact-avatar buddy-avatar">RP</div>
+                  <div class="contact-header-info">
+                    <span class="contact-role-tag buddy-tag">Assigned Buddy (Mentor)</span>
+                    <h3 class="contact-name">Rahul Pandey</h3>
+                    <span class="contact-title">Principal Solutions Architect · Joined 2021</span>
+                  </div>
+                </div>
+                <div class="contact-phone-block">
+                  <span class="phone-label">BUDDY DIRECT PHONE LINE</span>
+                  <a href="tel:+918067892831" class="phone-display-btn buddy-phone">
+                    <span class="phone-icon">📞</span>
+                    <strong>+91 (80) 6789-BUD1</strong>
+                  </a>
+                </div>
+                <div class="contact-details-list">
+                  <div class="contact-detail-row">
+                    <span class="detail-icon">📧</span>
+                    <span>rahul.pandey2021@microsoft.in</span>
+                  </div>
+                  <div class="contact-detail-row highlight-session">
+                    <span class="detail-icon">📅</span>
+                    <strong>1:1 Briefing Today: 2:00 PM IST (Teams Room)</strong>
+                  </div>
+                </div>
+                <div class="contact-actions-row">
+                  <a href="tel:+918067892831" class="btn-contact-action btn-call-buddy">
+                    📞 Call Buddy
+                  </a>
+                  <button class="btn-contact-action btn-teams" onclick="showNotification('Opening Teams 1:1 Welcome Briefing Room with Rahul Pandey...')">
+                    📅 Join 1:1 Call
+                  </button>
+                </div>
+              </div>
+
+              <!-- IT Helpdesk Card -->
+              <div class="contact-card-pro it-glow">
+                <div class="contact-card-top">
+                  <div class="contact-avatar it-avatar">IT</div>
+                  <div class="contact-header-info">
+                    <span class="contact-role-tag it-tag">IT Operations & Security</span>
+                    <h3 class="contact-name">Microsoft IT Helpdesk</h3>
+                    <span class="contact-title">24/7 Identity, Hardware & VPN Support</span>
+                  </div>
+                </div>
+                <div class="contact-phone-block">
+                  <span class="phone-label">TOLL-FREE IT HOTLINE</span>
+                  <a href="tel:+918005556738" class="phone-display-btn it-phone">
+                    <span class="phone-icon">📞</span>
+                    <strong>+91 (800) 555-MSFT-IN</strong>
+                  </a>
+                </div>
+                <div class="contact-details-list">
+                  <div class="contact-detail-row">
+                    <span class="detail-icon">🎫</span>
+                    <span>Extension: #4402 (Zero-Trust Priority Access)</span>
+                  </div>
+                  <div class="contact-detail-row">
+                    <span class="detail-icon">⚡</span>
+                    <span>Global SLA: &lt; 15 mins for New Joiners</span>
+                  </div>
+                </div>
+                <div class="contact-actions-row">
+                  <a href="tel:+918005556738" class="btn-contact-action btn-call-it">
+                    📞 Call IT Desk
+                  </a>
+                  <button class="btn-contact-action btn-ticket" onclick="showNotification('Opened priority IT Ticket #MSFT-8831 (Token Provisioning)')">
+                    🎫 View Ticket
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 2: Daily Tasks & Work Checklist (Manual View) -->
+          <div class="dashboard-section-card">
+            <div class="section-card-header">
+              <div>
+                <div class="section-badge">Action Required</div>
+                <h2 class="section-title">Today's Work / Day 1 Checklist</h2>
+                <p class="section-desc">Toggle tasks when completed. All changes synchronize in real-time with your AI Copilot and HR records.</p>
+              </div>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <button class="btn-filter-pill active" id="filter-btn-all" onclick="filterManualTasks('all')">All Tasks (<span id="count-all-tasks">5</span>)</button>
+                <button class="btn-filter-pill" id="filter-btn-pending" onclick="filterManualTasks('pending')">Pending (<span id="count-pending-tasks">3</span>)</button>
+                <button class="btn-filter-pill" id="filter-btn-done" onclick="filterManualTasks('done')">Done (<span id="count-done-tasks">2</span>)</button>
+              </div>
+            </div>
+
+            <!-- Interactive Task List Container -->
+            <div id="manual-checklist-container" class="manual-checklist-container">
+              <!-- Dynamically populated from dailyTasksState -->
+            </div>
+          </div>
+
+          <!-- SECTION 3: Deep-Dive Task Breakdown & Step-by-Step Instructions -->
+          <div class="dashboard-section-card">
+            <div class="section-card-header">
+              <div>
+                <div class="section-badge">Detailed Execution Guide</div>
+                <h2 class="section-title">Task-by-Task In-Depth Instructions</h2>
+                <p class="section-desc">Comprehensive manual walk-through of every task: objectives, exact steps, prerequisites, and verification.</p>
+              </div>
+              <span style="font-size: 0.8rem; color: #818cf8; font-weight: 700;">✨ Copilot Knowledge-Base Synced</span>
+            </div>
+
+            <div id="manual-task-breakdowns" class="manual-task-breakdowns">
+              <!-- Expansive step-by-step breakdown cards for Task 1, Task 2, Task 3, Task 4, Task 5... -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ==========================================================
+             RIGHT 30%: AI ONBOARDING COPILOT CHATBOT (STICKY SIDEBAR)
+             ========================================================== -->
+        <div class="joiner-chat-panel">
+          <!-- Chatbot Header -->
+          <div class="copilot-sidebar-header">
+            <div class="copilot-header-brand">
+              <div class="copilot-sparkle-avatar">⚡</div>
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span class="copilot-title-text">AI Onboarding Copilot</span>
+                  <span class="copilot-live-pill">NVIDIA NIM</span>
+                </div>
+                <div class="copilot-subtitle-text">
+                  Context: <strong id="copilot-context-user">Rohan Sharma</strong> · Day 1 Guide
+                </div>
+              </div>
+            </div>
+            <button class="copilot-minimize-btn" onclick="showNotification('Copilot synchronized with your onboarding workflow.')" title="Copilot Status">
+              ✓
             </button>
           </div>
-        </div>
 
-        <!-- Chat Messages Container -->
-        <div id="chatbot-messages-feed" class="chatbot-messages-feed">
-          
-          <!-- Message 1: Personalized AI Greeting & Question Prompts -->
-          <div class="chat-bubble assistant">
-            <div class="chat-avatar ai">⚡</div>
-            <div class="chat-bubble-body">
-              <div id="chatbot-greeting-text" style="font-size: 0.95rem; font-weight: 600; color: var(--color-slate-900); margin-bottom: 8px;">
-                Hi Rohan! 👋 Welcome to Microsoft!
-              </div>
-              <p style="color: var(--color-slate-600); margin-bottom: 12px;">
-                Today is <strong>Day 1</strong> of your onboarding journey as a <strong>Software Engineer</strong>. I'm your interactive AI Copilot. I'll help you find your team, complete your daily checklist, and answer any questions.
-              </p>
-              <div style="font-size: 0.82rem; font-weight: 700; color: var(--color-primary); margin-bottom: 8px;">
-                What would you like to explore first? Click an option below:
-              </div>
+          <!-- Fast Quick Actions Bar -->
+          <div class="copilot-quick-prompts">
+            <div style="font-size: 0.7rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;">
+              Instant Copilot Actions:
+            </div>
+            <div class="copilot-chips-scroll" id="copilot-chips-container">
+              <button class="copilot-chip" onclick="handleChatOption('contacts')">📞 Contacts</button>
+              <button class="copilot-chip" onclick="handleChatOption('checklist')">📋 Day 1 Tasks</button>
+              <button class="copilot-chip" onclick="explainTaskById(1)">💡 Task 1: SSO</button>
+              <button class="copilot-chip" onclick="explainTaskById(2)">💡 Task 2: Agreement</button>
+              <button class="copilot-chip" onclick="explainTaskById(3)">💡 Task 3: Buddy 1:1</button>
+              <button class="copilot-chip" onclick="explainTaskById(4)">💡 Task 4: Dev Tunnel</button>
+              <button class="copilot-chip" onclick="explainTaskById(5)">💡 Task 5: Repo Setup</button>
+              <button class="copilot-chip" onclick="handleChatOption('stuck')">🚨 I'm Stuck</button>
+            </div>
+          </div>
 
-              <!-- Suggested Questions / Actions -->
-              <div class="chat-options-group">
-                <button class="chat-action-chip" onclick="handleChatOption('contacts')">
-                  📞 Team Members & HR Contact Numbers
-                </button>
-                <button class="chat-action-chip" onclick="handleChatOption('checklist')">
-                  📋 Today's Work / Day 1 Checklist (5 Tasks)
-                </button>
-                <button class="chat-action-chip" onclick="handleChatOption('explain-first')">
-                  💡 Explain My First Task
-                </button>
-                <button class="chat-action-chip" onclick="handleChatOption('stuck')">
-                  🚨 I'm Stuck / Help
-                </button>
-              </div>
+          <!-- Chat Messages Container -->
+          <div id="chatbot-messages-feed" class="copilot-messages-feed">
+            <!-- Dynamic AI messages stream -->
+          </div>
+
+          <!-- Chatbot Sticky Input Box -->
+          <div class="copilot-composer">
+            <div class="composer-inner">
+              <textarea 
+                id="chatbot-input" 
+                class="copilot-textarea" 
+                placeholder="Ask Copilot anything about tasks, team, or setup..." 
+                rows="1"
+                onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); sendChatMessage(); }"
+              ></textarea>
+              <button id="chatbot-send-btn" class="copilot-send-button" onclick="sendChatMessage()" title="Send prompt to NVIDIA NIM AI">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+            </div>
+            <div class="composer-footnote">
+              <span>⚡ Model: meta/llama-3.2-11b · NVIDIA NIM Microservice</span>
             </div>
           </div>
 
         </div>
 
-        <!-- Chat Input Composer -->
-        <div class="chat-composer-bar">
-          <input 
-            type="text" 
-            id="chatbot-input" 
-            class="styled-input" 
-            placeholder="Ask me anything about your onboarding, tasks, or team (e.g. 'How do I contact my manager?')..."
-            style="flex: 1;"
-            onkeydown="if(event.key==='Enter') sendChatMessage();"
-          >
-          <button 
-            id="chatbot-send-btn" 
-            class="confirm-launch-btn" 
-            style="margin-top: 0; width: auto; background: linear-gradient(135deg, #4f46e5, #7c3aed); padding: 10px 22px; font-size: 0.88rem; white-space: nowrap;"
-            onclick="sendChatMessage()"
-          >
-            <span>Ask AI</span>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-          </button>
-        </div>
       </div>
     </section>
 
     <!-- ==============================================================
-         STEP 4B: HR COHORT MANAGEMENT PORTAL
+         STEP 4B: HR COHORT MANAGEMENT & FRESHER TASK MANAGER PORTAL
          ============================================================== -->
-    <section id="step-hr-portal" class="step-view" style="display: none; max-width: 1100px; margin: 0 auto; width: 100%;">
+    <section id="step-hr-portal" class="step-view" style="display: none; max-width: 1300px; margin: 0 auto; width: 100%;">
       <div class="breadcrumbs-bar">
         <button onclick="goToStep('step-gateway')">Gateway</button>
         <span class="breadcrumbs-separator">/</span>
         <button onclick="goToStep('step-signin')">Sign In</button>
         <span class="breadcrumbs-separator">/</span>
-        <span>HR Command Center</span>
+        <span>HR Command Center & Task Management</span>
       </div>
 
       <div class="portal-header-banner" style="background: linear-gradient(135deg, #1e3a8a, #0f172a);">
         <div>
           <div style="font-size: 0.8rem; font-weight: 700; color: #93c5fd; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">
-            People Operations Command Center
+            People Operations & Task Management Command Center
           </div>
           <h1 class="portal-banner-title">
-            Welcome, <span id="hr-portal-name">Priya Sharma</span> (HR Partner)
+            Welcome, <span id="hr-portal-name">Priya Sharma</span> (Lead HR Partner)
           </h1>
           <p class="portal-banner-desc">
-            Microsoft Corporation · New Joiner Cohort of 2026. Monitor readiness, paired buddy mentors, and approve clearances.
+            Microsoft Corporation · 2026 Fresher Cohort. Allocate, add, and remove tasks for new joiners in real-time.
           </p>
         </div>
         <div style="text-align: right;">
@@ -627,11 +836,11 @@
       </div>
 
       <!-- Cohort Roster Table -->
-      <div style="background: #ffffff; border: 1px solid var(--color-slate-200); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow-sm); margin-top: 24px;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+      <div style="background: #ffffff; border: 1px solid var(--color-slate-200); border-radius: var(--radius-xl); padding: 26px 30px; box-shadow: var(--shadow-sm); margin-top: 24px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
           <div>
-            <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--color-slate-900);">Active Microsoft Joiners Cohort (10 Members)</h3>
-            <p style="font-size: 0.8rem; color: var(--color-slate-500);">Auto-matched with Senior Buddy Mentors</p>
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--color-slate-900);">Active Microsoft Joiners Cohort (10 Freshers)</h3>
+            <p style="font-size: 0.82rem; color: var(--color-slate-500);">Auto-matched with Senior Buddy Mentors</p>
           </div>
           <button class="btn-secondary" onclick="showNotification('Exported cohort readiness metrics!')">
             📊 Export Report
@@ -642,7 +851,7 @@
           <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
             <thead>
               <tr style="background: var(--color-slate-50); border-bottom: 2px solid var(--color-slate-200); color: var(--color-slate-600); font-weight: 700;">
-                <th style="padding: 12px 14px;">Joiner Name & Badge</th>
+                <th style="padding: 12px 14px;">Fresher Joiner</th>
                 <th style="padding: 12px 14px;">Email ID</th>
                 <th style="padding: 12px 14px;">Department</th>
                 <th style="padding: 12px 14px;">Assigned Buddy Mentor</th>
@@ -655,6 +864,109 @@
             </tbody>
           </table>
         </div>
+      </div>
+
+      <!-- HR FRESHER TASK MANAGEMENT CONSOLE (ADD & REMOVE TASKS) -->
+      <div class="hr-task-manager-panel">
+        <div class="hr-panel-header">
+          <div>
+            <div class="section-badge" style="color: #2563eb;">HR Access & Control</div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--color-slate-900); margin-bottom: 4px;">
+              Fresher Onboarding Task Management
+            </h3>
+            <p style="font-size: 0.84rem; color: var(--color-slate-500);">
+              As an HR Partner, you can add new onboarding tasks or remove existing tasks for freshers. Changes update live across the Fresher Portal & AI Copilot.
+            </p>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <button type="button" class="btn-secondary" onclick="resetTasksToDefault()" style="font-size: 0.78rem; font-weight: 700; background: #f1f5f9; border-color: #cbd5e1;" title="Restore original 5 Microsoft corporate default tasks">
+              🔄 Reset to Defaults
+            </button>
+            <div class="hr-target-selector">
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--color-slate-600);">Managing Checklist for:</span>
+              <select id="hr-target-fresher-select" class="hr-target-select-input" onchange="onHRFresherTargetChange()">
+                <option value="all">All 2026 Freshers (Master Template)</option>
+                <option value="rohan.sharma2026@microsoft.in" selected>Rohan Sharma (rohan.sharma2026@microsoft.in)</option>
+                <option value="aarav.patel2026@microsoft.in">Aarav Patel (aarav.patel2026@microsoft.in)</option>
+                <option value="kavya.singh2026@microsoft.in">Kavya Singh (kavya.singh2026@microsoft.in)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Fresher Task Inventory Table with 1-Click Remove -->
+        <div style="overflow-x: auto;">
+          <table class="hr-task-inventory-table">
+            <thead>
+              <tr>
+                <th style="width: 50px;">ID</th>
+                <th style="width: 120px;">Category</th>
+                <th>Task Title & Short Instructions</th>
+                <th style="width: 100px;">Duration</th>
+                <th style="width: 110px;">Status</th>
+                <th style="width: 130px; text-align: right;">HR Action</th>
+              </tr>
+            </thead>
+            <tbody id="hr-task-inventory-body">
+              <!-- Dynamically populated from dailyTasksState with Remove buttons -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ADD NEW TASK TO FRESHER CHECKLIST FORM -->
+        <div class="hr-add-task-box">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+            <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--color-slate-900);">
+              ➕ Add New Task to Fresher Checklist
+            </h4>
+            <span style="font-size: 0.74rem; color: #2563eb; font-weight: 700;">Instant Push to AI Copilot & Portal</span>
+          </div>
+
+          <form id="hr-add-task-form" onsubmit="handleAddNewTaskByHR(event)">
+            <div class="hr-form-grid">
+              <div class="hr-form-group">
+                <label>Task Title *</label>
+                <input type="text" id="new-task-title" placeholder="e.g. Complete OWASP Top 10 Security Assessment" required>
+              </div>
+
+              <div class="hr-form-group">
+                <label>Category *</label>
+                <select id="new-task-category" required>
+                  <option value="Security">Security</option>
+                  <option value="Compliance">Compliance & Legal</option>
+                  <option value="Mentoring">Mentoring & Culture</option>
+                  <option value="Access">IT Access & Tools</option>
+                  <option value="Engineering" selected>Engineering & Code</option>
+                </select>
+              </div>
+
+              <div class="hr-form-group">
+                <label>Estimated Time</label>
+                <input type="text" id="new-task-duration" placeholder="e.g. 25 mins" value="25 mins">
+              </div>
+            </div>
+
+            <div class="hr-form-group" style="margin-bottom: 14px;">
+              <label>Task Instructions & Step-by-Step Guidance (Seen by Fresher & Chatbot) *</label>
+              <textarea id="new-task-desc" placeholder="Detail the step-by-step instructions so the Fresher and AI Chatbot can explain it..." required></textarea>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+              <div class="hr-presets-row">
+                <span style="font-size: 0.72rem; font-weight: 700; color: var(--color-slate-500);">QUICK PRESETS:</span>
+                <button type="button" class="hr-preset-btn" onclick="applyTaskPreset('cloud')">+ Azure Cloud Setup</button>
+                <button type="button" class="hr-preset-btn" onclick="applyTaskPreset('security')">+ Security Training</button>
+                <button type="button" class="hr-preset-btn" onclick="applyTaskPreset('culture')">+ Team 1:1 Intro</button>
+              </div>
+
+              <button type="submit" class="btn-add-task-submit">
+                <span>➕ Add Task to Fresher Checklist</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
       </div>
     </section>
 
@@ -964,14 +1276,142 @@
     let currentAuthenticatedUser = null;
     let detectedRoleKey = 'joiner';
 
-    // Checklist state for active session (5 tasks)
-    let dailyTasksState = [
-      { id: 1, title: 'Enroll Corporate SSO & Hardware 2FA Key', desc: 'Set up corporate multi-factor authentication and register security key for intranet services.', done: true, tag: 'Security' },
-      { id: 2, title: 'Digitally Sign Employment Agreement & NDA', desc: 'Completed DocuSign packet submitted directly to HR Legal onboarding repository.', done: true, tag: 'Compliance' },
-      { id: 3, title: '1:1 Welcome Briefing with Buddy Rahul Pandey', desc: 'Meet your buddy at 2:00 PM for team introduction, repository architecture tour, and norms.', done: false, tag: 'Mentoring' },
-      { id: 4, title: 'Corporate VPN & Azure Dev Tunnel Request', desc: 'Request encrypted VPN profile and Azure Dev Tunnel credentials for private cluster access.', done: false, tag: 'Access' },
-      { id: 5, title: 'Review Engineering Standards & Team Guidelines', desc: 'Read code review guidelines, PR SLAs, and development branch etiquette handbook.', done: false, tag: 'Engineering' }
+    // Comprehensive Fresher Onboarding Tasks State (5 Default Core Tasks)
+    const DEFAULT_DAILY_TASKS = [
+      {
+        id: 1,
+        title: 'Enroll Corporate SSO & Hardware 2FA Key',
+        tag: 'Security',
+        tagClass: 'tag-security',
+        duration: '15 mins',
+        priority: 'High',
+        done: true,
+        desc: 'Set up corporate multi-factor authentication and register security key for intranet services.',
+        objective: 'Enforce Microsoft Zero-Trust security compliance and establish cryptographic identity verification with Microsoft Entra ID and FIDO2 hardware passkeys for Azure, GitHub Enterprise, and internal portals.',
+        steps: [
+          'Install Microsoft Authenticator on your enrolled iOS/Android corporate device.',
+          'Open https://myprofile.microsoft.com and sign in with your corporate alias (rohan.sharma2026@microsoft.in).',
+          'Select "Security Info" -> "Add Sign-in Method" -> choose "Authenticator app".',
+          'Scan the dynamic enterprise QR code and confirm the two-digit numeric push prompt.',
+          'Register your physical FIDO2 USB-C key for passkey passwordless sign-in.'
+        ],
+        tools: 'Microsoft Authenticator, FIDO2 USB-C Key, Microsoft Entra ID Portal',
+        verification: 'Active status indicator turns green on Identity Security Dashboard and SSO login succeeds.'
+      },
+      {
+        id: 2,
+        title: 'Digitally Sign Employment Agreement & NDA',
+        tag: 'Compliance',
+        tagClass: 'tag-compliance',
+        duration: '20 mins',
+        priority: 'High',
+        done: true,
+        desc: 'Completed DocuSign packet submitted directly to HR Legal onboarding repository.',
+        objective: 'Execute statutory employment contracts, proprietary invention assignments, intellectual property policies, and code of conduct charters.',
+        steps: [
+          'Check your corporate inbox for the DocuSign transmission from HR Legal Operations.',
+          'Verify candidate legal identification details (PAN, Aadhaar, Passport).',
+          'Complete digital signatures on the Employment Agreement, Non-Disclosure Agreement, and Code of Business Ethics.',
+          'Click "Finish" to seal the signed package into the legal archival repository.'
+        ],
+        tools: 'DocuSign Enterprise Portal, Microsoft Legal Compliance Hub',
+        verification: 'Automated clearance receipt received from Lead HR Partner Priya Sharma.'
+      },
+      {
+        id: 3,
+        title: '1:1 Welcome Briefing with Buddy Rahul Pandey',
+        tag: 'Mentoring',
+        tagClass: 'tag-mentoring',
+        duration: '45 mins',
+        priority: 'Medium',
+        done: false,
+        desc: 'Meet your buddy at 2:00 PM for team introduction, repository architecture tour, and norms.',
+        objective: 'Establish technical mentorship with Principal Solutions Architect Rahul Pandey (Class of 2021) to understand team dynamics, sprint cadences, and codebase orientation.',
+        steps: [
+          'Review the meeting calendar invite: "1:1 Welcome Briefing" scheduled for 2:00 PM IST.',
+          'Join the Microsoft Teams video briefing room via the calendar link or buddy card.',
+          'Discuss the Azure Core & Cloud Infrastructure architectural overview and engineering SLAs.',
+          'Establish recurring weekly 1:1 mentorship check-in cadence for your first 90 days.'
+        ],
+        tools: 'Microsoft Teams, Azure DevOps Board, OneNote Mentorship Scratchpad',
+        verification: 'Buddy sign-off recorded in the Start Smart Mentorship Console.'
+      },
+      {
+        id: 4,
+        title: 'Corporate VPN & Azure Dev Tunnel Request',
+        tag: 'Access',
+        tagClass: 'tag-access',
+        duration: '30 mins',
+        priority: 'High',
+        done: false,
+        desc: 'Request encrypted VPN profile and Azure Dev Tunnel credentials for private cluster access.',
+        objective: 'Establish hardware-encrypted tunnel connectivity to Microsoft internal development clusters, staging subnets, and isolated private microservices.',
+        steps: [
+          'Open the Microsoft GlobalProtect / Azure Dev Tunnel client on your workstation.',
+          'Connect to the regional gateway: "blr-gateway.corp.microsoft.com".',
+          'Authenticate with your corporate 2FA passkey enrolled in Task 1.',
+          'Verify network route propagation by running az account show in your developer terminal.'
+        ],
+        tools: 'GlobalProtect VPN, Azure CLI (az dev-tunnel), IT Operations Portal',
+        verification: 'Ping success to internal cluster endpoint core-cluster.staging.msft.'
+      },
+      {
+        id: 5,
+        title: 'Review Engineering Standards & Team Guidelines',
+        tag: 'Engineering',
+        tagClass: 'tag-engineering',
+        duration: '40 mins',
+        priority: 'Medium',
+        done: false,
+        desc: 'Read code review guidelines, PR SLAs, and development branch etiquette handbook.',
+        objective: 'Align with Microsoft Core engineering bar: clean code standards, unit test coverage minimums (>85%), PR review turnarounds (<24h), and trunk-based deployment hygiene.',
+        steps: [
+          'Clone the azure-core/infra-mesh repo and read CONTRIBUTING.md.',
+          'Review the Microsoft TypeScript & C# coding conventions handbook.',
+          'Familiarize yourself with automated CodeQL security scanning rules in CI/CD.',
+          'Bookmark the internal developer wiki and technical documentation portal.'
+        ],
+        tools: 'GitHub Enterprise, Azure Pipelines, Microsoft Engineering Playbook',
+        verification: 'Sign-off on engineering charter completed.'
+      }
     ];
+
+    const TASKS_STORAGE_KEY = 'startsmart_daily_tasks_v2';
+
+    function loadTasksState() {
+      try {
+        const saved = localStorage.getItem(TASKS_STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            return parsed;
+          }
+        }
+      } catch (e) {
+        console.debug('Error reading tasks from storage:', e);
+      }
+      return JSON.parse(JSON.stringify(DEFAULT_DAILY_TASKS));
+    }
+
+    function saveTasksState() {
+      try {
+        localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(dailyTasksState));
+      } catch (e) {
+        console.debug('Error saving tasks to storage:', e);
+      }
+    }
+
+    function resetTasksToDefault() {
+      dailyTasksState.length = 0;
+      DEFAULT_DAILY_TASKS.forEach(t => dailyTasksState.push(JSON.parse(JSON.stringify(t))));
+      saveTasksState();
+      renderHRTaskInventory();
+      renderManualDashboard(currentAuthenticatedUser);
+      showNotification('Reset checklist to Microsoft Corporate Day 1 defaults!');
+    }
+
+    let dailyTasksState = loadTasksState();
+    let currentTaskFilter = 'all';
 
     // Navigation Step Transition Manager
     function goToStep(stepId) {
@@ -1079,12 +1519,12 @@
       if (detection.role === 'joiner') {
         badge.querySelector('span').textContent = '🟢';
         title.textContent = `Detected Role: ${detection.title}`;
-        desc.textContent = `${detection.desc} · Routes to AI Onboarding Chatbot`;
-        btnText.textContent = 'Sign In & Open AI Chatbot →';
+        desc.textContent = `${detection.desc} · Routes to 70/30 Onboarding Workspace & AI Copilot`;
+        btnText.textContent = 'Sign In to Workspace & AI Copilot →';
       } else if (detection.role === 'hr') {
         badge.querySelector('span').textContent = '🔵';
         title.textContent = `Detected Role: ${detection.title}`;
-        desc.textContent = `${detection.desc} · Routes to HR Cohort Command`;
+        desc.textContent = `${detection.desc} · Routes to HR Command & Task Management`;
         btnText.textContent = 'Sign In to HR Command →';
       } else if (detection.role === 'buddy') {
         badge.querySelector('span').textContent = '🟣';
@@ -1109,6 +1549,7 @@
       showNotification(`Authenticated as ${detection.user.name} (${detection.title})`);
 
       if (detection.role === 'joiner') {
+        renderManualDashboard(detection.user);
         initJoinerChatbot(detection.user);
         goToStep('step-joiner-chatbot');
       } else if (detection.role === 'hr') {
@@ -1122,261 +1563,406 @@
       }
     }
 
-    // Initialize Step 4A: New Joiner AI Chatbot
-    function initJoinerChatbot(user) {
-      document.getElementById('chatbot-user-name').textContent = user.name;
-      document.getElementById('chatbot-company-name').textContent = companiesDatabase[currentSelectedCompany]?.fullName || 'Microsoft Corporation';
-      document.getElementById('chatbot-greeting-text').textContent = `Hi ${user.name.split(' ')[0]}! 👋 Welcome to ${companiesDatabase[currentSelectedCompany]?.name || 'Microsoft'}!`;
+    // ==============================================================
+    // STEP 4A: RENDER 70% MANUAL DASHBOARD (HERO, CONTACTS, TASKS, BREAKDOWNS)
+    // ==============================================================
+    function renderManualDashboard(user) {
+      if (!user) user = { name: 'Rohan Sharma', title: 'Software Engineer 1', email: 'rohan.sharma2026@microsoft.in' };
 
-      // Reset messages container to initial greeting
-      const feed = document.getElementById('chatbot-messages-feed');
-      feed.innerHTML = `
-        <div class="chat-bubble assistant">
-          <div class="chat-avatar ai">⚡</div>
-          <div class="chat-bubble-body">
-            <div style="font-size: 0.95rem; font-weight: 700; color: var(--color-slate-900); margin-bottom: 6px;">
-              Hi ${user.name.split(' ')[0]}! 👋 Welcome to Microsoft!
-            </div>
-            <p style="color: var(--color-slate-600); margin-bottom: 12px;">
-              Today is <strong>Day 1</strong> of your onboarding journey as a <strong>${user.title || 'Software Engineer'}</strong>. I'm your AI Onboarding Copilot. I'll help you get to know your team, view your contact numbers, and complete your Day 1 work checklist.
-            </p>
-            <div style="font-size: 0.82rem; font-weight: 700; color: var(--color-primary); margin-bottom: 8px;">
-              What would you like to explore first? Click an option below:
-            </div>
-            <div class="chat-options-group">
-              <button class="chat-action-chip" onclick="handleChatOption('contacts')">
-                📞 Team Members & HR Contact Numbers
-              </button>
-              <button class="chat-action-chip" onclick="handleChatOption('checklist')">
-                📋 Today's Work / Day 1 Checklist (5 Tasks)
-              </button>
-              <button class="chat-action-chip" onclick="handleChatOption('explain-first')">
-                💡 Explain My First Task
-              </button>
-              <button class="chat-action-chip" onclick="handleChatOption('stuck')">
-                🚨 I'm Stuck / Help
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-    }
+      // Update Hero Header
+      document.getElementById('manual-user-name').textContent = user.name;
+      document.getElementById('manual-user-role').textContent = user.title || 'Software Engineer 1';
+      document.getElementById('manual-user-email').textContent = user.email || 'rohan.sharma2026@microsoft.in';
+      document.getElementById('copilot-context-user').textContent = user.name;
 
-    // Handle Quick Chat Options Click
-    function handleChatOption(optionKey) {
-      const feed = document.getElementById('chatbot-messages-feed');
-      const user = currentAuthenticatedUser || { name: 'Rohan Sharma' };
+      // Calculate Progress Metrics
+      const totalCount = dailyTasksState.length;
+      const completedCount = dailyTasksState.filter(t => t.done).length;
+      const pendingCount = totalCount - completedCount;
+      const pct = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
-      if (optionKey === 'contacts') {
-        // User bubble
-        appendChatBubble('user', 'Who are my team members and HR contact numbers?');
+      // Update Counters & Progress Meter
+      document.getElementById('manual-progress-pct').textContent = `${pct}%`;
+      document.getElementById('manual-tasks-stat').textContent = `${completedCount} of ${totalCount} Tasks Cleared (${pct}%)`;
+      document.getElementById('manual-linear-bar').style.width = `${pct}%`;
 
-        // Assistant response with phone numbers and cards
-        const buddy = microsoftDirectory.previousMembers.find(b => b.menteeEmail === user.email) || microsoftDirectory.previousMembers[0];
-        const hr = microsoftDirectory.hr[0];
+      // Circular Ring stroke-dashoffset (Circumference 2 * PI * 38 = ~238.76)
+      const circumference = 238.76;
+      const offset = circumference - (pct / 100) * circumference;
+      const circleEl = document.getElementById('manual-progress-circle');
+      if (circleEl) {
+        circleEl.style.strokeDashoffset = offset;
+      }
 
-        const contactsHtml = `
-          <div>
-            <p style="margin-bottom: 12px; font-weight: 600;">
-              Here are the direct phone numbers and contacts for your assigned HR Partner, Buddy Mentor, and IT Helpdesk:
-            </p>
+      // Update Filter Pill Counts
+      document.getElementById('count-all-tasks').textContent = totalCount;
+      document.getElementById('count-pending-tasks').textContent = pendingCount;
+      document.getElementById('count-done-tasks').textContent = completedCount;
 
-            <div class="chat-card-contacts">
-              <!-- HR Card -->
-              <div class="chat-contact-mini" style="border-top: 3px solid #2563eb;">
-                <div style="font-size: 0.72rem; font-weight: 700; color: #2563eb; text-transform: uppercase;">Assigned HR Partner</div>
-                <div style="font-size: 0.95rem; font-weight: 800; color: var(--color-slate-900); margin: 2px 0;">${hr.name}</div>
-                <div style="font-size: 0.76rem; color: var(--color-slate-500); margin-bottom: 8px;">${hr.title}</div>
-                
-                <div style="background: var(--color-slate-50); padding: 8px 10px; border-radius: var(--radius-sm); border: 1px dashed var(--color-slate-200); margin-bottom: 8px;">
-                  <div style="font-size: 0.7rem; color: var(--color-slate-500); font-weight: 600;">DIRECT PHONE</div>
-                  <a href="tel:${hr.phone.replace(/[^0-9+]/g, '')}" class="phone-call-btn" style="margin-top: 2px; font-size: 0.8rem; padding: 4px 8px;">
-                    📞 ${hr.phone}
-                  </a>
-                </div>
-                <div style="font-size: 0.74rem; color: var(--color-slate-600);">📧 ${hr.email}</div>
-                <div style="font-size: 0.74rem; color: var(--color-slate-500); margin-top: 2px;">📍 ${hr.desk}</div>
-              </div>
+      // Render Section 2: Interactive Task Checklist
+      const checklistContainer = document.getElementById('manual-checklist-container');
+      checklistContainer.innerHTML = '';
 
-              <!-- Buddy Mentor Card -->
-              <div class="chat-contact-mini" style="border-top: 3px solid #9333ea;">
-                <div style="font-size: 0.72rem; font-weight: 700; color: #9333ea; text-transform: uppercase;">Technical Buddy (Mentor)</div>
-                <div style="font-size: 0.95rem; font-weight: 800; color: var(--color-slate-900); margin: 2px 0;">${buddy.name}</div>
-                <div style="font-size: 0.76rem; color: var(--color-slate-500); margin-bottom: 8px;">${buddy.title} (Class of ${buddy.batch})</div>
-                
-                <div style="background: var(--color-slate-50); padding: 8px 10px; border-radius: var(--radius-sm); border: 1px dashed var(--color-slate-200); margin-bottom: 8px;">
-                  <div style="font-size: 0.7rem; color: var(--color-slate-500); font-weight: 600;">BUDDY DIRECT PHONE</div>
-                  <a href="tel:${buddy.phone.replace(/[^0-9+]/g, '')}" class="phone-call-btn" style="background: #faf5ff; border-color: #d8b4fe; color: #7e22ce; margin-top: 2px; font-size: 0.8rem; padding: 4px 8px;">
-                    📞 ${buddy.phone}
-                  </a>
-                </div>
-                <div style="font-size: 0.74rem; color: var(--color-slate-600);">📧 ${buddy.email}</div>
-                <div style="font-size: 0.74rem; color: #6b21a8; font-weight: 600; margin-top: 4px;">📅 Today's 1:1 Sync: 2:00 PM (Teams Room)</div>
-              </div>
-
-              <!-- IT Support Hotline -->
-              <div class="chat-contact-mini" style="border-top: 3px solid #059669;">
-                <div style="font-size: 0.72rem; font-weight: 700; color: #059669; text-transform: uppercase;">IT Helpdesk & Access</div>
-                <div style="font-size: 0.95rem; font-weight: 800; color: var(--color-slate-900); margin: 2px 0;">Microsoft IT Operations</div>
-                <div style="font-size: 0.76rem; color: var(--color-slate-500); margin-bottom: 8px;">24/7 Global Identity & Hardware Support</div>
-                <div style="background: var(--color-slate-50); padding: 8px 10px; border-radius: var(--radius-sm); border: 1px dashed var(--color-slate-200);">
-                  <div style="font-size: 0.7rem; color: var(--color-slate-500); font-weight: 600;">IT HOTLINE</div>
-                  <a href="tel:+918005556738" class="phone-call-btn" style="margin-top: 2px; font-size: 0.8rem; padding: 4px 8px;">
-                    📞 +91 (800) 555-MSFT-IN
-                  </a>
-                </div>
-              </div>
-            </div>
+      if (dailyTasksState.length === 0) {
+        checklistContainer.innerHTML = `
+          <div style="padding: 24px; text-align: center; color: var(--color-slate-500); background: var(--color-slate-50); border-radius: var(--radius-md);">
+            No tasks currently assigned. HR Partner can add tasks from the HR Command Center.
           </div>
         `;
-        appendChatBubble('assistant', contactsHtml);
-
-      } else if (optionKey === 'checklist') {
-        // User bubble
-        appendChatBubble('user', "Show me my today's work and Day 1 checklist.");
-
-        // Render 5 Tasks Checklist inside Chat
-        const completedCount = dailyTasksState.filter(t => t.done).length;
-        const totalCount = dailyTasksState.length;
-        const pct = Math.round((completedCount / totalCount) * 100);
-
-        let checklistHtml = `
-          <div class="chat-card-checklist">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-              <div>
-                <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--color-slate-900);">Day 1 Checklist (5 Tasks)</h4>
-                <p style="font-size: 0.75rem; color: var(--color-slate-500);">Complete these tasks today to achieve 100% Day-1 activation</p>
-              </div>
-              <span id="chat-progress-counter" style="font-size: 0.8rem; font-weight: 700; color: var(--color-primary); font-family: var(--font-mono);">
-                ${completedCount} of ${totalCount} Done (${pct}%)
-              </span>
-            </div>
-
-            <!-- Progress Bar -->
-            <div style="width: 100%; height: 6px; background: var(--color-slate-200); border-radius: var(--radius-full); overflow: hidden; margin-bottom: 16px;">
-              <div id="chat-checklist-progressbar" style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, #4f46e5, #10b981); border-radius: var(--radius-full); transition: width 0.3s ease;"></div>
-            </div>
-
-            <div id="chat-tasks-container">
-        `;
-
+      } else {
         dailyTasksState.forEach(task => {
-          checklistHtml += `
-            <div class="chat-task-row ${task.done ? 'done' : ''}" id="chat-task-${task.id}">
-              <div style="display: flex; align-items: flex-start; gap: 10px; flex: 1;">
-                <span style="font-size: 1.1rem; line-height: 1;">${task.done ? '✅' : '⬜'}</span>
-                <div>
-                  <div style="font-size: 0.85rem; font-weight: 700; color: var(--color-slate-800); text-decoration: ${task.done ? 'line-through' : 'none'};">
-                    ${task.title}
-                  </div>
-                  <div style="font-size: 0.74rem; color: var(--color-slate-500); margin-top: 2px;">
-                    ${task.desc}
-                  </div>
-                </div>
-              </div>
+          const card = document.createElement('div');
+          card.className = `manual-task-card ${task.done ? 'is-done' : ''}`;
+          card.id = `manual-task-card-${task.id}`;
+          card.dataset.status = task.done ? 'done' : 'pending';
 
-              <div style="display: flex; gap: 6px; shrink: 0; margin-left: 10px;">
-                <button class="persona-pill-btn" style="padding: 4px 10px; font-size: 0.74rem; ${task.done ? 'background: #d1fae5; color: #065f46; border-color: #a7f3d0;' : 'background: #4f46e5; color: #fff; border-color: #4f46e5;'}" onclick="toggleChatTask(${task.id})">
-                  ${task.done ? '✓ Done' : 'Mark Complete'}
-                </button>
-                <button class="persona-pill-btn" style="padding: 4px 10px; font-size: 0.74rem;" onclick="explainTaskById(${task.id})">
-                  💡 Explain
-                </button>
+          card.innerHTML = `
+            <button class="manual-task-check-btn" onclick="toggleManualTask(${task.id})" title="${task.done ? 'Mark as Pending' : 'Mark as Complete'}">
+              ${task.done ? '✓' : ''}
+            </button>
+            <div class="manual-task-info">
+              <div class="manual-task-badges">
+                <span class="manual-task-tag ${task.tagClass || 'tag-engineering'}">${task.tag || 'Task'}</span>
+                <span class="manual-task-duration">⏱️ ${task.duration || '20 mins'}</span>
+                <span style="font-size: 0.72rem; font-weight: 700; color: ${task.done ? '#059669' : '#d97706'};">
+                  ${task.done ? '● Completed' : '● Action Required'}
+                </span>
               </div>
+              <div class="manual-task-title">${task.title}</div>
+              <div class="manual-task-desc">${task.desc}</div>
+            </div>
+            <div class="manual-task-actions">
+              <button class="btn-task-toggle ${task.done ? 'done-state' : 'pending-state'}" onclick="toggleManualTask(${task.id})">
+                ${task.done ? '✓ Completed' : 'Mark Complete'}
+              </button>
+              <button class="btn-task-explain" onclick="askCopilotToExplainTask(${task.id})" title="Ask the 30% AI Copilot to explain this task">
+                <span>💡 Ask AI Copilot</span>
+              </button>
             </div>
           `;
+          checklistContainer.appendChild(card);
         });
+      }
 
-        checklistHtml += `</div></div>`;
-        appendChatBubble('assistant', checklistHtml);
+      // Render Section 3: Deep-Dive Task Breakdowns
+      const breakdownContainer = document.getElementById('manual-task-breakdowns');
+      breakdownContainer.innerHTML = '';
 
-      } else if (optionKey === 'explain-first') {
-        appendChatBubble('user', 'Can you explain my first task?');
-        explainTaskById(1);
+      dailyTasksState.forEach((task, index) => {
+        const bCard = document.createElement('div');
+        bCard.className = 'breakdown-card';
+        bCard.id = `breakdown-task-${task.id}`;
 
-      } else if (optionKey === 'stuck') {
-        appendChatBubble('user', "I'm stuck. Can you help me?");
-        const stuckHtml = `
-          <div>
-            <p style="font-weight: 600; margin-bottom: 8px;">
-              No worries, ${user.name.split(' ')[0]}! Let's inspect your onboarding dependencies:
-            </p>
-            <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-md); padding: 12px; font-size: 0.82rem; color: #92400e; margin-bottom: 10px;">
-              🔍 <strong>Blocker Diagnosis:</strong> Your Corporate VPN Access is currently waiting on hardware token verification from <strong>IT Operations</strong> (SLA &lt; 2 hrs).
+        let stepsHtml = '';
+        if (task.steps && task.steps.length > 0) {
+          stepsHtml = task.steps.map(s => `<li>${s}</li>`).join('');
+        } else {
+          stepsHtml = `<li>Follow the instructions outlined in your welcome briefing or consult your buddy.</li>`;
+        }
+
+        bCard.innerHTML = `
+          <div class="breakdown-header">
+            <div class="breakdown-header-left">
+              <div class="breakdown-task-num ${task.done ? 'completed' : ''}">${task.done ? '✓' : (index + 1)}</div>
+              <div>
+                <span class="manual-task-tag ${task.tagClass || 'tag-engineering'}" style="margin-bottom: 2px;">${task.tag || 'Task'}</span>
+                <div class="breakdown-title-text">${task.title}</div>
+              </div>
             </div>
-            <p style="font-size: 0.82rem; color: var(--color-slate-600); margin-bottom: 8px;">
-              While IT is approving your token, you can complete independent tasks that do not require VPN:
-            </p>
-            <ul style="font-size: 0.8rem; color: var(--color-slate-700); padding-left: 20px; margin-bottom: 10px;">
-              <li>Reviewing Engineering Standards & Guidelines (Task 5)</li>
-              <li>Syncing with your buddy Rahul Pandey at 2:00 PM (Task 3)</li>
-            </ul>
-            <div style="display: flex; gap: 8px;">
-              <a href="tel:+918005556738" class="phone-call-btn" style="font-size: 0.78rem;">
-                📞 Call IT Hotline (+91 800 555-MSFT-IN)
-              </a>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 0.75rem; color: var(--color-slate-500); font-family: var(--font-mono);">Est: ${task.duration || '25m'}</span>
+              <button class="btn-task-explain" onclick="askCopilotToExplainTask(${task.id})">
+                <span>⚡ Explain with AI</span>
+              </button>
             </div>
           </div>
+
+          <div class="breakdown-body">
+            <div>
+              <div class="breakdown-field-label">1. Primary Objective & Purpose:</div>
+              <p style="color: var(--color-slate-700);">${task.objective || task.desc}</p>
+            </div>
+
+            <div>
+              <div class="breakdown-field-label">2. Step-by-Step Execution Protocol:</div>
+              <ol class="breakdown-steps-list">
+                ${stepsHtml}
+              </ol>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; background: var(--color-slate-50); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--color-slate-200);">
+              <div>
+                <div class="breakdown-field-label">Tools & Resources:</div>
+                <span style="font-size: 0.78rem; color: var(--color-slate-700);">${task.tools || 'Microsoft 365, Teams, Azure Portal'}</span>
+              </div>
+              <div>
+                <div class="breakdown-field-label">Completion Verification:</div>
+                <span style="font-size: 0.78rem; color: #047857; font-weight: 600;">${task.verification || 'Signed off upon verification'}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="breakdown-footer">
+            <div style="font-size: 0.75rem; color: var(--color-slate-500);">
+              Status: <strong style="color: ${task.done ? '#059669' : '#d97706'}">${task.done ? 'Verified & Completed' : 'Pending Action'}</strong>
+            </div>
+            <button class="btn-task-toggle ${task.done ? 'done-state' : 'pending-state'}" onclick="toggleManualTask(${task.id})">
+              ${task.done ? '✓ Mark as Pending' : 'Mark Task as Completed'}
+            </button>
+          </div>
         `;
-        appendChatBubble('assistant', stuckHtml);
-      }
+        breakdownContainer.appendChild(bCard);
+      });
+
+      // Update Copilot Quick Chips
+      updateCopilotChips();
     }
 
-    // Toggle Task Complete in Chat Checklist
-    function toggleChatTask(taskId) {
+    // Filter Manual Tasks
+    function filterManualTasks(filterKey) {
+      currentTaskFilter = filterKey;
+
+      document.getElementById('filter-btn-all').classList.toggle('active', filterKey === 'all');
+      document.getElementById('filter-btn-pending').classList.toggle('active', filterKey === 'pending');
+      document.getElementById('filter-btn-done').classList.toggle('active', filterKey === 'done');
+
+      const cards = document.querySelectorAll('#manual-checklist-container .manual-task-card');
+      cards.forEach(card => {
+        const st = card.dataset.status;
+        if (filterKey === 'all') {
+          card.style.display = 'flex';
+        } else if (filterKey === 'pending') {
+          card.style.display = (st === 'pending') ? 'flex' : 'none';
+        } else if (filterKey === 'done') {
+          card.style.display = (st === 'done') ? 'flex' : 'none';
+        }
+      });
+    }
+
+    // Toggle Task Completed State
+    function toggleManualTask(taskId) {
       const task = dailyTasksState.find(t => t.id === taskId);
       if (!task) return;
 
       task.done = !task.done;
+      saveTasksState();
+      renderManualDashboard(currentAuthenticatedUser);
 
-      const completedCount = dailyTasksState.filter(t => t.done).length;
-      const totalCount = dailyTasksState.length;
-      const pct = Math.round((completedCount / totalCount) * 100);
+      // Also refresh HR task inventory if visible
+      if (document.getElementById('step-hr-portal').style.display !== 'none') {
+        renderHRTaskInventory();
+      }
 
-      // Re-render checklist inside chat
-      handleChatOption('checklist');
+      showNotification(`${task.done ? 'Completed: ' : 'Reopened: '} "${task.title}"`);
+    }
 
-      if (task.done) {
-        showNotification(`Completed: "${task.title}"! (${completedCount}/${totalCount})`);
+    // Ask 30% AI Copilot to Explain a Task
+    function askCopilotToExplainTask(taskId) {
+      explainTaskById(taskId);
+
+      // Highlight copilot panel
+      const panel = document.querySelector('.joiner-chat-panel');
+      if (panel) {
+        panel.style.boxShadow = '0 0 35px rgba(99, 102, 241, 0.6)';
+        setTimeout(() => {
+          panel.style.boxShadow = '';
+        }, 1200);
       }
     }
 
-    // Explain a specific task inside the chat
-    function explainTaskById(taskId) {
-      const task = dailyTasksState.find(t => t.id === taskId) || dailyTasksState[0];
-      const explainHtml = `
-        <div style="background: #f8fafc; border: 1px solid var(--color-slate-200); border-radius: var(--radius-md); padding: 14px; font-size: 0.85rem;">
-          <div style="font-weight: 800; font-size: 0.95rem; color: var(--color-primary); margin-bottom: 8px;">
-            💡 Task Breakdown: ${task.title}
-          </div>
-          <div style="margin-bottom: 8px;">
-            <strong>1. What does this mean?</strong><br>
-            <span style="color: var(--color-slate-600);">${task.desc}</span>
-          </div>
-          <div style="margin-bottom: 8px;">
-            <strong>2. Why is it necessary?</strong><br>
-            <span style="color: var(--color-slate-600);">Ensures your Microsoft enterprise account conforms to zero-trust security and grants secure access to internal Azure and GitHub systems.</span>
-          </div>
-          <div style="margin-bottom: 8px;">
-            <strong>3. Step-by-step instructions:</strong><br>
-            <ol style="padding-left: 20px; color: var(--color-slate-600); font-size: 0.82rem;">
-              <li>Log into Microsoft Authenticator with your verified email (${currentAuthenticatedUser?.email || 'rohan.sharma2026@microsoft.in'}).</li>
-              <li>Scan the corporate security QR code issued in your HR welcome kit.</li>
-              <li>Confirm prompt and verify hardware key registration.</li>
-            </ol>
-          </div>
-          <div>
-            <strong>4. Completion verification:</strong><br>
-            <span style="color: var(--color-slate-600);">Mark this task as complete once you receive the green confirmation checkmark on the portal.</span>
+    // Update Quick Copilot Chips
+    function updateCopilotChips() {
+      const container = document.getElementById('copilot-chips-container');
+      if (!container) return;
+
+      let chipsHtml = `
+        <button class="copilot-chip" onclick="handleChatOption('contacts')">📞 Contacts</button>
+        <button class="copilot-chip" onclick="handleChatOption('checklist')">📋 Day 1 Tasks</button>
+      `;
+
+      dailyTasksState.slice(0, 6).forEach((task, idx) => {
+        const shortTitle = task.title.split(' ').slice(0, 3).join(' ');
+        chipsHtml += `<button class="copilot-chip" onclick="explainTaskById(${task.id})">💡 T${task.id}: ${shortTitle}</button>`;
+      });
+
+      chipsHtml += `<button class="copilot-chip" onclick="handleChatOption('stuck')">🚨 I'm Stuck</button>`;
+      container.innerHTML = chipsHtml;
+    }
+
+    // ==============================================================
+    // STEP 4A (RIGHT 30%): AI COPILOT CHATBOT INITIALIZATION & LOGIC
+    // ==============================================================
+    function initJoinerChatbot(user) {
+      const feed = document.getElementById('chatbot-messages-feed');
+      if (!feed) return;
+
+      feed.innerHTML = `
+        <div class="chat-bubble assistant">
+          <div class="chat-avatar ai">⚡</div>
+          <div class="chat-bubble-body">
+            <div style="font-size: 0.95rem; font-weight: 800; color: #f8fafc; margin-bottom: 6px;">
+              Hi ${user.name.split(' ')[0]}! 👋 Welcome to Microsoft!
+            </div>
+            <p style="color: #cbd5e1; margin-bottom: 12px; font-size: 0.85rem;">
+              I am your <strong>AI Onboarding Copilot</strong>. I have real-time access to your <strong>Day 1 Work Checklist</strong>, assigned <strong>Buddy Mentor (Rahul Pandey)</strong>, and <strong>HR Partner (Priya Sharma)</strong>.
+            </p>
+            <div style="font-size: 0.8rem; font-weight: 700; color: #818cf8; margin-bottom: 8px;">
+              How can I assist you right now?
+            </div>
+            <div class="chat-options-group" style="margin-top: 10px;">
+              <button class="chat-action-chip" onclick="handleChatOption('contacts')">📞 Contact Directory</button>
+              <button class="chat-action-chip" onclick="handleChatOption('checklist')">📋 Today's Checklist</button>
+              <button class="chat-action-chip" onclick="explainTaskById(1)">💡 Explain Task 1</button>
+              <button class="chat-action-chip" onclick="explainTaskById(2)">💡 Explain Task 2</button>
+              <button class="chat-action-chip" onclick="handleChatOption('stuck')">🚨 I'm Stuck</button>
+            </div>
           </div>
         </div>
       `;
-      appendChatBubble('assistant', explainHtml);
     }
 
-    // Append Chat Bubble Helper
+    // Explain Task in Chat Feed
+    function explainTaskById(taskId) {
+      const task = dailyTasksState.find(t => t.id === taskId) || dailyTasksState[0];
+      appendChatBubble('user', `Can you explain Task #${task.id}: "${task.title}"?`);
+
+      let stepsList = '';
+      if (task.steps && task.steps.length > 0) {
+        stepsList = task.steps.map((s, i) => `<li><strong>Step ${i+1}:</strong> ${s}</li>`).join('');
+      } else {
+        stepsList = `<li>${task.desc}</li>`;
+      }
+
+      const explainHtml = `
+        <div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-size: 0.72rem; font-weight: 800; background: rgba(99, 102, 241, 0.2); color: #c7d2fe; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">
+              ${task.tag || 'Task'} Guidance
+            </span>
+            <span style="font-size: 0.75rem; color: #94a3b8; font-family: var(--font-mono);">⏱️ ${task.duration || '20m'}</span>
+          </div>
+
+          <h4 style="font-size: 1.02rem; font-weight: 800; color: #f8fafc; margin-bottom: 8px;">
+            ${task.title}
+          </h4>
+
+          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; font-size: 0.82rem; color: #e2e8f0;">
+            🎯 <strong>Objective:</strong> ${task.objective || task.desc}
+          </div>
+
+          <div style="font-size: 0.82rem; font-weight: 700; color: #38bdf8; margin-bottom: 6px;">
+            Execution Steps:
+          </div>
+          <ol style="font-size: 0.82rem; color: #cbd5e1; padding-left: 18px; line-height: 1.55; margin-bottom: 12px;">
+            ${stepsList}
+          </ol>
+
+          <div style="font-size: 0.78rem; color: #94a3b8; margin-bottom: 12px;">
+            🛠️ <strong>Tools Needed:</strong> ${task.tools || 'Microsoft Intranet, Teams, Authenticator'}<br>
+            ✅ <strong>Verification:</strong> ${task.verification || 'Mark complete on your dashboard'}
+          </div>
+
+          <div style="display: flex; gap: 8px;">
+            <button class="copilot-chip" style="background: ${task.done ? '#065f46' : '#4f46e5'}; color: #fff; padding: 6px 14px;" onclick="toggleManualTask(${task.id})">
+              ${task.done ? '✓ Task is Completed' : '✓ Mark as Completed'}
+            </button>
+            <button class="copilot-chip" style="background: rgba(255,255,255,0.1); color: #cbd5e1;" onclick="handleChatOption('contacts')">
+              📞 Contact Helper
+            </button>
+          </div>
+        </div>
+      `;
+
+      setTimeout(() => {
+        appendChatBubble('assistant', explainHtml);
+      }, 300);
+    }
+
+    // Handle Quick Options in Chat
+    function handleChatOption(optionKey) {
+      const user = currentAuthenticatedUser || { name: 'Rohan Sharma' };
+
+      if (optionKey === 'contacts') {
+        appendChatBubble('user', 'Show me all my team and HR contact numbers.');
+        const contactsHtml = `
+          <div>
+            <div style="font-weight: 800; font-size: 0.95rem; color: #f8fafc; margin-bottom: 8px;">
+              📞 Direct Team & Support Contact Numbers
+            </div>
+            <div style="font-size: 0.82rem; color: #cbd5e1; line-height: 1.55; display: flex; flex-direction: column; gap: 8px;">
+              <div style="background: rgba(37, 99, 235, 0.15); border: 1px solid rgba(37, 99, 235, 0.35); padding: 8px 12px; border-radius: 8px;">
+                <strong>HR Partner: Priya Sharma</strong><br>
+                📞 Direct Phone: <a href="tel:+918067894701" style="color: #60a5fa; font-weight: 700;">+91 (80) 6789-HR01</a><br>
+                📧 priya.sharma.hr@microsoft.in · Desk HR-12
+              </div>
+              <div style="background: rgba(147, 51, 234, 0.15); border: 1px solid rgba(147, 51, 234, 0.35); padding: 8px 12px; border-radius: 8px;">
+                <strong>Buddy Mentor: Rahul Pandey (Principal Architect)</strong><br>
+                📞 Buddy Phone: <a href="tel:+918067892831" style="color: #c084fc; font-weight: 700;">+91 (80) 6789-BUD1</a><br>
+                📅 Today's 1:1 Sync: 2:00 PM (Teams Room)
+              </div>
+              <div style="background: rgba(5, 150, 105, 0.15); border: 1px solid rgba(5, 150, 105, 0.35); padding: 8px 12px; border-radius: 8px;">
+                <strong>24/7 IT Helpdesk Hotline:</strong><br>
+                📞 Toll-Free: <a href="tel:+918005556738" style="color: #34d399; font-weight: 700;">+91 (800) 555-MSFT-IN</a> (Ext #4402)
+              </div>
+            </div>
+          </div>
+        `;
+        setTimeout(() => appendChatBubble('assistant', contactsHtml), 250);
+
+      } else if (optionKey === 'checklist') {
+        appendChatBubble('user', "Show my Today's Work and Day 1 checklist.");
+        const total = dailyTasksState.length;
+        const doneCount = dailyTasksState.filter(t => t.done).length;
+        const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
+
+        let listHtml = `
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <span style="font-weight: 800; color: #f8fafc;">Day 1 Checklist (${doneCount}/${total} Done · ${pct}%)</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.82rem;">
+        `;
+
+        dailyTasksState.forEach(t => {
+          listHtml += `
+            <div style="background: rgba(255,255,255,0.06); padding: 8px 10px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between;">
+              <span style="color: ${t.done ? '#94a3b8' : '#f8fafc'}; text-decoration: ${t.done ? 'line-through' : 'none'};">
+                ${t.done ? '✅' : '⬜'} ${t.title}
+              </span>
+              <button class="copilot-chip" style="padding: 2px 8px; font-size: 0.7rem;" onclick="explainTaskById(${t.id})">Explain</button>
+            </div>
+          `;
+        });
+
+        listHtml += `</div></div>`;
+        setTimeout(() => appendChatBubble('assistant', listHtml), 250);
+
+      } else if (optionKey === 'stuck') {
+        appendChatBubble('user', "I'm stuck on one of my setup tasks. What should I do?");
+        const stuckHtml = `
+          <div>
+            <div style="font-weight: 800; color: #f87171; margin-bottom: 6px;">
+              🚨 Onboarding Dependency Troubleshooting
+            </div>
+            <p style="font-size: 0.82rem; color: #cbd5e1; margin-bottom: 8px;">
+              If your <strong>Corporate VPN & Dev Tunnel</strong> is waiting on IT token sync:
+            </p>
+            <ul style="font-size: 0.8rem; color: #e2e8f0; padding-left: 18px; margin-bottom: 10px;">
+              <li>Call IT Hotline directly at <strong>+91 (800) 555-MSFT-IN</strong> (Ext #4402).</li>
+              <li>You can proceed with Task 5 (Engineering Standards) which is offline and does not require VPN.</li>
+              <li>Your buddy Rahul Pandey will verify your dev tunnel during your 2:00 PM sync.</li>
+            </ul>
+          </div>
+        `;
+        setTimeout(() => appendChatBubble('assistant', stuckHtml), 250);
+      }
+    }
+
+    // Append Chat Bubble
     function appendChatBubble(sender, contentHtml) {
       const feed = document.getElementById('chatbot-messages-feed');
+      if (!feed) return;
+
       const bubble = document.createElement('div');
       bubble.className = `chat-bubble ${sender}`;
 
@@ -1396,7 +1982,7 @@
       feed.scrollTop = feed.scrollHeight;
     }
 
-    // Send Free-Form Chat Message
+    // Send Free-Form Chat Message to NVIDIA NIM
     async function sendChatMessage() {
       const input = document.getElementById('chatbot-input');
       const query = input.value.trim();
@@ -1407,35 +1993,51 @@
 
       const sendBtn = document.getElementById('chatbot-send-btn');
       sendBtn.disabled = true;
-      sendBtn.innerHTML = '<span>Thinking...</span> ⏳';
 
       const lower = query.toLowerCase();
 
-      // Check instant canned matches
-      if (lower.includes('contact') || lower.includes('phone') || lower.includes('team') || lower.includes('hr') || lower.includes('buddy') || lower.includes('manager')) {
-        setTimeout(() => {
-          handleChatOption('contacts');
+      // Dynamic task recognition by number: "task 1", "task #2", "task3", "explain task 4", "task 6", etc.
+      const taskNumMatch = lower.match(/task\s*#?(\d+)/i);
+      if (taskNumMatch) {
+        const tId = parseInt(taskNumMatch[1], 10);
+        const found = dailyTasksState.find(t => t.id === tId);
+        if (found) {
+          explainTaskById(tId);
           sendBtn.disabled = false;
-          sendBtn.innerHTML = '<span>Ask AI</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
-        }, 400);
+          return;
+        }
+      }
+
+      // Dynamic task keyword matching against all current tasks in state (including HR-added tasks)
+      for (const task of dailyTasksState) {
+        const words = task.title.toLowerCase().split(/\s+/).filter(w => w.length >= 4);
+        if (words.some(w => lower.includes(w)) || (task.tag && lower.includes(task.tag.toLowerCase()))) {
+          if (lower.includes('explain') || lower.includes('how') || lower.includes('what') || lower.includes('detail') || lower.includes('step') || lower.includes('guide')) {
+            explainTaskById(task.id);
+            sendBtn.disabled = false;
+            return;
+          }
+        }
+      }
+
+      // Check for contacts / phone
+      if (lower.includes('contact') || lower.includes('phone') || lower.includes('hr') || lower.includes('buddy') || lower.includes('priya') || lower.includes('rahul') || lower.includes('call') || lower.includes('number')) {
+        handleChatOption('contacts');
+        sendBtn.disabled = false;
         return;
       }
 
-      if (lower.includes('task') || lower.includes('checklist') || lower.includes('work') || lower.includes('today') || lower.includes('todo')) {
-        setTimeout(() => {
-          handleChatOption('checklist');
-          sendBtn.disabled = false;
-          sendBtn.innerHTML = '<span>Ask AI</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
-        }, 400);
+      // Check for checklist / work
+      if (lower.includes('checklist') || lower.includes('work') || lower.includes('todo') || lower.includes('today') || lower.includes('progress') || lower.includes('status')) {
+        handleChatOption('checklist');
+        sendBtn.disabled = false;
         return;
       }
 
-      if (lower.includes('stuck') || lower.includes('help') || lower.includes('blocked') || lower.includes('vpn') || lower.includes('issue')) {
-        setTimeout(() => {
-          handleChatOption('stuck');
-          sendBtn.disabled = false;
-          sendBtn.innerHTML = '<span>Ask AI</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
-        }, 400);
+      // Check for stuck / blocked
+      if (lower.includes('stuck') || lower.includes('block') || lower.includes('help') || lower.includes('issue') || lower.includes('error')) {
+        handleChatOption('stuck');
+        sendBtn.disabled = false;
         return;
       }
 
@@ -1460,23 +2062,24 @@
             aiAnswer = data.data?.answer;
           }
         } catch (e) {
-          console.debug('Backend fetch skipped');
+          console.debug('Local backend bypassed or offline, generating local response');
         }
 
         if (!aiAnswer) {
-          aiAnswer = `As a New Joiner at Microsoft Corporation, your primary goals for Day 1 are completing your documentation, setting up your corporate credentials, and connecting with your technical buddy Rahul Pandey during your 1:1 welcome session at 2:00 PM today!`;
+          aiAnswer = `As your Microsoft AI Onboarding Copilot, I'm here to support your Day 1 success. You currently have ${dailyTasksState.filter(t => !t.done).length} pending tasks on your checklist. Make sure to complete your Corporate SSO setup and join your 1:1 briefing with buddy Rahul Pandey at 2:00 PM today!`;
         }
 
         appendChatBubble('assistant', aiAnswer);
       } catch (err) {
-        appendChatBubble('assistant', `As a New Joiner at Microsoft, remember to verify your security keys and reach out to your HR Partner Priya Sharma (+91 (80) 6789-HR01) for any assistance.`);
+        appendChatBubble('assistant', 'I am here to guide your onboarding. Check your Day 1 tasks or reach out to HR Partner Priya Sharma at +91 (80) 6789-HR01.');
       } finally {
         sendBtn.disabled = false;
-        sendBtn.innerHTML = '<span>Ask AI</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
       }
     }
 
-    // Render Step 4B: HR Cohort Portal
+    // ==============================================================
+    // STEP 4B: HR COHORT PORTAL & FRESHER TASK MANAGEMENT (ADD & REMOVE)
+    // ==============================================================
     function renderHRPortal(hrUser) {
       document.getElementById('hr-portal-name').textContent = hrUser.name;
       const tbody = document.getElementById('hr-cohort-roster-body');
@@ -1502,7 +2105,7 @@
           </td>
           <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100);">
             <span style="display: inline-block; padding: 2px 8px; border-radius: 9999px; font-size: 0.72rem; font-weight: 700; background: ${idx < 3 ? '#d1fae5; color: #065f46;' : '#fef3c7; color: #92400e;'}">
-              ${idx < 3 ? '● Day 1 Ready' : '● In Progress (40%)'}
+              ${idx < 3 ? '● Day 1 Ready' : '● In Progress'}
             </span>
           </td>
           <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100);">
@@ -1513,9 +2116,163 @@
         `;
         tbody.appendChild(tr);
       });
+
+      // Render HR Fresher Task Inventory
+      renderHRTaskInventory();
     }
 
-    // Render Step 4C: Buddy / Mentor Portal
+    // Render HR Task Inventory Table with 1-Click Remove
+    function renderHRTaskInventory() {
+      const tbody = document.getElementById('hr-task-inventory-body');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+
+      if (dailyTasksState.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align: center; padding: 24px; color: var(--color-slate-500);">
+              No active tasks in fresher checklist. Use the form below to add onboarding tasks.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      dailyTasksState.forEach(task => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-family: var(--font-mono); font-weight: 700; color: var(--color-slate-500);">#${task.id}</td>
+          <td>
+            <span class="manual-task-tag ${task.tagClass || 'tag-engineering'}">${task.tag || 'Task'}</span>
+          </td>
+          <td>
+            <div style="font-weight: 700; color: var(--color-slate-900);">${task.title}</div>
+            <div style="font-size: 0.75rem; color: var(--color-slate-500); margin-top: 2px;">${task.desc}</div>
+          </td>
+          <td style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-slate-600);">${task.duration || '20m'}</td>
+          <td>
+            <span style="font-size: 0.75rem; font-weight: 700; color: ${task.done ? '#059669' : '#d97706'};">
+              ${task.done ? '● Completed' : '● In Progress'}
+            </span>
+          </td>
+          <td style="text-align: right;">
+            <button class="btn-remove-task" onclick="removeTaskByHR(${task.id})" title="Remove task from fresher onboarding">
+              🗑️ Remove Task
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // HR Action: Remove Task from Fresher Checklist
+    function removeTaskByHR(taskId) {
+      const targetIndex = dailyTasksState.findIndex(t => t.id === taskId);
+      if (targetIndex === -1) return;
+      const title = dailyTasksState[targetIndex].title;
+
+      // Remove from state in-place
+      dailyTasksState.splice(targetIndex, 1);
+      saveTasksState();
+
+      // Re-render HR Inventory
+      renderHRTaskInventory();
+
+      // Synchronize with New Joiner Dashboard and AI Copilot
+      renderManualDashboard(currentAuthenticatedUser);
+
+      showNotification(`HR Removed Task: "${title}" from Fresher checklist!`);
+    }
+
+    // HR Action: Add New Task to Fresher Checklist
+    function handleAddNewTaskByHR(event) {
+      event.preventDefault();
+
+      const titleInput = document.getElementById('new-task-title');
+      const catInput = document.getElementById('new-task-category');
+      const durationInput = document.getElementById('new-task-duration');
+      const descInput = document.getElementById('new-task-desc');
+
+      const title = titleInput.value.trim();
+      const category = catInput.value;
+      const duration = durationInput.value.trim() || '25 mins';
+      const desc = descInput.value.trim();
+
+      if (!title || !desc) return;
+
+      const nextId = dailyTasksState.length > 0 ? Math.max(...dailyTasksState.map(t => t.id)) + 1 : 1;
+
+      const tagClassMap = {
+        'Security': 'tag-security',
+        'Compliance': 'tag-compliance',
+        'Mentoring': 'tag-mentoring',
+        'Access': 'tag-access',
+        'Engineering': 'tag-engineering'
+      };
+
+      const newTask = {
+        id: nextId,
+        title: title,
+        tag: category,
+        tagClass: tagClassMap[category] || 'tag-engineering',
+        duration: duration,
+        priority: 'High',
+        done: false,
+        desc: desc,
+        objective: `Assigned by HR People Operations: ${title}.`,
+        steps: [
+          desc,
+          'Review technical documentation or link provided in your corporate portal.',
+          'Sync with your assigned buddy mentor if you need access or clarification.',
+          'Mark as completed on your Day 1 dashboard.'
+        ],
+        tools: 'Microsoft Intranet, HR Operations System',
+        verification: 'Verified and signed off by Lead HR Partner Priya Sharma.'
+      };
+
+      // Push to state
+      dailyTasksState.push(newTask);
+      saveTasksState();
+
+      // Clear Form
+      titleInput.value = '';
+      descInput.value = '';
+
+      // Re-render HR view and Fresher view
+      renderHRTaskInventory();
+      renderManualDashboard(currentAuthenticatedUser);
+
+      showNotification(`➕ HR Added Task: "${title}" to Fresher Checklist!`);
+    }
+
+    // HR Preset Task Quick-Add
+    function applyTaskPreset(type) {
+      if (type === 'cloud') {
+        document.getElementById('new-task-title').value = 'Configure Azure CLI & Dev Subscription Sandbox';
+        document.getElementById('new-task-category').value = 'Engineering';
+        document.getElementById('new-task-duration').value = '30 mins';
+        document.getElementById('new-task-desc').value = 'Run az login, configure your developer subscription sandbox ID, and deploy your first hello-world microservice to the staging cluster.';
+      } else if (type === 'security') {
+        document.getElementById('new-task-title').value = 'Complete Zero-Trust Security & Data Handling Module';
+        document.getElementById('new-task-category').value = 'Security';
+        document.getElementById('new-task-duration').value = '25 mins';
+        document.getElementById('new-task-desc').value = 'Review the Microsoft Confidential Information handling policy and complete the 5-question security quiz on Microsoft Learning.';
+      } else if (type === 'culture') {
+        document.getElementById('new-task-title').value = 'Schedule Coffee Chats with 2 Cross-Functional Teammates';
+        document.getElementById('new-task-category').value = 'Mentoring';
+        document.getElementById('new-task-duration').value = '20 mins';
+        document.getElementById('new-task-desc').value = 'Reach out via Teams chat to introduce yourself and schedule 15-minute coffee chats with peer software engineers in your squad.';
+      }
+    }
+
+    function onHRFresherTargetChange() {
+      const select = document.getElementById('hr-target-fresher-select');
+      showNotification(`Viewing & managing checklist for: ${select.options[select.selectedIndex].text}`);
+      renderHRTaskInventory();
+    }
+
+    // Step 4C: Buddy / Mentor Portal
     function renderBuddyPortal(buddyUser) {
       document.getElementById('buddy-mentor-name').textContent = buddyUser.name;
       document.getElementById('buddy-mentor-role-badge').textContent = `Senior Member & Technical Buddy (Class of ${buddyUser.batch || '2021'}) · Microsoft Cloud & Architecture`;
@@ -1556,3 +2313,4 @@
   </script>
 </body>
 </html>
+
