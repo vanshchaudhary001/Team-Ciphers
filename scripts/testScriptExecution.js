@@ -10,7 +10,12 @@ const code = scriptMatch.replace(/<script[^>]*>|<\/script>/gi, '');
 const createElementMock = (tag) => ({
   tagName: tag || 'div',
   style: {},
-  classList: { add: () => {}, remove: () => {}, contains: () => false },
+  classList: {
+    add: () => {},
+    remove: () => {},
+    contains: () => false,
+    toggle: () => {}
+  },
   appendChild: () => {},
   innerHTML: '',
   textContent: '',
