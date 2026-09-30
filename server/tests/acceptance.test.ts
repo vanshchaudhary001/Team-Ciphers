@@ -124,7 +124,7 @@ describe('START SMART Acceptance Tests', () => {
       expect(res.body.data.diagnosis.rootBlockerTitle).toContain('VPN');
       expect(res.body.data.diagnosis.responsibleOwnerGroupName).toContain('IT');
       expect(res.body.data.diagnosis.downstreamImpactCount).toBe(4);
-    });
+    }, 15000);
 
     it('calculates SideQuests excluding blocker-affected tasks', async () => {
       const res = await request(app)

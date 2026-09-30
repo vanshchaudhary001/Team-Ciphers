@@ -90,15 +90,17 @@ app.use((_req: Request, res: Response) => {
   });
 });
 
-app.listen(PORT, async () => {
-  logger.info(`🚀 Start Smart API server listening on http://localhost:${PORT}`);
-  logger.info(`👉 API Health check: http://localhost:${PORT}/api/v1/health`);
-  try {
-    await csvDataLoader.ensureLoaded();
-    logger.info('📊 All 5 structured datasets verified and synchronized with database.');
-  } catch (err: any) {
-    logger.error('Failed to initialize CSV datasets on startup:', err);
-  }
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, async () => {
+    logger.info(`🚀 Start Smart API server listening on http://localhost:${PORT}`);
+    logger.info(`👉 API Health check: http://localhost:${PORT}/api/v1/health`);
+    try {
+      await csvDataLoader.ensureLoaded();
+      logger.info('📊 All 5 structured datasets verified and synchronized with database.');
+    } catch (err: any) {
+      logger.error('Failed to initialize CSV datasets on startup:', err);
+    }
+  });
+}
 
 export default app;

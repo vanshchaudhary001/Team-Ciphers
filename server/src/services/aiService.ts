@@ -159,7 +159,7 @@ Instructions:
 
       if (nvidiaReply) {
         answer = nvidiaReply;
-        aiProvider = 'NVIDIA NIM (Microservice Inference)';
+        aiProvider = 'AI Onboarding Copilot';
         aiModel = 'meta/llama-3.2-11b-vision-instruct';
       } else if (diagnosis && diagnosis.rootBlockerId !== diagnosis.affectedTaskId) {
         // Fallback

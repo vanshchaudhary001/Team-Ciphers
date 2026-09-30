@@ -159,10 +159,8 @@ export const Navbar: React.FC = () => {
           {/* LEFT: StartSmart Brand & Company Identifier */}
           <div className="flex items-center gap-4 lg:gap-8">
             <Link to="/" className="flex items-center gap-2.5 group focus:outline-none">
-              <div className="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center font-black text-sm shadow-xs transition-transform group-hover:scale-105">
-                <span className="material-symbols-outlined text-lg leading-none" aria-hidden="true">
-                  hub
-                </span>
+              <div className="w-9 h-9 rounded-xl bg-white border border-outline-variant/60 flex items-center justify-center shadow-xs transition-transform group-hover:scale-105 p-1">
+                <img src="/start-smart-icon.png" alt="StartSmart Logo" className="w-full h-full object-contain" />
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
@@ -173,11 +171,9 @@ export const Navbar: React.FC = () => {
                     v1.0
                   </span>
                 </div>
-                {user?.company?.name && (
-                  <span className="text-[11px] text-on-surface-variant font-medium leading-tight truncate max-w-[160px] sm:max-w-xs">
-                    {user.company.name}
-                  </span>
-                )}
+                <span className="text-[10px] text-on-surface-variant font-semibold tracking-wider uppercase leading-tight truncate max-w-[160px] sm:max-w-xs">
+                  {user?.company?.name || 'Building Your Future'}
+                </span>
               </div>
             </Link>
 

@@ -6,6 +6,8 @@
   <title>StartSmart — Enterprise Onboarding Portal</title>
   <meta name="description" content="StartSmart Enterprise Onboarding Portal. Choose your enrolled company or register a new company, sign in with automatic role detection, and access your interactive AI Onboarding Chatbot, daily checklist, and contacts.">
   
+  <link rel="icon" type="image/png" href="start-smart-icon.png">
+  <link rel="shortcut icon" href="start-smart-icon.png">
   <!-- Modern Typography (Inter & JetBrains Mono) & Google Material Symbols -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -104,15 +106,15 @@
   <header class="app-header">
     <div class="header-container">
       <div class="brand-wrapper">
-        <a href="javascript:void(0)" onclick="goToStep('step-gateway')" class="brand-icon" title="Return to StartSmart Gateway">
-          <span class="material-symbols-outlined" style="font-size: 20px; color: #ffffff;">verified</span>
+        <a href="javascript:void(0)" onclick="goToStep('step-gateway')" class="brand-icon" title="Return to StartSmart Gateway" style="background: #ffffff; border: 1px solid rgba(0, 55, 176, 0.15); width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; padding: 2px; box-shadow: 0 2px 8px rgba(0, 34, 68, 0.08);">
+          <img src="start-smart-icon.png" alt="StartSmart Logo" style="width: 100%; height: 100%; object-fit: contain;">
         </a>
         <div class="brand-text">
-          <div class="brand-title">
-            Start<span>Smart</span>
-            <span class="brand-badge">Enterprise</span>
+          <div class="brand-title" style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-weight: 800; letter-spacing: -0.02em; color: #002244;">START<span style="color: #0088cc;">SMART</span></span>
+            <span class="brand-badge" style="background: rgba(0, 136, 204, 0.1); color: #0088cc; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 6px; letter-spacing: 0.04em;">ENTERPRISE</span>
           </div>
-          <span class="brand-tagline">Intelligent Enterprise Onboarding &amp; Organization Gateway</span>
+          <span class="brand-tagline" style="font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #64748b;">Building Your Future</span>
         </div>
       </div>
 
@@ -125,7 +127,7 @@
           <span class="material-symbols-outlined" style="font-size: 17px;">login</span>
           Gateway
         </a>
-        <a href="/" class="nav-link" style="color: #4f46e5; font-weight: 700; background: rgba(79, 70, 229, 0.08); border-radius: 8px; padding: 6px 12px;" title="Open Start Smart DAG Platform">
+        <a href="javascript:void(0)" onclick="goToStep('step-joiner-chatbot')" class="nav-link" style="color: #4f46e5; font-weight: 700; background: rgba(79, 70, 229, 0.08); border-radius: 8px; padding: 6px 12px;" title="Open Start Smart DAG Platform & Chatbot">
           <span class="material-symbols-outlined" style="font-size: 17px;">hub</span>
           DAG Platform
         </a>
@@ -148,6 +150,9 @@
          ============================================================== -->
     <section id="step-gateway" class="step-view">
       <div class="gateway-hero">
+        <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 24px;">
+          <img src="start-smart-logo-transparent.png" alt="Start Smart - Building Your Future" style="height: 84px; max-width: 90%; object-fit: contain; filter: drop-shadow(0 6px 20px rgba(0, 34, 68, 0.12));">
+        </div>
         <div class="hero-pill">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
@@ -405,7 +410,14 @@
         <!-- Google -->
         <div class="company-card" data-company-key="google" data-category="Cloud" onclick="selectCompany('google')">
           <div class="company-card-header">
-            <div class="company-monogram-box" style="background: #fee2e2; color: #dc2626;">GO</div>
+            <div class="company-monogram-box" style="background: #ffffff; border: 1px solid #fee2e2;">
+              <svg width="22" height="22" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.04h3.88c2.27-2.09 3.66-5.17 3.66-9.14z"/>
+                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.04c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.13C3.25 21.36 7.31 24 12 24z"/>
+                <path fill="#FBBC05" d="M5.28 14.28c-.24-.72-.38-1.49-.38-2.28s.14-1.56.38-2.28V6.59H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.41l4.03-3.13z"/>
+                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.25 2.64 1.25 6.59l4.03 3.13c.95-2.83 3.6-4.97 6.72-4.97z"/>
+              </svg>
+            </div>
             <span class="company-category-chip">Cloud &amp; AI</span>
           </div>
           <div class="company-card-body">
@@ -423,7 +435,13 @@
         <!-- Amazon -->
         <div class="company-card" data-company-key="amazon" data-category="Cloud" onclick="selectCompany('amazon')">
           <div class="company-card-header">
-            <div class="company-monogram-box" style="background: #fef3c7; color: #d97706;">AZ</div>
+            <div class="company-monogram-box" style="background: #ffffff; border: 1px solid #fef3c7;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M13.88 12.8c-.85.74-2.08 1.16-3.23 1.16-1.92 0-3.05-1.12-3.05-2.8 0-2.2 1.84-3.32 4.96-3.32v-.32c0-.72-.45-1.2-1.52-1.2-.74 0-1.52.24-2.16.63-.12.08-.24.06-.32-.04l-.62-.84c-.08-.12-.06-.24.06-.32 1-.67 2.18-1 3.35-1 2.22 0 3.37 1.08 3.37 3.05v4.25c0 .76.22 1.1 1.04 1.1.18 0 .37-.02.53-.06.14-.04.26.06.3.2l.34.94c.04.14-.04.28-.18.32-.42.1-.88.16-1.39.16-1.04 0-1.87-.4-1.93-1.42l.06-.45zm-1.32-2.84c-1.68 0-2.6.48-2.6 1.62 0 .84.58 1.34 1.48 1.34.78 0 1.54-.38 1.88-.98v-2l-.76.02z" fill="#232F3E"/>
+                <path d="M21.6 18.2c-2.7 1.95-6.64 2.98-10.02 2.98-4.73 0-8.99-1.8-12.22-4.8-.26-.24-.04-.57.26-.39 3.49 2.03 7.82 3.25 12.22 3.25 2.99 0 6.47-.79 9.38-2.42.45-.25.83.39.38.38z" fill="#FF9900"/>
+                <path d="M22.5 16.92c-.34-.44-2.28-.21-3.15-.1-.26.03-.3-.19-.07-.35 1.5-1.06 3.96-.75 4.25-.4.29.35-.08 2.82-1.5 3.99-.22.18-.39.08-.28-.15.38-.79.75-2.99.75-2.99z" fill="#FF9900"/>
+              </svg>
+            </div>
             <span class="company-category-chip">Cloud &amp; Retail</span>
           </div>
           <div class="company-card-body">
@@ -441,7 +459,11 @@
         <!-- Apple -->
         <div class="company-card" data-company-key="apple" data-category="Hardware" onclick="selectCompany('apple')">
           <div class="company-card-header">
-            <div class="company-monogram-box" style="background: #f1f5f9; color: #334155;">AP</div>
+            <div class="company-monogram-box" style="background: #ffffff; border: 1px solid #e2e8f0; color: #000000;">
+              <svg width="22" height="22" viewBox="0 0 170 170" fill="currentColor">
+                <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.08-7.73-7.94-12.12-14.58-6.19-9.35-11.09-19.68-14.71-30.98-3.62-11.31-5.43-22.14-5.43-32.51 0-14.93 3.82-27.17 11.45-36.72 7.63-9.55 17.1-14.42 28.4-14.62 4.93 0 10.42 1.34 16.48 4.02 6.06 2.68 9.97 4.07 11.73 4.17 1.48 0 5.66-1.51 12.54-4.52 6.88-3.01 12.83-4.32 17.85-3.92 13.43.91 23.95 5.92 31.57 15.03-11.83 7.18-17.65 17.07-17.46 29.68.22 9.87 3.98 18.23 11.29 25.07 7.31 6.84 15.93 10.74 25.86 11.7-2.14 6.33-4.59 12.8-7.37 19.41zm-32.42-108.57c0 5.48-1.96 10.78-5.88 15.91-3.92 5.13-8.85 8.78-14.79 10.95-.53-1.07-.85-2.2-.95-3.41-.11-1.21-.16-2.22-.16-3.04 0-5.38 2.05-10.76 6.15-16.14 4.1-5.38 9.27-9.01 15.52-10.89.07 1.15.11 2.21.11 3.19z"/>
+              </svg>
+            </div>
             <span class="company-category-chip">Hardware &amp; OS</span>
           </div>
           <div class="company-card-body">
@@ -459,7 +481,11 @@
         <!-- NVIDIA -->
         <div class="company-card" data-company-key="nvidia" data-category="Hardware" onclick="selectCompany('nvidia')">
           <div class="company-card-header">
-            <div class="company-monogram-box" style="background: #dcfce7; color: #16a34a;">NV</div>
+            <div class="company-monogram-box" style="background: #ffffff; border: 1px solid #bbf7d0;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M12.15 4.5c-3.94.38-7.07 3.43-7.66 7.31-.64 4.28 2.04 8.31 6.23 9.37 3.41.87 7-.38 9.15-3.18-.2-.04-.41-.08-.63-.15-1.97-.61-2.98-2.52-2.55-4.52.4-1.88 1.99-3.29 3.91-3.44 1.15-.1 2.24.25 3.07.92.19.16.36.34.52.54.29-2.07-.19-4.22-1.42-5.99-2.12-3.05-5.77-4.76-9.45-4.41l-1.17.13zm.86 3.45c2.45-.19 4.84.94 6.22 2.96.66.97 1.02 2.09 1.11 3.24-.47-.43-1.06-.7-1.73-.78-1.39-.17-2.66.64-3.07 1.95-.41 1.31.19 2.69 1.4 3.3.29.15.61.22.95.25-1.53 1.56-3.77 2.34-6.03 1.89-3-.59-5.05-3.21-4.78-6.22.27-3.01 2.8-5.38 5.82-5.61l.1-.01zm.4 3.23c-1.36.09-2.45 1.2-2.44 2.56.01 1.38 1.12 2.47 2.5 2.45 1.35-.02 2.44-1.13 2.43-2.49-.01-1.36-1.13-2.44-2.49-2.52z" fill="#76B900"/>
+              </svg>
+            </div>
             <span class="company-category-chip">AI &amp; Chips</span>
           </div>
           <div class="company-card-body">
@@ -477,7 +503,12 @@
         <!-- Stripe -->
         <div class="company-card" data-company-key="stripe" data-category="FinTech" onclick="selectCompany('stripe')">
           <div class="company-card-header">
-            <div class="company-monogram-box" style="background: #ede9fe; color: #7c3aed;">ST</div>
+            <div class="company-monogram-box" style="background: #ffffff; border: 1px solid #ddd6fe;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <rect width="24" height="24" rx="5" fill="#635BFF"/>
+                <path d="M13.976 9.15c0-.776-.642-1.077-1.706-1.077-1.523 0-3.46.46-4.963 1.272V5.728c1.642-.693 3.447-.98 5.176-.98 4.14 0 6.85 2.052 6.85 5.513 0 5.438-7.466 4.568-7.466 6.915 0 .919.805 1.218 1.94 1.218 1.764 0 4.024-.658 5.672-1.583v3.669c-1.84.776-3.834 1.12-5.787 1.12-4.298 0-7.23-2.12-7.23-5.617 0-5.882 7.514-4.856 7.514-7.213z" fill="#FFFFFF"/>
+              </svg>
+            </div>
             <span class="company-category-chip">FinTech &amp; Pay</span>
           </div>
           <div class="company-card-body">
@@ -495,7 +526,11 @@
         <!-- Salesforce -->
         <div class="company-card" data-company-key="salesforce" data-category="Enterprise" onclick="selectCompany('salesforce')">
           <div class="company-card-header">
-            <div class="company-monogram-box" style="background: #e0f2fe; color: #0284c7;">SF</div>
+            <div class="company-monogram-box" style="background: #ffffff; border: 1px solid #bae6fd;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M19.34 9.47c-.52-2.31-2.54-4.04-4.96-4.04-1.28 0-2.46.49-3.36 1.29-.86-.68-1.95-1.09-3.14-1.09-2.73 0-4.96 2.17-5.06 4.88C1.19 11.08 0 12.65 0 14.54c0 2.45 1.99 4.43 4.43 4.43h14.75c2.66 0 4.82-2.16 4.82-4.82 0-2.35-1.69-4.31-3.92-4.68h-.74z" fill="#00A1E0"/>
+              </svg>
+            </div>
             <span class="company-category-chip">CRM &amp; Cloud</span>
           </div>
           <div class="company-card-body">
@@ -513,7 +548,14 @@
         <!-- TechNova Systems -->
         <div class="company-card" data-company-key="technova" data-category="Enterprise" onclick="selectCompany('technova')">
           <div class="company-card-header">
-            <div class="company-monogram-box" style="background: #eff4ff; color: #0037b0;">TN</div>
+            <div class="company-monogram-box" style="background: #ffffff; border: 1px solid #bfdbfe;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" fill="#0037B0" opacity="0.12"/>
+                <path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" stroke="#0037B0" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M12 6v12M7 9l10 6M17 9l-10 6" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="12" cy="12" r="3" fill="#0037B0"/>
+              </svg>
+            </div>
             <span class="company-category-chip">Enterprise ERP</span>
           </div>
           <div class="company-card-body">
@@ -531,7 +573,14 @@
         <!-- Finwise Global -->
         <div class="company-card" data-company-key="finwise" data-category="FinTech" onclick="selectCompany('finwise')">
           <div class="company-card-header">
-            <div class="company-monogram-box" style="background: #fef3c7; color: #b45309;">FW</div>
+            <div class="company-monogram-box" style="background: #ffffff; border: 1px solid #fde68a;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <rect width="24" height="24" rx="6" fill="#FEF3C7"/>
+                <path d="M12 3l8 6-8 12L4 9l8-6z" stroke="#D97706" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M12 3v18M4 9h16" stroke="#D97706" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="12" cy="9" r="2.5" fill="#F59E0B"/>
+              </svg>
+            </div>
             <span class="company-category-chip">Global Finance</span>
           </div>
           <div class="company-card-body">
@@ -549,7 +598,13 @@
         <!-- MedCore Systems -->
         <div class="company-card" data-company-key="medcore" data-category="Health" onclick="selectCompany('medcore')">
           <div class="company-card-header">
-            <div class="company-monogram-box" style="background: #e0e7ff; color: #4338ca;">MC</div>
+            <div class="company-monogram-box" style="background: #ffffff; border: 1px solid #c7d2fe;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <rect width="24" height="24" rx="6" fill="#EEF2FF"/>
+                <path d="M9 4h6v5h5v6h-5v5H9v-5H4V9h5V4z" fill="#4338CA"/>
+                <path d="M5 12h3l1.5-3 2.5 6 1.5-3h4.5" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
             <span class="company-category-chip">Healthcare AI</span>
           </div>
           <div class="company-card-body">
@@ -1034,14 +1089,19 @@
           <!-- Chatbot Header -->
           <div class="copilot-sidebar-header">
             <div class="copilot-header-brand">
-              <div class="copilot-sparkle-avatar">⚡</div>
+              <div class="copilot-avatar-wrapper" style="width: 38px; height: 38px; min-width: 38px; border-radius: 10px; background: #ffffff; border: 1px solid rgba(99, 102, 241, 0.4); display: flex; align-items: center; justify-content: center; padding: 3px; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45); flex-shrink: 0;">
+                <img src="copilot-icon.png" onerror="this.src='/copilot-icon.png'" alt="AI Copilot Logo" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+              </div>
               <div>
                 <div style="display: flex; align-items: center; gap: 8px;">
-                  <span class="copilot-title-text">AI Onboarding Copilot</span>
-                  <span class="copilot-live-pill">NVIDIA NIM</span>
+                  <span class="copilot-title-text" style="font-weight: 800; font-size: 1rem; color: #ffffff;">AI Onboarding Copilot</span>
+                  <span class="copilot-live-pill" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 9999px; display: inline-flex; align-items: center; gap: 4px;">
+                    <span style="width: 6px; height: 6px; border-radius: 50%; background: #34d399; display: inline-block;"></span>
+                    LIVE
+                  </span>
                 </div>
                 <div class="copilot-subtitle-text">
-                  Context: <strong id="copilot-context-user">Rohan Sharma</strong> · Day 1 Guide
+                  Context: <strong id="copilot-context-user">Aarav Sharma</strong> · Day 1 Guide
                 </div>
               </div>
             </div>
@@ -1082,7 +1142,7 @@
                 rows="1"
                 onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); sendChatMessage(); }"
               ></textarea>
-              <button id="chatbot-send-btn" class="copilot-send-button" onclick="sendChatMessage()" title="Send prompt to NVIDIA NIM AI">
+              <button id="chatbot-send-btn" class="copilot-send-button" onclick="sendChatMessage()" title="Send prompt to AI Copilot">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <line x1="22" y1="2" x2="11" y2="13"></line>
                   <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -1090,7 +1150,7 @@
               </button>
             </div>
             <div class="composer-footnote">
-              <span>⚡ Model: meta/llama-3.2-11b · NVIDIA NIM Microservice</span>
+              <span>⚡ Live Context Aware · Enterprise Day-1 Grounded</span>
             </div>
           </div>
 
@@ -2262,6 +2322,57 @@
       }
     }
 
+    // Authentic SVG Logos for All 10 Enterprise Organizations
+    const companyLogosSvg = {
+      microsoft: `<svg width="22" height="22" viewBox="0 0 21 21" fill="none">
+        <rect x="1" y="1" width="9" height="9" fill="#F25022"/>
+        <rect x="11" y="1" width="9" height="9" fill="#7FBA00"/>
+        <rect x="1" y="11" width="9" height="9" fill="#00A4EF"/>
+        <rect x="11" y="11" width="9" height="9" fill="#FFB900"/>
+      </svg>`,
+      google: `<svg width="22" height="22" viewBox="0 0 24 24">
+        <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.04h3.88c2.27-2.09 3.66-5.17 3.66-9.14z"/>
+        <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.04c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.13C3.25 21.36 7.31 24 12 24z"/>
+        <path fill="#FBBC05" d="M5.28 14.28c-.24-.72-.38-1.49-.38-2.28s.14-1.56.38-2.28V6.59H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.41l4.03-3.13z"/>
+        <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.25 2.64 1.25 6.59l4.03 3.13c.95-2.83 3.6-4.97 6.72-4.97z"/>
+      </svg>`,
+      amazon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M13.88 12.8c-.85.74-2.08 1.16-3.23 1.16-1.92 0-3.05-1.12-3.05-2.8 0-2.2 1.84-3.32 4.96-3.32v-.32c0-.72-.45-1.2-1.52-1.2-.74 0-1.52.24-2.16.63-.12.08-.24.06-.32-.04l-.62-.84c-.08-.12-.06-.24.06-.32 1-.67 2.18-1 3.35-1 2.22 0 3.37 1.08 3.37 3.05v4.25c0 .76.22 1.1 1.04 1.1.18 0 .37-.02.53-.06.14-.04.26.06.3.2l.34.94c.04.14-.04.28-.18.32-.42.1-.88.16-1.39.16-1.04 0-1.87-.4-1.93-1.42l.06-.45zm-1.32-2.84c-1.68 0-2.6.48-2.6 1.62 0 .84.58 1.34 1.48 1.34.78 0 1.54-.38 1.88-.98v-2l-.76.02z" fill="#232F3E"/>
+        <path d="M21.6 18.2c-2.7 1.95-6.64 2.98-10.02 2.98-4.73 0-8.99-1.8-12.22-4.8-.26-.24-.04-.57.26-.39 3.49 2.03 7.82 3.25 12.22 3.25 2.99 0 6.47-.79 9.38-2.42.45-.25.83.39.38.38z" fill="#FF9900"/>
+        <path d="M22.5 16.92c-.34-.44-2.28-.21-3.15-.1-.26.03-.3-.19-.07-.35 1.5-1.06 3.96-.75 4.25-.4.29.35-.08 2.82-1.5 3.99-.22.18-.39.08-.28-.15.38-.79.75-2.99.75-2.99z" fill="#FF9900"/>
+      </svg>`,
+      apple: `<svg width="22" height="22" viewBox="0 0 170 170" fill="#000000">
+        <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.08-7.73-7.94-12.12-14.58-6.19-9.35-11.09-19.68-14.71-30.98-3.62-11.31-5.43-22.14-5.43-32.51 0-14.93 3.82-27.17 11.45-36.72 7.63-9.55 17.1-14.42 28.4-14.62 4.93 0 10.42 1.34 16.48 4.02 6.06 2.68 9.97 4.07 11.73 4.17 1.48 0 5.66-1.51 12.54-4.52 6.88-3.01 12.83-4.32 17.85-3.92 13.43.91 23.95 5.92 31.57 15.03-11.83 7.18-17.65 17.07-17.46 29.68.22 9.87 3.98 18.23 11.29 25.07 7.31 6.84 15.93 10.74 25.86 11.7-2.14 6.33-4.59 12.8-7.37 19.41zm-32.42-108.57c0 5.48-1.96 10.78-5.88 15.91-3.92 5.13-8.85 8.78-14.79 10.95-.53-1.07-.85-2.2-.95-3.41-.11-1.21-.16-2.22-.16-3.04 0-5.38 2.05-10.76 6.15-16.14 4.1-5.38 9.27-9.01 15.52-10.89.07 1.15.11 2.21.11 3.19z"/>
+      </svg>`,
+      nvidia: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M12.15 4.5c-3.94.38-7.07 3.43-7.66 7.31-.64 4.28 2.04 8.31 6.23 9.37 3.41.87 7-.38 9.15-3.18-.2-.04-.41-.08-.63-.15-1.97-.61-2.98-2.52-2.55-4.52.4-1.88 1.99-3.29 3.91-3.44 1.15-.1 2.24.25 3.07.92.19.16.36.34.52.54.29-2.07-.19-4.22-1.42-5.99-2.12-3.05-5.77-4.76-9.45-4.41l-1.17.13zm.86 3.45c2.45-.19 4.84.94 6.22 2.96.66.97 1.02 2.09 1.11 3.24-.47-.43-1.06-.7-1.73-.78-1.39-.17-2.66.64-3.07 1.95-.41 1.31.19 2.69 1.4 3.3.29.15.61.22.95.25-1.53 1.56-3.77 2.34-6.03 1.89-3-.59-5.05-3.21-4.78-6.22.27-3.01 2.8-5.38 5.82-5.61l.1-.01zm.4 3.23c-1.36.09-2.45 1.2-2.44 2.56.01 1.38 1.12 2.47 2.5 2.45 1.35-.02 2.44-1.13 2.43-2.49-.01-1.36-1.13-2.44-2.49-2.52z" fill="#76B900"/>
+      </svg>`,
+      stripe: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <rect width="24" height="24" rx="5" fill="#635BFF"/>
+        <path d="M13.976 9.15c0-.776-.642-1.077-1.706-1.077-1.523 0-3.46.46-4.963 1.272V5.728c1.642-.693 3.447-.98 5.176-.98 4.14 0 6.85 2.052 6.85 5.513 0 5.438-7.466 4.568-7.466 6.915 0 .919.805 1.218 1.94 1.218 1.764 0 4.024-.658 5.672-1.583v3.669c-1.84.776-3.834 1.12-5.787 1.12-4.298 0-7.23-2.12-7.23-5.617 0-5.882 7.514-4.856 7.514-7.213z" fill="#FFFFFF"/>
+      </svg>`,
+      salesforce: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M19.34 9.47c-.52-2.31-2.54-4.04-4.96-4.04-1.28 0-2.46.49-3.36 1.29-.86-.68-1.95-1.09-3.14-1.09-2.73 0-4.96 2.17-5.06 4.88C1.19 11.08 0 12.65 0 14.54c0 2.45 1.99 4.43 4.43 4.43h14.75c2.66 0 4.82-2.16 4.82-4.82 0-2.35-1.69-4.31-3.92-4.68h-.74z" fill="#00A1E0"/>
+      </svg>`,
+      technova: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" fill="#0037B0" opacity="0.12"/>
+        <path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" stroke="#0037B0" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M12 6v12M7 9l10 6M17 9l-10 6" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="3" fill="#0037B0"/>
+      </svg>`,
+      finwise: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <rect width="24" height="24" rx="6" fill="#FEF3C7"/>
+        <path d="M12 3l8 6-8 12L4 9l8-6z" stroke="#D97706" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M12 3v18M4 9h16" stroke="#D97706" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="12" cy="9" r="2.5" fill="#F59E0B"/>
+      </svg>`,
+      medcore: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <rect width="24" height="24" rx="6" fill="#EEF2FF"/>
+        <path d="M9 4h6v5h5v6h-5v5H9v-5H4V9h5V4z" fill="#4338CA"/>
+        <path d="M5 12h3l1.5-3 2.5 6 1.5-3h4.5" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>`
+    };
+
     // Step 2 Action: Select Company -> Routes directly to Step 3 Sign In
     function selectCompany(companyKey) {
       currentSelectedCompany = companyKey;
@@ -2283,21 +2394,10 @@
       const submitBtn = document.getElementById('signin-btn-text');
       if (submitBtn) submitBtn.textContent = `Sign In to ${comp.name}`;
 
-      // Update Logo in Tenant Box
+      // Update Logo in Tenant Box with Authentic Realistic SVG
       const logoBox = document.getElementById('tenant-logo-container');
       if (logoBox) {
-        if (companyKey === 'microsoft') {
-          logoBox.innerHTML = `
-            <svg width="22" height="22" viewBox="0 0 21 21" fill="none">
-              <rect x="1" y="1" width="9" height="9" fill="#F25022"/>
-              <rect x="11" y="1" width="9" height="9" fill="#7FBA00"/>
-              <rect x="1" y="11" width="9" height="9" fill="#00A4EF"/>
-              <rect x="11" y="11" width="9" height="9" fill="#FFB900"/>
-            </svg>`;
-        } else {
-          const initials = comp.name.slice(0, 2).toUpperCase();
-          logoBox.innerHTML = `<span style="font-family: var(--font-mono); font-weight: 700; font-size: 13px; color: var(--stitch-primary);">${initials}</span>`;
-        }
+        logoBox.innerHTML = companyLogosSvg[companyKey] || companyLogosSvg.microsoft;
       }
 
       // Clear inputs to ask user for corporate login credentials
@@ -2324,10 +2424,10 @@
         detDesc.textContent = `Type your @${comp.domain.replace('@', '')} email or click a quick persona to sign in.`;
       }
 
-      // Show/hide persona pills section based on company
+      // Keep test persona pills section visible for all companies so user can test roles seamlessly
       const personaSection = document.getElementById('microsoft-persona-section');
       if (personaSection) {
-        personaSection.style.display = companyKey === 'microsoft' ? 'block' : 'none';
+        personaSection.style.display = 'block';
       }
 
       showNotification(`Selected ${comp.fullName}`);
@@ -3253,24 +3353,156 @@
     // ==============================================================
     // STEP 4A (RIGHT 30%): AI COPILOT CHATBOT INITIALIZATION & LOGIC
     // ==============================================================
+
+    function appendChatBubble(role, contentHtml) {
+      const feed = document.getElementById('chatbot-messages-feed');
+      if (!feed) return null;
+
+      const bubble = document.createElement('div');
+      bubble.className = `chat-bubble ${role}`;
+
+      if (role === 'assistant') {
+        bubble.innerHTML = `
+          <div class="chat-avatar ai" title="AI Onboarding Copilot">
+            <img src="copilot-icon.png" onerror="this.src='/copilot-icon.png'" alt="Copilot" />
+          </div>
+          <div class="chat-bubble-body">
+            ${contentHtml}
+          </div>
+        `;
+      } else {
+        bubble.innerHTML = `
+          <div class="chat-avatar user" title="You">
+            <span>You</span>
+          </div>
+          <div class="chat-bubble-body">
+            ${escapeHtml(contentHtml)}
+          </div>
+        `;
+      }
+
+      feed.appendChild(bubble);
+      feed.scrollTop = feed.scrollHeight;
+      return bubble;
+    }
+
+    let isCopilotThinking = false;
+
+    async function runCopilotResponseWithThinking(userDisplayText, responseGeneratorFn) {
+      if (isCopilotThinking) return;
+      isCopilotThinking = true;
+
+      const feed = document.getElementById('chatbot-messages-feed');
+      const sendBtn = document.getElementById('chatbot-send-btn');
+      if (sendBtn) sendBtn.disabled = true;
+
+      // 1. Append User message if provided
+      if (userDisplayText) {
+        appendChatBubble('user', userDisplayText);
+      }
+
+      // 2. Append AI Thinking & Loading Bubble
+      const thinkingBubble = document.createElement('div');
+      thinkingBubble.className = 'chat-bubble assistant thinking';
+      thinkingBubble.id = 'copilot-thinking-bubble';
+      thinkingBubble.innerHTML = `
+        <div class="chat-avatar ai" style="animation: copilotPulse 1.8s infinite ease-in-out;">
+          <img src="copilot-icon.png" onerror="this.src='/copilot-icon.png'" alt="Copilot" />
+        </div>
+        <div class="chat-bubble-body" style="background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(99, 102, 241, 0.4); border-radius: 12px; padding: 14px 18px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+            <div class="thinking-spinner">
+              <span class="spinner-dot dot-1"></span>
+              <span class="spinner-dot dot-2"></span>
+              <span class="spinner-dot dot-3"></span>
+            </div>
+            <span style="font-weight: 800; font-size: 0.88rem; color: #a5b4fc; letter-spacing: 0.02em;">
+              AI Copilot is analyzing...
+            </span>
+          </div>
+          <div id="copilot-thinking-caption" style="font-size: 0.78rem; color: #94a3b8; font-style: italic; transition: opacity 0.3s ease;">
+            Reading enterprise workspace & directory graph...
+          </div>
+        </div>
+      `;
+
+      if (feed) {
+        feed.appendChild(thinkingBubble);
+        feed.scrollTop = feed.scrollHeight;
+      }
+
+      // Dynamic 3-phase loading status transitions across 3.5 seconds
+      const captionTimer1 = setTimeout(() => {
+        const c = document.getElementById('copilot-thinking-caption');
+        if (c) {
+          c.style.opacity = '0';
+          setTimeout(() => { if (c) { c.textContent = 'Analyzing task dependencies, owners & policies...'; c.style.opacity = '1'; } }, 150);
+        }
+      }, 1200);
+
+      const captionTimer2 = setTimeout(() => {
+        const c = document.getElementById('copilot-thinking-caption');
+        if (c) {
+          c.style.opacity = '0';
+          setTimeout(() => { if (c) { c.textContent = 'Formulating personalized Day-1 guidance...'; c.style.opacity = '1'; } }, 150);
+        }
+      }, 2400);
+
+      // Enforce the 3.5s AI loading delay requested by user
+      await new Promise(resolve => setTimeout(resolve, 3500));
+      clearTimeout(captionTimer1);
+      clearTimeout(captionTimer2);
+
+      let answerHtml = '';
+      try {
+        answerHtml = await responseGeneratorFn();
+      } catch (err) {
+        answerHtml = `<div style="color: #cbd5e1;">I am here to guide your onboarding journey. Please reach out to your HR Partner or Buddy anytime!</div>`;
+      }
+
+      // Remove thinking bubble
+      const activeThinking = document.getElementById('copilot-thinking-bubble');
+      if (activeThinking && activeThinking.parentNode) {
+        activeThinking.parentNode.removeChild(activeThinking);
+      }
+
+      // Render finalized assistant bubble
+      appendChatBubble('assistant', answerHtml);
+
+      isCopilotThinking = false;
+      if (sendBtn) sendBtn.disabled = false;
+      const input = document.getElementById('chatbot-input');
+      if (input) input.focus();
+    }
+
     function initJoinerChatbot(user) {
       const feed = document.getElementById('chatbot-messages-feed');
       if (!feed) return;
 
+      const compName = user?.company?.name || (currentLiveDashboard?.company?.name) || 'your organization';
+      const firstName = user?.name ? user.name.split(' ')[0] : 'there';
+      const buddyName = user?.buddy?.name || (currentLiveDashboard?.employee?.buddy?.name) || 'Dhruv Agarwal';
+      const hrName = user?.hr?.name || (currentLiveDashboard?.employee?.hr?.name) || 'Priya Nair';
+
+      const ctxUserEl = document.getElementById('copilot-context-user');
+      if (ctxUserEl) ctxUserEl.textContent = user?.name || 'Aarav Sharma';
+
       feed.innerHTML = `
         <div class="chat-bubble assistant">
-          <div class="chat-avatar ai">⚡</div>
+          <div class="chat-avatar ai" title="AI Onboarding Copilot">
+            <img src="copilot-icon.png" onerror="this.src='/copilot-icon.png'" alt="Copilot" />
+          </div>
           <div class="chat-bubble-body">
-            <div style="font-size: 0.95rem; font-weight: 800; color: #f8fafc; margin-bottom: 6px;">
-              Hi ${user.name.split(' ')[0]}! 👋 Welcome to Microsoft!
+            <div style="font-size: 0.98rem; font-weight: 800; color: #f8fafc; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+              <span>👋</span> Hi ${escapeHtml(firstName)}! Welcome to ${escapeHtml(compName)}!
             </div>
-            <p style="color: #cbd5e1; margin-bottom: 12px; font-size: 0.85rem;">
-              I am your <strong>AI Onboarding Copilot</strong>. I have real-time access to your <strong>Day 1 Work Checklist</strong>, assigned <strong>Buddy Mentor (Rahul Pandey)</strong>, and <strong>HR Partner (Priya Sharma)</strong>.
+            <p style="color: #cbd5e1; margin-bottom: 12px; font-size: 0.84rem; line-height: 1.55;">
+              I am your <strong>AI Onboarding Copilot</strong>. I have real-time access to your <strong>Day 1 Work Checklist</strong>, verified <strong>Contact Directory</strong>, assigned <strong>Buddy (${escapeHtml(buddyName)})</strong>, and <strong>HR Partner (${escapeHtml(hrName)})</strong>.
             </p>
-            <div style="font-size: 0.8rem; font-weight: 700; color: #818cf8; margin-bottom: 8px;">
-              How can I assist you right now?
+            <div style="font-size: 0.78rem; font-weight: 700; color: #818cf8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.03em;">
+              Recommended Day-1 Actions:
             </div>
-            <div class="chat-options-group" style="margin-top: 10px;">
+            <div class="chat-options-group">
               <button class="chat-action-chip" onclick="handleChatOption('contacts')">📞 Contact Directory</button>
               <button class="chat-action-chip" onclick="handleChatOption('checklist')">📋 Today's Checklist</button>
               <button class="chat-action-chip" onclick="explainTaskById(1)">💡 Explain Task 1</button>
@@ -3282,7 +3514,378 @@
       `;
     }
 
-// Explain Task in Chat Feed
+    function getContactDirectoryResponseHtml() {
+      const comp = currentLiveDashboard?.company || { name: 'TechNova' };
+      const emp = currentLiveDashboard?.employee || { name: 'Aarav Sharma', role: 'Software Engineer' };
+      const buddy = emp.buddy || {
+        name: 'Dhruv Agarwal',
+        role: 'Senior Team Buddy & Mentor',
+        phone: '+91 80 6789 89928',
+        email: 'buddy@demo-company.com',
+        availability: 'Daily 10:00 AM - 6:00 PM (Slack & In-person)'
+      };
+      const hr = emp.hr || {
+        name: 'Priya Nair',
+        role: 'People Operations / HR Partner',
+        phone: '+91 80 6789 89912',
+        email: 'hr@demo-company.com',
+        availability: 'Mon - Fri, 9:00 AM - 5:30 PM'
+      };
+
+      return `
+        <div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
+            <div style="font-weight: 800; font-size: 0.95rem; color: #f8fafc; display: flex; align-items: center; gap: 8px;">
+              <span>📞</span> Verified Enterprise Contact Directory
+            </div>
+            <span style="font-size: 0.7rem; font-weight: 700; color: #34d399; background: rgba(16, 185, 129, 0.15); padding: 2px 8px; border-radius: 9999px;">
+              Live Grounded
+            </span>
+          </div>
+
+          <div style="font-size: 0.8rem; color: #cbd5e1; margin-bottom: 12px; line-height: 1.45;">
+            Direct access to assigned mentors, HR leads, and emergency IT operations for <strong>${escapeHtml(emp.name)}</strong> at <strong>${escapeHtml(comp.name)}</strong>:
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Card 1: Onboarding Buddy -->
+            <div style="background: rgba(147, 51, 234, 0.12); border: 1px solid rgba(147, 51, 234, 0.35); border-radius: 10px; padding: 12px 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                  <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #c084fc; letter-spacing: 0.04em;">Assigned Onboarding Buddy</div>
+                  <div style="font-size: 0.98rem; font-weight: 800; color: #ffffff; margin-top: 1px;">${escapeHtml(buddy.name)}</div>
+                  <div style="font-size: 0.76rem; color: #cbd5e1;">${escapeHtml(buddy.role || 'Senior Team Buddy')}</div>
+                </div>
+                <a href="tel:${escapeHtml(buddy.phone)}" style="display: inline-flex; align-items: center; gap: 4px; background: #9333ea; color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 6px; text-decoration: none;">
+                  📞 Call
+                </a>
+              </div>
+              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(147, 51, 234, 0.2); font-size: 0.78rem; color: #e2e8f0; line-height: 1.5;">
+                <div>📱 <strong>Direct Phone:</strong> <a href="tel:${escapeHtml(buddy.phone)}" style="color: #c084fc; font-weight: 700;">${escapeHtml(buddy.phone)}</a></div>
+                <div>📧 <strong>Email:</strong> <a href="mailto:${escapeHtml(buddy.email)}" style="color: #e2e8f0;">${escapeHtml(buddy.email)}</a></div>
+                <div>⏱️ <strong>Availability:</strong> ${escapeHtml(buddy.availability || 'Daily 10:00 AM - 6:00 PM')}</div>
+                <div style="color: #94a3b8; font-size: 0.72rem; margin-top: 3px;">🎯 Purpose: 1:1 sync, codebase orientation, daily questions</div>
+              </div>
+            </div>
+
+            <!-- Card 2: HR Partner -->
+            <div style="background: rgba(37, 99, 235, 0.12); border: 1px solid rgba(37, 99, 235, 0.35); border-radius: 10px; padding: 12px 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                  <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #60a5fa; letter-spacing: 0.04em;">People Operations & HR Partner</div>
+                  <div style="font-size: 0.98rem; font-weight: 800; color: #ffffff; margin-top: 1px;">${escapeHtml(hr.name)}</div>
+                  <div style="font-size: 0.76rem; color: #cbd5e1;">${escapeHtml(hr.role || 'HR Business Partner')}</div>
+                </div>
+                <a href="tel:${escapeHtml(hr.phone)}" style="display: inline-flex; align-items: center; gap: 4px; background: #2563eb; color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 6px; text-decoration: none;">
+                  📞 Call
+                </a>
+              </div>
+              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(37, 99, 235, 0.2); font-size: 0.78rem; color: #e2e8f0; line-height: 1.5;">
+                <div>📱 <strong>Direct Phone:</strong> <a href="tel:${escapeHtml(hr.phone)}" style="color: #60a5fa; font-weight: 700;">${escapeHtml(hr.phone)}</a></div>
+                <div>📧 <strong>Email:</strong> <a href="mailto:${escapeHtml(hr.email)}" style="color: #e2e8f0;">${escapeHtml(hr.email)}</a></div>
+                <div>⏱️ <strong>Hours:</strong> Mon - Fri, 9:00 AM - 5:30 PM</div>
+                <div style="color: #94a3b8; font-size: 0.72rem; margin-top: 3px;">🎯 Purpose: Benefits, documentation, agreements, payroll setup</div>
+              </div>
+            </div>
+
+            <!-- Card 3: IT Helpdesk Hotline -->
+            <div style="background: rgba(5, 150, 105, 0.12); border: 1px solid rgba(5, 150, 105, 0.35); border-radius: 10px; padding: 12px 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                  <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #34d399; letter-spacing: 0.04em;">IT Infrastructure & Hardware Hotline</div>
+                  <div style="font-size: 0.98rem; font-weight: 800; color: #ffffff; margin-top: 1px;">Rahul Mehta</div>
+                  <div style="font-size: 0.76rem; color: #cbd5e1;">Lead IT Systems Engineer · Code: C001</div>
+                </div>
+                <a href="tel:+9180678989910" style="display: inline-flex; align-items: center; gap: 4px; background: #059669; color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 6px; text-decoration: none;">
+                  📞 Call
+                </a>
+              </div>
+              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(5, 150, 105, 0.2); font-size: 0.78rem; color: #e2e8f0; line-height: 1.5;">
+                <div>📱 <strong>Emergency Line:</strong> <a href="tel:+9180678989910" style="color: #34d399; font-weight: 700;">+91 80 6789 89910</a></div>
+                <div>📧 <strong>Email:</strong> <a href="mailto:it@demo-company.com" style="color: #e2e8f0;">it@demo-company.com</a></div>
+                <div>🚨 <strong>Escalation Line:</strong> Vikram Shah (Director of IT Operations)</div>
+                <div style="color: #94a3b8; font-size: 0.72rem; margin-top: 3px;">🎯 Purpose: Laptop provisioning, MFA resets, VPN approvals, tokens</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function getChecklistResponseHtml() {
+      const tasks = (currentLiveDashboard && currentLiveDashboard.tasks && currentLiveDashboard.tasks.length > 0)
+        ? currentLiveDashboard.tasks
+        : (dailyTasksState || []);
+
+      const day1Tasks = tasks.filter(t => (t.day === 'Day 1' || String(t.day).toLowerCase().includes('1')));
+      const displayTasks = day1Tasks.length > 0 ? day1Tasks : tasks.slice(0, 6);
+      const doneCount = displayTasks.filter(t => t.status === 'Completed').length;
+      const totalCount = displayTasks.length;
+      const pct = totalCount > 0 ? Math.round((doneCount / totalCount) * 100) : 0;
+
+      let listHtml = `
+        <div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
+            <div style="font-weight: 800; font-size: 0.95rem; color: #f8fafc; display: flex; align-items: gap: 8px;">
+              <span>📋</span> Today's Onboarding Checklist
+            </div>
+            <span style="font-size: 0.72rem; font-weight: 800; color: ${pct === 100 ? '#34d399' : '#818cf8'}; background: rgba(99, 102, 241, 0.15); padding: 2px 8px; border-radius: 9999px;">
+              ${doneCount}/${totalCount} Completed (${pct}%)
+            </span>
+          </div>
+
+          <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.1); border-radius: 9999px; overflow: hidden; margin-bottom: 12px;">
+            <div style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, #6366f1, #38bdf8); transition: width 0.4s ease;"></div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.82rem;">
+      `;
+
+      displayTasks.forEach((t, idx) => {
+        const isDone = t.status === 'Completed';
+        const tId = t.taskId || t.id || (idx + 1);
+        const tName = t.taskName || t.title;
+        const priorityColor = t.priority === 'High' ? '#f87171' : (t.priority === 'Medium' ? '#fbbf24' : '#38bdf8');
+
+        listHtml += `
+          <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); padding: 9px 12px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px; overflow: hidden;">
+              <span style="font-size: 1rem;">${isDone ? '✅' : '⬜'}</span>
+              <div style="display: flex; flex-direction: column; overflow: hidden;">
+                <span style="color: ${isDone ? '#94a3b8' : '#f8fafc'}; text-decoration: ${isDone ? 'line-through' : 'none'}; font-weight: 600; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+                  ${escapeHtml(tName)}
+                </span>
+                <span style="font-size: 0.7rem; color: #94a3b8;">
+                  Task ${tId} · <span style="color: ${priorityColor}; font-weight: 700;">${t.priority || 'High'} Priority</span>
+                </span>
+              </div>
+            </div>
+            <div style="display: flex; gap: 6px; shrink: 0;">
+              <button class="copilot-chip" style="padding: 3px 8px; font-size: 0.7rem; background: rgba(99, 102, 241, 0.2);" onclick="explainTaskById('${tId}')">
+                💡 Explain
+              </button>
+              <button class="copilot-chip" style="padding: 3px 8px; font-size: 0.7rem; background: ${isDone ? 'rgba(255,255,255,0.1)' : '#4f46e5'}; color: #fff;" onclick="toggleLiveTask('${t.progressId || ('P_' + tId)}', '${t.status || 'Pending'}', '${tId}')">
+                ${isDone ? 'Reopen' : '✓ Done'}
+              </button>
+            </div>
+          </div>
+        `;
+      });
+
+      listHtml += `
+          </div>
+          <div style="margin-top: 10px; font-size: 0.74rem; color: #94a3b8; text-align: center;">
+            💡 Click <strong>Explain</strong> on any task for step-by-step guidance & owner contacts.
+          </div>
+        </div>
+      `;
+
+      return listHtml;
+    }
+
+    function getExplainTaskResponseHtml(taskId) {
+      const numId = parseInt(String(taskId).replace(/\D/g, ''), 10) || 1;
+      let task = null;
+      if (currentLiveDashboard && currentLiveDashboard.tasks) {
+        task = currentLiveDashboard.tasks.find(t => String(t.taskId) === String(taskId) || String(t.id) === String(taskId) || parseInt(String(t.taskId).replace(/\D/g, ''), 10) === numId);
+      }
+      if (!task && dailyTasksState) {
+        task = dailyTasksState.find(t => String(t.id) === String(taskId) || parseInt(String(t.id).replace(/\D/g, ''), 10) === numId);
+      }
+
+      const taskProfiles = {
+        1: {
+          title: 'Complete Corporate SSO & MFA Identity Enrollment',
+          category: 'Identity & Authentication',
+          timeEst: '15 mins',
+          objective: 'Establishes your cryptographically verified Single Sign-On (SSO) corporate credentials and multi-factor authenticator token. This is the master key required to access company email, Slack/Teams, repository permissions, and developer VPN.',
+          steps: [
+            'Navigate to the corporate Single Sign-On Portal (https://sso.internal.demo).',
+            'Log in using your provisional credentials supplied in your Day-1 Welcome Email.',
+            'Open Microsoft Authenticator or Google Authenticator on your mobile smartphone.',
+            'Scan the enterprise registration QR code and submit the 6-digit confirmation PIN.',
+            'Download and safely store your 10 emergency recovery codes.'
+          ],
+          resource: { name: 'Corporate SSO & MFA Setup Guide', link: '/resources/sso-setup-guide', desc: 'Step-by-step authentication walkthrough & troubleshooting' },
+          contact: { name: 'Rahul Mehta', role: 'IT Support Lead', phone: '+91 80 6789 89910', email: 'it@demo-company.com' }
+        },
+        2: {
+          title: 'Review & Sign Employment Agreement & NDA',
+          category: 'Legal & Compliance',
+          timeEst: '20 mins',
+          objective: 'Fulfills legal compliance, non-disclosure terms, and intellectual property agreements mandatory before code repositories and internal client data can be provisioned to your profile.',
+          steps: [
+            'Open your DocuSign invitation or access the portal link below.',
+            'Review clauses on proprietary information, inventions assignment, and data privacy.',
+            'Verify your permanent address, emergency contact details, and tax ID information.',
+            'Sign digitally with date verification and save a PDF copy for your personal records.'
+          ],
+          resource: { name: 'Employment Agreement & NDA Package', link: '/resources/employment-agreement', desc: 'Digital signatory documents with compliance audit trail' },
+          contact: { name: 'Priya Nair', role: 'People Operations / HR Partner', phone: '+91 80 6789 89912', email: 'hr@demo-company.com' }
+        },
+        3: {
+          title: 'Day-1 Orientation & 1:1 Sync with Onboarding Buddy',
+          category: 'Team Integration',
+          timeEst: '45 mins',
+          objective: 'Connects you directly with your designated mentor buddy to review team sprint cadence, architecture diagrams, pull request protocols, and answer any Day-1 questions.',
+          steps: [
+            'Check your calendar for the scheduled 2:00 PM Buddy Introduction Sync.',
+            'Review the high-level system architecture and repository links sent by your buddy.',
+            'Join the primary Slack channels (#team-engineering, #product-announcements, #freshers-2026).',
+            'Prepare 2-3 questions about local environment setup and team norms.'
+          ],
+          resource: { name: 'First-Week Buddy Playbook & Architecture Overview', link: '/resources/buddy-playbook', desc: 'Checklist of discussion topics & engineering standards' },
+          contact: { name: 'Dhruv Agarwal', role: 'Senior Team Buddy', phone: '+91 80 6789 89928', email: 'buddy@demo-company.com' }
+        },
+        4: {
+          title: 'IT Hardware & Development Tunnel Configuration',
+          category: 'Infrastructure & DevOps',
+          timeEst: '30 mins',
+          objective: 'Installs and configures secure encrypted VPN tunnels and SSH keys required to reach internal staging environments, package registries, and protected database clusters.',
+          steps: [
+            'Download and install the official WireGuard / OpenVPN client on your laptop.',
+            'Import your personal configuration certificate from the IT Security Vault.',
+            'Generate a new ed25519 SSH keypair (ssh-keygen -t ed25519 -C "work-laptop").',
+            'Upload the public key to your internal developer profile and verify ping to staging.'
+          ],
+          resource: { name: 'VPN & Secure Dev Tunnel Setup Manual', link: '/resources/vpn-guide', desc: 'Tunnel configuration, IP routing & SSH authorization' },
+          contact: { name: 'Rahul Mehta', role: 'IT Support Lead', phone: '+91 80 6789 89910', email: 'it@demo-company.com' }
+        },
+        5: {
+          title: 'Repository & Codebase Access Initialization (GitHub Enterprise)',
+          category: 'Engineering & Source Control',
+          timeEst: '25 mins',
+          objective: 'Grants read/write team permissions on GitHub Enterprise organizations, CI/CD pipeline triggers, and internal artifact registries.',
+          steps: [
+            'Authenticate your GitHub Enterprise account via Single Sign-On.',
+            'Accept the organization invitation sent to your work email.',
+            'Clone your team primary repository: git clone git@github.com:enterprise/core-repo.git',
+            'Run the bootstrap script (npm install && npm test) to verify local build health.'
+          ],
+          resource: { name: 'GitHub Enterprise Access & Contribution Guide', link: '/resources/github-access', desc: 'Branching strategy, PR guidelines, and CI linting standards' },
+          contact: { name: 'Dhruv Agarwal', role: 'Senior Team Buddy', phone: '+91 80 6789 89928', email: 'buddy@demo-company.com' }
+        }
+      };
+
+      const profile = taskProfiles[numId] || {
+        title: task ? (task.taskName || task.title) : `Task ${taskId}: Onboarding Milestone`,
+        category: task?.department || 'Onboarding Milestone',
+        timeEst: '20 mins',
+        objective: task?.description || `Complete prerequisite requirements and verify deliverables for ${task?.department || 'your role'}.`,
+        steps: [
+          'Review the requirements and deliverables defined in your roadmap.',
+          'Coordinate with your designated task owner if any permissions are blocked.',
+          'Execute the task and test end-to-end functionality.',
+          'Mark as completed in your portal to unlock downstream tasks.'
+        ],
+        resource: task?.resource || { name: 'General Employee Onboarding Manual', link: '/resources/employee-handbook', desc: 'Standard operating procedures and best practices' },
+        contact: { name: 'Dhruv Agarwal', role: 'Team Buddy', phone: '+91 80 6789 89928', email: 'buddy@demo-company.com' }
+      };
+
+      const tName = profile.title;
+      const isDone = task && task.status === 'Completed';
+
+      let stepsHtml = '';
+      profile.steps.forEach((s) => {
+        stepsHtml += `<li style="margin-bottom: 5px;">${escapeHtml(s)}</li>`;
+      });
+
+      return `
+        <div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px;">
+            <span style="font-size: 0.72rem; font-weight: 800; background: rgba(99, 102, 241, 0.2); color: #c7d2fe; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">
+              ${escapeHtml(profile.category)} · Est. ${escapeHtml(profile.timeEst)}
+            </span>
+            <span style="font-size: 0.72rem; font-weight: 700; color: ${isDone ? '#34d399' : '#f87171'};">
+              ${isDone ? '✓ Completed' : 'Pending Action'}
+            </span>
+          </div>
+
+          <h4 style="font-size: 1.02rem; font-weight: 800; color: #f8fafc; margin-bottom: 8px; line-height: 1.35;">
+            ${escapeHtml(tName)}
+          </h4>
+
+          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; font-size: 0.8rem; color: #e2e8f0; line-height: 1.5;">
+            🎯 <strong>Objective & Why It Matters:</strong><br>
+            ${escapeHtml(profile.objective)}
+          </div>
+
+          <div style="margin-bottom: 10px;">
+            <div style="font-size: 0.78rem; font-weight: 800; color: #93c5fd; margin-bottom: 4px;">
+              📝 Step-by-Step Instructions:
+            </div>
+            <ol style="font-size: 0.78rem; color: #cbd5e1; padding-left: 18px; margin: 0; line-height: 1.55;">
+              ${stepsHtml}
+            </ol>
+          </div>
+
+          <!-- Linked Resource -->
+          <div style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; margin-bottom: 10px;">
+            📄 <strong>Linked Resource:</strong> <a href="${profile.resource.link}" target="_blank" style="color: #34d399; font-weight: 700; text-decoration: underline;">${escapeHtml(profile.resource.name)}</a><br>
+            <span style="font-size: 0.72rem; color: #cbd5e1;">${escapeHtml(profile.resource.desc || 'Direct manual & documentation')}</span>
+          </div>
+
+          <!-- Contact for this task -->
+          <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div>
+              <span style="color: #94a3b8; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">Task Helper:</span>
+              <div style="color: #f8fafc; font-weight: 700;">${escapeHtml(profile.contact.name)} (${escapeHtml(profile.contact.role)})</div>
+              <div style="color: #cbd5e1; font-size: 0.72rem;">${escapeHtml(profile.contact.phone)} · ${escapeHtml(profile.contact.email)}</div>
+            </div>
+            <a href="tel:${escapeHtml(profile.contact.phone)}" style="background: #4f46e5; color: #fff; font-size: 0.72rem; font-weight: 700; padding: 4px 9px; border-radius: 6px; text-decoration: none;">
+              📞 Call
+            </a>
+          </div>
+
+          <div style="display: flex; gap: 8px;">
+            <button class="copilot-chip" style="background: ${isDone ? 'rgba(255,255,255,0.1)' : '#4f46e5'}; color: #fff; padding: 6px 14px; font-size: 0.76rem;" onclick="toggleLiveTask('${(task && task.progressId) || ('P_' + taskId)}', '${(task && task.status) || 'Pending'}', '${taskId}')">
+              ${isDone ? '✓ Completed (Click to Reopen)' : '✓ Mark Task as Completed'}
+            </button>
+            <button class="copilot-chip" style="background: rgba(255,255,255,0.08); color: #cbd5e1; padding: 6px 12px; font-size: 0.76rem;" onclick="handleChatOption('contacts')">
+              📞 Contact Directory
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function getStuckTroubleshootingResponseHtml() {
+      return `
+        <div>
+          <div style="font-weight: 800; font-size: 0.95rem; color: #f87171; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+            <span>🚨</span> Onboarding Dependency & Blocker Recovery
+          </div>
+          <p style="font-size: 0.82rem; color: #cbd5e1; margin-bottom: 10px; line-height: 1.5;">
+            If you are blocked on <strong>VPN tokens, SSO access, hardware, or permissions</strong>:
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.8rem; margin-bottom: 12px;">
+            <div style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); padding: 8px 12px; border-radius: 8px;">
+              <strong>1. IT Operations Lead: Rahul Mehta</strong><br>
+              📞 Hotline: <a href="tel:+9180678989910" style="color: #f87171; font-weight: 700;">+91 80 6789 89910</a><br>
+              📧 it@demo-company.com (Escalation: Vikram Shah, IT Director)
+            </div>
+            <div style="background: rgba(147, 51, 234, 0.12); border: 1px solid rgba(147, 51, 234, 0.35); padding: 8px 12px; border-radius: 8px;">
+              <strong>2. Assigned Onboarding Buddy: Dhruv Agarwal</strong><br>
+              📞 Mobile: <a href="tel:+9180678989928" style="color: #c084fc; font-weight: 700;">+91 80 6789 89928</a><br>
+              Can verify your profile and approve internal group access.
+            </div>
+          </div>
+
+          <div style="background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; line-height: 1.5;">
+            ✨ <strong>Zero-Wait SideQuests Available:</strong><br>
+            While your blocker is being resolved, you can complete independent tasks:
+            <ul style="padding-left: 16px; margin: 4px 0 0 0;">
+              <li>Review the Employee Handbook (/resources/employee-handbook)</li>
+              <li>Read the Architecture Overview (/resources/buddy-playbook)</li>
+              <li>Complete Security Awareness Training module</li>
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+
+    // Explain Task in Chat Feed
     function askCopilotToExplainTask(taskId) {
       explainTaskById(taskId);
       const panel = document.querySelector('.joiner-chat-panel');
@@ -3293,347 +3896,132 @@
     }
 
     function explainTaskById(taskId) {
-      let task = null;
-      if (currentLiveDashboard && currentLiveDashboard.tasks) {
-        task = currentLiveDashboard.tasks.find(t => String(t.taskId) === String(taskId) || String(t.id) === String(taskId));
-      }
-      if (!task) {
-        task = dailyTasksState.find(t => String(t.id) === String(taskId)) || dailyTasksState[0] || { taskName: 'Task #' + taskId, day: 'Day 1', priority: 'High' };
-      }
-
-      const tName = task.taskName || task.title;
-      appendChatBubble('user', `Can you explain Task ${task.taskId || task.id}: "${tName}"?`);
-
-      let resourceNote = '';
-      if (task.resource) {
-        resourceNote = `
-          <div style="margin-top: 8px; font-size: 0.78rem; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); padding: 8px 12px; border-radius: 6px;">
-            📄 <strong>Linked Resource:</strong> <a href="${task.resource.link}" target="_blank" style="color: #34d399; font-weight: 700; text-decoration: underline;">${task.resource.resourceName}</a><br>
-            <span style="font-size: 0.72rem; color: #cbd5e1;">${task.resource.description || 'Access documentation directly at ' + task.resource.link}</span>
-          </div>
-        `;
-      }
-
-      const explainHtml = `
-        <div>
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-            <span style="font-size: 0.72rem; font-weight: 800; background: rgba(99, 102, 241, 0.2); color: #c7d2fe; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">
-              ${task.department || 'Task'} Guidance · ${task.day || 'Day 1'}
-            </span>
-            <span style="font-size: 0.75rem; color: #94a3b8; font-family: var(--font-mono);">${task.priority || 'High'} Priority</span>
-          </div>
-
-          <h4 style="font-size: 1.02rem; font-weight: 800; color: #f8fafc; margin-bottom: 8px;">
-            ${tName}
-          </h4>
-
-          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; font-size: 0.82rem; color: #e2e8f0;">
-            🎯 <strong>Objective:</strong> Complete statutory requirements and setup for ${task.department || 'your role'}.
-          </div>
-
-          ${resourceNote}
-
-          <div style="display: flex; gap: 8px; margin-top: 12px;">
-            <button class="copilot-chip" style="background: #4f46e5; color: #fff; padding: 6px 14px;" onclick="toggleLiveTask('${task.progressId || ('P_' + task.taskId)}', '${task.status || 'Pending'}', '${task.taskId || task.id}')">
-              ${task.status === 'Completed' ? '✓ Task is Completed' : '✓ Mark as Completed'}
-            </button>
-            <button class="copilot-chip" style="background: rgba(255,255,255,0.1); color: #cbd5e1;" onclick="handleChatOption('contacts')">
-              📞 Contact Helper
-            </button>
-          </div>
-        </div>
-      `;
-
-      setTimeout(() => {
-        appendChatBubble('assistant', explainHtml);
-      }, 250);
+      const numId = parseInt(String(taskId).replace(/\D/g, ''), 10) || 1;
+      const titles = {
+        1: 'Complete Corporate SSO & MFA Identity Enrollment',
+        2: 'Review & Sign Employment Agreement & NDA',
+        3: 'Day-1 Orientation & 1:1 Sync with Onboarding Buddy',
+        4: 'IT Hardware & Development Tunnel Configuration',
+        5: 'Repository & Codebase Access Initialization (GitHub Enterprise)'
+      };
+      const tName = titles[numId] || ('Task #' + taskId);
+      runCopilotResponseWithThinking(`Can you explain Task ${taskId}: "${tName}"?`, () => getExplainTaskResponseHtml(taskId));
     }
 
     // Handle Quick Options in Chat
     function handleChatOption(optionKey) {
       if (optionKey === 'contacts') {
-        appendChatBubble('user', 'Show me all my team and HR contact numbers.');
-        const contactsHtml = `
-          <div>
-            <div style="font-weight: 800; font-size: 0.95rem; color: #f8fafc; margin-bottom: 8px;">
-              📞 Direct Team & Support Contact Numbers
-            </div>
-            <div style="font-size: 0.82rem; color: #cbd5e1; line-height: 1.55; display: flex; flex-direction: column; gap: 8px;">
-              <div style="background: rgba(37, 99, 235, 0.15); border: 1px solid rgba(37, 99, 235, 0.35); padding: 8px 12px; border-radius: 8px;">
-                <strong>HR Partner: Priya Nair (HR Manager · C003)</strong><br>
-                📞 Direct Phone: <a href="tel:+9180678989912" style="color: #60a5fa; font-weight: 700;">+91 80 6789 89912</a><br>
-                📧 hr@demo-company.com · Escalation: Meera Rao (Operations Manager)
-              </div>
-              <div style="background: rgba(147, 51, 234, 0.15); border: 1px solid rgba(147, 51, 234, 0.35); padding: 8px 12px; border-radius: 8px;">
-                <strong>Onboarding Buddy: Dhruv Agarwal (C019)</strong><br>
-                📞 Buddy Phone: <a href="tel:+9180678989928" style="color: #c084fc; font-weight: 700;">+91 80 6789 89928</a><br>
-                📧 buddy@demo-company.com · Availability: Mon-Fri, 10AM-6PM
-              </div>
-              <div style="background: rgba(5, 150, 105, 0.15); border: 1px solid rgba(5, 150, 105, 0.35); padding: 8px 12px; border-radius: 8px;">
-                <strong>IT Helpdesk Hotline: Rahul Mehta (C001)</strong><br>
-                📞 Direct Phone: <a href="tel:+9180678989910" style="color: #34d399; font-weight: 700;">+91 80 6789 89910</a><br>
-                📧 it@demo-company.com · Escalates to Vikram Shah (IT Manager)
-              </div>
-            </div>
-          </div>
-        `;
-        setTimeout(() => appendChatBubble('assistant', contactsHtml), 250);
-
+        runCopilotResponseWithThinking('Show me the verified Contact Directory and emergency support numbers.', getContactDirectoryResponseHtml);
       } else if (optionKey === 'checklist') {
-        appendChatBubble('user', "Show my Today's Work and Day 1 checklist.");
-        const tasks = currentLiveDashboard?.tasks || [];
-        const day1Tasks = tasks.filter(t => t.day === 'Day 1');
-        const doneCount = day1Tasks.filter(t => t.status === 'Completed').length;
-        const total = day1Tasks.length;
-        const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
-
-        let listHtml = `
-          <div>
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-              <span style="font-weight: 800; color: #f8fafc;">Day 1 Checklist (${doneCount}/${total} Done · ${pct}%)</span>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.82rem;">
-        `;
-
-        day1Tasks.forEach(t => {
-          const isDone = t.status === 'Completed';
-          listHtml += `
-            <div style="background: rgba(255,255,255,0.06); padding: 8px 10px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between;">
-              <span style="color: ${isDone ? '#94a3b8' : '#f8fafc'}; text-decoration: ${isDone ? 'line-through' : 'none'};">
-                ${isDone ? '✅' : '⬜'} ${t.taskName || t.title}
-              </span>
-              <button class="copilot-chip" style="padding: 2px 8px; font-size: 0.7rem;" onclick="askCopilotToExplainTask('${t.taskId || t.id}')">Explain</button>
-            </div>
-          `;
-        });
-
-        listHtml += `</div></div>`;
-        setTimeout(() => appendChatBubble('assistant', listHtml), 250);
-
+        runCopilotResponseWithThinking("Show my Today's Work and Day 1 onboarding checklist.", getChecklistResponseHtml);
       } else if (optionKey === 'stuck') {
-        appendChatBubble('user', "I'm stuck on one of my setup tasks. What should I do?");
-        const stuckHtml = `
-          <div>
-            <div style="font-weight: 800; color: #f87171; margin-bottom: 6px;">
-              🚨 Onboarding Dependency Troubleshooting
-            </div>
-            <p style="font-size: 0.82rem; color: #cbd5e1; margin-bottom: 8px;">
-              If your <strong>Corporate Account, MFA or IT Access</strong> is blocked:
-            </p>
-            <ul style="font-size: 0.8rem; color: #e2e8f0; padding-left: 18px; margin-bottom: 10px;">
-              <li>Call IT Helpdesk Lead Rahul Mehta directly at <strong>+91 80 6789 89910</strong>.</li>
-              <li>You can proceed with offline reading tasks like the Employee Handbook (/resources/employee-handbook).</li>
-              <li>Your buddy Dhruv Agarwal will verify your access during your 1:1 briefing.</li>
-            </ul>
-          </div>
-        `;
-        setTimeout(() => appendChatBubble('assistant', stuckHtml), 250);
+        runCopilotResponseWithThinking("I'm stuck on one of my onboarding tasks. What should I do?", getStuckTroubleshootingResponseHtml);
       }
     }
 
-    // Send Free-Form Chat Message to NVIDIA NIM / Grounded Dataset
+    // Send Free-Form Chat Message to AI Onboarding Copilot
     async function sendChatMessage() {
       const input = document.getElementById('chatbot-input');
       const query = input.value.trim();
-      if (!query) return;
+      if (!query || isCopilotThinking) return;
 
-      appendChatBubble('user', query);
       input.value = '';
-
-      const sendBtn = document.getElementById('chatbot-send-btn');
-      if (sendBtn) sendBtn.disabled = true;
-
       const lower = query.toLowerCase();
-      const currentEmp = currentLiveDashboard?.employee || { name: 'Aarav Sharma', role: 'Software Engineer', buddy: { name: 'Dhruv Agarwal', phone: '+91 80 6789 89928', email: 'buddy@demo-company.com' } };
-      const tasks = currentLiveDashboard?.tasks || [];
-      const metrics = currentLiveDashboard?.metrics || { percentage: 10, completedTasks: 2, totalTasks: 20 };
 
-      // 1. "What do I need to complete today?"
-      if (lower.includes('today') || lower.includes('complete today') || lower.includes('day 1 tasks') || lower.includes('my tasks')) {
-        const day1Tasks = tasks.filter(t => t.day === 'Day 1');
-        const pendingDay1 = day1Tasks.filter(t => t.status !== 'Completed');
-        let answerHtml = `
-          <div>
-            <div style="font-weight: 800; font-size: 0.95rem; color: #f8fafc; margin-bottom: 6px;">
-              📋 Today's Priority Action Items (${pendingDay1.length} pending of ${day1Tasks.length} Day 1 tasks):
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.82rem;">
-        `;
-        day1Tasks.forEach(t => {
-          const isDone = t.status === 'Completed';
-          answerHtml += `
-            <div style="background: rgba(255,255,255,0.07); padding: 8px 10px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between;">
-              <span style="color: ${isDone ? '#94a3b8' : '#f8fafc'}; text-decoration: ${isDone ? 'line-through' : 'none'};">
-                ${isDone ? '✅' : '⬜'} <strong>${t.taskId}</strong>: ${t.taskName} <span style="font-size: 0.72rem; color: ${t.priority==='High'?'#f87171':'#38bdf8'}; font-weight: 700;">(${t.priority})</span>
-              </span>
-              <button class="copilot-chip" style="padding: 2px 8px; font-size: 0.7rem;" onclick="toggleLiveTask('${t.progressId}', '${t.status}', '${t.taskId}')">
-                ${isDone ? 'Reopen' : 'Complete'}
-              </button>
-            </div>
-          `;
-        });
-        answerHtml += `</div></div>`;
-        setTimeout(() => {
-          appendChatBubble('assistant', answerHtml);
-          if (sendBtn) sendBtn.disabled = false;
-        }, 250);
+      // Route natural language queries intelligently with 3.5s thinking delay
+      if (lower.includes('contact') || lower.includes('phone') || lower.includes('call') || lower.includes('directory') || lower.includes('number') || lower.includes('who to call') || lower.includes('who to contact')) {
+        runCopilotResponseWithThinking(query, getContactDirectoryResponseHtml);
         return;
       }
 
-      // 2. "Who is my onboarding buddy?"
-      if (lower.includes('buddy') || lower.includes('onboarding buddy') || lower.includes('mentor')) {
-        const buddy = currentEmp.buddy || { name: 'Dhruv Agarwal', phone: '+91 80 6789 89928', email: 'buddy@demo-company.com', role: 'Onboarding Buddy', availability: 'Mon-Fri, 10AM-6PM' };
-        const buddyHtml = `
-          <div>
-            <div style="font-weight: 800; font-size: 0.95rem; color: #c084fc; margin-bottom: 6px;">
-              🤝 Your Assigned Onboarding Buddy
-            </div>
-            <div style="background: rgba(147, 51, 234, 0.15); border: 1px solid rgba(147, 51, 234, 0.35); padding: 10px 14px; border-radius: 8px; font-size: 0.84rem; line-height: 1.55;">
-              <div style="font-size: 1rem; font-weight: 800; color: #f8fafc;">${buddy.name}</div>
-              <div style="color: #cbd5e1; font-size: 0.78rem;">Role: ${buddy.role || 'Onboarding Buddy'} (Employee Support)</div>
-              <div style="margin-top: 6px;">
-                📞 <strong>Direct Phone:</strong> <a href="tel:${buddy.phone}" style="color: #c084fc; font-weight: 700;">${buddy.phone}</a><br>
-                📧 <strong>Email:</strong> <a href="mailto:${buddy.email}" style="color: #e2e8f0;">${buddy.email}</a><br>
-                ⏱️ <strong>Availability:</strong> ${buddy.availability || 'Mon-Fri, 10AM-6PM'}<br>
-                🎯 <strong>Purpose:</strong> General first-week guidance, culture orientation & buddy sync.
-              </div>
-            </div>
-          </div>
-        `;
-        setTimeout(() => {
-          appendChatBubble('assistant', buddyHtml);
-          if (sendBtn) sendBtn.disabled = false;
-        }, 250);
+      if (lower.includes('checklist') || lower.includes('today') || lower.includes('complete today') || lower.includes('day 1 tasks') || lower.includes('my tasks') || lower.includes('what to do')) {
+        runCopilotResponseWithThinking(query, getChecklistResponseHtml);
         return;
       }
 
-      // 3. "Who should I contact for laptop problems?"
-      if (lower.includes('laptop') || lower.includes('hardware') || lower.includes('computer') || lower.includes('software issue') || lower.includes('it problem')) {
-        const itHtml = `
-          <div>
-            <div style="font-weight: 800; font-size: 0.95rem; color: #34d399; margin-bottom: 6px;">
-              🛠️ IT Hardware & Laptop Support
-            </div>
-            <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); padding: 10px 14px; border-radius: 8px; font-size: 0.84rem; line-height: 1.55;">
-              <div style="font-size: 1rem; font-weight: 800; color: #f8fafc;">Rahul Mehta (IT Helpdesk · C001)</div>
-              <div style="color: #cbd5e1; font-size: 0.78rem;">Purpose: Laptop, account, hardware and software issues</div>
-              <div style="margin-top: 6px;">
-                📞 <strong>Direct Phone:</strong> <a href="tel:+9180678989910" style="color: #34d399; font-weight: 700;">+91 80 6789 89910</a><br>
-                📧 <strong>Email:</strong> <a href="mailto:it@demo-company.com" style="color: #e2e8f0;">it@demo-company.com</a><br>
-                ⏱️ <strong>Availability:</strong> Mon-Fri, 9AM-6PM<br>
-                🚨 <strong>Escalation Line:</strong> Vikram Shah (IT Manager · C002, it.manager@demo-company.com)
-              </div>
-            </div>
-          </div>
-        `;
-        setTimeout(() => {
-          appendChatBubble('assistant', itHtml);
-          if (sendBtn) sendBtn.disabled = false;
-        }, 250);
+      if (lower.includes('task 1') || lower.includes('sso') || lower.includes('mfa')) {
+        runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(1));
         return;
       }
 
-      // 4. "Where can I find the GitHub access guide?"
-      if (lower.includes('github') || lower.includes('github access')) {
-        const ghHtml = `
-          <div>
-            <div style="font-weight: 800; font-size: 0.95rem; color: #38bdf8; margin-bottom: 6px;">
-              🐙 GitHub Access Guide & Repository Setup
-            </div>
-            <div style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.35); padding: 10px 14px; border-radius: 8px; font-size: 0.84rem; line-height: 1.55;">
-              <div style="font-size: 0.95rem; font-weight: 800; color: #f8fafc;">Resource R005: GitHub Access Guide</div>
-              <div style="color: #cbd5e1; font-size: 0.78rem;">Category: IT / Engineering · Applicable to Engineering & Data roles</div>
-              <div style="margin-top: 6px;">
-                🔗 <strong>Direct Resource Link:</strong> <a href="/resources/github-access" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: 700;">/resources/github-access</a><br>
-                📝 <strong>Description:</strong> Instructions for requesting, authenticating MFA, and joining company repositories.<br>
-                ✅ <strong>Related Task:</strong> Task T014: Set up GitHub access (Day 1, High Priority).
-              </div>
-            </div>
-          </div>
-        `;
-        setTimeout(() => {
-          appendChatBubble('assistant', ghHtml);
-          if (sendBtn) sendBtn.disabled = false;
-        }, 250);
+      if (lower.includes('task 2') || lower.includes('agreement') || lower.includes('nda')) {
+        runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(2));
         return;
       }
 
-      // 5. "What tasks are mandatory?"
-      if (lower.includes('mandatory') || lower.includes('required')) {
-        const mandTasks = tasks.filter(t => t.isMandatory || t.priority === 'High');
-        let mandHtml = `
-          <div>
-            <div style="font-weight: 800; font-size: 0.95rem; color: #f87171; margin-bottom: 6px;">
-              ★ Mandatory Compliance & Security Tasks (${mandTasks.length} Tasks)
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.82rem;">
-        `;
-        mandTasks.slice(0, 7).forEach(t => {
-          const isDone = t.status === 'Completed';
-          mandHtml += `
-            <div style="background: rgba(239, 68, 68, 0.1); border-left: 3px solid #ef4444; padding: 6px 10px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
-              <span>${isDone ? '✅' : '🔴'} <strong>${t.taskId}</strong>: ${t.taskName} (${t.day})</span>
-              <span style="font-size: 0.7rem; font-weight: 700; color: ${isDone ? '#10b981' : '#f87171'};">${t.status}</span>
-            </div>
-          `;
-        });
-        mandHtml += `</div></div>`;
-        setTimeout(() => {
-          appendChatBubble('assistant', mandHtml);
-          if (sendBtn) sendBtn.disabled = false;
-        }, 250);
+      if (lower.includes('task 3') || (lower.includes('sync') && lower.includes('buddy')) || lower.includes('1:1')) {
+        runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(3));
         return;
       }
 
-      // 6. "What is my current onboarding progress?"
-      if (lower.includes('progress') || lower.includes('how far') || lower.includes('status')) {
-        const progHtml = `
-          <div>
-            <div style="font-weight: 800; font-size: 0.95rem; color: #f8fafc; margin-bottom: 6px;">
-              📊 Live Onboarding Progress Telemetry
-            </div>
-            <div style="background: rgba(255,255,255,0.08); padding: 12px; border-radius: 8px; font-size: 0.84rem; line-height: 1.6;">
-              <div>Employee: <strong>${currentEmp.name}</strong> (${currentEmp.role})</div>
-              <div>Cleared Tasks: <strong>${metrics.completedTasks} of ${metrics.totalTasks}</strong></div>
-              <div>Remaining Tasks: <strong>${metrics.pendingTasks}</strong></div>
-              <div style="margin-top: 8px; font-size: 1.1rem; font-weight: 800; color: #34d399;">
-                Overall Readiness: ${metrics.percentage}%
-              </div>
-            </div>
-          </div>
-        `;
-        setTimeout(() => {
-          appendChatBubble('assistant', progHtml);
-          if (sendBtn) sendBtn.disabled = false;
-        }, 250);
+      if (lower.includes('task 4') || lower.includes('tunnel') || (lower.includes('vpn') && lower.includes('explain'))) {
+        runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(4));
         return;
       }
 
-      // Backend NVIDIA Copilot API call with grounding
-      try {
-        const base = getApiBaseUrl();
-        const res = await fetch(`${base}/api/v1/ai/nvidia-copilot`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            query,
-            employeeId: currentLiveEmployeeId,
-            role: currentEmp.role,
-            buddyName: currentEmp.buddy?.name || 'Dhruv Agarwal',
-            hrName: 'Priya Nair'
-          })
-        });
-        if (res.ok) {
-          const data = await res.json();
-          appendChatBubble('assistant', data.data?.answer || data.answer);
-        } else {
-          throw new Error('Backend AI offline');
+      if (lower.includes('task 5') || lower.includes('repo') || (lower.includes('github') && lower.includes('explain'))) {
+        runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(5));
+        return;
+      }
+
+      if (lower.includes('stuck') || lower.includes('blocked') || lower.includes('help me') || lower.includes('issue')) {
+        runCopilotResponseWithThinking(query, getStuckTroubleshootingResponseHtml);
+        return;
+      }
+
+      // General free-form AI query: calls backend /api/v1/ai/nvidia-copilot (NVIDIA LLM in background) with 3.5s thinking state
+      runCopilotResponseWithThinking(query, async () => {
+        const currentEmp = currentLiveDashboard?.employee || { name: 'Aarav Sharma', role: 'Software Engineer', buddy: { name: 'Dhruv Agarwal' } };
+        const comp = currentLiveDashboard?.company || { name: 'TechNova' };
+
+        try {
+          const base = getApiBaseUrl();
+          const res = await fetch(`${base}/api/v1/ai/nvidia-copilot`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              query,
+              employeeId: currentLiveEmployeeId,
+              role: currentEmp.role,
+              company: comp.name,
+              buddyName: currentEmp.buddy?.name || 'Dhruv Agarwal',
+              hrName: 'Priya Nair'
+            })
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            const ans = data.data?.answer || data.answer;
+            if (ans) {
+              return `
+                <div>
+                  <div style="font-size: 0.84rem; color: #f8fafc; line-height: 1.6; white-space: pre-wrap;">${escapeHtml(ans)}</div>
+                  <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.72rem; color: #94a3b8; display: flex; align-items: center; justify-content: space-between;">
+                    <span>⚡ AI Onboarding Intelligence</span>
+                    <button class="copilot-chip" style="font-size: 0.68rem; padding: 2px 7px;" onclick="handleChatOption('contacts')">📞 Contacts</button>
+                  </div>
+                </div>
+              `;
+            }
+          }
+        } catch (err) {
+          // quiet fallback
         }
-      } catch (err) {
-        appendChatBubble('assistant', `I am here to guide your onboarding as a ${currentEmp.role}. You currently have ${metrics.pendingTasks} pending tasks. Reach out to buddy ${currentEmp.buddy?.name || 'Dhruv Agarwal'} or HR Partner Priya Nair (+91 80 6789 89912) anytime!`);
-      } finally {
-        if (sendBtn) sendBtn.disabled = false;
-      }
+
+        // High quality grounded fallback if backend offline
+        return `
+          <div>
+            <div style="font-size: 0.84rem; color: #f8fafc; line-height: 1.6;">
+              As a <strong>${escapeHtml(currentEmp.role)}</strong> at <strong>${escapeHtml(comp.name)}</strong>, you are currently in your Day 1 onboarding phase. You can check your pending roadmap tasks, connect with your buddy <strong>${escapeHtml(currentEmp.buddy?.name || 'Dhruv Agarwal')}</strong>, or contact HR partner <strong>Priya Nair (+91 80 6789 89912)</strong> for any assistance!
+            </div>
+            <div style="margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;">
+              <button class="chat-action-chip" onclick="handleChatOption('contacts')">📞 Contacts</button>
+              <button class="chat-action-chip" onclick="handleChatOption('checklist')">📋 Checklist</button>
+              <button class="chat-action-chip" onclick="explainTaskById(1)">💡 Task 1</button>
+            </div>
+          </div>
+        `;
+      });
     }
 
     // ==============================================================

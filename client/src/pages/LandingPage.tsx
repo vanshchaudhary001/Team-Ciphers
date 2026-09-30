@@ -47,8 +47,12 @@ export const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 selection:bg-indigo-500 selection:text-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-32 bg-gradient-to-b from-white via-indigo-50/20 to-slate-50 border-b border-slate-200">
+      <section className="relative overflow-hidden pt-12 pb-20 lg:pt-16 lg:pb-32 bg-gradient-to-b from-white via-indigo-50/20 to-slate-50 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <div className="flex justify-center mb-6">
+            <img src="/start-smart-logo-transparent.png" alt="Start Smart - Building Your Future" className="h-20 sm:h-24 object-contain drop-shadow-md" />
+          </div>
+
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-bold uppercase tracking-wider mb-6 shadow-2xs">
             <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
             AI-Powered, Dependency-Aware Employee Onboarding Platform
@@ -77,160 +81,86 @@ export const LandingPage: React.FC = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Card 1: I'm a New Joiner */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {/* Option 1: Already a Company Member */}
               <a
-                href="/new-joiner.html"
-                className="group relative bg-white border border-slate-200 hover:border-indigo-400 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
+                href="/index.html"
+                className="group relative bg-white border border-slate-200 hover:border-indigo-500 rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
               >
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 rounded-t-3xl" />
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors flex items-center justify-center">
-                      <UserPlus className="w-6 h-6" />
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors flex items-center justify-center">
+                      <Building2 className="w-7 h-7" />
                     </div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-full">
-                      Employee Portal
+                    <span className="text-xs font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
+                      Enrolled Organization
                     </span>
                   </div>
-                  <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-indigo-600 transition-colors">
-                    I'm a New Joiner
+                  <h3 className="text-2xl font-black text-slate-900 group-hover:text-indigo-600 transition-colors">
+                    Already a Company Member
                   </h3>
-                  <p className="mt-2 text-xs text-slate-500 leading-relaxed">
-                    Routes to the employee onboarding checklist and registration portal.
+                  <p className="mt-3 text-sm text-slate-500 leading-relaxed">
+                    I am an employee, HR partner, mentor buddy, or administrator of an enrolled organization (Microsoft, Amazon, Google, NVIDIA, etc.).
                   </p>
-                  <div className="mt-4 pt-4 border-t border-slate-100 space-y-1.5 text-[11px] text-slate-600 font-medium">
-                    <div className="flex items-center gap-1.5 text-emerald-600">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Company & branch selector
+                  <div className="mt-6 pt-5 border-t border-slate-100 space-y-2.5 text-xs text-slate-700 font-medium">
+                    <div className="flex items-center gap-2 text-emerald-600">
+                      <CheckCircle2 className="w-4 h-4 shrink-0" /> Select from enrolled companies (Microsoft, Google, Amazon, NVIDIA)
                     </div>
-                    <div className="flex items-center gap-1.5 text-emerald-600">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Assigned Buddy & HR contacts
+                    <div className="flex items-center gap-2 text-emerald-600">
+                      <CheckCircle2 className="w-4 h-4 shrink-0" /> Automatic role detection (Joiner, HR, Buddy, Admin)
                     </div>
-                    <div className="flex items-center gap-1.5 text-emerald-600">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Interactive "Work for Today"
+                    <div className="flex items-center gap-2 text-emerald-600">
+                      <CheckCircle2 className="w-4 h-4 shrink-0" /> Interactive AI Onboarding Chatbot for new joiners
                     </div>
                   </div>
                 </div>
-                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-700 group-hover:text-indigo-600">
-                  <span>Start Onboarding</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <div className="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between text-sm font-bold text-indigo-600">
+                  <span>Select Your Company</span>
+                  <div className="w-8 h-8 rounded-full bg-indigo-50 group-hover:bg-indigo-600 group-hover:text-white transition-colors flex items-center justify-center">
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                  </div>
                 </div>
               </a>
 
-              {/* Card 2: Existing Company */}
+              {/* Option 2: Register a Company */}
               <a
-                href="/existing-company.html"
-                className="group relative bg-white border border-slate-200 hover:border-blue-400 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
+                href="/index.html"
+                className="group relative bg-white border border-slate-200 hover:border-emerald-500 rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
               >
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-blue-600 rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-green-500 rounded-t-3xl" />
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors flex items-center justify-center">
-                      <Building2 className="w-6 h-6" />
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors flex items-center justify-center">
+                      <PlusCircle className="w-7 h-7" />
                     </div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full">
-                      Org Login
+                    <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+                      New Organization
                     </span>
                   </div>
-                  <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">
-                    Existing Company
-                  </h3>
-                  <p className="mt-2 text-xs text-slate-500 leading-relaxed">
-                    Routes to the standard login for enrolled organizations.
-                  </p>
-                  <div className="mt-4 pt-4 border-t border-slate-100 space-y-1.5 text-[11px] text-slate-600 font-medium">
-                    <div className="flex items-center gap-1.5 text-emerald-600">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Okta / Azure AD SAML SSO
-                    </div>
-                    <div className="flex items-center gap-1.5 text-emerald-600">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Tenant domain credentials
-                    </div>
-                    <div className="flex items-center gap-1.5 text-emerald-600">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Organization directory sync
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-700 group-hover:text-blue-600">
-                  <span>Company Sign In</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </a>
-
-              {/* Card 3: Register a Company */}
-              <a
-                href="/register.html"
-                className="group relative bg-white border border-slate-200 hover:border-emerald-400 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
-              >
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors flex items-center justify-center">
-                      <PlusCircle className="w-6 h-6" />
-                    </div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full">
-                      Setup Master
-                    </span>
-                  </div>
-                  <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">
+                  <h3 className="text-2xl font-black text-slate-900 group-hover:text-emerald-600 transition-colors">
                     Register a Company
                   </h3>
-                  <p className="mt-2 text-xs text-slate-500 leading-relaxed">
-                    Routes to the master setup form for new organizations.
+                  <p className="mt-3 text-sm text-slate-500 leading-relaxed">
+                    Deploy a master onboarding workspace for a new company. Set up departments, workflow pipelines, and automatic buddy pairing.
                   </p>
-                  <div className="mt-4 pt-4 border-t border-slate-100 space-y-1.5 text-[11px] text-slate-600 font-medium">
-                    <div className="flex items-center gap-1.5 text-emerald-600">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Department workflow blueprints
+                  <div className="mt-6 pt-5 border-t border-slate-100 space-y-2.5 text-xs text-slate-700 font-medium">
+                    <div className="flex items-center gap-2 text-emerald-600">
+                      <CheckCircle2 className="w-4 h-4 shrink-0" /> Configure company domain &amp; admin account
                     </div>
-                    <div className="flex items-center gap-1.5 text-emerald-600">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> SLA & escalation rules
+                    <div className="flex items-center gap-2 text-emerald-600">
+                      <CheckCircle2 className="w-4 h-4 shrink-0" /> Engineering, Sales, &amp; Corporate blueprints
                     </div>
-                    <div className="flex items-center gap-1.5 text-emerald-600">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> 14-day enterprise pilot
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-700 group-hover:text-emerald-600">
-                  <span>Register Workspace</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </a>
-
-              {/* Card 4: I'm a Buddy (Manager / HR Admin) */}
-              <a
-                href="/buddy.html"
-                className="group relative bg-white border border-slate-200 hover:border-purple-400 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
-              >
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-purple-600 rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-purple-50 border border-purple-100 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors flex items-center justify-center">
-                      <UserCheck className="w-6 h-6" />
-                    </div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded-full">
-                      Staff Portal
-                    </span>
-                  </div>
-                  <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-purple-600 transition-colors">
-                    I'm a Buddy (Manager / HR Admin)
-                  </h3>
-                  <p className="mt-2 text-xs text-slate-500 leading-relaxed">
-                    Routes to the staff mentoring, escalation, and management dashboard.
-                  </p>
-                  <div className="mt-4 pt-4 border-t border-slate-100 space-y-1.5 text-[11px] text-slate-600 font-medium">
-                    <div className="flex items-center gap-1.5 text-emerald-600">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Assigned mentee roster
-                    </div>
-                    <div className="flex items-center gap-1.5 text-emerald-600">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Live bottleneck escalation
-                    </div>
-                    <div className="flex items-center gap-1.5 text-emerald-600">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> 1:1 syncs & approval actions
+                    <div className="flex items-center gap-2 text-emerald-600">
+                      <CheckCircle2 className="w-4 h-4 shrink-0" /> 14-day enterprise pilot trial
                     </div>
                   </div>
                 </div>
-                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-700 group-hover:text-purple-600">
-                  <span>Open Staff Portal</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <div className="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between text-sm font-bold text-emerald-600">
+                  <span>Register New Workspace</span>
+                  <div className="w-8 h-8 rounded-full bg-emerald-50 group-hover:bg-emerald-600 group-hover:text-white transition-colors flex items-center justify-center">
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                  </div>
                 </div>
               </a>
             </div>

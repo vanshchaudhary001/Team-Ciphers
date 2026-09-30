@@ -6,6 +6,8 @@
   <title>New Joiner Portal — Enterprise Onboarding Gateway</title>
   <meta name="description" content="Employee onboarding registration and day-one dashboard. Select your registered company, field of work, branch office, and view your assigned buddy, HR partner, and today's work checklist.">
   
+  <link rel="icon" type="image/png" href="start-smart-icon.png">
+  <link rel="shortcut icon" href="start-smart-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -18,17 +20,15 @@
   <header class="app-header">
     <div class="header-container">
       <div class="brand-wrapper">
-        <a href="index.html" class="brand-icon" title="Return to Portal Gateway">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-          </svg>
+        <a href="index.html" class="brand-icon" title="Return to Portal Gateway" style="background: #ffffff; border: 1px solid rgba(0, 55, 176, 0.15); width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; padding: 2px;">
+          <img src="start-smart-icon.png" alt="StartSmart Logo" style="width: 100%; height: 100%; object-fit: contain;">
         </a>
         <div class="brand-text">
           <div class="brand-title">
-            Enterprise<span>Portal</span>
-            <span class="brand-badge">Joiner Hub</span>
+            Start<span style="color: #0088cc;">Smart</span>
+            <span class="brand-badge" style="background: rgba(0, 136, 204, 0.1); color: #0088cc; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 6px;">Joiner Hub</span>
           </div>
-          <span class="brand-tagline">New Employee Onboarding & Day-1 Activation</span>
+          <span class="brand-tagline">Building Your Future · Day-1 Activation</span>
         </div>
       </div>
 
@@ -482,23 +482,23 @@
           <div style="margin-top: 32px; background: linear-gradient(135deg, #090d16, #0f172a); border: 1px solid #1e293b; border-radius: var(--radius-xl); padding: 28px; color: #ffffff; box-shadow: var(--shadow-lg);">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
               <div style="display: flex; align-items: center; gap: 14px;">
-                <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: linear-gradient(135deg, #76b900, #4c7c00); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem; color: #fff; box-shadow: 0 4px 14px rgba(118, 185, 0, 0.4);">
-                  ⚡
+                <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: #ffffff; border: 1px solid rgba(99, 102, 241, 0.4); display: flex; align-items: center; justify-content: center; padding: 4px; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45);">
+                  <img src="copilot-icon.png" onerror="this.src='/copilot-icon.png'" alt="AI Copilot Logo" style="width: 100%; height: 100%; object-fit: contain; display: block;">
                 </div>
                 <div>
                   <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                    <h3 style="font-size: 1.15rem; font-weight: 800; color: #ffffff;">NVIDIA AI Onboarding Copilot</h3>
-                    <span style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; background: rgba(118, 185, 0, 0.15); color: #76b900; border: 1px solid rgba(118, 185, 0, 0.35); padding: 2px 10px; border-radius: 9999px;">
-                      NVIDIA NIM Active · meta/llama-3.2-11b
+                    <h3 style="font-size: 1.15rem; font-weight: 800; color: #ffffff;">AI Onboarding Copilot</h3>
+                    <span style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); padding: 2px 10px; border-radius: 9999px;">
+                      Live Connected
                     </span>
                   </div>
                   <p style="font-size: 0.78rem; color: #94a3b8; margin-top: 2px;">
-                    Enterprise intelligence microservice configured with your role, company context, and Day-1 roadmap.
+                    Enterprise intelligence assistant configured with your role, company context, and Day-1 roadmap.
                   </p>
                 </div>
               </div>
-              <div style="font-size: 0.72rem; color: #64748b; font-family: var(--font-mono); background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.1);">
-                Endpoint: integrate.api.nvidia.com
+              <div style="font-size: 0.72rem; color: #94a3b8; font-family: var(--font-mono); background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.1);">
+                Live Workspace Intelligence
               </div>
             </div>
 
@@ -524,7 +524,7 @@
                 type="text" 
                 id="copilot-input" 
                 class="styled-input" 
-                placeholder="Ask NVIDIA AI Copilot anything about your onboarding, tasks, buddy, or policies..."
+                placeholder="Ask AI Copilot anything about your onboarding, tasks, buddy, or policies..." 
                 style="background: #1e293b; border-color: #334155; color: #ffffff; flex: 1;"
                 onkeydown="if(event.key==='Enter') sendCopilotQuery();"
               >
@@ -532,9 +532,9 @@
                 id="copilot-submit-btn" 
                 onclick="sendCopilotQuery()" 
                 class="confirm-launch-btn" 
-                style="margin-top: 0; width: auto; background: linear-gradient(135deg, #76b900, #5c9300); padding: 12px 24px; white-space: nowrap; font-size: 0.88rem;"
+                style="margin-top: 0; width: auto; background: linear-gradient(135deg, #4f46e5, #7c3aed); padding: 12px 24px; white-space: nowrap; font-size: 0.88rem;"
               >
-                <span>Ask AI</span>
+                <span>Ask Copilot</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
               </button>
             </div>
@@ -542,11 +542,11 @@
             <!-- Response Display Box -->
             <div id="copilot-response-box" style="display: none; background: rgba(15, 23, 42, 0.85); border: 1px solid #334155; border-radius: var(--radius-lg); padding: 20px;">
               <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
-                <span style="font-size: 0.75rem; font-weight: 700; color: #76b900; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;">
-                  <span>⚡</span> NVIDIA NIM Copilot Response
+                <span style="font-size: 0.75rem; font-weight: 700; color: #818cf8; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;">
+                  <span>⚡</span> AI Copilot Response
                 </span>
                 <span id="copilot-model-tag" style="font-size: 0.7rem; color: #94a3b8; font-family: var(--font-mono);">
-                  meta/llama-3.2-11b-vision-instruct
+                  Enterprise Copilot Engine
                 </span>
               </div>
               <div id="copilot-answer-text" style="font-size: 0.88rem; color: #f1f5f9; line-height: 1.65; white-space: pre-wrap;">
@@ -854,13 +854,26 @@
       if (!query) return;
 
       btn.disabled = true;
-      btn.innerHTML = '<span>Thinking...</span> ⏳';
+      btn.innerHTML = '<span>Analyzing...</span> ⏳';
       responseBox.style.display = 'block';
-      answerText.innerHTML = '<span style="color: #94a3b8;">Querying NVIDIA NIM meta/llama-3.2-11b microservice...</span>';
+      answerText.innerHTML = '<span style="color: #94a3b8;">🧠 Reading enterprise workspace & directory graph...</span>';
 
       try {
         const comp = companiesData[selectedCompanyKey] || companiesData.google;
         let result = null;
+
+        const captionTimer1 = setTimeout(() => {
+          answerText.innerHTML = '<span style="color: #94a3b8;">🔍 Analyzing tasks, dependencies & contact owners...</span>';
+        }, 1200);
+
+        const captionTimer2 = setTimeout(() => {
+          answerText.innerHTML = '<span style="color: #94a3b8;">✨ Formulating personalized Day-1 guidance...</span>';
+        }, 2400);
+
+        // Enforce 3.5s AI loading delay requested by user
+        await new Promise(r => setTimeout(r, 3500));
+        clearTimeout(captionTimer1);
+        clearTimeout(captionTimer2);
 
         // Try backend endpoint first
         try {
@@ -883,10 +896,10 @@
             result = data.data;
           }
         } catch (e) {
-          console.debug('Backend unavailable, falling back to direct NVIDIA NIM API call');
+          console.debug('Backend unavailable, falling back to direct background inference');
         }
 
-        // Direct fallback to NVIDIA NIM API
+        // Direct fallback
         if (!result) {
           const directRes = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
             method: 'POST',
@@ -899,7 +912,7 @@
               messages: [
                 {
                   role: 'system',
-                  content: `You are Start Smart AI Onboarding Copilot powered by NVIDIA NIM inference. Help a new employee joining as ${selectedField} at ${comp.name} (${selectedBranch}). Assigned buddy is ${comp.buddy.name} and HR partner is ${comp.hr.name}. Keep answers concise, helpful, and under 120 words.`
+                  content: `You are Start Smart AI Onboarding Copilot. Help a new employee joining as ${selectedField} at ${comp.name} (${selectedBranch}). Assigned buddy is ${comp.buddy.name} and HR partner is ${comp.hr.name}. Keep answers concise, helpful, and under 120 words.`
                 },
                 { role: 'user', content: query }
               ],
@@ -910,24 +923,25 @@
             const directData = await directRes.json();
             result = {
               answer: directData.choices[0].message.content,
-              model: 'meta/llama-3.2-11b-vision-instruct',
-              poweredBy: 'NVIDIA NIM (Microservice Inference)'
+              model: 'Enterprise Intelligence Copilot',
+              poweredBy: 'Day-1 Grounded Engine'
             };
           }
         }
 
         if (result && result.answer) {
           answerText.textContent = result.answer;
-          modelTag.textContent = `${result.model} · ${result.poweredBy || 'NVIDIA NIM'}`;
-          showNotification('NVIDIA AI Copilot responded');
+          modelTag.textContent = 'Grounded · Live Connected';
+          showNotification('AI Copilot responded');
         } else {
-          answerText.textContent = `As ${selectedField} at ${comp.name}, your primary focus today is completing SSO identity enrollment, syncing with your buddy ${comp.buddy.name} at 2:00 PM, and connecting with HR Partner ${comp.hr.name}.`;
+          answerText.textContent = `As ${selectedField} at ${comp.name}, your primary focus today is completing SSO identity enrollment (Task 1), syncing with your buddy ${comp.buddy.name} at 2:00 PM, and connecting with HR Partner ${comp.hr.name}.`;
+          modelTag.textContent = 'Grounded · Live Connected';
         }
       } catch (err) {
-        answerText.textContent = `Error connecting to NVIDIA AI: ${err.message}. Please verify network connectivity.`;
+        answerText.textContent = `Error connecting to AI Copilot: ${err.message}. Please check your connection.`;
       } finally {
         btn.disabled = false;
-        btn.innerHTML = '<span>Ask AI</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
+        btn.innerHTML = '<span>Ask Copilot</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
       }
     }
 

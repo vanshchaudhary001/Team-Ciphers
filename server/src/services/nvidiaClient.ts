@@ -124,7 +124,7 @@ ${context?.pendingTasks ? `- Pending Tasks: ${context.pendingTasks.join(', ')}` 
       return {
         answer: aiResponse,
         model: this.defaultModel,
-        poweredBy: 'NVIDIA NIM (Microservice Inference)',
+        poweredBy: 'AI Onboarding Copilot',
       };
     }
 

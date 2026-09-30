@@ -188,7 +188,7 @@ export const UnstickModal: React.FC<UnstickModalProps> = ({
                       Intelligence Diagnosis
                     </span>
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-2xs">
-                      ⚡ Powered by {result.aiProvider || 'NVIDIA NIM (meta/llama-3.2-11b)'}
+                      ⚡ Powered by {result.aiProvider || 'AI Onboarding Copilot'}
                     </span>
                   </div>
                   <p className="text-slate-700 text-xs sm:text-sm">{result.answer}</p>
