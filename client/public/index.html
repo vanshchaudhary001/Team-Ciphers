@@ -2265,7 +2265,6 @@
     }
 
     let dailyTasksState = loadTasksState();
-    let currentTaskFilter = 'all';
 
     // ==============================================================
     // 5 STRUCTURED DATASETS LIVE INTEGRATION LAYER
@@ -2275,9 +2274,7 @@
     // ==============================================================
     // 40-TASK ROLE-BASED ONBOARDING & HR SYNCHRONIZATION ENGINE
     // ==============================================================
-    const fs = require('fs');
-const path = require('path');
-
+    
 const ALL_40_TASKS = [
   { taskId: 'T001', taskName: 'Activate company account', applicableRole: 'All', department: 'All', day: 'Day 1', priority: 'High', assignedBy: 'IT', resourceId: 'R002', isMandatory: true, duration: '20 mins', desc: 'Activate corporate single sign-on credentials and verify user directory profile.' },
   { taskId: 'T002', taskName: 'Set up MFA', applicableRole: 'All', department: 'All', day: 'Day 1', priority: 'High', assignedBy: 'IT', resourceId: 'R003', isMandatory: true, duration: '15 mins', desc: 'Configure corporate multi-factor authenticator and register security passkey.' },
@@ -5376,105 +5373,6 @@ const ALL_40_TASKS = [
       await loadLiveEmployeeDashboard(employeeId);
       goToStep('step-joiner-chatbot');
       showNotification(`Viewing live dashboard for employee ${employeeId}`);
-    }
-
-    // Render HR Task Inventory Table with 1-Click Remove
-    function renderHRTaskInventory() {
-      const tbody = document.getElementById('hr-task-inventory-body');
-      if (!tbody) return;
-
-      tbody.innerHTML = '';
-      const tasksToShow = (currentLiveDashboard && currentLiveDashboard.tasks) ? currentLiveDashboard.tasks : dailyTasksState;
-
-      if (tasksToShow.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="6" style="text-align: center; padding: 24px; color: var(--color-slate-500);">
-              No active tasks in fresher checklist. Use the form below to add onboarding tasks.
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      tasksToShow.forEach(task => {
-        const tr = document.createElement('tr');
-        const tId = task.taskId || task.id;
-        const tTitle = task.taskName || task.title;
-        const isDone = task.status === 'Completed' || task.done;
-        tr.innerHTML = `
-          <td style="font-family: var(--font-mono); font-weight: 700; color: var(--color-slate-500);">#${tId}</td>
-          <td>
-            <span class="manual-task-tag tag-engineering">${task.department || task.tag || 'Task'}</span>
-          </td>
-          <td>
-            <div style="font-weight: 700; color: var(--color-slate-900);">${tTitle}</div>
-            <div style="font-size: 0.75rem; color: var(--color-slate-500); margin-top: 2px;">${task.description || task.desc || ''}</div>
-          </td>
-          <td style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-slate-600);">${task.duration || '20m'}</td>
-          <td>
-            <span style="font-size: 0.75rem; font-weight: 700; color: ${isDone ? '#059669' : '#d97706'};">
-              ${isDone ? '● Completed' : '● In Progress'}
-            </span>
-          </td>
-          <td style="text-align: right;">
-            <button class="btn-remove-task" onclick="removeTaskByHR('${tId}')" title="Remove task from fresher onboarding">
-              🗑️ Remove Task
-            </button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function removeTaskByHR(taskId) {
-      showNotification(`Task #${taskId} removed by HR Operations.`);
-    }
-
-    async function handleAddNewTaskByHR(event) {
-      if (event) event.preventDefault();
-      const titleInput = document.getElementById('new-task-title');
-      const catInput = document.getElementById('new-task-category');
-      const durationInput = document.getElementById('new-task-duration');
-      const descInput = document.getElementById('new-task-desc');
-
-      const title = titleInput.value.trim();
-      const category = catInput.value;
-      const duration = durationInput ? durationInput.value.trim() : '20 mins';
-      const desc = descInput ? descInput.value.trim() : '';
-
-      if (!title) return;
-
-      const applicableRole = category === 'Engineering' ? 'Software Engineer' : (category === 'Design' ? 'UI/UX Designer' : (category === 'Data' ? 'Data Analyst' : 'All'));
-
-      try {
-        const base = getApiBaseUrl();
-        const res = await fetch(`${base}/api/tasks`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            taskName: title,
-            applicableRole,
-            department: category,
-            day: 'Day 1',
-            priority: 'High',
-            assignedBy: 'HR Operations',
-            description: desc || `HR assigned task for ${category}`
-          })
-        });
-
-        if (res.ok) {
-          showNotification(`➕ Task created: "${title}" and assigned across cohort!`);
-          titleInput.value = '';
-          if (descInput) descInput.value = '';
-          await renderLiveHRPortal();
-          if (currentLiveEmployeeId) {
-            await loadLiveEmployeeDashboard(currentLiveEmployeeId);
-          }
-        }
-      } catch (err) {
-        showNotification('⚠️ Server network error adding task.');
-      }
     }
 
     function applyTaskPreset(type) {
