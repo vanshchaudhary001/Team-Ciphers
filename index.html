@@ -953,187 +953,29 @@
 
           <!-- SECTION 1: Team Members & Direct Contact Numbers (Manual View) -->
           <div class="dashboard-section-card" id="section-contacts-directory">
-            <div class="section-card-header">
-              <div>
-                <div class="section-badge">Direct Access Directory</div>
-                <h2 class="section-title">Team Members &amp; Key HR Contacts</h2>
-                <p class="section-desc">Reach out directly via in-app VoIP call, in-app messaging, direct phone lines, or Microsoft Teams.</p>
+            <div class="section-card-header" style="display: flex; flex-direction: column; gap: 14px; align-items: stretch;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+                <div>
+                  <div class="section-badge">Action Required</div>
+                  <h2 class="section-title">Today's Work & Onboarding Checklist</h2>
+                  <p class="section-desc">Toggle tasks when completed. All changes synchronize in real-time with your AI Copilot and HR records. Need detailed step-by-step guidance? Ask your AI Copilot.</p>
+                </div>
               </div>
-              <span class="section-counter-badge" id="contacts-active-counter">Select from Dropdown</span>
-            </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-top: 1px solid var(--color-slate-100); padding-top: 12px;">
+                <!-- Day Filter Tabs -->
+                <div class="day-filter-bar">
+                  <button type="button" class="btn-day-pill active" id="day-pill-day1" onclick="filterByDay('Day 1')">Day 1 (Today)</button>
+                  <button type="button" class="btn-day-pill" id="day-pill-day2" onclick="filterByDay('Day 2')">Day 2</button>
+                  <button type="button" class="btn-day-pill" id="day-pill-day3" onclick="filterByDay('Day 3')">Day 3</button>
+                  <button type="button" class="btn-day-pill" id="day-pill-all" onclick="filterByDay('all')">All Days</button>
+                </div>
 
-            <!-- Contacts Interactive Dropdown Control Bar -->
-            <div class="contacts-dropdown-control-bar">
-              <div class="contacts-dropdown-picker">
-                <label for="contact-directory-select" class="contacts-dropdown-label">
-                  <span class="material-symbols-outlined" style="font-size: 19px; color: var(--stitch-primary);">contacts</span>
-                  <span>Select Contact to Display:</span>
-                </label>
-                <div class="styled-dropdown-select-wrapper">
-                  <select id="contact-directory-select" class="styled-contact-select" onchange="onContactDropdownSelect(this.value)">
-                    <option value="none">-- Click dropdown to select contact --</option>
-                    <option value="hr">👤 Priya Sharma (Lead HR People Partner)</option>
-                    <option value="buddy">🤝 Rahul Pandey (Assigned Buddy Mentor)</option>
-                    <option value="it">🛠️ Microsoft IT Helpdesk (24/7 Operations &amp; Security)</option>
-                    <option value="all">👥 Show All Key Contacts (3)</option>
-                  </select>
-                  <span class="material-symbols-outlined select-chevron">expand_more</span>
+                <!-- Status Filter Pills -->
+                <div style="display: flex; gap: 6px;">
+                  <button class="btn-filter-pill active" id="filter-btn-all" onclick="filterManualTasks('all')">All (<span id="count-all-tasks">0</span>)</button>
+                  <button class="btn-filter-pill" id="filter-btn-pending" onclick="filterManualTasks('pending')">Pending (<span id="count-pending-tasks">0</span>)</button>
+                  <button class="btn-filter-pill" id="filter-btn-done" onclick="filterManualTasks('done')">Done (<span id="count-done-tasks">0</span>)</button>
                 </div>
-              </div>
-              <div class="contacts-quick-pills">
-                <button type="button" class="contact-pill-btn active" id="pill-none" onclick="setContactDropdownFilter('none')">📁 Collapsed</button>
-                <button type="button" class="contact-pill-btn" id="pill-hr" onclick="setContactDropdownFilter('hr')">HR Partner</button>
-                <button type="button" class="contact-pill-btn" id="pill-buddy" onclick="setContactDropdownFilter('buddy')">Buddy Mentor</button>
-                <button type="button" class="contact-pill-btn" id="pill-it" onclick="setContactDropdownFilter('it')">IT Desk</button>
-                <button type="button" class="contact-pill-btn" id="pill-all" onclick="setContactDropdownFilter('all')">View All (3)</button>
-              </div>
-            </div>
-
-            <!-- Collapsed Placeholder (Shown when 'none' is selected) -->
-            <div id="contacts-collapsed-placeholder" class="contacts-collapsed-placeholder" onclick="setContactDropdownFilter('all')">
-              <div class="placeholder-icon-ring">
-                <span class="material-symbols-outlined" style="font-size: 26px; color: var(--stitch-primary);">contact_phone</span>
-              </div>
-              <div class="placeholder-text-block">
-                <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--color-slate-900); margin-bottom: 2px;">
-                  Direct Contacts Directory Collapsed
-                </h4>
-                <p style="font-size: 0.8rem; color: var(--color-slate-500); margin: 0;">
-                  Click the dropdown above or click here to view direct phone lines, initiate an in-app VoIP call, or send an in-app message.
-                </p>
-              </div>
-              <button type="button" class="btn-open-dropdown" onclick="event.stopPropagation(); setContactDropdownFilter('all')">
-                <span>View Contacts ▼</span>
-              </button>
-            </div>
-
-            <!-- Contacts Cards Grid (Filtered dynamically by dropdown) -->
-            <div class="contacts-grid-pro" id="contacts-grid-pro" style="display: none;">
-              <!-- HR Partner Card -->
-              <div class="contact-card-pro hr-glow" id="contact-card-hr">
-                <div class="contact-card-top">
-                  <div class="contact-avatar hr-avatar">PS</div>
-                  <div class="contact-header-info">
-                    <span class="contact-role-tag hr-tag">People Operations (HR)</span>
-                    <h3 class="contact-name">Priya Sharma</h3>
-                    <span class="contact-title">Lead HR People Partner · Class of 2020</span>
-                  </div>
-                </div>
-                <div class="contact-phone-block">
-                  <span class="phone-label">DIRECT PHONE LINE</span>
-                  <a href="javascript:void(0)" onclick="openInAppCall('hr')" class="phone-display-btn">
-                    <span class="phone-icon">📞</span>
-                    <strong>+91 (80) 6789-HR01</strong>
-                  </a>
-                </div>
-                <div class="contact-details-list">
-                  <div class="contact-detail-row">
-                    <span class="detail-icon">📧</span>
-                    <span>priya.sharma.hr@microsoft.in</span>
-                  </div>
-                  <div class="contact-detail-row">
-                    <span class="detail-icon">🏢</span>
-                    <span>Executive Tower, Level 4, Desk HR-12</span>
-                  </div>
-                </div>
-                <div class="contact-actions-row">
-                  <button type="button" class="btn-contact-action btn-call" onclick="openInAppCall('hr')">
-                    📞 Direct Call
-                  </button>
-                  <button type="button" class="btn-contact-action btn-inapp-msg" onclick="openInAppMessenger('hr')">
-                    💬 In-App Message
-                  </button>
-                </div>
-              </div>
-
-              <!-- Buddy Mentor Card -->
-              <div class="contact-card-pro buddy-glow" id="contact-card-buddy">
-                <div class="contact-card-top">
-                  <div class="contact-avatar buddy-avatar">RP</div>
-                  <div class="contact-header-info">
-                    <span class="contact-role-tag buddy-tag">Assigned Buddy (Mentor)</span>
-                    <h3 class="contact-name">Rahul Pandey</h3>
-                    <span class="contact-title">Principal Solutions Architect · Joined 2021</span>
-                  </div>
-                </div>
-                <div class="contact-phone-block">
-                  <span class="phone-label">BUDDY DIRECT PHONE LINE</span>
-                  <a href="javascript:void(0)" onclick="openInAppCall('buddy')" class="phone-display-btn buddy-phone">
-                    <span class="phone-icon">📞</span>
-                    <strong>+91 (80) 6789-BUD1</strong>
-                  </a>
-                </div>
-                <div class="contact-details-list">
-                  <div class="contact-detail-row">
-                    <span class="detail-icon">📧</span>
-                    <span>rahul.pandey2021@microsoft.in</span>
-                  </div>
-                  <div class="contact-detail-row highlight-session">
-                    <span class="detail-icon">📅</span>
-                    <strong>1:1 Briefing Today: 2:00 PM IST (Teams Room)</strong>
-                  </div>
-                </div>
-                <div class="contact-actions-row">
-                  <button type="button" class="btn-contact-action btn-call-buddy" onclick="openInAppCall('buddy')">
-                    📞 Direct Call
-                  </button>
-                  <button type="button" class="btn-contact-action btn-inapp-msg" onclick="openInAppMessenger('buddy')">
-                    💬 In-App Message
-                  </button>
-                </div>
-              </div>
-
-              <!-- IT Helpdesk Card -->
-              <div class="contact-card-pro it-glow" id="contact-card-it">
-                <div class="contact-card-top">
-                  <div class="contact-avatar it-avatar">IT</div>
-                  <div class="contact-header-info">
-                    <span class="contact-role-tag it-tag">IT Operations &amp; Security</span>
-                    <h3 class="contact-name">Microsoft IT Helpdesk</h3>
-                    <span class="contact-title">24/7 Identity, Hardware &amp; VPN Support</span>
-                  </div>
-                </div>
-                <div class="contact-phone-block">
-                  <span class="phone-label">TOLL-FREE IT HOTLINE</span>
-                  <a href="javascript:void(0)" onclick="openInAppCall('it')" class="phone-display-btn it-phone">
-                    <span class="phone-icon">📞</span>
-                    <strong>+91 (800) 555-MSFT-IN</strong>
-                  </a>
-                </div>
-                <div class="contact-details-list">
-                  <div class="contact-detail-row">
-                    <span class="detail-icon">🎫</span>
-                    <span>Extension: #4402 (Zero-Trust Priority Access)</span>
-                  </div>
-                  <div class="contact-detail-row">
-                    <span class="detail-icon">⚡</span>
-                    <span>Global SLA: &lt; 15 mins for New Joiners</span>
-                  </div>
-                </div>
-                <div class="contact-actions-row">
-                  <button type="button" class="btn-contact-action btn-call-it" onclick="openInAppCall('it')">
-                    📞 Direct Call
-                  </button>
-                  <button type="button" class="btn-contact-action btn-inapp-msg" onclick="openInAppMessenger('it')">
-                    💬 In-App Message
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- SECTION 2: Daily Tasks & Work Checklist (Manual View) -->
-          <div class="dashboard-section-card">
-            <div class="section-card-header">
-              <div>
-                <div class="section-badge">Action Required</div>
-                <h2 class="section-title">Today's Work / Day 1 Checklist</h2>
-                <p class="section-desc">Toggle tasks when completed. All changes synchronize in real-time with your AI Copilot and HR records. Need detailed step-by-step guidance? Ask your AI Copilot.</p>
-              </div>
-              <div style="display: flex; gap: 8px; align-items: center;">
-                <button class="btn-filter-pill active" id="filter-btn-all" onclick="filterManualTasks('all')">All Tasks (<span id="count-all-tasks">5</span>)</button>
-                <button class="btn-filter-pill" id="filter-btn-pending" onclick="filterManualTasks('pending')">Pending (<span id="count-pending-tasks">3</span>)</button>
-                <button class="btn-filter-pill" id="filter-btn-done" onclick="filterManualTasks('done')">Done (<span id="count-done-tasks">2</span>)</button>
               </div>
             </div>
 
@@ -2268,6 +2110,12 @@
 
     // ==============================================================
     // 5 STRUCTURED DATASETS LIVE INTEGRATION LAYER
+
+    // 5 STRUCTURED DATASETS EMBEDDED DIRECTLY FOR OFFLINE & VERCEL RELIABILITY
+    window.__START_SMART_DATASETS__ = {"employees":[{"employeeId":"E001","name":"Aarav Sharma","role":"Software Engineer","department":"Engineering","location":"Bengaluru","joiningDate":"2026-09-29","managerId":"M001","buddyId":"B001","email":"aarav.sharma@demo-company.com"},{"employeeId":"E002","name":"Diya Singh","role":"Data Analyst","department":"Data","location":"Delhi","joiningDate":"2026-09-30","managerId":"M002","buddyId":"B002","email":"diya.singh@demo-company.com"},{"employeeId":"E003","name":"Rohan Kapoor","role":"UI/UX Designer","department":"Design","location":"Mumbai","joiningDate":"2026-09-30","managerId":"M003","buddyId":"B003","email":"rohan.kapoor@demo-company.com"},{"employeeId":"E004","name":"Ananya Singh","role":"HR Executive","department":"Human Resources","location":"Bengaluru","joiningDate":"2026-09-30","managerId":"M006","buddyId":"B004","email":"ananya.singh@demo-company.com"},{"employeeId":"E005","name":"Kabir Verma","role":"Software Engineer","department":"Engineering","location":"Hyderabad","joiningDate":"2026-10-01","managerId":"M007","buddyId":"B005","email":"kabir.verma@demo-company.com"},{"employeeId":"E006","name":"Meera Iyer","role":"Marketing Executive","department":"Marketing","location":"Mumbai","joiningDate":"2026-10-01","managerId":"M002","buddyId":"B006","email":"meera.iyer@demo-company.com"},{"employeeId":"E007","name":"Arjun Malhotra","role":"DevOps Engineer","department":"Engineering","location":"Pune","joiningDate":"2026-10-01","managerId":"M009","buddyId":"B007","email":"arjun.malhotra@demo-company.com"},{"employeeId":"E008","name":"Siya Gupta","role":"Product Analyst","department":"Product","location":"Delhi","joiningDate":"2026-10-02","managerId":"M002","buddyId":"B008","email":"siya.gupta@demo-company.com"},{"employeeId":"E009","name":"Vivaan Rao","role":"Software Engineer","department":"Engineering","location":"Bengaluru","joiningDate":"2026-10-02","managerId":"M008","buddyId":"B009","email":"vivaan.rao@demo-company.com"},{"employeeId":"E010","name":"Kavya Nair","role":"Data Scientist","department":"Data","location":"Hyderabad","joiningDate":"2026-10-02","managerId":"M006","buddyId":"B010","email":"kavya.nair@demo-company.com"},{"employeeId":"E011","name":"Aditya Jain","role":"Finance Executive","department":"Finance","location":"Mumbai","joiningDate":"2026-10-03","managerId":"M004","buddyId":"B011","email":"aditya.jain@demo-company.com"},{"employeeId":"E012","name":"Ishita Bansal","role":"UI/UX Designer","department":"Design","location":"Delhi","joiningDate":"2026-10-03","managerId":"M009","buddyId":"B012","email":"ishita.bansal@demo-company.com"},{"employeeId":"E013","name":"Reyansh Sethi","role":"Software Engineer","department":"Engineering","location":"Pune","joiningDate":"2026-10-03","managerId":"M005","buddyId":"B013","email":"reyansh.sethi@demo-company.com"},{"employeeId":"E014","name":"Sara Khan","role":"HR Executive","department":"Human Resources","location":"Hyderabad","joiningDate":"2026-10-04","managerId":"M005","buddyId":"B014","email":"sara.khan@demo-company.com"},{"employeeId":"E015","name":"Dhruv Agarwal","role":"Business Analyst","department":"Business","location":"Bengaluru","joiningDate":"2026-10-04","managerId":"M002","buddyId":"B015","email":"dhruv.agarwal@demo-company.com"},{"employeeId":"E016","name":"Myra Chawla","role":"Marketing Executive","department":"Marketing","location":"Delhi","joiningDate":"2026-10-04","managerId":"M001","buddyId":"B016","email":"myra.chawla@demo-company.com"},{"employeeId":"E017","name":"Yash Thakur","role":"Cloud Engineer","department":"Engineering","location":"Mumbai","joiningDate":"2026-10-05","managerId":"M009","buddyId":"B017","email":"yash.thakur@demo-company.com"},{"employeeId":"E018","name":"Tara Menon","role":"Data Analyst","department":"Data","location":"Bengaluru","joiningDate":"2026-10-05","managerId":"M003","buddyId":"B018","email":"tara.menon@demo-company.com"},{"employeeId":"E019","name":"Atharv Joshi","role":"Product Manager","department":"Product","location":"Pune","joiningDate":"2026-10-05","managerId":"M006","buddyId":"B019","email":"atharv.joshi@demo-company.com"},{"employeeId":"E020","name":"Kiara Desai","role":"Software Engineer","department":"Engineering","location":"Delhi","joiningDate":"2026-10-05","managerId":"M008","buddyId":"B020","email":"kiara.desai@demo-company.com"}],"contacts":[{"contactId":"C001","name":"Rahul Mehta","team":"IT","role":"IT Helpdesk","purpose":"Laptop, account and software issues","email":"it@demo-company.com","phone":"+91 80 6789 89910","availability":"Mon-Fri, 9AM-6PM","escalationTo":"C002"},{"contactId":"C002","name":"Vikram Shah","team":"IT","role":"IT Manager","purpose":"Escalated IT and access issues","email":"it.manager@demo-company.com","phone":"+91 80 6789 89911","availability":"Mon-Fri, 9AM-6PM","escalationTo":"C010"},{"contactId":"C003","name":"Priya Nair","team":"Human Resources","role":"HR Manager","purpose":"HR policies, benefits and employee queries","email":"hr@demo-company.com","phone":"+91 80 6789 89912","availability":"Mon-Fri, 9AM-5PM","escalationTo":"C010"},{"contactId":"C004","name":"Sneha Kapoor","team":"Human Resources","role":"HR Executive","purpose":"Onboarding documents and HR portal","email":"hr.support@demo-company.com","phone":"+91 80 6789 89913","availability":"Mon-Fri, 9AM-5PM","escalationTo":"C003"},{"contactId":"C005","name":"Arjun Malhotra","team":"Engineering","role":"Engineering Lead","purpose":"Technical and engineering questions","email":"engineering@demo-company.com","phone":"+91 80 6789 89914","availability":"Mon-Fri, 10AM-6PM","escalationTo":"C006"},{"contactId":"C006","name":"Rohan Verma","team":"Engineering","role":"Engineering Manager","purpose":"Engineering escalations and access","email":"eng.manager@demo-company.com","phone":"+91 80 6789 89915","availability":"Mon-Fri, 10AM-6PM","escalationTo":"C010"},{"contactId":"C007","name":"Neha Sharma","team":"Security","role":"Security Lead","purpose":"Security incidents and security access","email":"security@demo-company.com","phone":"+91 80 6789 89916","availability":"Mon-Fri, 9AM-6PM","escalationTo":"C010"},{"contactId":"C008","name":"Ananya Gupta","team":"Data","role":"Data Team Lead","purpose":"Data tools, analytics and data access","email":"data@demo-company.com","phone":"+91 80 6789 89917","availability":"Mon-Fri, 10AM-6PM","escalationTo":"C009"},{"contactId":"C009","name":"Karan Iyer","team":"Data","role":"Data Manager","purpose":"Data access and analytics escalations","email":"data.manager@demo-company.com","phone":"+91 80 6789 89918","availability":"Mon-Fri, 10AM-6PM","escalationTo":"C010"},{"contactId":"C010","name":"Meera Rao","team":"Administration","role":"Operations Manager","purpose":"General workplace and administrative issues","email":"operations@demo-company.com","phone":"+91 80 6789 89919","availability":"Mon-Fri, 9AM-6PM","escalationTo":null},{"contactId":"C011","name":"Aditi Bansal","team":"Design","role":"Design Lead","purpose":"Design tools and design system questions","email":"design@demo-company.com","phone":"+91 80 6789 89920","availability":"Mon-Fri, 10AM-6PM","escalationTo":"C012"},{"contactId":"C012","name":"Kabir Joshi","team":"Design","role":"Design Manager","purpose":"Design-related escalations","email":"design.manager@demo-company.com","phone":"+91 80 6789 89921","availability":"Mon-Fri, 10AM-6PM","escalationTo":"C010"},{"contactId":"C013","name":"Ishita Singh","team":"Marketing","role":"Marketing Lead","purpose":"Marketing tools and campaign questions","email":"marketing@demo-company.com","phone":"+91 80 6789 89922","availability":"Mon-Fri, 10AM-6PM","escalationTo":"C014"},{"contactId":"C014","name":"Aditya Kapoor","team":"Marketing","role":"Marketing Manager","purpose":"Marketing-related escalations","email":"marketing.manager@demo-company.com","phone":"+91 80 6789 89923","availability":"Mon-Fri, 10AM-6PM","escalationTo":"C010"},{"contactId":"C015","name":"Tara Menon","team":"Finance","role":"Finance Executive","purpose":"Payroll, reimbursement and finance queries","email":"finance@demo-company.com","phone":"+91 80 6789 89924","availability":"Mon-Fri, 9AM-5PM","escalationTo":"C016"},{"contactId":"C016","name":"Nikhil Jain","team":"Finance","role":"Finance Manager","purpose":"Finance and payroll escalations","email":"finance.manager@demo-company.com","phone":"+91 80 6789 89925","availability":"Mon-Fri, 9AM-5PM","escalationTo":"C010"},{"contactId":"C017","name":"Yash Thakur","team":"Facilities","role":"Facilities Coordinator","purpose":"Office access, seating and facilities","email":"facilities@demo-company.com","phone":"+91 80 6789 89926","availability":"Mon-Fri, 9AM-6PM","escalationTo":"C010"},{"contactId":"C018","name":"Sara Khan","team":"Learning & Development","role":"Training Coordinator","purpose":"Training and learning-related queries","email":"training@demo-company.com","phone":"+91 80 6789 89927","availability":"Mon-Fri, 9AM-5PM","escalationTo":"C003"},{"contactId":"C019","name":"Dhruv Agarwal","team":"Employee Support","role":"Onboarding Buddy","purpose":"General first-week guidance","email":"buddy@demo-company.com","phone":"+91 80 6789 89928","availability":"Mon-Fri, 10AM-6PM","escalationTo":"C003"},{"contactId":"C020","name":"Myra Chawla","team":"Employee Support","role":"Onboarding Coordinator","purpose":"New-joiner onboarding support","email":"onboarding@demo-company.com","phone":"+91 80 6789 89929","availability":"Mon-Fri, 9AM-6PM","escalationTo":"C003"}],"resources":[{"resourceId":"R001","resourceName":"Employee Handbook","category":"HR","link":"/resources/employee-handbook","resourceType":"Document","description":"General company rules, culture and employee guidelines"},{"resourceId":"R002","resourceName":"IT Setup Guide","category":"IT","link":"/resources/it-setup","resourceType":"Document","description":"Guide for setting up laptop, email and basic IT access"},{"resourceId":"R003","resourceName":"MFA Setup Guide","category":"Security","link":"/resources/mfa-setup","resourceType":"Guide","description":"Steps to activate multi-factor authentication"},{"resourceId":"R004","resourceName":"Security Awareness Training","category":"Training","link":"/training/security","resourceType":"Training","description":"Mandatory security awareness training"},{"resourceId":"R005","resourceName":"Company Orientation","category":"Orientation","link":"/training/orientation","resourceType":"Video","description":"Introduction to company, teams and workplace"},{"resourceId":"R006","resourceName":"Leave & Attendance Policy","category":"HR","link":"/resources/leave-policy","resourceType":"Document","description":"Information about leave, attendance and working hours"},{"resourceId":"R007","resourceName":"Employee Benefits Guide","category":"HR","link":"/resources/benefits","resourceType":"Document","description":"Information about employee benefits and facilities"},{"resourceId":"R008","resourceName":"Workplace Safety Guide","category":"Safety","link":"/resources/safety","resourceType":"Document","description":"Workplace safety procedures and emergency information"},{"resourceId":"R009","resourceName":"GitHub Access Guide","category":"Engineering","link":"/resources/github-access","resourceType":"Guide","description":"Steps to request and activate GitHub access"},{"resourceId":"R010","resourceName":"Development Environment Guide","category":"Engineering","link":"/resources/dev-setup","resourceType":"Guide","description":"Setup guide for development tools and environment"},{"resourceId":"R011","resourceName":"Engineering Coding Guidelines","category":"Engineering","link":"/resources/coding-guidelines","resourceType":"Document","description":"Coding standards and development practices"},{"resourceId":"R012","resourceName":"Software Architecture Guide","category":"Engineering","link":"/resources/architecture","resourceType":"Document","description":"Overview of the company's software architecture"},{"resourceId":"R013","resourceName":"Engineering Repository Guide","category":"Engineering","link":"/resources/repository","resourceType":"Guide","description":"Instructions for accessing engineering repositories"},{"resourceId":"R014","resourceName":"Code Security Training","category":"Security","link":"/training/code-security","resourceType":"Training","description":"Secure coding and application security training"},{"resourceId":"R015","resourceName":"Data Tools Setup Guide","category":"Data","link":"/resources/data-tools","resourceType":"Guide","description":"Setup instructions for analytics and data tools"},{"resourceId":"R016","resourceName":"Data Warehouse Access Guide","category":"Data","link":"/resources/data-access","resourceType":"Guide","description":"Steps for requesting data warehouse access"},{"resourceId":"R017","resourceName":"Data Governance Policy","category":"Data","link":"/resources/data-governance","resourceType":"Document","description":"Rules for handling and using company data"},{"resourceId":"R018","resourceName":"Reporting Standards Guide","category":"Data","link":"/resources/reporting","resourceType":"Document","description":"Company standards for reports and dashboards"},{"resourceId":"R019","resourceName":"Design Tools Setup Guide","category":"Design","link":"/resources/design-tools","resourceType":"Guide","description":"Setup instructions for approved design tools"},{"resourceId":"R020","resourceName":"Design Repository Guide","category":"Design","link":"/resources/design-repository","resourceType":"Guide","description":"Access instructions for design files and repositories"},{"resourceId":"R021","resourceName":"Company Design System","category":"Design","link":"/resources/design-system","resourceType":"Document","description":"Components, patterns and design standards"},{"resourceId":"R022","resourceName":"Brand Guidelines","category":"Design","link":"/resources/brand-guidelines","resourceType":"Document","description":"Company visual identity and branding rules"},{"resourceId":"R023","resourceName":"HR Portal Guide","category":"HR","link":"/resources/hr-portal","resourceType":"Guide","description":"Guide to using the internal HR portal"},{"resourceId":"R024","resourceName":"HR Policies Guide","category":"HR","link":"/resources/hr-policies","resourceType":"Document","description":"Important HR policies and procedures"},{"resourceId":"R025","resourceName":"Employee Records Guide","category":"HR","link":"/resources/employee-records","resourceType":"Guide","description":"Procedures for managing employee records"},{"resourceId":"R026","resourceName":"HR Compliance Training","category":"Training","link":"/training/hr-compliance","resourceType":"Training","description":"Mandatory HR compliance training"},{"resourceId":"R027","resourceName":"Marketing Tools Guide","category":"Marketing","link":"/resources/marketing-tools","resourceType":"Guide","description":"Setup instructions for marketing tools"},{"resourceId":"R028","resourceName":"Marketing Brand Guide","category":"Marketing","link":"/resources/marketing-brand","resourceType":"Document","description":"Marketing-specific brand and communication guidelines"},{"resourceId":"R029","resourceName":"Marketing Strategy Guide","category":"Marketing","link":"/resources/marketing-strategy","resourceType":"Document","description":"Overview of company marketing strategy"},{"resourceId":"R030","resourceName":"Marketing Analytics Guide","category":"Marketing","link":"/resources/marketing-analytics","resourceType":"Guide","description":"Instructions for accessing marketing analytics"}],"tasks":[{"taskId":"T001","checklistId":null,"taskName":"Activate company account","applicableRole":"All","department":"All","day":"Day 1","priority":"High","assignedBy":"IT","deadline":"Day 1, 5:00 PM","resourceId":"R002","isMandatory":true,"description":"Activate corporate single sign-on credentials and verify user directory profile."},{"taskId":"T002","checklistId":null,"taskName":"Set up MFA","applicableRole":"All","department":"All","day":"Day 1","priority":"High","assignedBy":"IT","deadline":"Day 1, 5:00 PM","resourceId":"R003","isMandatory":true,"description":"Configure Microsoft Authenticator and register security passkey."},{"taskId":"T003","checklistId":null,"taskName":"Complete employee profile","applicableRole":"All","department":"All","day":"Day 1","priority":"Medium","assignedBy":"HR","deadline":"Day 1, 5:00 PM","resourceId":"R001","isMandatory":true,"description":"Submit emergency contacts, statutory identity docs, and personal bio."},{"taskId":"T004","checklistId":null,"taskName":"Read employee handbook","applicableRole":"All","department":"All","day":"Day 1","priority":"Medium","assignedBy":"HR","deadline":"Day 1, 5:00 PM","resourceId":"R001","isMandatory":true,"description":"Review corporate mission, workplace conduct rules, and company values."},{"taskId":"T005","checklistId":null,"taskName":"Complete security awareness training","applicableRole":"All","department":"All","day":"Day 1","priority":"High","assignedBy":"Security","deadline":"Day 1, 5:00 PM","resourceId":"R004","isMandatory":true,"description":"Complete mandatory cyber threat, phishing defense, and data protection module."},{"taskId":"T006","checklistId":null,"taskName":"Meet onboarding buddy","applicableRole":"All","department":"All","day":"Day 1","priority":"Medium","assignedBy":"Manager","deadline":"Day 1, 5:00 PM","resourceId":"","isMandatory":true,"description":"Connect 1-on-1 with your assigned senior buddy for workplace norms and team intro."},{"taskId":"T007","checklistId":null,"taskName":"Attend company orientation","applicableRole":"All","department":"All","day":"Day 1","priority":"High","assignedBy":"HR","deadline":"Day 1, 5:00 PM","resourceId":"R005","isMandatory":true,"description":"Join welcome orientation session with People Operations and leadership team."},{"taskId":"T008","checklistId":null,"taskName":"Set up company email","applicableRole":"All","department":"All","day":"Day 1","priority":"High","assignedBy":"IT","deadline":"Day 1, 5:00 PM","resourceId":"R002","isMandatory":true,"description":"Configure corporate mailbox, calendar sync, and email signature."},{"taskId":"T009","checklistId":null,"taskName":"Review leave and attendance policy","applicableRole":"All","department":"All","day":"Day 2","priority":"Medium","assignedBy":"HR","deadline":"Day 2, 5:00 PM","resourceId":"R006","isMandatory":true,"description":"Learn leave application process, holiday calendars, and working hour policies."},{"taskId":"T010","checklistId":null,"taskName":"Review company benefits","applicableRole":"All","department":"All","day":"Day 2","priority":"Low","assignedBy":"HR","deadline":"Day 2, 5:00 PM","resourceId":"R007","isMandatory":false,"description":"Explore health insurance, wellness stipends, and retirement benefits."},{"taskId":"T011","checklistId":null,"taskName":"Complete workplace safety training","applicableRole":"All","department":"All","day":"Day 2","priority":"Medium","assignedBy":"HR","deadline":"Day 2, 5:00 PM","resourceId":"R008","isMandatory":true,"description":"Complete workplace ergonomics, fire safety, and emergency protocol module."},{"taskId":"T012","checklistId":null,"taskName":"Meet reporting manager","applicableRole":"All","department":"All","day":"Day 2","priority":"High","assignedBy":"Manager","deadline":"Day 2, 5:00 PM","resourceId":"","isMandatory":true,"description":"Align on first-week priorities, 30-60-90 day milestones, and expectations."},{"taskId":"T013","checklistId":null,"taskName":"Join department communication channel","applicableRole":"All","department":"All","day":"Day 2","priority":"Medium","assignedBy":"Manager","deadline":"Day 2, 5:00 PM","resourceId":"","isMandatory":true,"description":"Join squad Slack/Teams channels and bookmark team knowledge bases."},{"taskId":"T014","checklistId":null,"taskName":"Set up GitHub access","applicableRole":"Software Engineer","department":"Engineering","day":"Day 1","priority":"High","assignedBy":"IT","deadline":"Day 1, 5:00 PM","resourceId":"R009","isMandatory":true,"description":"Accept enterprise GitHub organization invitation and link SSH signing keys."},{"taskId":"T015","checklistId":null,"taskName":"Set up development environment","applicableRole":"Software Engineer","department":"Engineering","day":"Day 1","priority":"High","assignedBy":"Manager","deadline":"Day 1, 5:00 PM","resourceId":"R010","isMandatory":true,"description":"Install IDE, compilers, container runtime, and run local test suite."},{"taskId":"T016","checklistId":null,"taskName":"Read engineering coding guidelines","applicableRole":"Software Engineer","department":"Engineering","day":"Day 2","priority":"Medium","assignedBy":"Manager","deadline":"Day 2, 5:00 PM","resourceId":"R011","isMandatory":true,"description":"Read code formatting, linting rules, PR review SLAs, and branch naming conventions."},{"taskId":"T017","checklistId":null,"taskName":"Review software architecture","applicableRole":"Software Engineer","department":"Engineering","day":"Day 2","priority":"Medium","assignedBy":"Manager","deadline":"Day 2, 5:00 PM","resourceId":"R012","isMandatory":true,"description":"Review microservice blueprints, database schemas, and API gateway specs."},{"taskId":"T018","checklistId":null,"taskName":"Join engineering repository","applicableRole":"Software Engineer","department":"Engineering","day":"Day 2","priority":"High","assignedBy":"IT","deadline":"Day 2, 5:00 PM","resourceId":"R013","isMandatory":true,"description":"Clone monorepo, configure pre-commit hooks, and verify local build."},{"taskId":"T019","checklistId":null,"taskName":"Complete code security training","applicableRole":"Software Engineer","department":"Engineering","day":"Day 3","priority":"High","assignedBy":"Security","deadline":"Day 3, 5:00 PM","resourceId":"R014","isMandatory":true,"description":"Learn SAST/DAST scanning, secret management, and secure dependency handling."},{"taskId":"T020","checklistId":null,"taskName":"Meet engineering team","applicableRole":"Software Engineer","department":"Engineering","day":"Day 3","priority":"Medium","assignedBy":"Manager","deadline":"Day 3, 5:00 PM","resourceId":"","isMandatory":true,"description":"Join sprint planning or team standup to introduce yourself to teammates."},{"taskId":"T021","checklistId":null,"taskName":"Set up analytics tools","applicableRole":"Data Analyst","department":"Data","day":"Day 1","priority":"High","assignedBy":"Manager","deadline":"Day 1, 5:00 PM","resourceId":"R015","isMandatory":true,"description":"Configure Power BI, Tableau, dbt CLI, and Python analytical libraries."},{"taskId":"T022","checklistId":null,"taskName":"Get access to data warehouse","applicableRole":"Data Analyst","department":"Data","day":"Day 1","priority":"High","assignedBy":"IT","deadline":"Day 1, 5:00 PM","resourceId":"R016","isMandatory":true,"description":"Request read permissions for Snowflake/BigQuery staging schemas."},{"taskId":"T023","checklistId":null,"taskName":"Review data governance policy","applicableRole":"Data Analyst","department":"Data","day":"Day 2","priority":"High","assignedBy":"Data Lead","deadline":"Day 2, 5:00 PM","resourceId":"R017","isMandatory":true,"description":"Understand PII data masking, compliance guidelines, and export policies."},{"taskId":"T024","checklistId":null,"taskName":"Review reporting standards","applicableRole":"Data Analyst","department":"Data","day":"Day 2","priority":"Medium","assignedBy":"Data Lead","deadline":"Day 2, 5:00 PM","resourceId":"R018","isMandatory":true,"description":"Study standard corporate metric definitions, KPI models, and dashboard templates."},{"taskId":"T025","checklistId":null,"taskName":"Meet data team","applicableRole":"Data Analyst","department":"Data","day":"Day 3","priority":"Medium","assignedBy":"Manager","deadline":"Day 3, 5:00 PM","resourceId":"","isMandatory":true,"description":"Meet data engineers and business intelligence peers to discuss current pipelines."},{"taskId":"T026","checklistId":null,"taskName":"Set up design tools","applicableRole":"UI/UX Designer","department":"Design","day":"Day 1","priority":"High","assignedBy":"IT","deadline":"Day 1, 5:00 PM","resourceId":"R019","isMandatory":true,"description":"Activate Figma enterprise seat, font packages, and asset libraries."},{"taskId":"T027","checklistId":null,"taskName":"Get access to design repository","applicableRole":"UI/UX Designer","department":"Design","day":"Day 1","priority":"High","assignedBy":"IT","deadline":"Day 1, 5:00 PM","resourceId":"R020","isMandatory":true,"description":"Request access to Figma workspace, component tokens, and UX research archives."},{"taskId":"T028","checklistId":null,"taskName":"Review design system","applicableRole":"UI/UX Designer","department":"Design","day":"Day 2","priority":"Medium","assignedBy":"Design Lead","deadline":"Day 2, 5:00 PM","resourceId":"R021","isMandatory":true,"description":"Study typography tokens, elevation scales, grid systems, and component states."},{"taskId":"T029","checklistId":null,"taskName":"Review brand guidelines","applicableRole":"UI/UX Designer","department":"Design","day":"Day 2","priority":"Medium","assignedBy":"Design Lead","deadline":"Day 2, 5:00 PM","resourceId":"R022","isMandatory":true,"description":"Review brand voice, color harmony, iconography, and illustration guidelines."},{"taskId":"T030","checklistId":null,"taskName":"Meet design team","applicableRole":"UI/UX Designer","department":"Design","day":"Day 3","priority":"Medium","assignedBy":"Manager","deadline":"Day 3, 5:00 PM","resourceId":"","isMandatory":true,"description":"Attend weekly design critique and introduce yourself to product designers."},{"taskId":"T031","checklistId":null,"taskName":"Get access to HR portal","applicableRole":"HR Executive","department":"Human Resources","day":"Day 1","priority":"High","assignedBy":"IT","deadline":"Day 1, 5:00 PM","resourceId":"R023","isMandatory":true,"description":"Acquire administrative access to HRIS, Workday, and applicant tracker."},{"taskId":"T032","checklistId":null,"taskName":"Review HR policies","applicableRole":"HR Executive","department":"Human Resources","day":"Day 1","priority":"High","assignedBy":"HR Manager","deadline":"Day 1, 5:00 PM","resourceId":"R024","isMandatory":true,"description":"Study grievance procedures, leave policies, compensation bands, and onboarding flows."},{"taskId":"T033","checklistId":null,"taskName":"Review employee records process","applicableRole":"HR Executive","department":"Human Resources","day":"Day 2","priority":"High","assignedBy":"HR Manager","deadline":"Day 2, 5:00 PM","resourceId":"R025","isMandatory":true,"description":"Understand document verification, compliance filing, and digital dossier retention."},{"taskId":"T034","checklistId":null,"taskName":"Complete HR compliance training","applicableRole":"HR Executive","department":"Human Resources","day":"Day 2","priority":"High","assignedBy":"HR Manager","deadline":"Day 2, 5:00 PM","resourceId":"R026","isMandatory":true,"description":"Complete statutory labor law, workplace equality, and POSH training certification."},{"taskId":"T035","checklistId":null,"taskName":"Meet HR team","applicableRole":"HR Executive","department":"Human Resources","day":"Day 3","priority":"Medium","assignedBy":"HR Manager","deadline":"Day 3, 5:00 PM","resourceId":"","isMandatory":true,"description":"Join the People Operations weekly sync and meet recruitment & talent partners."},{"taskId":"T036","checklistId":null,"taskName":"Set up marketing tools","applicableRole":"Marketing Executive","department":"Marketing","day":"Day 1","priority":"High","assignedBy":"IT","deadline":"Day 1, 5:00 PM","resourceId":"R027","isMandatory":true,"description":"Get access to HubSpot, Google Analytics 4, SEMrush, and social management tools."},{"taskId":"T037","checklistId":null,"taskName":"Review brand guidelines","applicableRole":"Marketing Executive","department":"Marketing","day":"Day 1","priority":"Medium","assignedBy":"Marketing Manager","deadline":"Day 1, 5:00 PM","resourceId":"R028","isMandatory":true,"description":"Review corporate brand voice, messaging guidelines, and approved media assets."},{"taskId":"T038","checklistId":null,"taskName":"Review marketing strategy","applicableRole":"Marketing Executive","department":"Marketing","day":"Day 2","priority":"Medium","assignedBy":"Marketing Manager","deadline":"Day 2, 5:00 PM","resourceId":"R029","isMandatory":true,"description":"Read quarterly GTM roadmap, target persona profiles, and campaign briefs."},{"taskId":"T039","checklistId":null,"taskName":"Get access to marketing analytics","applicableRole":"Marketing Executive","department":"Marketing","day":"Day 2","priority":"High","assignedBy":"IT","deadline":"Day 2, 5:00 PM","resourceId":"R030","isMandatory":true,"description":"Obtain permissions for campaign dashboards, conversion tracking, and CRM reports."},{"taskId":"T040","checklistId":null,"taskName":"Meet marketing team","applicableRole":"Marketing Executive","department":"Marketing","day":"Day 3","priority":"Medium","assignedBy":"Manager","deadline":"Day 3, 5:00 PM","resourceId":"","isMandatory":true,"description":"Meet content strategists, performance marketers, and growth lead."}],"progress":[{"progressId":"P001","employeeId":"E001","taskId":"T001","status":"Completed","assignedDate":"2026-09-29","dueDate":"2026-10-05","completedDate":"2026-09-29"},{"progressId":"P002","employeeId":"E001","taskId":"T002","status":"Completed","assignedDate":"2026-09-29","dueDate":"2026-10-05","completedDate":"2026-09-29"},{"progressId":"P003","employeeId":"E001","taskId":"T003","status":"Pending","assignedDate":"2026-09-29","dueDate":"2026-10-05","completedDate":null},{"progressId":"P004","employeeId":"E001","taskId":"T005","status":"Pending","assignedDate":"2026-09-29","dueDate":"2026-10-05","completedDate":null},{"progressId":"P005","employeeId":"E002","taskId":"T001","status":"Completed","assignedDate":"2026-09-29","dueDate":"2026-10-05","completedDate":"2026-09-29"},{"progressId":"P006","employeeId":"E002","taskId":"T002","status":"Completed","assignedDate":"2026-09-29","dueDate":"2026-10-05","completedDate":"2026-09-29"},{"progressId":"P007","employeeId":"E002","taskId":"T003","status":"Pending","assignedDate":"2026-09-29","dueDate":"2026-10-05","completedDate":null},{"progressId":"P008","employeeId":"E002","taskId":"T005","status":"Completed","assignedDate":"2026-09-29","dueDate":"2026-10-05","completedDate":"2026-09-29"},{"progressId":"P009","employeeId":"E003","taskId":"T001","status":"Completed","assignedDate":"2026-09-30","dueDate":"2026-10-05","completedDate":"2026-09-30"},{"progressId":"P010","employeeId":"E003","taskId":"T002","status":"Pending","assignedDate":"2026-09-30","dueDate":"2026-10-05","completedDate":null},{"progressId":"P011","employeeId":"E003","taskId":"T003","status":"Pending","assignedDate":"2026-09-30","dueDate":"2026-10-05","completedDate":null},{"progressId":"P012","employeeId":"E003","taskId":"T006","status":"Completed","assignedDate":"2026-09-30","dueDate":"2026-10-05","completedDate":"2026-09-30"},{"progressId":"P013","employeeId":"E004","taskId":"T001","status":"Completed","assignedDate":"2026-09-30","dueDate":"2026-10-05","completedDate":"2026-09-30"},{"progressId":"P014","employeeId":"E004","taskId":"T002","status":"Completed","assignedDate":"2026-09-30","dueDate":"2026-10-05","completedDate":"2026-09-30"},{"progressId":"P015","employeeId":"E004","taskId":"T003","status":"Completed","assignedDate":"2026-09-30","dueDate":"2026-10-05","completedDate":"2026-09-30"},{"progressId":"P016","employeeId":"E004","taskId":"T031","status":"Pending","assignedDate":"2026-09-30","dueDate":"2026-10-05","completedDate":null},{"progressId":"P017","employeeId":"E005","taskId":"T001","status":"Completed","assignedDate":"2026-10-01","dueDate":"2026-10-05","completedDate":"2026-10-01"},{"progressId":"P018","employeeId":"E005","taskId":"T002","status":"Pending","assignedDate":"2026-10-01","dueDate":"2026-10-05","completedDate":null},{"progressId":"P019","employeeId":"E005","taskId":"T014","status":"Pending","assignedDate":"2026-10-01","dueDate":"2026-10-05","completedDate":null},{"progressId":"P020","employeeId":"E005","taskId":"T015","status":"Completed","assignedDate":"2026-10-01","dueDate":"2026-10-05","completedDate":"2026-10-01"},{"progressId":"P021","employeeId":"E006","taskId":"T001","status":"Completed","assignedDate":"2026-10-01","dueDate":"2026-10-05","completedDate":"2026-10-01"},{"progressId":"P022","employeeId":"E006","taskId":"T002","status":"Completed","assignedDate":"2026-10-01","dueDate":"2026-10-05","completedDate":"2026-10-01"},{"progressId":"P023","employeeId":"E006","taskId":"T003","status":"Pending","assignedDate":"2026-10-01","dueDate":"2026-10-05","completedDate":null},{"progressId":"P024","employeeId":"E006","taskId":"T036","status":"Pending","assignedDate":"2026-10-01","dueDate":"2026-10-05","completedDate":null},{"progressId":"P025","employeeId":"E007","taskId":"T001","status":"Completed","assignedDate":"2026-10-01","dueDate":"2026-10-05","completedDate":"2026-10-01"},{"progressId":"P026","employeeId":"E007","taskId":"T002","status":"Completed","assignedDate":"2026-10-01","dueDate":"2026-10-05","completedDate":"2026-10-01"},{"progressId":"P027","employeeId":"E007","taskId":"T005","status":"Pending","assignedDate":"2026-10-01","dueDate":"2026-10-05","completedDate":null},{"progressId":"P028","employeeId":"E007","taskId":"T014","status":"Completed","assignedDate":"2026-10-01","dueDate":"2026-10-05","completedDate":"2026-10-01"},{"progressId":"P029","employeeId":"E008","taskId":"T001","status":"Completed","assignedDate":"2026-10-02","dueDate":"2026-10-05","completedDate":"2026-10-02"},{"progressId":"P030","employeeId":"E008","taskId":"T002","status":"Pending","assignedDate":"2026-10-02","dueDate":"2026-10-05","completedDate":null},{"progressId":"P031","employeeId":"E008","taskId":"T003","status":"Pending","assignedDate":"2026-10-02","dueDate":"2026-10-05","completedDate":null},{"progressId":"P032","employeeId":"E009","taskId":"T001","status":"Completed","assignedDate":"2026-10-02","dueDate":"2026-10-05","completedDate":"2026-10-02"},{"progressId":"P033","employeeId":"E009","taskId":"T002","status":"Completed","assignedDate":"2026-10-02","dueDate":"2026-10-05","completedDate":"2026-10-02"},{"progressId":"P034","employeeId":"E009","taskId":"T014","status":"Pending","assignedDate":"2026-10-02","dueDate":"2026-10-05","completedDate":null},{"progressId":"P035","employeeId":"E010","taskId":"T001","status":"Completed","assignedDate":"2026-10-02","dueDate":"2026-10-05","completedDate":null}]};
+    let allEmployeesDataset = window.__START_SMART_DATASETS__.employees || [];
+    let allContactsDataset = window.__START_SMART_DATASETS__.contacts || [];
+
     // ==============================================================
     
     
@@ -2854,8 +2702,7 @@ const ALL_40_TASKS = [
   
     let currentLiveEmployeeId = 'E001';
     let currentLiveDashboard = null;
-    let allEmployeesDataset = [];
-    let allContactsDataset = [];
+    // Initialized from window.__START_SMART_DATASETS__ above
     let liveTasksList = [];
 
     function getApiBaseUrl() {
@@ -3259,23 +3106,41 @@ const ALL_40_TASKS = [
     // ==============================================================
     async function loadLiveEmployeeDashboard(empId) {
       currentLiveEmployeeId = empId || currentLiveEmployeeId || 'E001';
+
+      // 1. Synthesize immediately from datasets for 0ms instantaneous rendering on Vercel & Local
+      const synthesized = getSynthesizedDashboardForEmployee(currentLiveEmployeeId);
+      if (synthesized) {
+        currentLiveDashboard = synthesized;
+        liveTasksList = synthesized.tasks || [];
+        renderManualDashboardFromLive(synthesized);
+      }
+
+      // 2. Fetch live data from backend server if running locally
       try {
         const base = getApiBaseUrl();
-        const res = await fetch(`${base}/api/employees/${currentLiveEmployeeId}/dashboard`);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        currentLiveDashboard = data;
-        liveTasksList = data.tasks || [];
-        renderManualDashboardFromLive(data);
+        if (base && window.location.port === '3000') {
+          const res = await fetch(`${base}/api/employees/${currentLiveEmployeeId}/dashboard`);
+          if (res.ok) {
+            const data = await res.json();
+            currentLiveDashboard = data;
+            liveTasksList = data.tasks || [];
+            renderManualDashboardFromLive(data);
+          }
+        }
       } catch (err) {
-        console.error('Failed to load live employee dashboard:', err);
-        renderManualDashboard(currentAuthenticatedUser);
+        console.debug('Using synthesized client dataset:', err);
       }
     }
 
     function renderManualDashboard(user) {
       if (currentLiveDashboard) {
         renderManualDashboardFromLive(currentLiveDashboard);
+        return;
+      }
+      const synthesized = getSynthesizedDashboardForEmployee(currentLiveEmployeeId || user?.employeeId || 'E001');
+      if (synthesized) {
+        currentLiveDashboard = synthesized;
+        renderManualDashboardFromLive(synthesized);
         return;
       }
       if (!user) user = { name: 'Aarav Sharma', title: 'Software Engineer', email: 'aarav.sharma@demo-company.com' };
@@ -3302,6 +3167,42 @@ const ALL_40_TASKS = [
       document.getElementById('count-all-tasks').textContent = totalCount;
       document.getElementById('count-pending-tasks').textContent = pendingCount;
       document.getElementById('count-done-tasks').textContent = completedCount;
+
+      // Populate cards if not already present
+      const container = document.getElementById('manual-checklist-container');
+      if (container && container.children.length === 0) {
+        dailyTasksState.forEach(t => {
+          const card = document.createElement('div');
+          card.className = `manual-task-card ${t.done ? 'is-done' : ''}`;
+          card.id = `manual-task-card-${t.id}`;
+          card.dataset.status = t.done ? 'done' : 'pending';
+          card.dataset.day = 'Day 1';
+          card.innerHTML = `
+            <button class="manual-task-check-btn" onclick="toggleManualTask(${t.id})">
+              ${t.done ? '✓' : ''}
+            </button>
+            <div class="manual-task-info">
+              <div class="manual-task-badges">
+                <span class="manual-task-tag tag-engineering">${t.tag || 'Engineering'}</span>
+                <span style="font-size: 0.72rem; font-weight: 700; color: ${t.done ? '#059669' : '#d97706'};">
+                  ${t.done ? '● Completed' : '● Action Required'}
+                </span>
+              </div>
+              <div class="manual-task-title">${t.title}</div>
+              <div class="manual-task-desc">${t.desc}</div>
+            </div>
+            <div class="manual-task-actions">
+              <button class="btn-task-toggle ${t.done ? 'done-state' : 'pending-state'}" onclick="toggleManualTask(${t.id})">
+                ${t.done ? '✓ Completed' : 'Mark Complete'}
+              </button>
+              <button class="btn-task-explain" onclick="askCopilotToExplainTask('${t.id}')">
+                <span>💡 Ask AI Copilot</span>
+              </button>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      }
     }
 
     function renderManualDashboardFromLive(data) {
@@ -3364,6 +3265,7 @@ const ALL_40_TASKS = [
             card.className = `manual-task-card ${isDone ? 'is-done' : ''}`;
             card.id = `manual-task-card-${t.taskId}`;
             card.dataset.status = isDone ? 'done' : 'pending';
+            card.dataset.day = t.day || 'Day 1';
 
             const priorityColor = t.priority === 'High' ? '#dc2626' : (t.priority === 'Medium' ? '#2563eb' : '#64748b');
             const priorityBg = t.priority === 'High' ? '#fee2e2' : (t.priority === 'Medium' ? '#dbeafe' : '#f1f5f9');
@@ -3465,23 +3367,29 @@ const ALL_40_TASKS = [
 
     async function toggleLiveTask(progressId, currentStatus, taskId) {
       const nextStatus = currentStatus === 'Completed' ? 'Pending' : 'Completed';
+
+      // 1. Update localStorage status store immediately
+      const statusStore = getTaskStatusStore();
+      const key = `${currentLiveEmployeeId}_${taskId}`;
+      statusStore[key] = nextStatus;
+      saveTaskStatusStore(statusStore);
+
+      showNotification(`✓ ${taskId}: Marked as ${nextStatus}!`);
+
+      // 2. Reload employee dashboard
+      await loadLiveEmployeeDashboard(currentLiveEmployeeId);
+
+      // 3. Sync to server if backend is active
       try {
         const base = getApiBaseUrl();
-        const res = await fetch(`${base}/api/progress/${progressId}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ status: nextStatus })
-        });
-        if (res.ok) {
-          showNotification(`✓ ${taskId}: Status updated to ${nextStatus}!`);
-          await loadLiveEmployeeDashboard(currentLiveEmployeeId);
-        } else {
-          showNotification(`⚠️ Failed to update task status: ${res.statusText}`);
+        if (base && window.location.port === '3000') {
+          await fetch(`${base}/api/progress/${progressId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: nextStatus })
+          });
         }
-      } catch (err) {
-        console.error('Error toggling live task:', err);
-        showNotification('⚠️ Server network error updating task.');
-      }
+      } catch (err) {}
     }
 
     function updateLiveCopilotChips(tasks) {
@@ -4330,165 +4238,75 @@ const ALL_40_TASKS = [
     }
 
     function getExplainTaskResponseHtml(taskId) {
+      const allTasks = (currentLiveDashboard && currentLiveDashboard.tasks) ? currentLiveDashboard.tasks : (ALL_40_TASKS || []);
       const numId = parseInt(String(taskId).replace(/\D/g, ''), 10) || 1;
-      let task = null;
-      if (currentLiveDashboard && currentLiveDashboard.tasks) {
-        task = currentLiveDashboard.tasks.find(t => String(t.taskId) === String(taskId) || String(t.id) === String(taskId) || parseInt(String(t.taskId).replace(/\D/g, ''), 10) === numId);
-      }
+
+      let task = allTasks.find(t => 
+        String(t.taskId).toLowerCase() === String(taskId).toLowerCase() ||
+        String(t.taskId).replace(/\D/g, '') === String(taskId).replace(/\D/g, '') ||
+        parseInt(String(t.taskId).replace(/\D/g, ''), 10) === numId
+      );
+
       if (!task && dailyTasksState) {
         task = dailyTasksState.find(t => String(t.id) === String(taskId) || parseInt(String(t.id).replace(/\D/g, ''), 10) === numId);
       }
 
-      const taskProfiles = {
-        1: {
-          title: 'Complete Corporate SSO & MFA Identity Enrollment',
-          category: 'Identity & Authentication',
-          timeEst: '15 mins',
-          objective: 'Establishes your cryptographically verified Single Sign-On (SSO) corporate credentials and multi-factor authenticator token. This is the master key required to access company email, Slack/Teams, repository permissions, and developer VPN.',
-          steps: [
-            'Navigate to the corporate Single Sign-On Portal (https://sso.internal.demo).',
-            'Log in using your provisional credentials supplied in your Day-1 Welcome Email.',
-            'Open Microsoft Authenticator or Google Authenticator on your mobile smartphone.',
-            'Scan the enterprise registration QR code and submit the 6-digit confirmation PIN.',
-            'Download and safely store your 10 emergency recovery codes.'
-          ],
-          resource: { name: 'Corporate SSO & MFA Setup Guide', link: '/resources/sso-setup-guide', desc: 'Step-by-step authentication walkthrough & troubleshooting' },
-          contact: { name: 'Rahul Mehta', role: 'IT Support Lead', phone: '+91 80 6789 89910', email: 'it@demo-company.com' }
-        },
-        2: {
-          title: 'Review & Sign Employment Agreement & NDA',
-          category: 'Legal & Compliance',
-          timeEst: '20 mins',
-          objective: 'Fulfills legal compliance, non-disclosure terms, and intellectual property agreements mandatory before code repositories and internal client data can be provisioned to your profile.',
-          steps: [
-            'Open your DocuSign invitation or access the portal link below.',
-            'Review clauses on proprietary information, inventions assignment, and data privacy.',
-            'Verify your permanent address, emergency contact details, and tax ID information.',
-            'Sign digitally with date verification and save a PDF copy for your personal records.'
-          ],
-          resource: { name: 'Employment Agreement & NDA Package', link: '/resources/employment-agreement', desc: 'Digital signatory documents with compliance audit trail' },
-          contact: { name: 'Priya Nair', role: 'People Operations / HR Partner', phone: '+91 80 6789 89912', email: 'hr@demo-company.com' }
-        },
-        3: {
-          title: 'Day-1 Orientation & 1:1 Sync with Onboarding Buddy',
-          category: 'Team Integration',
-          timeEst: '45 mins',
-          objective: 'Connects you directly with your designated mentor buddy to review team sprint cadence, architecture diagrams, pull request protocols, and answer any Day-1 questions.',
-          steps: [
-            'Check your calendar for the scheduled 2:00 PM Buddy Introduction Sync.',
-            'Review the high-level system architecture and repository links sent by your buddy.',
-            'Join the primary Slack channels (#team-engineering, #product-announcements, #freshers-2026).',
-            'Prepare 2-3 questions about local environment setup and team norms.'
-          ],
-          resource: { name: 'First-Week Buddy Playbook & Architecture Overview', link: '/resources/buddy-playbook', desc: 'Checklist of discussion topics & engineering standards' },
-          contact: { name: 'Dhruv Agarwal', role: 'Senior Team Buddy', phone: '+91 80 6789 89928', email: 'buddy@demo-company.com' }
-        },
-        4: {
-          title: 'IT Hardware & Development Tunnel Configuration',
-          category: 'Infrastructure & DevOps',
-          timeEst: '30 mins',
-          objective: 'Installs and configures secure encrypted VPN tunnels and SSH keys required to reach internal staging environments, package registries, and protected database clusters.',
-          steps: [
-            'Download and install the official WireGuard / OpenVPN client on your laptop.',
-            'Import your personal configuration certificate from the IT Security Vault.',
-            'Generate a new ed25519 SSH keypair (ssh-keygen -t ed25519 -C "work-laptop").',
-            'Upload the public key to your internal developer profile and verify ping to staging.'
-          ],
-          resource: { name: 'VPN & Secure Dev Tunnel Setup Manual', link: '/resources/vpn-guide', desc: 'Tunnel configuration, IP routing & SSH authorization' },
-          contact: { name: 'Rahul Mehta', role: 'IT Support Lead', phone: '+91 80 6789 89910', email: 'it@demo-company.com' }
-        },
-        5: {
-          title: 'Repository & Codebase Access Initialization (GitHub Enterprise)',
-          category: 'Engineering & Source Control',
-          timeEst: '25 mins',
-          objective: 'Grants read/write team permissions on GitHub Enterprise organizations, CI/CD pipeline triggers, and internal artifact registries.',
-          steps: [
-            'Authenticate your GitHub Enterprise account via Single Sign-On.',
-            'Accept the organization invitation sent to your work email.',
-            'Clone your team primary repository: git clone git@github.com:enterprise/core-repo.git',
-            'Run the bootstrap script (npm install && npm test) to verify local build health.'
-          ],
-          resource: { name: 'GitHub Enterprise Access & Contribution Guide', link: '/resources/github-access', desc: 'Branching strategy, PR guidelines, and CI linting standards' },
-          contact: { name: 'Dhruv Agarwal', role: 'Senior Team Buddy', phone: '+91 80 6789 89928', email: 'buddy@demo-company.com' }
-        }
-      };
+      if (!task) {
+        task = {
+          taskId: 'T00' + numId,
+          taskName: 'Onboarding Task ' + taskId,
+          department: 'General',
+          day: 'Day 1',
+          priority: 'High',
+          duration: '20 mins',
+          description: 'Standard enterprise onboarding checklist requirement.'
+        };
+      }
 
-      const profile = taskProfiles[numId] || {
-        title: task ? (task.taskName || task.title) : `Task ${taskId}: Onboarding Milestone`,
-        category: task?.department || 'Onboarding Milestone',
-        timeEst: '20 mins',
-        objective: task?.description || `Complete prerequisite requirements and verify deliverables for ${task?.department || 'your role'}.`,
-        steps: [
-          'Review the requirements and deliverables defined in your roadmap.',
-          'Coordinate with your designated task owner if any permissions are blocked.',
-          'Execute the task and test end-to-end functionality.',
-          'Mark as completed in your portal to unlock downstream tasks.'
-        ],
-        resource: task?.resource || { name: 'General Employee Onboarding Manual', link: '/resources/employee-handbook', desc: 'Standard operating procedures and best practices' },
-        contact: { name: 'Dhruv Agarwal', role: 'Team Buddy', phone: '+91 80 6789 89928', email: 'buddy@demo-company.com' }
-      };
-
-      const tName = profile.title;
-      const isDone = task && task.status === 'Completed';
-
-      let stepsHtml = '';
-      profile.steps.forEach((s) => {
-        stepsHtml += `<li style="margin-bottom: 5px;">${escapeHtml(s)}</li>`;
-      });
+      const tTitle = task.taskName || task.title;
+      const isDone = task.status === 'Completed' || task.done;
+      const helperName = (task.assignedBy === 'IT') ? 'Rahul Mehta (IT Support)' :
+                         (task.assignedBy === 'HR') ? 'Priya Nair (HR Operations)' :
+                         (task.assignedBy === 'Security') ? 'Karan Patel (Security Lead)' :
+                         'Dhruv Agarwal (Senior Buddy)';
 
       return `
-        <div>
+        <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(99, 102, 241, 0.35); border-radius: 10px; padding: 14px; margin-top: 4px;">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px;">
-            <span style="font-size: 0.72rem; font-weight: 800; background: rgba(99, 102, 241, 0.2); color: #c7d2fe; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">
-              ${escapeHtml(profile.category)} · Est. ${escapeHtml(profile.timeEst)}
+            <span style="font-size: 0.72rem; font-weight: 800; background: rgba(99, 102, 241, 0.25); color: #c7d2fe; padding: 2px 8px; border-radius: 4px;">
+              ${escapeHtml(task.taskId || 'Task')} · ${escapeHtml(task.day || 'Day 1')}
             </span>
             <span style="font-size: 0.72rem; font-weight: 700; color: ${isDone ? '#34d399' : '#f87171'};">
-              ${isDone ? '✓ Completed' : 'Pending Action'}
+              ${isDone ? '✓ Completed' : '● Action Required'}
             </span>
           </div>
 
-          <h4 style="font-size: 1.02rem; font-weight: 800; color: #f8fafc; margin-bottom: 8px; line-height: 1.35;">
-            ${escapeHtml(tName)}
-          </h4>
-
-          <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; font-size: 0.8rem; color: #e2e8f0; line-height: 1.5;">
-            🎯 <strong>Objective & Why It Matters:</strong><br>
-            ${escapeHtml(profile.objective)}
+          <div style="font-size: 0.98rem; font-weight: 800; color: #ffffff; margin-bottom: 6px; line-height: 1.35;">
+            ${escapeHtml(tTitle)}
           </div>
 
-          <div style="margin-bottom: 10px;">
-            <div style="font-size: 0.78rem; font-weight: 800; color: #93c5fd; margin-bottom: 4px;">
-              📝 Step-by-Step Instructions:
+          <div style="font-size: 0.82rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 10px; background: rgba(30, 41, 59, 0.6); padding: 8px 10px; border-radius: 6px;">
+            📌 <strong>Brief Explanation:</strong> ${escapeHtml(task.description || (tTitle + ' - Complete this prerequisite to unlock your team tools.'))}
+          </div>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.75rem; color: #94a3b8; margin-bottom: 10px;">
+            <span>⏱️ <strong>Est:</strong> ${escapeHtml(task.duration || '20m')}</span>
+            <span>🏷️ <strong>Track:</strong> ${escapeHtml(task.department || 'All')}</span>
+            <span>👤 <strong>Helper:</strong> ${escapeHtml(helperName)}</span>
+          </div>
+
+          ${task.resource ? `
+            <div style="margin-bottom: 10px; font-size: 0.76rem; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.25); padding: 6px 10px; border-radius: 6px;">
+              📄 <strong>Official Resource:</strong> <a href="${escapeHtml(task.resource.link || '#')}" target="_blank" style="color: #34d399; font-weight: 700; text-decoration: underline;">${escapeHtml(task.resource.resourceName || 'Setup Guide')}</a>
             </div>
-            <ol style="font-size: 0.78rem; color: #cbd5e1; padding-left: 18px; margin: 0; line-height: 1.55;">
-              ${stepsHtml}
-            </ol>
-          </div>
+          ` : ''}
 
-          <!-- Linked Resource -->
-          <div style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; margin-bottom: 10px;">
-            📄 <strong>Linked Resource:</strong> <a href="${profile.resource.link}" target="_blank" style="color: #34d399; font-weight: 700; text-decoration: underline;">${escapeHtml(profile.resource.name)}</a><br>
-            <span style="font-size: 0.72rem; color: #cbd5e1;">${escapeHtml(profile.resource.desc || 'Direct manual & documentation')}</span>
-          </div>
-
-          <!-- Contact for this task -->
-          <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <div>
-              <span style="color: #94a3b8; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">Task Helper:</span>
-              <div style="color: #f8fafc; font-weight: 700;">${escapeHtml(profile.contact.name)} (${escapeHtml(profile.contact.role)})</div>
-              <div style="color: #cbd5e1; font-size: 0.72rem;">${escapeHtml(profile.contact.phone)} · ${escapeHtml(profile.contact.email)}</div>
-            </div>
-            <a href="tel:${escapeHtml(profile.contact.phone)}" style="background: #4f46e5; color: #fff; font-size: 0.72rem; font-weight: 700; padding: 4px 9px; border-radius: 6px; text-decoration: none;">
-              📞 Call
-            </a>
-          </div>
-
-          <div style="display: flex; gap: 8px;">
-            <button class="copilot-chip" style="background: ${isDone ? 'rgba(255,255,255,0.1)' : '#4f46e5'}; color: #fff; padding: 6px 14px; font-size: 0.76rem;" onclick="toggleLiveTask('${(task && task.progressId) || ('P_' + taskId)}', '${(task && task.status) || 'Pending'}', '${taskId}')">
-              ${isDone ? '✓ Completed (Click to Reopen)' : '✓ Mark Task as Completed'}
+          <div style="display: flex; gap: 8px; margin-top: 8px;">
+            <button class="copilot-chip" style="background: ${isDone ? 'rgba(255,255,255,0.1)' : '#4f46e5'}; color: #fff; padding: 5px 12px; font-size: 0.75rem; font-weight: 700; border-radius: 6px; cursor: pointer;" onclick="toggleLiveTask('${task.progressId || ('P_' + task.taskId)}', '${task.status}', '${task.taskId}')">
+              ${isDone ? '✓ Mark as Pending' : '✓ Mark as Completed'}
             </button>
-            <button class="copilot-chip" style="background: rgba(255,255,255,0.08); color: #cbd5e1; padding: 6px 12px; font-size: 0.76rem;" onclick="handleChatOption('contacts')">
-              📞 Contact Directory
+            <button class="copilot-chip" style="background: rgba(255,255,255,0.08); color: #cbd5e1; padding: 5px 10px; font-size: 0.75rem; border-radius: 6px; cursor: pointer;" onclick="handleChatOption('contacts')">
+              📞 Call Helper
             </button>
           </div>
         </div>
@@ -4580,42 +4398,44 @@ const ALL_40_TASKS = [
         return;
       }
 
-      if (lower.includes('checklist') || lower.includes('today') || lower.includes('complete today') || lower.includes('day 1 tasks') || lower.includes('my tasks') || lower.includes('what to do')) {
+      if (lower.includes('checklist') || (lower.includes('show') && lower.includes('task')) || lower.includes('today') || lower.includes('complete today') || lower.includes('day 1 tasks') || lower.includes('what to do')) {
         runCopilotResponseWithThinking(query, getChecklistResponseHtml);
         return;
       }
 
-      if (lower.includes('task 1') || lower.includes('sso') || lower.includes('mfa')) {
-        runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(1));
+      // Check if user specifically asks to explain a task: e.g. "explain task 1", "explain T014", "how to do task 3", "what is task 2"
+      const taskNumMatch = lower.match(/(?:explain|what is|tell me about|how to do|help with|details of)?\s*(?:task\s*#?\s*|t\s*)(\d+)/);
+      if (taskNumMatch && (lower.includes('explain') || lower.includes('what') || lower.includes('how') || lower.includes('task') || lower.includes('help'))) {
+        const taskIdNum = parseInt(taskNumMatch[1], 10);
+        runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(taskIdNum));
         return;
       }
 
-      if (lower.includes('task 2') || lower.includes('agreement') || lower.includes('nda')) {
-        runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(2));
+      // Check by task name keywords if user asks to explain a topic
+      const allTasks = (currentLiveDashboard && currentLiveDashboard.tasks) ? currentLiveDashboard.tasks : (ALL_40_TASKS || []);
+      const matchedTask = allTasks.find(t => {
+        const nameLower = (t.taskName || t.title || '').toLowerCase();
+        if (lower.includes('sso') || lower.includes('account')) return t.taskId === 'T001';
+        if (lower.includes('mfa') || lower.includes('authenticator')) return t.taskId === 'T002';
+        if (lower.includes('handbook')) return t.taskId === 'T004';
+        if (lower.includes('security training') || lower.includes('cyber')) return t.taskId === 'T005';
+        if (lower.includes('github') || lower.includes('repo')) return nameLower.includes('github') || t.taskId === 'T014';
+        if (lower.includes('ide') || lower.includes('editor')) return nameLower.includes('ide') || t.taskId === 'T015';
+        if (lower.includes('docker') || lower.includes('container')) return nameLower.includes('docker') || t.taskId === 'T017';
+        return false;
+      });
+
+      if (matchedTask && (lower.includes('explain') || lower.includes('how') || lower.includes('what') || lower.includes('help') || lower.includes('guide'))) {
+        runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(matchedTask.taskId));
         return;
       }
 
-      if (lower.includes('task 3') || (lower.includes('sync') && lower.includes('buddy')) || lower.includes('1:1')) {
-        runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(3));
-        return;
-      }
-
-      if (lower.includes('task 4') || lower.includes('tunnel') || (lower.includes('vpn') && lower.includes('explain'))) {
-        runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(4));
-        return;
-      }
-
-      if (lower.includes('task 5') || lower.includes('repo') || (lower.includes('github') && lower.includes('explain'))) {
-        runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(5));
-        return;
-      }
-
-      if (lower.includes('stuck') || lower.includes('blocked') || lower.includes('help me') || lower.includes('issue')) {
+      if (lower.includes('stuck') || lower.includes('blocked') || lower.includes('issue') || lower.includes('problem')) {
         runCopilotResponseWithThinking(query, getStuckTroubleshootingResponseHtml);
         return;
       }
 
-      // General free-form AI query: calls backend /api/v1/ai/nvidia-copilot (NVIDIA LLM in background) with 3.5s thinking state
+      // General query with fallback
       runCopilotResponseWithThinking(query, async () => {
         const currentEmp = currentLiveDashboard?.employee || { name: 'Aarav Sharma', role: 'Software Engineer', buddy: { name: 'Dhruv Agarwal' } };
         const comp = currentLiveDashboard?.company || { name: 'TechNova' };
