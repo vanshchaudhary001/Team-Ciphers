@@ -8,6 +8,7 @@
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",
     "build": "cd server && npm run build && cd ../client && npm run build",
+    "vercel-build": "cd client && npm install && npm run build",
     "seed": "cd server && npm run seed",
     "test": "cd server && npm run test"
   },
