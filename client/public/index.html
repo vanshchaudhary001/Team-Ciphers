@@ -55,6 +55,69 @@
       background: var(--color-emerald-100);
       transform: translateY(-1px);
     }
+  
+    /* Day Filter Pills & Badges */
+    .day-filter-bar {
+      display: inline-flex;
+      gap: 4px;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-slate-200);
+    }
+    .btn-day-pill {
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--color-slate-600);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .btn-day-pill:hover {
+      color: var(--color-slate-900);
+      background: rgba(255, 255, 255, 0.6);
+    }
+    .btn-day-pill.active {
+      background: #ffffff;
+      color: #2563eb;
+      border-color: rgba(37, 99, 235, 0.25);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+    .manual-task-day-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: #eff6ff;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+    }
+    .btn-sm-action {
+      padding: 5px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .btn-sm-toggle {
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      transition: all var(--transition-fast);
+    }
+    .btn-sm-toggle:hover {
+      background: #dbeafe;
+    }
+    
   </style>
 </head>
 <body>
@@ -2208,1542 +2271,126 @@
     // 5 STRUCTURED DATASETS LIVE INTEGRATION LAYER
     // ==============================================================
     
-    // Embedded 5 Structured Datasets (Employees, Tasks, Progress, Resources, Contacts)
-    window.__START_SMART_DATASETS__ = {
-  "employees": [
-    {
-      "employeeId": "E001",
-      "name": "Aarav Sharma",
-      "role": "Software Engineer",
-      "department": "Engineering",
-      "location": "Bengaluru",
-      "joiningDate": "2026-09-29",
-      "managerId": "M001",
-      "buddyId": "B001",
-      "email": "aarav.sharma@demo-company.com"
-    },
-    {
-      "employeeId": "E002",
-      "name": "Diya Singh",
-      "role": "Data Analyst",
-      "department": "Data",
-      "location": "Delhi",
-      "joiningDate": "2026-09-30",
-      "managerId": "M002",
-      "buddyId": "B002",
-      "email": "diya.singh@demo-company.com"
-    },
-    {
-      "employeeId": "E003",
-      "name": "Rohan Kapoor",
-      "role": "UI/UX Designer",
-      "department": "Design",
-      "location": "Mumbai",
-      "joiningDate": "2026-09-30",
-      "managerId": "M003",
-      "buddyId": "B003",
-      "email": "rohan.kapoor@demo-company.com"
-    },
-    {
-      "employeeId": "E004",
-      "name": "Ananya Singh",
-      "role": "HR Executive",
-      "department": "Human Resources",
-      "location": "Bengaluru",
-      "joiningDate": "2026-09-30",
-      "managerId": "M006",
-      "buddyId": "B004",
-      "email": "ananya.singh@demo-company.com"
-    },
-    {
-      "employeeId": "E005",
-      "name": "Kabir Verma",
-      "role": "Software Engineer",
-      "department": "Engineering",
-      "location": "Hyderabad",
-      "joiningDate": "2026-10-01",
-      "managerId": "M007",
-      "buddyId": "B005",
-      "email": "kabir.verma@demo-company.com"
-    },
-    {
-      "employeeId": "E006",
-      "name": "Meera Iyer",
-      "role": "Marketing Executive",
-      "department": "Marketing",
-      "location": "Mumbai",
-      "joiningDate": "2026-10-01",
-      "managerId": "M002",
-      "buddyId": "B006",
-      "email": "meera.iyer@demo-company.com"
-    },
-    {
-      "employeeId": "E007",
-      "name": "Arjun Malhotra",
-      "role": "DevOps Engineer",
-      "department": "Engineering",
-      "location": "Pune",
-      "joiningDate": "2026-10-01",
-      "managerId": "M009",
-      "buddyId": "B007",
-      "email": "arjun.malhotra@demo-company.com"
-    },
-    {
-      "employeeId": "E008",
-      "name": "Siya Gupta",
-      "role": "Product Analyst",
-      "department": "Product",
-      "location": "Delhi",
-      "joiningDate": "2026-10-02",
-      "managerId": "M002",
-      "buddyId": "B008",
-      "email": "siya.gupta@demo-company.com"
-    },
-    {
-      "employeeId": "E009",
-      "name": "Vivaan Rao",
-      "role": "Software Engineer",
-      "department": "Engineering",
-      "location": "Bengaluru",
-      "joiningDate": "2026-10-02",
-      "managerId": "M008",
-      "buddyId": "B009",
-      "email": "vivaan.rao@demo-company.com"
-    },
-    {
-      "employeeId": "E010",
-      "name": "Kavya Nair",
-      "role": "Data Scientist",
-      "department": "Data",
-      "location": "Hyderabad",
-      "joiningDate": "2026-10-02",
-      "managerId": "M006",
-      "buddyId": "B010",
-      "email": "kavya.nair@demo-company.com"
-    },
-    {
-      "employeeId": "E011",
-      "name": "Aditya Jain",
-      "role": "Finance Executive",
-      "department": "Finance",
-      "location": "Mumbai",
-      "joiningDate": "2026-10-03",
-      "managerId": "M004",
-      "buddyId": "B011",
-      "email": "aditya.jain@demo-company.com"
-    },
-    {
-      "employeeId": "E012",
-      "name": "Ishita Bansal",
-      "role": "UI/UX Designer",
-      "department": "Design",
-      "location": "Delhi",
-      "joiningDate": "2026-10-03",
-      "managerId": "M009",
-      "buddyId": "B012",
-      "email": "ishita.bansal@demo-company.com"
-    },
-    {
-      "employeeId": "E013",
-      "name": "Reyansh Sethi",
-      "role": "Software Engineer",
-      "department": "Engineering",
-      "location": "Pune",
-      "joiningDate": "2026-10-03",
-      "managerId": "M005",
-      "buddyId": "B013",
-      "email": "reyansh.sethi@demo-company.com"
-    },
-    {
-      "employeeId": "E014",
-      "name": "Sara Khan",
-      "role": "HR Executive",
-      "department": "Human Resources",
-      "location": "Hyderabad",
-      "joiningDate": "2026-10-04",
-      "managerId": "M005",
-      "buddyId": "B014",
-      "email": "sara.khan@demo-company.com"
-    },
-    {
-      "employeeId": "E015",
-      "name": "Dhruv Agarwal",
-      "role": "Business Analyst",
-      "department": "Business",
-      "location": "Bengaluru",
-      "joiningDate": "2026-10-04",
-      "managerId": "M002",
-      "buddyId": "B015",
-      "email": "dhruv.agarwal@demo-company.com"
-    },
-    {
-      "employeeId": "E016",
-      "name": "Myra Chawla",
-      "role": "Marketing Executive",
-      "department": "Marketing",
-      "location": "Delhi",
-      "joiningDate": "2026-10-04",
-      "managerId": "M001",
-      "buddyId": "B016",
-      "email": "myra.chawla@demo-company.com"
-    },
-    {
-      "employeeId": "E017",
-      "name": "Yash Thakur",
-      "role": "Cloud Engineer",
-      "department": "Engineering",
-      "location": "Mumbai",
-      "joiningDate": "2026-10-05",
-      "managerId": "M009",
-      "buddyId": "B017",
-      "email": "yash.thakur@demo-company.com"
-    },
-    {
-      "employeeId": "E018",
-      "name": "Tara Menon",
-      "role": "Data Analyst",
-      "department": "Data",
-      "location": "Bengaluru",
-      "joiningDate": "2026-10-05",
-      "managerId": "M003",
-      "buddyId": "B018",
-      "email": "tara.menon@demo-company.com"
-    },
-    {
-      "employeeId": "E019",
-      "name": "Atharv Joshi",
-      "role": "Product Manager",
-      "department": "Product",
-      "location": "Pune",
-      "joiningDate": "2026-10-05",
-      "managerId": "M006",
-      "buddyId": "B019",
-      "email": "atharv.joshi@demo-company.com"
-    },
-    {
-      "employeeId": "E020",
-      "name": "Kiara Desai",
-      "role": "Software Engineer",
-      "department": "Engineering",
-      "location": "Delhi",
-      "joiningDate": "2026-10-05",
-      "managerId": "M008",
-      "buddyId": "B020",
-      "email": "kiara.desai@demo-company.com"
+    
+    // ==============================================================
+    // 40-TASK ROLE-BASED ONBOARDING & HR SYNCHRONIZATION ENGINE
+    // ==============================================================
+    const fs = require('fs');
+const path = require('path');
+
+const ALL_40_TASKS = [
+  { taskId: 'T001', taskName: 'Activate company account', applicableRole: 'All', department: 'All', day: 'Day 1', priority: 'High', assignedBy: 'IT', resourceId: 'R002', isMandatory: true, duration: '20 mins', desc: 'Activate corporate single sign-on credentials and verify user directory profile.' },
+  { taskId: 'T002', taskName: 'Set up MFA', applicableRole: 'All', department: 'All', day: 'Day 1', priority: 'High', assignedBy: 'IT', resourceId: 'R003', isMandatory: true, duration: '15 mins', desc: 'Configure corporate multi-factor authenticator and register security passkey.' },
+  { taskId: 'T003', taskName: 'Complete employee profile', applicableRole: 'All', department: 'All', day: 'Day 1', priority: 'Medium', assignedBy: 'HR', resourceId: 'R001', isMandatory: true, duration: '20 mins', desc: 'Submit emergency contacts, statutory identity docs, and personal bio.' },
+  { taskId: 'T004', taskName: 'Read employee handbook', applicableRole: 'All', department: 'All', day: 'Day 1', priority: 'Medium', assignedBy: 'HR', resourceId: 'R001', isMandatory: true, duration: '30 mins', desc: 'Review corporate mission, workplace conduct rules, and company values.' },
+  { taskId: 'T005', taskName: 'Complete security awareness training', applicableRole: 'All', department: 'All', day: 'Day 1', priority: 'High', assignedBy: 'Security', resourceId: 'R004', isMandatory: true, duration: '25 mins', desc: 'Complete mandatory cyber threat, phishing defense, and data protection module.' },
+  { taskId: 'T006', taskName: 'Meet onboarding buddy', applicableRole: 'All', department: 'All', day: 'Day 1', priority: 'Medium', assignedBy: 'Manager', resourceId: null, isMandatory: true, duration: '40 mins', desc: 'Connect 1-on-1 with your assigned senior buddy for workplace norms and team intro.' },
+  { taskId: 'T007', taskName: 'Attend company orientation', applicableRole: 'All', department: 'All', day: 'Day 1', priority: 'High', assignedBy: 'HR', resourceId: 'R005', isMandatory: true, duration: '45 mins', desc: 'Join welcome orientation session with People Operations and leadership team.' },
+  { taskId: 'T008', taskName: 'Set up company email', applicableRole: 'All', department: 'All', day: 'Day 1', priority: 'High', assignedBy: 'IT', resourceId: 'R002', isMandatory: true, duration: '15 mins', desc: 'Configure corporate mailbox, calendar sync, and email signature.' },
+  { taskId: 'T009', taskName: 'Review leave and attendance policy', applicableRole: 'All', department: 'All', day: 'Day 2', priority: 'Medium', assignedBy: 'HR', resourceId: 'R006', isMandatory: true, duration: '20 mins', desc: 'Learn leave application process, holiday calendars, and working hour policies.' },
+  { taskId: 'T010', taskName: 'Review company benefits', applicableRole: 'All', department: 'All', day: 'Day 2', priority: 'Low', assignedBy: 'HR', resourceId: 'R007', isMandatory: false, duration: '25 mins', desc: 'Explore health insurance, wellness stipends, and retirement benefits.' },
+  { taskId: 'T011', taskName: 'Complete workplace safety training', applicableRole: 'All', department: 'All', day: 'Day 2', priority: 'Medium', assignedBy: 'HR', resourceId: 'R008', isMandatory: true, duration: '20 mins', desc: 'Complete workplace ergonomics, fire safety, and emergency protocol module.' },
+  { taskId: 'T012', taskName: 'Meet reporting manager', applicableRole: 'All', department: 'All', day: 'Day 2', priority: 'High', assignedBy: 'Manager', resourceId: null, isMandatory: true, duration: '45 mins', desc: 'Align on first-week priorities, 30-60-90 day milestones, and expectations.' },
+  { taskId: 'T013', taskName: 'Join department communication channel', applicableRole: 'All', department: 'All', day: 'Day 2', priority: 'Medium', assignedBy: 'Manager', resourceId: null, isMandatory: true, duration: '15 mins', desc: 'Join squad Slack/Teams channels and bookmark team knowledge bases.' },
+  // Software Engineer
+  { taskId: 'T014', taskName: 'Set up GitHub access', applicableRole: 'Software Engineer', department: 'Engineering', day: 'Day 1', priority: 'High', assignedBy: 'IT', resourceId: 'R009', isMandatory: true, duration: '20 mins', desc: 'Accept enterprise GitHub organization invitation and link SSH signing keys.' },
+  { taskId: 'T015', taskName: 'Set up development environment', applicableRole: 'Software Engineer', department: 'Engineering', day: 'Day 1', priority: 'High', assignedBy: 'Manager', resourceId: 'R010', isMandatory: true, duration: '60 mins', desc: 'Install IDE, compilers, container runtime, and run local test suite.' },
+  { taskId: 'T016', taskName: 'Read engineering coding guidelines', applicableRole: 'Software Engineer', department: 'Engineering', day: 'Day 2', priority: 'Medium', assignedBy: 'Manager', resourceId: 'R011', isMandatory: true, duration: '30 mins', desc: 'Read code formatting, linting rules, PR review SLAs, and branch naming conventions.' },
+  { taskId: 'T017', taskName: 'Review software architecture', applicableRole: 'Software Engineer', department: 'Engineering', day: 'Day 2', priority: 'Medium', assignedBy: 'Manager', resourceId: 'R012', isMandatory: true, duration: '45 mins', desc: 'Review microservice blueprints, database schemas, and API gateway specs.' },
+  { taskId: 'T018', taskName: 'Join engineering repository', applicableRole: 'Software Engineer', department: 'Engineering', day: 'Day 2', priority: 'High', assignedBy: 'IT', resourceId: 'R013', isMandatory: true, duration: '20 mins', desc: 'Clone monorepo, configure pre-commit hooks, and verify local build.' },
+  { taskId: 'T019', taskName: 'Complete code security training', applicableRole: 'Software Engineer', department: 'Engineering', day: 'Day 3', priority: 'High', assignedBy: 'Security', resourceId: 'R014', isMandatory: true, duration: '35 mins', desc: 'Learn SAST/DAST scanning, secret management, and secure dependency handling.' },
+  { taskId: 'T020', taskName: 'Meet engineering team', applicableRole: 'Software Engineer', department: 'Engineering', day: 'Day 3', priority: 'Medium', assignedBy: 'Manager', resourceId: null, isMandatory: true, duration: '45 mins', desc: 'Join sprint planning or team standup to introduce yourself to teammates.' },
+  // Data Analyst
+  { taskId: 'T021', taskName: 'Set up analytics tools', applicableRole: 'Data Analyst', department: 'Data', day: 'Day 1', priority: 'High', assignedBy: 'Manager', resourceId: 'R015', isMandatory: true, duration: '30 mins', desc: 'Configure Power BI, Tableau, dbt CLI, and Python analytical libraries.' },
+  { taskId: 'T022', taskName: 'Get access to data warehouse', applicableRole: 'Data Analyst', department: 'Data', day: 'Day 1', priority: 'High', assignedBy: 'IT', resourceId: 'R016', isMandatory: true, duration: '25 mins', desc: 'Request read permissions for Snowflake/BigQuery staging schemas.' },
+  { taskId: 'T023', taskName: 'Review data governance policy', applicableRole: 'Data Analyst', department: 'Data', day: 'Day 2', priority: 'High', assignedBy: 'Data Lead', resourceId: 'R017', isMandatory: true, duration: '30 mins', desc: 'Understand PII data masking, compliance guidelines, and export policies.' },
+  { taskId: 'T024', taskName: 'Review reporting standards', applicableRole: 'Data Analyst', department: 'Data', day: 'Day 2', priority: 'Medium', assignedBy: 'Data Lead', resourceId: 'R018', isMandatory: true, duration: '25 mins', desc: 'Study standard corporate metric definitions, KPI models, and dashboard templates.' },
+  { taskId: 'T025', taskName: 'Meet data team', applicableRole: 'Data Analyst', department: 'Data', day: 'Day 3', priority: 'Medium', assignedBy: 'Manager', resourceId: null, isMandatory: true, duration: '40 mins', desc: 'Meet data engineers and business intelligence peers to discuss current pipelines.' },
+  // UI/UX Designer
+  { taskId: 'T026', taskName: 'Set up design tools', applicableRole: 'UI/UX Designer', department: 'Design', day: 'Day 1', priority: 'High', assignedBy: 'IT', resourceId: 'R019', isMandatory: true, duration: '25 mins', desc: 'Activate Figma enterprise seat, font packages, and asset libraries.' },
+  { taskId: 'T027', taskName: 'Get access to design repository', applicableRole: 'UI/UX Designer', department: 'Design', day: 'Day 1', priority: 'High', assignedBy: 'IT', resourceId: 'R020', isMandatory: true, duration: '20 mins', desc: 'Request access to Figma workspace, component tokens, and UX research archives.' },
+  { taskId: 'T028', taskName: 'Review design system', applicableRole: 'UI/UX Designer', department: 'Design', day: 'Day 2', priority: 'Medium', assignedBy: 'Design Lead', resourceId: 'R021', isMandatory: true, duration: '40 mins', desc: 'Study typography tokens, elevation scales, grid systems, and component states.' },
+  { taskId: 'T029', taskName: 'Review brand guidelines', applicableRole: 'UI/UX Designer', department: 'Design', day: 'Day 2', priority: 'Medium', assignedBy: 'Design Lead', resourceId: 'R022', isMandatory: true, duration: '30 mins', desc: 'Review brand voice, color harmony, iconography, and illustration guidelines.' },
+  { taskId: 'T030', taskName: 'Meet design team', applicableRole: 'UI/UX Designer', department: 'Design', day: 'Day 3', priority: 'Medium', assignedBy: 'Manager', resourceId: null, isMandatory: true, duration: '45 mins', desc: 'Attend weekly design critique and introduce yourself to product designers.' },
+  // HR Executive
+  { taskId: 'T031', taskName: 'Get access to HR portal', applicableRole: 'HR Executive', department: 'Human Resources', day: 'Day 1', priority: 'High', assignedBy: 'IT', resourceId: 'R023', isMandatory: true, duration: '25 mins', desc: 'Acquire administrative access to HRIS, Workday, and applicant tracker.' },
+  { taskId: 'T032', taskName: 'Review HR policies', applicableRole: 'HR Executive', department: 'Human Resources', day: 'Day 1', priority: 'High', assignedBy: 'HR Manager', resourceId: 'R024', isMandatory: true, duration: '40 mins', desc: 'Study grievance procedures, leave policies, compensation bands, and onboarding flows.' },
+  { taskId: 'T033', taskName: 'Review employee records process', applicableRole: 'HR Executive', department: 'Human Resources', day: 'Day 2', priority: 'High', assignedBy: 'HR Manager', resourceId: 'R025', isMandatory: true, duration: '30 mins', desc: 'Understand document verification, compliance filing, and digital dossier retention.' },
+  { taskId: 'T034', taskName: 'Complete HR compliance training', applicableRole: 'HR Executive', department: 'Human Resources', day: 'Day 2', priority: 'High', assignedBy: 'HR Manager', resourceId: 'R026', isMandatory: true, duration: '35 mins', desc: 'Complete statutory labor law, workplace equality, and POSH training certification.' },
+  { taskId: 'T035', taskName: 'Meet HR team', applicableRole: 'HR Executive', department: 'Human Resources', day: 'Day 3', priority: 'Medium', assignedBy: 'HR Manager', resourceId: null, isMandatory: true, duration: '45 mins', desc: 'Join the People Operations weekly sync and meet recruitment & talent partners.' },
+  // Marketing Executive
+  { taskId: 'T036', taskName: 'Set up marketing tools', applicableRole: 'Marketing Executive', department: 'Marketing', day: 'Day 1', priority: 'High', assignedBy: 'IT', resourceId: 'R027', isMandatory: true, duration: '30 mins', desc: 'Get access to HubSpot, Google Analytics 4, SEMrush, and social management tools.' },
+  { taskId: 'T037', taskName: 'Review brand guidelines', applicableRole: 'Marketing Executive', department: 'Marketing', day: 'Day 1', priority: 'Medium', assignedBy: 'Marketing Manager', resourceId: 'R028', isMandatory: true, duration: '30 mins', desc: 'Review corporate brand voice, messaging guidelines, and approved media assets.' },
+  { taskId: 'T038', taskName: 'Review marketing strategy', applicableRole: 'Marketing Executive', department: 'Marketing', day: 'Day 2', priority: 'Medium', assignedBy: 'Marketing Manager', resourceId: 'R029', isMandatory: true, duration: '45 mins', desc: 'Read quarterly GTM roadmap, target persona profiles, and campaign briefs.' },
+  { taskId: 'T039', taskName: 'Get access to marketing analytics', applicableRole: 'Marketing Executive', department: 'Marketing', day: 'Day 2', priority: 'High', assignedBy: 'IT', resourceId: 'R030', isMandatory: true, duration: '20 mins', desc: 'Obtain permissions for campaign dashboards, conversion tracking, and CRM reports.' },
+  { taskId: 'T040', taskName: 'Meet marketing team', applicableRole: 'Marketing Executive', department: 'Marketing', day: 'Day 3', priority: 'Medium', assignedBy: 'Manager', resourceId: null, isMandatory: true, duration: '45 mins', desc: 'Meet content strategists, performance marketers, and growth lead.' }
+];
+
+    let currentDayFilter = 'Day 1';
+    let currentTaskFilter = 'all';
+
+    function getCustomTasksStore() {
+      try {
+        const saved = localStorage.getItem('startsmart_custom_tasks_v3');
+        return saved ? JSON.parse(saved) : {};
+      } catch (e) {
+        return {};
+      }
     }
-  ],
-  "contacts": [
-    {
-      "contactId": "C001",
-      "name": "Rahul Mehta",
-      "team": "IT",
-      "role": "IT Helpdesk",
-      "purpose": "Laptop, account and software issues",
-      "email": "it@demo-company.com",
-      "phone": "+91 80 6789 89910",
-      "availability": "Mon-Fri, 9AM-6PM",
-      "escalationTo": "C002"
-    },
-    {
-      "contactId": "C002",
-      "name": "Vikram Shah",
-      "team": "IT",
-      "role": "IT Manager",
-      "purpose": "Escalated IT and access issues",
-      "email": "it.manager@demo-company.com",
-      "phone": "+91 80 6789 89911",
-      "availability": "Mon-Fri, 9AM-6PM",
-      "escalationTo": "C010"
-    },
-    {
-      "contactId": "C003",
-      "name": "Priya Nair",
-      "team": "Human Resources",
-      "role": "HR Manager",
-      "purpose": "HR policies, benefits and employee queries",
-      "email": "hr@demo-company.com",
-      "phone": "+91 80 6789 89912",
-      "availability": "Mon-Fri, 9AM-5PM",
-      "escalationTo": "C010"
-    },
-    {
-      "contactId": "C004",
-      "name": "Sneha Kapoor",
-      "team": "Human Resources",
-      "role": "HR Executive",
-      "purpose": "Onboarding documents and HR portal",
-      "email": "hr.support@demo-company.com",
-      "phone": "+91 80 6789 89913",
-      "availability": "Mon-Fri, 9AM-5PM",
-      "escalationTo": "C003"
-    },
-    {
-      "contactId": "C005",
-      "name": "Arjun Malhotra",
-      "team": "Engineering",
-      "role": "Engineering Lead",
-      "purpose": "Technical and engineering questions",
-      "email": "engineering@demo-company.com",
-      "phone": "+91 80 6789 89914",
-      "availability": "Mon-Fri, 10AM-6PM",
-      "escalationTo": "C006"
-    },
-    {
-      "contactId": "C006",
-      "name": "Rohan Verma",
-      "team": "Engineering",
-      "role": "Engineering Manager",
-      "purpose": "Engineering escalations and access",
-      "email": "eng.manager@demo-company.com",
-      "phone": "+91 80 6789 89915",
-      "availability": "Mon-Fri, 10AM-6PM",
-      "escalationTo": "C010"
-    },
-    {
-      "contactId": "C007",
-      "name": "Neha Sharma",
-      "team": "Security",
-      "role": "Security Lead",
-      "purpose": "Security incidents and security access",
-      "email": "security@demo-company.com",
-      "phone": "+91 80 6789 89916",
-      "availability": "Mon-Fri, 9AM-6PM",
-      "escalationTo": "C010"
-    },
-    {
-      "contactId": "C008",
-      "name": "Ananya Gupta",
-      "team": "Data",
-      "role": "Data Team Lead",
-      "purpose": "Data tools, analytics and data access",
-      "email": "data@demo-company.com",
-      "phone": "+91 80 6789 89917",
-      "availability": "Mon-Fri, 10AM-6PM",
-      "escalationTo": "C009"
-    },
-    {
-      "contactId": "C009",
-      "name": "Karan Iyer",
-      "team": "Data",
-      "role": "Data Manager",
-      "purpose": "Data access and analytics escalations",
-      "email": "data.manager@demo-company.com",
-      "phone": "+91 80 6789 89918",
-      "availability": "Mon-Fri, 10AM-6PM",
-      "escalationTo": "C010"
-    },
-    {
-      "contactId": "C010",
-      "name": "Meera Rao",
-      "team": "Administration",
-      "role": "Operations Manager",
-      "purpose": "General workplace and administrative issues",
-      "email": "operations@demo-company.com",
-      "phone": "+91 80 6789 89919",
-      "availability": "Mon-Fri, 9AM-6PM",
-      "escalationTo": null
-    },
-    {
-      "contactId": "C011",
-      "name": "Aditi Bansal",
-      "team": "Design",
-      "role": "Design Lead",
-      "purpose": "Design tools and design system questions",
-      "email": "design@demo-company.com",
-      "phone": "+91 80 6789 89920",
-      "availability": "Mon-Fri, 10AM-6PM",
-      "escalationTo": "C012"
-    },
-    {
-      "contactId": "C012",
-      "name": "Kabir Joshi",
-      "team": "Design",
-      "role": "Design Manager",
-      "purpose": "Design-related escalations",
-      "email": "design.manager@demo-company.com",
-      "phone": "+91 80 6789 89921",
-      "availability": "Mon-Fri, 10AM-6PM",
-      "escalationTo": "C010"
-    },
-    {
-      "contactId": "C013",
-      "name": "Ishita Singh",
-      "team": "Marketing",
-      "role": "Marketing Lead",
-      "purpose": "Marketing tools and campaign questions",
-      "email": "marketing@demo-company.com",
-      "phone": "+91 80 6789 89922",
-      "availability": "Mon-Fri, 10AM-6PM",
-      "escalationTo": "C014"
-    },
-    {
-      "contactId": "C014",
-      "name": "Aditya Kapoor",
-      "team": "Marketing",
-      "role": "Marketing Manager",
-      "purpose": "Marketing-related escalations",
-      "email": "marketing.manager@demo-company.com",
-      "phone": "+91 80 6789 89923",
-      "availability": "Mon-Fri, 10AM-6PM",
-      "escalationTo": "C010"
-    },
-    {
-      "contactId": "C015",
-      "name": "Tara Menon",
-      "team": "Finance",
-      "role": "Finance Executive",
-      "purpose": "Payroll, reimbursement and finance queries",
-      "email": "finance@demo-company.com",
-      "phone": "+91 80 6789 89924",
-      "availability": "Mon-Fri, 9AM-5PM",
-      "escalationTo": "C016"
-    },
-    {
-      "contactId": "C016",
-      "name": "Nikhil Jain",
-      "team": "Finance",
-      "role": "Finance Manager",
-      "purpose": "Finance and payroll escalations",
-      "email": "finance.manager@demo-company.com",
-      "phone": "+91 80 6789 89925",
-      "availability": "Mon-Fri, 9AM-5PM",
-      "escalationTo": "C010"
-    },
-    {
-      "contactId": "C017",
-      "name": "Yash Thakur",
-      "team": "Facilities",
-      "role": "Facilities Coordinator",
-      "purpose": "Office access, seating and facilities",
-      "email": "facilities@demo-company.com",
-      "phone": "+91 80 6789 89926",
-      "availability": "Mon-Fri, 9AM-6PM",
-      "escalationTo": "C010"
-    },
-    {
-      "contactId": "C018",
-      "name": "Sara Khan",
-      "team": "Learning & Development",
-      "role": "Training Coordinator",
-      "purpose": "Training and learning-related queries",
-      "email": "training@demo-company.com",
-      "phone": "+91 80 6789 89927",
-      "availability": "Mon-Fri, 9AM-5PM",
-      "escalationTo": "C003"
-    },
-    {
-      "contactId": "C019",
-      "name": "Dhruv Agarwal",
-      "team": "Employee Support",
-      "role": "Onboarding Buddy",
-      "purpose": "General first-week guidance",
-      "email": "buddy@demo-company.com",
-      "phone": "+91 80 6789 89928",
-      "availability": "Mon-Fri, 10AM-6PM",
-      "escalationTo": "C003"
-    },
-    {
-      "contactId": "C020",
-      "name": "Myra Chawla",
-      "team": "Employee Support",
-      "role": "Onboarding Coordinator",
-      "purpose": "New-joiner onboarding support",
-      "email": "onboarding@demo-company.com",
-      "phone": "+91 80 6789 89929",
-      "availability": "Mon-Fri, 9AM-6PM",
-      "escalationTo": "C003"
+
+    function saveCustomTasksStore(store) {
+      try {
+        localStorage.setItem('startsmart_custom_tasks_v3', JSON.stringify(store));
+      } catch (e) {}
     }
-  ],
-  "resources": [
-    {
-      "resourceId": "R001",
-      "resourceName": "Employee Handbook",
-      "category": "HR",
-      "link": "/resources/employee-handbook",
-      "resourceType": "Document",
-      "description": "General company rules, culture and employee guidelines"
-    },
-    {
-      "resourceId": "R002",
-      "resourceName": "IT Setup Guide",
-      "category": "IT",
-      "link": "/resources/it-setup",
-      "resourceType": "Document",
-      "description": "Guide for setting up laptop, email and basic IT access"
-    },
-    {
-      "resourceId": "R003",
-      "resourceName": "MFA Setup Guide",
-      "category": "Security",
-      "link": "/resources/mfa-setup",
-      "resourceType": "Guide",
-      "description": "Steps to activate multi-factor authentication"
-    },
-    {
-      "resourceId": "R004",
-      "resourceName": "Security Awareness Training",
-      "category": "Training",
-      "link": "/training/security",
-      "resourceType": "Training",
-      "description": "Mandatory security awareness training"
-    },
-    {
-      "resourceId": "R005",
-      "resourceName": "Company Orientation",
-      "category": "Orientation",
-      "link": "/training/orientation",
-      "resourceType": "Video",
-      "description": "Introduction to company, teams and workplace"
-    },
-    {
-      "resourceId": "R006",
-      "resourceName": "Leave & Attendance Policy",
-      "category": "HR",
-      "link": "/resources/leave-policy",
-      "resourceType": "Document",
-      "description": "Information about leave, attendance and working hours"
-    },
-    {
-      "resourceId": "R007",
-      "resourceName": "Employee Benefits Guide",
-      "category": "HR",
-      "link": "/resources/benefits",
-      "resourceType": "Document",
-      "description": "Information about employee benefits and facilities"
-    },
-    {
-      "resourceId": "R008",
-      "resourceName": "Workplace Safety Guide",
-      "category": "Safety",
-      "link": "/resources/safety",
-      "resourceType": "Document",
-      "description": "Workplace safety procedures and emergency information"
-    },
-    {
-      "resourceId": "R009",
-      "resourceName": "GitHub Access Guide",
-      "category": "Engineering",
-      "link": "/resources/github-access",
-      "resourceType": "Guide",
-      "description": "Steps to request and activate GitHub access"
-    },
-    {
-      "resourceId": "R010",
-      "resourceName": "Development Environment Guide",
-      "category": "Engineering",
-      "link": "/resources/dev-setup",
-      "resourceType": "Guide",
-      "description": "Setup guide for development tools and environment"
-    },
-    {
-      "resourceId": "R011",
-      "resourceName": "Engineering Coding Guidelines",
-      "category": "Engineering",
-      "link": "/resources/coding-guidelines",
-      "resourceType": "Document",
-      "description": "Coding standards and development practices"
-    },
-    {
-      "resourceId": "R012",
-      "resourceName": "Software Architecture Guide",
-      "category": "Engineering",
-      "link": "/resources/architecture",
-      "resourceType": "Document",
-      "description": "Overview of the company's software architecture"
-    },
-    {
-      "resourceId": "R013",
-      "resourceName": "Engineering Repository Guide",
-      "category": "Engineering",
-      "link": "/resources/repository",
-      "resourceType": "Guide",
-      "description": "Instructions for accessing engineering repositories"
-    },
-    {
-      "resourceId": "R014",
-      "resourceName": "Code Security Training",
-      "category": "Security",
-      "link": "/training/code-security",
-      "resourceType": "Training",
-      "description": "Secure coding and application security training"
-    },
-    {
-      "resourceId": "R015",
-      "resourceName": "Data Tools Setup Guide",
-      "category": "Data",
-      "link": "/resources/data-tools",
-      "resourceType": "Guide",
-      "description": "Setup instructions for analytics and data tools"
-    },
-    {
-      "resourceId": "R016",
-      "resourceName": "Data Warehouse Access Guide",
-      "category": "Data",
-      "link": "/resources/data-access",
-      "resourceType": "Guide",
-      "description": "Steps for requesting data warehouse access"
-    },
-    {
-      "resourceId": "R017",
-      "resourceName": "Data Governance Policy",
-      "category": "Data",
-      "link": "/resources/data-governance",
-      "resourceType": "Document",
-      "description": "Rules for handling and using company data"
-    },
-    {
-      "resourceId": "R018",
-      "resourceName": "Reporting Standards Guide",
-      "category": "Data",
-      "link": "/resources/reporting",
-      "resourceType": "Document",
-      "description": "Company standards for reports and dashboards"
-    },
-    {
-      "resourceId": "R019",
-      "resourceName": "Design Tools Setup Guide",
-      "category": "Design",
-      "link": "/resources/design-tools",
-      "resourceType": "Guide",
-      "description": "Setup instructions for approved design tools"
-    },
-    {
-      "resourceId": "R020",
-      "resourceName": "Design Repository Guide",
-      "category": "Design",
-      "link": "/resources/design-repository",
-      "resourceType": "Guide",
-      "description": "Access instructions for design files and repositories"
-    },
-    {
-      "resourceId": "R021",
-      "resourceName": "Company Design System",
-      "category": "Design",
-      "link": "/resources/design-system",
-      "resourceType": "Document",
-      "description": "Components, patterns and design standards"
-    },
-    {
-      "resourceId": "R022",
-      "resourceName": "Brand Guidelines",
-      "category": "Design",
-      "link": "/resources/brand-guidelines",
-      "resourceType": "Document",
-      "description": "Company visual identity and branding rules"
-    },
-    {
-      "resourceId": "R023",
-      "resourceName": "HR Portal Guide",
-      "category": "HR",
-      "link": "/resources/hr-portal",
-      "resourceType": "Guide",
-      "description": "Guide to using the internal HR portal"
-    },
-    {
-      "resourceId": "R024",
-      "resourceName": "HR Policies Guide",
-      "category": "HR",
-      "link": "/resources/hr-policies",
-      "resourceType": "Document",
-      "description": "Important HR policies and procedures"
-    },
-    {
-      "resourceId": "R025",
-      "resourceName": "Employee Records Guide",
-      "category": "HR",
-      "link": "/resources/employee-records",
-      "resourceType": "Guide",
-      "description": "Procedures for managing employee records"
-    },
-    {
-      "resourceId": "R026",
-      "resourceName": "HR Compliance Training",
-      "category": "Training",
-      "link": "/training/hr-compliance",
-      "resourceType": "Training",
-      "description": "Mandatory HR compliance training"
-    },
-    {
-      "resourceId": "R027",
-      "resourceName": "Marketing Tools Guide",
-      "category": "Marketing",
-      "link": "/resources/marketing-tools",
-      "resourceType": "Guide",
-      "description": "Setup instructions for marketing tools"
-    },
-    {
-      "resourceId": "R028",
-      "resourceName": "Marketing Brand Guide",
-      "category": "Marketing",
-      "link": "/resources/marketing-brand",
-      "resourceType": "Document",
-      "description": "Marketing-specific brand and communication guidelines"
-    },
-    {
-      "resourceId": "R029",
-      "resourceName": "Marketing Strategy Guide",
-      "category": "Marketing",
-      "link": "/resources/marketing-strategy",
-      "resourceType": "Document",
-      "description": "Overview of company marketing strategy"
-    },
-    {
-      "resourceId": "R030",
-      "resourceName": "Marketing Analytics Guide",
-      "category": "Marketing",
-      "link": "/resources/marketing-analytics",
-      "resourceType": "Guide",
-      "description": "Instructions for accessing marketing analytics"
+
+    function getDeletedTasksStore() {
+      try {
+        const saved = localStorage.getItem('startsmart_deleted_tasks_v3');
+        return saved ? JSON.parse(saved) : {};
+      } catch (e) {
+        return {};
+      }
     }
-  ],
-  "tasks": [
-    {
-      "taskId": "T001",
-      "checklistId": null,
-      "taskName": "Activate company account",
-      "applicableRole": "All",
-      "department": "All",
-      "day": "Day 1",
-      "priority": "High",
-      "assignedBy": "IT",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R002",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T002",
-      "checklistId": null,
-      "taskName": "Set up MFA",
-      "applicableRole": "All",
-      "department": "All",
-      "day": "Day 1",
-      "priority": "High",
-      "assignedBy": "IT",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R003",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T003",
-      "checklistId": null,
-      "taskName": "Complete employee profile",
-      "applicableRole": "All",
-      "department": "All",
-      "day": "Day 1",
-      "priority": "Medium",
-      "assignedBy": "HR",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R001",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T004",
-      "checklistId": null,
-      "taskName": "Read employee handbook",
-      "applicableRole": "All",
-      "department": "All",
-      "day": "Day 1",
-      "priority": "Medium",
-      "assignedBy": "HR",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R001",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T005",
-      "checklistId": null,
-      "taskName": "Complete security awareness training",
-      "applicableRole": "All",
-      "department": "All",
-      "day": "Day 1",
-      "priority": "High",
-      "assignedBy": "Security",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R004",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T006",
-      "checklistId": null,
-      "taskName": "Meet onboarding buddy",
-      "applicableRole": "All",
-      "department": "All",
-      "day": "Day 1",
-      "priority": "Medium",
-      "assignedBy": "Manager",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T007",
-      "checklistId": null,
-      "taskName": "Attend company orientation",
-      "applicableRole": "All",
-      "department": "All",
-      "day": "Day 1",
-      "priority": "High",
-      "assignedBy": "HR",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R005",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T008",
-      "checklistId": null,
-      "taskName": "Set up company email",
-      "applicableRole": "All",
-      "department": "All",
-      "day": "Day 1",
-      "priority": "High",
-      "assignedBy": "IT",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R002",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T009",
-      "checklistId": null,
-      "taskName": "Review leave and attendance policy",
-      "applicableRole": "All",
-      "department": "All",
-      "day": "Day 2",
-      "priority": "Medium",
-      "assignedBy": "HR",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "R006",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T010",
-      "checklistId": null,
-      "taskName": "Review company benefits",
-      "applicableRole": "All",
-      "department": "All",
-      "day": "Day 2",
-      "priority": "Low",
-      "assignedBy": "HR",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "R007",
-      "isMandatory": false
-    },
-    {
-      "taskId": "T011",
-      "checklistId": null,
-      "taskName": "Complete workplace safety training",
-      "applicableRole": "All",
-      "department": "All",
-      "day": "Day 2",
-      "priority": "Medium",
-      "assignedBy": "HR",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "R008",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T012",
-      "checklistId": null,
-      "taskName": "Meet reporting manager",
-      "applicableRole": "All",
-      "department": "All",
-      "day": "Day 2",
-      "priority": "High",
-      "assignedBy": "Manager",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T013",
-      "checklistId": null,
-      "taskName": "Join department communication channel",
-      "applicableRole": "All",
-      "department": "All",
-      "day": "Day 2",
-      "priority": "Medium",
-      "assignedBy": "Manager",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T014",
-      "checklistId": null,
-      "taskName": "Set up GitHub access",
-      "applicableRole": "Software Engineer",
-      "department": "Engineering",
-      "day": "Day 1",
-      "priority": "High",
-      "assignedBy": "IT",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R009",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T015",
-      "checklistId": null,
-      "taskName": "Set up development environment",
-      "applicableRole": "Software Engineer",
-      "department": "Engineering",
-      "day": "Day 1",
-      "priority": "High",
-      "assignedBy": "Manager",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R010",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T016",
-      "checklistId": null,
-      "taskName": "Read engineering coding guidelines",
-      "applicableRole": "Software Engineer",
-      "department": "Engineering",
-      "day": "Day 2",
-      "priority": "Medium",
-      "assignedBy": "Manager",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "R011",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T017",
-      "checklistId": null,
-      "taskName": "Review software architecture",
-      "applicableRole": "Software Engineer",
-      "department": "Engineering",
-      "day": "Day 2",
-      "priority": "Medium",
-      "assignedBy": "Manager",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "R012",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T018",
-      "checklistId": null,
-      "taskName": "Join engineering repository",
-      "applicableRole": "Software Engineer",
-      "department": "Engineering",
-      "day": "Day 2",
-      "priority": "High",
-      "assignedBy": "IT",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "R013",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T019",
-      "checklistId": null,
-      "taskName": "Complete code security training",
-      "applicableRole": "Software Engineer",
-      "department": "Engineering",
-      "day": "Day 3",
-      "priority": "High",
-      "assignedBy": "Security",
-      "deadline": "Day 3, 5:00 PM",
-      "resourceId": "R014",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T020",
-      "checklistId": null,
-      "taskName": "Meet engineering team",
-      "applicableRole": "Software Engineer",
-      "department": "Engineering",
-      "day": "Day 3",
-      "priority": "Medium",
-      "assignedBy": "Manager",
-      "deadline": "Day 3, 5:00 PM",
-      "resourceId": "",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T021",
-      "checklistId": null,
-      "taskName": "Set up analytics tools",
-      "applicableRole": "Data Analyst",
-      "department": "Data",
-      "day": "Day 1",
-      "priority": "High",
-      "assignedBy": "Manager",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R015",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T022",
-      "checklistId": null,
-      "taskName": "Get access to data warehouse",
-      "applicableRole": "Data Analyst",
-      "department": "Data",
-      "day": "Day 1",
-      "priority": "High",
-      "assignedBy": "IT",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R016",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T023",
-      "checklistId": null,
-      "taskName": "Review data governance policy",
-      "applicableRole": "Data Analyst",
-      "department": "Data",
-      "day": "Day 2",
-      "priority": "High",
-      "assignedBy": "Data Lead",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "R017",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T024",
-      "checklistId": null,
-      "taskName": "Review reporting standards",
-      "applicableRole": "Data Analyst",
-      "department": "Data",
-      "day": "Day 2",
-      "priority": "Medium",
-      "assignedBy": "Data Lead",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "R018",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T025",
-      "checklistId": null,
-      "taskName": "Meet data team",
-      "applicableRole": "Data Analyst",
-      "department": "Data",
-      "day": "Day 3",
-      "priority": "Medium",
-      "assignedBy": "Manager",
-      "deadline": "Day 3, 5:00 PM",
-      "resourceId": "",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T026",
-      "checklistId": null,
-      "taskName": "Set up design tools",
-      "applicableRole": "UI/UX Designer",
-      "department": "Design",
-      "day": "Day 1",
-      "priority": "High",
-      "assignedBy": "IT",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R019",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T027",
-      "checklistId": null,
-      "taskName": "Get access to design repository",
-      "applicableRole": "UI/UX Designer",
-      "department": "Design",
-      "day": "Day 1",
-      "priority": "High",
-      "assignedBy": "IT",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R020",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T028",
-      "checklistId": null,
-      "taskName": "Review design system",
-      "applicableRole": "UI/UX Designer",
-      "department": "Design",
-      "day": "Day 2",
-      "priority": "Medium",
-      "assignedBy": "Design Lead",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "R021",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T029",
-      "checklistId": null,
-      "taskName": "Review brand guidelines",
-      "applicableRole": "UI/UX Designer",
-      "department": "Design",
-      "day": "Day 2",
-      "priority": "Medium",
-      "assignedBy": "Design Lead",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "R022",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T030",
-      "checklistId": null,
-      "taskName": "Meet design team",
-      "applicableRole": "UI/UX Designer",
-      "department": "Design",
-      "day": "Day 3",
-      "priority": "Medium",
-      "assignedBy": "Manager",
-      "deadline": "Day 3, 5:00 PM",
-      "resourceId": "",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T031",
-      "checklistId": null,
-      "taskName": "Get access to HR portal",
-      "applicableRole": "HR Executive",
-      "department": "Human Resources",
-      "day": "Day 1",
-      "priority": "High",
-      "assignedBy": "IT",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R023",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T032",
-      "checklistId": null,
-      "taskName": "Review HR policies",
-      "applicableRole": "HR Executive",
-      "department": "Human Resources",
-      "day": "Day 1",
-      "priority": "High",
-      "assignedBy": "HR Manager",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R024",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T033",
-      "checklistId": null,
-      "taskName": "Review employee records process",
-      "applicableRole": "HR Executive",
-      "department": "Human Resources",
-      "day": "Day 2",
-      "priority": "High",
-      "assignedBy": "HR Manager",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "R025",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T034",
-      "checklistId": null,
-      "taskName": "Complete HR compliance training",
-      "applicableRole": "HR Executive",
-      "department": "Human Resources",
-      "day": "Day 2",
-      "priority": "High",
-      "assignedBy": "HR Manager",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "R026",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T035",
-      "checklistId": null,
-      "taskName": "Meet HR team",
-      "applicableRole": "HR Executive",
-      "department": "Human Resources",
-      "day": "Day 3",
-      "priority": "Medium",
-      "assignedBy": "HR Manager",
-      "deadline": "Day 3, 5:00 PM",
-      "resourceId": "",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T036",
-      "checklistId": null,
-      "taskName": "Set up marketing tools",
-      "applicableRole": "Marketing Executive",
-      "department": "Marketing",
-      "day": "Day 1",
-      "priority": "High",
-      "assignedBy": "IT",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R027",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T037",
-      "checklistId": null,
-      "taskName": "Review brand guidelines",
-      "applicableRole": "Marketing Executive",
-      "department": "Marketing",
-      "day": "Day 1",
-      "priority": "Medium",
-      "assignedBy": "Marketing Manager",
-      "deadline": "Day 1, 5:00 PM",
-      "resourceId": "R028",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T038",
-      "checklistId": null,
-      "taskName": "Review marketing strategy",
-      "applicableRole": "Marketing Executive",
-      "department": "Marketing",
-      "day": "Day 2",
-      "priority": "Medium",
-      "assignedBy": "Marketing Manager",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "R029",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T039",
-      "checklistId": null,
-      "taskName": "Get access to marketing analytics",
-      "applicableRole": "Marketing Executive",
-      "department": "Marketing",
-      "day": "Day 2",
-      "priority": "High",
-      "assignedBy": "IT",
-      "deadline": "Day 2, 5:00 PM",
-      "resourceId": "R030",
-      "isMandatory": true
-    },
-    {
-      "taskId": "T040",
-      "checklistId": null,
-      "taskName": "Meet marketing team",
-      "applicableRole": "Marketing Executive",
-      "department": "Marketing",
-      "day": "Day 3",
-      "priority": "Medium",
-      "assignedBy": "Manager",
-      "deadline": "Day 3, 5:00 PM",
-      "resourceId": "",
-      "isMandatory": true
+
+    function saveDeletedTasksStore(store) {
+      try {
+        localStorage.setItem('startsmart_deleted_tasks_v3', JSON.stringify(store));
+      } catch (e) {}
     }
-  ],
-  "progress": [
-    {
-      "progressId": "P001",
-      "employeeId": "E001",
-      "taskId": "T001",
-      "status": "Completed",
-      "assignedDate": "2026-09-29",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-09-29"
-    },
-    {
-      "progressId": "P002",
-      "employeeId": "E001",
-      "taskId": "T002",
-      "status": "Completed",
-      "assignedDate": "2026-09-29",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-09-29"
-    },
-    {
-      "progressId": "P003",
-      "employeeId": "E001",
-      "taskId": "T003",
-      "status": "Pending",
-      "assignedDate": "2026-09-29",
-      "dueDate": "2026-10-05",
-      "completedDate": null
-    },
-    {
-      "progressId": "P004",
-      "employeeId": "E001",
-      "taskId": "T005",
-      "status": "Pending",
-      "assignedDate": "2026-09-29",
-      "dueDate": "2026-10-05",
-      "completedDate": null
-    },
-    {
-      "progressId": "P005",
-      "employeeId": "E002",
-      "taskId": "T001",
-      "status": "Completed",
-      "assignedDate": "2026-09-29",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-09-29"
-    },
-    {
-      "progressId": "P006",
-      "employeeId": "E002",
-      "taskId": "T002",
-      "status": "Completed",
-      "assignedDate": "2026-09-29",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-09-29"
-    },
-    {
-      "progressId": "P007",
-      "employeeId": "E002",
-      "taskId": "T003",
-      "status": "Pending",
-      "assignedDate": "2026-09-29",
-      "dueDate": "2026-10-05",
-      "completedDate": null
-    },
-    {
-      "progressId": "P008",
-      "employeeId": "E002",
-      "taskId": "T005",
-      "status": "Completed",
-      "assignedDate": "2026-09-29",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-09-29"
-    },
-    {
-      "progressId": "P009",
-      "employeeId": "E003",
-      "taskId": "T001",
-      "status": "Completed",
-      "assignedDate": "2026-09-30",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-09-30"
-    },
-    {
-      "progressId": "P010",
-      "employeeId": "E003",
-      "taskId": "T002",
-      "status": "Pending",
-      "assignedDate": "2026-09-30",
-      "dueDate": "2026-10-05",
-      "completedDate": null
-    },
-    {
-      "progressId": "P011",
-      "employeeId": "E003",
-      "taskId": "T003",
-      "status": "Pending",
-      "assignedDate": "2026-09-30",
-      "dueDate": "2026-10-05",
-      "completedDate": null
-    },
-    {
-      "progressId": "P012",
-      "employeeId": "E003",
-      "taskId": "T006",
-      "status": "Completed",
-      "assignedDate": "2026-09-30",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-09-30"
-    },
-    {
-      "progressId": "P013",
-      "employeeId": "E004",
-      "taskId": "T001",
-      "status": "Completed",
-      "assignedDate": "2026-09-30",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-09-30"
-    },
-    {
-      "progressId": "P014",
-      "employeeId": "E004",
-      "taskId": "T002",
-      "status": "Completed",
-      "assignedDate": "2026-09-30",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-09-30"
-    },
-    {
-      "progressId": "P015",
-      "employeeId": "E004",
-      "taskId": "T003",
-      "status": "Completed",
-      "assignedDate": "2026-09-30",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-09-30"
-    },
-    {
-      "progressId": "P016",
-      "employeeId": "E004",
-      "taskId": "T031",
-      "status": "Pending",
-      "assignedDate": "2026-09-30",
-      "dueDate": "2026-10-05",
-      "completedDate": null
-    },
-    {
-      "progressId": "P017",
-      "employeeId": "E005",
-      "taskId": "T001",
-      "status": "Completed",
-      "assignedDate": "2026-10-01",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-10-01"
-    },
-    {
-      "progressId": "P018",
-      "employeeId": "E005",
-      "taskId": "T002",
-      "status": "Pending",
-      "assignedDate": "2026-10-01",
-      "dueDate": "2026-10-05",
-      "completedDate": null
-    },
-    {
-      "progressId": "P019",
-      "employeeId": "E005",
-      "taskId": "T014",
-      "status": "Pending",
-      "assignedDate": "2026-10-01",
-      "dueDate": "2026-10-05",
-      "completedDate": null
-    },
-    {
-      "progressId": "P020",
-      "employeeId": "E005",
-      "taskId": "T015",
-      "status": "Completed",
-      "assignedDate": "2026-10-01",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-10-01"
-    },
-    {
-      "progressId": "P021",
-      "employeeId": "E006",
-      "taskId": "T001",
-      "status": "Completed",
-      "assignedDate": "2026-10-01",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-10-01"
-    },
-    {
-      "progressId": "P022",
-      "employeeId": "E006",
-      "taskId": "T002",
-      "status": "Completed",
-      "assignedDate": "2026-10-01",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-10-01"
-    },
-    {
-      "progressId": "P023",
-      "employeeId": "E006",
-      "taskId": "T003",
-      "status": "Pending",
-      "assignedDate": "2026-10-01",
-      "dueDate": "2026-10-05",
-      "completedDate": null
-    },
-    {
-      "progressId": "P024",
-      "employeeId": "E006",
-      "taskId": "T036",
-      "status": "Pending",
-      "assignedDate": "2026-10-01",
-      "dueDate": "2026-10-05",
-      "completedDate": null
-    },
-    {
-      "progressId": "P025",
-      "employeeId": "E007",
-      "taskId": "T001",
-      "status": "Completed",
-      "assignedDate": "2026-10-01",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-10-01"
-    },
-    {
-      "progressId": "P026",
-      "employeeId": "E007",
-      "taskId": "T002",
-      "status": "Completed",
-      "assignedDate": "2026-10-01",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-10-01"
-    },
-    {
-      "progressId": "P027",
-      "employeeId": "E007",
-      "taskId": "T005",
-      "status": "Pending",
-      "assignedDate": "2026-10-01",
-      "dueDate": "2026-10-05",
-      "completedDate": null
-    },
-    {
-      "progressId": "P028",
-      "employeeId": "E007",
-      "taskId": "T014",
-      "status": "Completed",
-      "assignedDate": "2026-10-01",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-10-01"
-    },
-    {
-      "progressId": "P029",
-      "employeeId": "E008",
-      "taskId": "T001",
-      "status": "Completed",
-      "assignedDate": "2026-10-02",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-10-02"
-    },
-    {
-      "progressId": "P030",
-      "employeeId": "E008",
-      "taskId": "T002",
-      "status": "Pending",
-      "assignedDate": "2026-10-02",
-      "dueDate": "2026-10-05",
-      "completedDate": null
-    },
-    {
-      "progressId": "P031",
-      "employeeId": "E008",
-      "taskId": "T003",
-      "status": "Pending",
-      "assignedDate": "2026-10-02",
-      "dueDate": "2026-10-05",
-      "completedDate": null
-    },
-    {
-      "progressId": "P032",
-      "employeeId": "E009",
-      "taskId": "T001",
-      "status": "Completed",
-      "assignedDate": "2026-10-02",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-10-02"
-    },
-    {
-      "progressId": "P033",
-      "employeeId": "E009",
-      "taskId": "T002",
-      "status": "Completed",
-      "assignedDate": "2026-10-02",
-      "dueDate": "2026-10-05",
-      "completedDate": "2026-10-02"
-    },
-    {
-      "progressId": "P034",
-      "employeeId": "E009",
-      "taskId": "T014",
-      "status": "Pending",
-      "assignedDate": "2026-10-02",
-      "dueDate": "2026-10-05",
-      "completedDate": null
-    },
-    {
-      "progressId": "P035",
-      "employeeId": "E010",
-      "taskId": "T001",
-      "status": "Completed",
-      "assignedDate": "2026-10-02",
-      "dueDate": "2026-10-05",
-      "completedDate": null
+
+    function getTaskStatusStore() {
+      try {
+        const saved = localStorage.getItem('startsmart_task_status_v3');
+        return saved ? JSON.parse(saved) : {};
+      } catch (e) {
+        return {};
+      }
     }
-  ]
-};
+
+    function saveTaskStatusStore(store) {
+      try {
+        localStorage.setItem('startsmart_task_status_v3', JSON.stringify(store));
+      } catch (e) {}
+    }
 
     function getSynthesizedDashboardForEmployee(empId) {
       const store = window.__START_SMART_DATASETS__;
       if (!store) return null;
-      const emp = store.employees.find(e => e.employeeId === empId || e.email === empId) || store.employees.find(e => e.name.toLowerCase().includes('diya')) || store.employees[0];
+
+      const emps = store.employees || [];
+      const emp = emps.find(e => e.employeeId === empId || e.email === empId) ||
+                  emps.find(e => e.name.toLowerCase().includes('diya')) ||
+                  emps[0];
       if (!emp) return null;
 
-      const manager = store.contacts.find(c => c.contactId === emp.managerId) || null;
+      const manager = store.contacts.find(c => c.contactId === emp.managerId) || {
+        name: 'Vikram Shah',
+        role: 'IT & Department Manager',
+        phone: '+91 80 6789 89911',
+        email: 'manager@demo-company.com'
+      };
+
       const buddy = store.contacts.find(c => c.contactId === emp.buddyId) || {
         name: 'Dhruv Agarwal',
         role: 'Onboarding Buddy',
@@ -3751,59 +2398,89 @@
         email: 'buddy@demo-company.com'
       };
 
-      const empProgress = store.progress.filter(p => p.employeeId === emp.employeeId);
-      let assignedTasks = [];
+      // 1. Base tasks for employee role & department
+      const normalizedRole = emp.role.toLowerCase();
+      const normalizedDept = emp.department.toLowerCase();
 
-      if (empProgress.length > 0) {
-        assignedTasks = empProgress.map(p => {
-          const taskDef = store.tasks.find(t => t.taskId === p.taskId) || {
-            taskId: p.taskId,
-            taskName: `Onboarding Task ${p.taskId}`,
-            department: emp.department,
-            day: 'Day 1',
-            priority: 'High',
-            isMandatory: true,
-            resourceId: null
-          };
-          const resource = taskDef.resourceId ? store.resources.find(r => r.resourceId === taskDef.resourceId) : null;
-          return {
-            taskId: taskDef.taskId,
-            taskName: taskDef.taskName,
-            department: taskDef.department || emp.department,
-            day: taskDef.day || 'Day 1',
-            priority: taskDef.priority || 'High',
-            isMandatory: taskDef.isMandatory !== false,
-            status: p.status || 'Pending',
-            progressId: p.progressId,
-            resource
-          };
-        });
-      } else {
-        const relevant = store.tasks.filter(t =>
-          t.applicableRole === 'All' ||
-          t.applicableRole === emp.role ||
-          t.department === emp.department
-        );
-        assignedTasks = relevant.map((t, idx) => {
-          const resource = t.resourceId ? store.resources.find(r => r.resourceId === t.resourceId) : null;
-          return {
-            taskId: t.taskId,
-            taskName: t.taskName,
-            department: t.department,
-            day: t.day,
-            priority: t.priority,
-            isMandatory: t.isMandatory !== false,
-            status: idx < 2 ? 'Completed' : 'Pending',
-            progressId: `P_SYN_${emp.employeeId}_${t.taskId}`,
-            resource
-          };
-        });
-      }
+      const candidateBaseTasks = ALL_40_TASKS.filter(t => {
+        if (t.applicableRole === 'All') return true;
+        const taskRole = t.applicableRole.toLowerCase();
+        const taskDept = t.department.toLowerCase();
 
-      const totalTasks = assignedTasks.length;
-      const completedTasks = assignedTasks.filter(t => t.status === 'Completed').length;
-      const pendingTasks = totalTasks - completedTasks;
-      const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+        if (taskRole === normalizedRole) return true;
+        if (taskDept === normalizedDept) return true;
+
+        if (normalizedRole.includes('engineer') && taskRole === 'software engineer') return true;
+        if (normalizedRole.includes('analyst') && taskRole === 'data analyst') return true;
+        if (normalizedRole.includes('designer') && taskRole === 'ui/ux designer') return true;
+        if (normalizedRole.includes('marketing') && taskRole === 'marketing executive') return true;
+        if (normalizedRole.includes('hr') && taskRole === 'hr executive') return true;
+
+        return false;
+      });
+
+      // 2. Custom tasks added by HR for this employee
+      const customStore = getCustomTasksStore();
+      const employeeCustomTasks = customStore[emp.employeeId] || [];
+
+      // 3. Deleted tasks for this employee
+      const deletedStore = getDeletedTasksStore();
+      const employeeDeletedTaskIds = deletedStore[emp.employeeId] || [];
+
+      // Combine base + custom, exclude deleted
+      let allCombinedTasks = [...candidateBaseTasks, ...employeeCustomTasks].filter(
+        t => !employeeDeletedTaskIds.includes(String(t.taskId))
+      );
+
+      // 4. Resolve status (from localStorage status store or progress dataset defaults)
+      const statusStore = getTaskStatusStore();
+      const progressStore = store.progress || [];
+
+      const resolvedTasks = allCombinedTasks.map(t => {
+        const key = `${emp.employeeId}_${t.taskId}`;
+        let status = statusStore[key];
+
+        if (!status) {
+          const progRecord = progressStore.find(p => p.employeeId === emp.employeeId && p.taskId === t.taskId);
+          if (progRecord) {
+            status = progRecord.status;
+          } else {
+            // Default initial completed state for demo
+            if (t.taskId === 'T001' || t.taskId === 'T002' || t.taskId === 'T004' || t.taskId === 'T005' || t.taskId === 'T006' || t.taskId === 'T008') {
+              status = 'Completed';
+            } else {
+              status = 'Pending';
+            }
+          }
+        }
+
+        const resource = t.resourceId ? store.resources.find(r => r.resourceId === t.resourceId) : null;
+
+        return {
+          taskId: t.taskId,
+          taskName: t.taskName,
+          department: t.department || emp.department,
+          day: t.day || 'Day 1',
+          priority: t.priority || 'Medium',
+          isMandatory: t.isMandatory !== false,
+          duration: t.duration || '25 mins',
+          description: t.desc || t.description || `${t.taskName} for ${emp.department} onboarding track.`,
+          status,
+          progressId: `P_${emp.employeeId}_${t.taskId}`,
+          resource
+        };
+      });
+
+      // Day 1 tasks are prioritized as "Today's Work"
+      const day1Tasks = resolvedTasks.filter(t => t.day === 'Day 1');
+      const totalDay1 = day1Tasks.length;
+      const completedDay1 = day1Tasks.filter(t => t.status === 'Completed').length;
+
+      const totalAll = resolvedTasks.length;
+      const completedAll = resolvedTasks.filter(t => t.status === 'Completed').length;
+      const pendingAll = totalAll - completedAll;
+      const percentage = totalAll > 0 ? Math.round((completedAll / totalAll) * 100) : 0;
+      const day1Percentage = totalDay1 > 0 ? Math.round((completedDay1 / totalDay1) * 100) : 0;
 
       return {
         employee: {
@@ -3812,13 +2489,370 @@
           buddy
         },
         metrics: {
-          totalTasks,
-          completedTasks,
-          pendingTasks,
-          percentage
+          totalTasks: totalAll,
+          completedTasks: completedAll,
+          pendingTasks: pendingAll,
+          percentage,
+          day1Total: totalDay1,
+          day1Completed: completedDay1,
+          day1Percentage
         },
-        tasks: assignedTasks
+        tasks: resolvedTasks
       };
+    }
+
+    function filterByDay(dayKey) {
+      currentDayFilter = dayKey;
+      ['day1', 'day2', 'day3', 'all'].forEach(k => {
+        const btn = document.getElementById(`day-pill-${k}`);
+        if (btn) btn.classList.remove('active');
+      });
+      const activeBtn = document.getElementById(
+        dayKey === 'all' ? 'day-pill-all' : (dayKey === 'Day 1' ? 'day-pill-day1' : (dayKey === 'Day 2' ? 'day-pill-day2' : 'day-pill-day3'))
+      );
+      if (activeBtn) activeBtn.classList.add('active');
+
+      applyTaskFilters();
+    }
+
+    function filterManualTasks(statusKey) {
+      currentTaskFilter = statusKey;
+      ['all', 'pending', 'done'].forEach(k => {
+        const btn = document.getElementById(`filter-btn-${k}`);
+        if (btn) btn.classList.toggle('active', statusKey === k);
+      });
+      applyTaskFilters();
+    }
+
+    function applyTaskFilters() {
+      const cards = document.querySelectorAll('#manual-checklist-container .manual-task-card');
+      let visibleCount = 0;
+      let pendingCount = 0;
+      let doneCount = 0;
+
+      cards.forEach(card => {
+        const cardDay = card.dataset.day || 'Day 1';
+        const cardStatus = card.dataset.status || 'pending';
+
+        const matchesDay = (currentDayFilter === 'all' || cardDay === currentDayFilter);
+        const matchesStatus = (currentTaskFilter === 'all' || cardStatus === currentTaskFilter);
+
+        if (matchesDay) {
+          if (cardStatus === 'done') doneCount++;
+          else pendingCount++;
+          visibleCount++;
+        }
+
+        if (matchesDay && matchesStatus) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      const countAll = document.getElementById('count-all-tasks');
+      const countPending = document.getElementById('count-pending-tasks');
+      const countDone = document.getElementById('count-done-tasks');
+      if (countAll) countAll.textContent = visibleCount;
+      if (countPending) countPending.textContent = pendingCount;
+      if (countDone) countDone.textContent = doneCount;
+    }
+
+    // HR Portal: Single Joiner Task Management Engine
+    function populateHRTargetDropdown() {
+      const select = document.getElementById('hr-target-fresher-select');
+      if (!select || !window.__START_SMART_DATASETS__) return;
+
+      const emps = window.__START_SMART_DATASETS__.employees || [];
+      let html = '';
+      emps.forEach(emp => {
+        const isSelected = (emp.employeeId === currentLiveEmployeeId) ? 'selected' : '';
+        html += `<option value="${emp.employeeId}" ${isSelected}>${emp.name} (${emp.role} · ${emp.department} · ${emp.employeeId})</option>`;
+      });
+      select.innerHTML = html;
+    }
+
+    function onHRFresherTargetChange() {
+      const select = document.getElementById('hr-target-fresher-select');
+      if (!select) return;
+      currentLiveEmployeeId = select.value;
+      const selectedName = select.options[select.selectedIndex]?.text || currentLiveEmployeeId;
+      showNotification(`Managing checklist for: ${selectedName}`);
+      renderHRTaskInventory();
+    }
+
+    function manageEmployeeTasksFromHR(employeeId) {
+      currentLiveEmployeeId = employeeId;
+      switchHRWorkspaceTab('taskmanager');
+      const select = document.getElementById('hr-target-fresher-select');
+      if (select) select.value = employeeId;
+      renderHRTaskInventory();
+      showNotification(`Switched to task manager for candidate ${employeeId}`);
+    }
+
+    function viewSelectedCandidatePortal() {
+      if (currentLiveEmployeeId) {
+        viewEmployeeFromHR(currentLiveEmployeeId);
+      }
+    }
+
+    function renderHRTaskInventory() {
+      const tbody = document.getElementById('hr-task-inventory-body');
+      if (!tbody) return;
+
+      populateHRTargetDropdown();
+
+      const candidateData = getSynthesizedDashboardForEmployee(currentLiveEmployeeId);
+      if (!candidateData) return;
+
+      const emp = candidateData.employee;
+      const metrics = candidateData.metrics;
+      const tasks = candidateData.tasks;
+
+      // Update Candidate Profile Banner
+      const nameEl = document.getElementById('hr-cand-name');
+      const avatarEl = document.getElementById('hr-cand-avatar');
+      const roleBadge = document.getElementById('hr-cand-role-badge');
+      const deptBadge = document.getElementById('hr-cand-dept-badge');
+      const buddyEl = document.getElementById('hr-cand-buddy');
+      const managerEl = document.getElementById('hr-cand-manager');
+      const pctText = document.getElementById('hr-cand-pct-text');
+      const statText = document.getElementById('hr-cand-stat-text');
+      const progBar = document.getElementById('hr-cand-prog-bar');
+      const addHeading = document.getElementById('hr-add-task-heading');
+
+      if (nameEl) nameEl.textContent = emp.name;
+      if (avatarEl) avatarEl.textContent = emp.name.split(' ').map(w => w[0]).join('');
+      if (roleBadge) roleBadge.textContent = emp.role;
+      if (deptBadge) deptBadge.textContent = `${emp.department} Dept · ${emp.location}`;
+      if (buddyEl) buddyEl.textContent = emp.buddy?.name || 'Dhruv Agarwal';
+      if (managerEl) managerEl.textContent = emp.manager?.name || 'Vikram Shah';
+      if (pctText) pctText.textContent = `${metrics.percentage}% Cleared`;
+      if (statText) statText.textContent = `${metrics.completedTasks} of ${metrics.totalTasks} Tasks Completed`;
+      if (progBar) progBar.style.width = `${metrics.percentage}%`;
+      if (addHeading) addHeading.textContent = `➕ Add Custom Task for ${emp.name}`;
+
+      // Render Task Rows
+      tbody.innerHTML = '';
+      if (tasks.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align: center; padding: 30px; color: var(--color-slate-500);">
+              No active tasks for ${emp.name}. Use the form below to assign custom onboarding tasks.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tasks.forEach(t => {
+        const isDone = t.status === 'Completed';
+        const priorityColor = t.priority === 'High' ? '#dc2626' : (t.priority === 'Medium' ? '#2563eb' : '#64748b');
+        const priorityBg = t.priority === 'High' ? '#fee2e2' : (t.priority === 'Medium' ? '#dbeafe' : '#f1f5f9');
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <span class="manual-task-day-badge">📅 ${t.day}</span>
+          </td>
+          <td style="font-family: var(--font-mono); font-weight: 700; color: var(--color-slate-600); font-size: 0.8rem;">
+            #${t.taskId}
+          </td>
+          <td>
+            <span class="manual-task-tag tag-engineering" style="font-size: 0.72rem;">${t.department}</span>
+          </td>
+          <td>
+            <div style="font-weight: 700; color: var(--color-slate-900); font-size: 0.88rem;">${t.taskName}</div>
+            <div style="font-size: 0.76rem; color: var(--color-slate-500); margin-top: 2px;">${t.description}</div>
+          </td>
+          <td>
+            <span style="background: ${priorityBg}; color: ${priorityColor}; padding: 2px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">
+              ${t.priority}
+            </span>
+          </td>
+          <td>
+            <span style="font-size: 0.78rem; font-weight: 700; color: ${isDone ? '#059669' : '#d97706'}; display: inline-flex; align-items: center; gap: 4px;">
+              ${isDone ? '✓ Completed' : '● Pending'}
+            </span>
+          </td>
+          <td style="text-align: right; white-space: nowrap;">
+            <button class="btn-sm-toggle" onclick="toggleTaskStatusByHR('${t.taskId}')" style="margin-right: 6px;">
+              ${isDone ? 'Mark Pending' : '✓ Complete'}
+            </button>
+            <button class="btn-remove-task" onclick="removeTaskByHR('${t.taskId}')" title="Remove task from candidate checklist">
+              🗑️ Remove
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function toggleTaskStatusByHR(taskId) {
+      const candidateData = getSynthesizedDashboardForEmployee(currentLiveEmployeeId);
+      if (!candidateData) return;
+
+      const target = candidateData.tasks.find(t => t.taskId === taskId);
+      const nextStatus = (target && target.status === 'Completed') ? 'Pending' : 'Completed';
+
+      const statusStore = getTaskStatusStore();
+      statusStore[`${currentLiveEmployeeId}_${taskId}`] = nextStatus;
+      saveTaskStatusStore(statusStore);
+
+      showNotification(`✓ Task #${taskId} updated to ${nextStatus} for ${candidateData.employee.name}!`);
+      renderHRTaskInventory();
+      renderHRRosterTable();
+    }
+
+    function removeTaskByHR(taskId) {
+      const candidateData = getSynthesizedDashboardForEmployee(currentLiveEmployeeId);
+      if (!candidateData) return;
+
+      const deletedStore = getDeletedTasksStore();
+      if (!deletedStore[currentLiveEmployeeId]) deletedStore[currentLiveEmployeeId] = [];
+      if (!deletedStore[currentLiveEmployeeId].includes(taskId)) {
+        deletedStore[currentLiveEmployeeId].push(taskId);
+      }
+      saveDeletedTasksStore(deletedStore);
+
+      showNotification(`🗑️ Task #${taskId} removed from ${candidateData.employee.name}'s checklist.`);
+      renderHRTaskInventory();
+      renderHRRosterTable();
+    }
+
+    async function handleAddNewTaskByHR(event) {
+      if (event) event.preventDefault();
+      const titleInput = document.getElementById('new-task-title');
+      const catInput = document.getElementById('new-task-category');
+      const dayInput = document.getElementById('new-task-day');
+      const priorityInput = document.getElementById('new-task-priority');
+      const durationInput = document.getElementById('new-task-duration');
+      const descInput = document.getElementById('new-task-desc');
+
+      const title = titleInput ? titleInput.value.trim() : '';
+      if (!title) return;
+
+      const category = catInput ? catInput.value : 'Engineering';
+      const day = dayInput ? dayInput.value : 'Day 1';
+      const priority = priorityInput ? priorityInput.value : 'High';
+      const duration = durationInput ? durationInput.value.trim() : '25 mins';
+      const desc = descInput ? descInput.value.trim() : `${title} assigned by HR Operations.`;
+
+      const newTaskId = 'T_HR_' + Math.floor(100 + Math.random() * 900);
+
+      const customStore = getCustomTasksStore();
+      if (!customStore[currentLiveEmployeeId]) customStore[currentLiveEmployeeId] = [];
+      customStore[currentLiveEmployeeId].push({
+        taskId: newTaskId,
+        taskName: title,
+        applicableRole: 'All',
+        department: category,
+        day,
+        priority,
+        assignedBy: 'HR Operations',
+        duration,
+        desc,
+        isMandatory: true
+      });
+      saveCustomTasksStore(customStore);
+
+      const candidateData = getSynthesizedDashboardForEmployee(currentLiveEmployeeId);
+      showNotification(`➕ Task "${title}" added to ${candidateData?.employee?.name || 'joiner'}'s ${day} checklist!`);
+
+      titleInput.value = '';
+      if (descInput) descInput.value = '';
+
+      renderHRTaskInventory();
+      renderHRRosterTable();
+    }
+
+    function renderHRRosterTable() {
+      const tbody = document.getElementById('hr-cohort-roster-body');
+      if (!tbody || !window.__START_SMART_DATASETS__) return;
+
+      const emps = window.__START_SMART_DATASETS__.employees || [];
+      tbody.innerHTML = '';
+
+      emps.forEach(emp => {
+        const candidateData = getSynthesizedDashboardForEmployee(emp.employeeId);
+        const metrics = candidateData?.metrics || { percentage: 0, completedTasks: 0, totalTasks: 10 };
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100); font-weight: 700; color: var(--color-slate-900);">
+            ${escapeHtml(emp.name)}
+            <div style="font-size: 0.72rem; color: var(--color-slate-500); font-weight: 500;">${escapeHtml(emp.role)} (${escapeHtml(emp.employeeId)})</div>
+          </td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100); font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-primary);">
+            ${escapeHtml(emp.email)}
+          </td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100); color: var(--color-slate-600);">
+            ${escapeHtml(emp.department)} · ${escapeHtml(emp.location)}
+          </td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100);">
+            <strong style="color: #6b21a8;">${escapeHtml(candidateData?.employee?.buddy?.name || 'Dhruv Agarwal')}</strong>
+            <div style="font-size: 0.72rem; color: var(--color-slate-500);">${escapeHtml(candidateData?.employee?.buddy?.phone || '+91 80 6789 89928')}</div>
+          </td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="width: 70px; height: 7px; background: #e2e8f0; border-radius: 999px; overflow: hidden;">
+                <div style="width: ${metrics.percentage}%; height: 100%; background: ${metrics.percentage === 100 ? '#10b981' : (metrics.percentage > 0 ? '#3b82f6' : '#94a3b8')};"></div>
+              </div>
+              <span style="font-size: 0.76rem; font-weight: 800; color: #0f172a;">${metrics.percentage}%</span>
+            </div>
+            <div style="font-size: 0.7rem; color: #64748b;">${metrics.completedTasks}/${metrics.totalTasks} cleared</div>
+          </td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid var(--color-slate-100); white-space: nowrap;">
+            <button class="btn-sm-action" style="background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; margin-right: 6px;" onclick="viewEmployeeFromHR('${escapeHtml(emp.employeeId)}')">
+              👁️ Joiner View
+            </button>
+            <button class="btn-sm-action" style="background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0;" onclick="manageEmployeeTasksFromHR('${escapeHtml(emp.employeeId)}')">
+              ⚙️ Manage Tasks
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function applyTaskPreset(type) {
+      const titleInput = document.getElementById('new-task-title');
+      const catInput = document.getElementById('new-task-category');
+      const dayInput = document.getElementById('new-task-day');
+      const durInput = document.getElementById('new-task-duration');
+      const descInput = document.getElementById('new-task-desc');
+
+      if (type === 'cloud') {
+        if (titleInput) titleInput.value = 'Configure Azure CLI & Dev Sandbox Environment';
+        if (catInput) catInput.value = 'Engineering';
+        if (dayInput) dayInput.value = 'Day 1';
+        if (durInput) durInput.value = '30 mins';
+        if (descInput) descInput.value = 'Run az login, configure your developer subscription sandbox ID, and verify deployment permissions to internal staging cluster.';
+      } else if (type === 'security') {
+        if (titleInput) titleInput.value = 'Complete OWASP & Data Protection Security Assessment';
+        if (catInput) catInput.value = 'Security';
+        if (dayInput) dayInput.value = 'Day 1';
+        if (durInput) durInput.value = '25 mins';
+        if (descInput) descInput.value = 'Review confidential information handling rules and complete the mandatory 5-question security compliance module.';
+      } else if (type === 'culture') {
+        if (titleInput) titleInput.value = '1:1 Technical Mentorship Kickoff with Assigned Buddy';
+        if (catInput) catInput.value = 'Mentoring';
+        if (dayInput) dayInput.value = 'Day 1';
+        if (durInput) durInput.value = '45 mins';
+        if (descInput) descInput.value = 'Meet your senior mentor for sprint cadence overview, code review SLAs, and repository tour.';
+      } else if (type === 'data') {
+        if (titleInput) titleInput.value = 'Configure BigQuery / Snowflake Read-Only Schemas';
+        if (catInput) catInput.value = 'Data';
+        if (dayInput) dayInput.value = 'Day 1';
+        if (durInput) durInput.value = '25 mins';
+        if (descInput) descInput.value = 'Request analytics role credentials and verify SQL query execution against staging data warehouse.';
+      } else if (type === 'design') {
+        if (titleInput) titleInput.value = 'Review Corporate Design System & Figma Token Libraries';
+        if (catInput) catInput.value = 'Design';
+        if (dayInput) dayInput.value = 'Day 2';
+        if (durInput) durInput.value = '35 mins';
+        if (descInput) descInput.value = 'Study typography tokens, elevation scales, grid systems, and component states in Figma library.';
+      }
     }
   
     let currentLiveEmployeeId = 'E001';
@@ -4392,7 +3426,7 @@
       updateLiveContactCards(emp);
 
       // Update Copilot Quick Chips
-      filterManualTasks(currentTaskFilter || 'all');
+      applyTaskFilters();
       updateLiveCopilotChips(tasks);
     }
 

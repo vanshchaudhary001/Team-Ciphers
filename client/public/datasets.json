@@ -697,7 +697,8 @@
       "assignedBy": "IT",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R002",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Activate corporate single sign-on credentials and verify user directory profile."
     },
     {
       "taskId": "T002",
@@ -710,7 +711,8 @@
       "assignedBy": "IT",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R003",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Configure Microsoft Authenticator and register security passkey."
     },
     {
       "taskId": "T003",
@@ -723,7 +725,8 @@
       "assignedBy": "HR",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R001",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Submit emergency contacts, statutory identity docs, and personal bio."
     },
     {
       "taskId": "T004",
@@ -736,7 +739,8 @@
       "assignedBy": "HR",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R001",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Review corporate mission, workplace conduct rules, and company values."
     },
     {
       "taskId": "T005",
@@ -749,7 +753,8 @@
       "assignedBy": "Security",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R004",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Complete mandatory cyber threat, phishing defense, and data protection module."
     },
     {
       "taskId": "T006",
@@ -762,7 +767,8 @@
       "assignedBy": "Manager",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Connect 1-on-1 with your assigned senior buddy for workplace norms and team intro."
     },
     {
       "taskId": "T007",
@@ -775,7 +781,8 @@
       "assignedBy": "HR",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R005",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Join welcome orientation session with People Operations and leadership team."
     },
     {
       "taskId": "T008",
@@ -788,7 +795,8 @@
       "assignedBy": "IT",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R002",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Configure corporate mailbox, calendar sync, and email signature."
     },
     {
       "taskId": "T009",
@@ -801,7 +809,8 @@
       "assignedBy": "HR",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "R006",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Learn leave application process, holiday calendars, and working hour policies."
     },
     {
       "taskId": "T010",
@@ -814,7 +823,8 @@
       "assignedBy": "HR",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "R007",
-      "isMandatory": false
+      "isMandatory": false,
+      "description": "Explore health insurance, wellness stipends, and retirement benefits."
     },
     {
       "taskId": "T011",
@@ -827,7 +837,8 @@
       "assignedBy": "HR",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "R008",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Complete workplace ergonomics, fire safety, and emergency protocol module."
     },
     {
       "taskId": "T012",
@@ -840,7 +851,8 @@
       "assignedBy": "Manager",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Align on first-week priorities, 30-60-90 day milestones, and expectations."
     },
     {
       "taskId": "T013",
@@ -853,7 +865,8 @@
       "assignedBy": "Manager",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Join squad Slack/Teams channels and bookmark team knowledge bases."
     },
     {
       "taskId": "T014",
@@ -866,7 +879,8 @@
       "assignedBy": "IT",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R009",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Accept enterprise GitHub organization invitation and link SSH signing keys."
     },
     {
       "taskId": "T015",
@@ -879,7 +893,8 @@
       "assignedBy": "Manager",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R010",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Install IDE, compilers, container runtime, and run local test suite."
     },
     {
       "taskId": "T016",
@@ -892,7 +907,8 @@
       "assignedBy": "Manager",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "R011",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Read code formatting, linting rules, PR review SLAs, and branch naming conventions."
     },
     {
       "taskId": "T017",
@@ -905,7 +921,8 @@
       "assignedBy": "Manager",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "R012",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Review microservice blueprints, database schemas, and API gateway specs."
     },
     {
       "taskId": "T018",
@@ -918,7 +935,8 @@
       "assignedBy": "IT",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "R013",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Clone monorepo, configure pre-commit hooks, and verify local build."
     },
     {
       "taskId": "T019",
@@ -931,7 +949,8 @@
       "assignedBy": "Security",
       "deadline": "Day 3, 5:00 PM",
       "resourceId": "R014",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Learn SAST/DAST scanning, secret management, and secure dependency handling."
     },
     {
       "taskId": "T020",
@@ -944,7 +963,8 @@
       "assignedBy": "Manager",
       "deadline": "Day 3, 5:00 PM",
       "resourceId": "",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Join sprint planning or team standup to introduce yourself to teammates."
     },
     {
       "taskId": "T021",
@@ -957,7 +977,8 @@
       "assignedBy": "Manager",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R015",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Configure Power BI, Tableau, dbt CLI, and Python analytical libraries."
     },
     {
       "taskId": "T022",
@@ -970,7 +991,8 @@
       "assignedBy": "IT",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R016",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Request read permissions for Snowflake/BigQuery staging schemas."
     },
     {
       "taskId": "T023",
@@ -983,7 +1005,8 @@
       "assignedBy": "Data Lead",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "R017",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Understand PII data masking, compliance guidelines, and export policies."
     },
     {
       "taskId": "T024",
@@ -996,7 +1019,8 @@
       "assignedBy": "Data Lead",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "R018",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Study standard corporate metric definitions, KPI models, and dashboard templates."
     },
     {
       "taskId": "T025",
@@ -1009,7 +1033,8 @@
       "assignedBy": "Manager",
       "deadline": "Day 3, 5:00 PM",
       "resourceId": "",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Meet data engineers and business intelligence peers to discuss current pipelines."
     },
     {
       "taskId": "T026",
@@ -1022,7 +1047,8 @@
       "assignedBy": "IT",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R019",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Activate Figma enterprise seat, font packages, and asset libraries."
     },
     {
       "taskId": "T027",
@@ -1035,7 +1061,8 @@
       "assignedBy": "IT",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R020",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Request access to Figma workspace, component tokens, and UX research archives."
     },
     {
       "taskId": "T028",
@@ -1048,7 +1075,8 @@
       "assignedBy": "Design Lead",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "R021",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Study typography tokens, elevation scales, grid systems, and component states."
     },
     {
       "taskId": "T029",
@@ -1061,7 +1089,8 @@
       "assignedBy": "Design Lead",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "R022",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Review brand voice, color harmony, iconography, and illustration guidelines."
     },
     {
       "taskId": "T030",
@@ -1074,7 +1103,8 @@
       "assignedBy": "Manager",
       "deadline": "Day 3, 5:00 PM",
       "resourceId": "",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Attend weekly design critique and introduce yourself to product designers."
     },
     {
       "taskId": "T031",
@@ -1087,7 +1117,8 @@
       "assignedBy": "IT",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R023",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Acquire administrative access to HRIS, Workday, and applicant tracker."
     },
     {
       "taskId": "T032",
@@ -1100,7 +1131,8 @@
       "assignedBy": "HR Manager",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R024",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Study grievance procedures, leave policies, compensation bands, and onboarding flows."
     },
     {
       "taskId": "T033",
@@ -1113,7 +1145,8 @@
       "assignedBy": "HR Manager",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "R025",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Understand document verification, compliance filing, and digital dossier retention."
     },
     {
       "taskId": "T034",
@@ -1126,7 +1159,8 @@
       "assignedBy": "HR Manager",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "R026",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Complete statutory labor law, workplace equality, and POSH training certification."
     },
     {
       "taskId": "T035",
@@ -1139,7 +1173,8 @@
       "assignedBy": "HR Manager",
       "deadline": "Day 3, 5:00 PM",
       "resourceId": "",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Join the People Operations weekly sync and meet recruitment & talent partners."
     },
     {
       "taskId": "T036",
@@ -1152,7 +1187,8 @@
       "assignedBy": "IT",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R027",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Get access to HubSpot, Google Analytics 4, SEMrush, and social management tools."
     },
     {
       "taskId": "T037",
@@ -1165,7 +1201,8 @@
       "assignedBy": "Marketing Manager",
       "deadline": "Day 1, 5:00 PM",
       "resourceId": "R028",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Review corporate brand voice, messaging guidelines, and approved media assets."
     },
     {
       "taskId": "T038",
@@ -1178,7 +1215,8 @@
       "assignedBy": "Marketing Manager",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "R029",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Read quarterly GTM roadmap, target persona profiles, and campaign briefs."
     },
     {
       "taskId": "T039",
@@ -1191,7 +1229,8 @@
       "assignedBy": "IT",
       "deadline": "Day 2, 5:00 PM",
       "resourceId": "R030",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Obtain permissions for campaign dashboards, conversion tracking, and CRM reports."
     },
     {
       "taskId": "T040",
@@ -1204,7 +1243,8 @@
       "assignedBy": "Manager",
       "deadline": "Day 3, 5:00 PM",
       "resourceId": "",
-      "isMandatory": true
+      "isMandatory": true,
+      "description": "Meet content strategists, performance marketers, and growth lead."
     }
   ],
   "progress": [
