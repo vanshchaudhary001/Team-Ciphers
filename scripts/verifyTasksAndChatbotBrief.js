@@ -156,18 +156,18 @@ try {
   console.log(`   All Days visible cards count: ${allVisible.length}`);
 
   // Test Brief Task Explanation for Chatbot
-  console.log('7. Testing brief task explanation for Task T001...');
-  const briefT1 = vm.runInContext('getExplainTaskResponseHtml("T001")', vmCtx);
-  console.log('   Explanation HTML preview:', briefT1.slice(0, 200).replace(/\s+/g, ' '));
-  if (!briefT1.includes('Activate company account') || !briefT1.includes('Brief Explanation')) {
-    throw new Error('Brief explanation HTML does not contain required fields!');
+  console.log('7. Testing deep task elaboration for Task T001...');
+  const deepT1 = vm.runInContext('getExplainTaskResponseHtml("T001")', vmCtx);
+  console.log('   Elaboration HTML preview:', deepT1.slice(0, 150).replace(/\s+/g, ' '));
+  if (!deepT1.includes('Activate company account') || !deepT1.includes('In-Depth Execution Playbook') || !deepT1.includes('Strategic Objective')) {
+    throw new Error('Deep elaboration HTML does not contain required fields!');
   }
 
-  console.log('8. Testing brief task explanation for Task T014 (GitHub setup)...');
-  const briefT14 = vm.runInContext('getExplainTaskResponseHtml("T014")', vmCtx);
-  console.log('   Explanation HTML preview:', briefT14.slice(0, 200).replace(/\s+/g, ' '));
-  if (!briefT14.includes('GitHub access') || !briefT14.includes('Brief Explanation')) {
-    throw new Error('Brief explanation for T014 failed!');
+  console.log('8. Testing deep task elaboration for Task T014 (GitHub setup)...');
+  const deepT14 = vm.runInContext('getExplainTaskResponseHtml("T014")', vmCtx);
+  console.log('   Elaboration HTML preview:', deepT14.slice(0, 150).replace(/\s+/g, ' '));
+  if (!deepT14.includes('GitHub access') || !deepT14.includes('ssh-keygen') || !deepT14.includes('In-Depth Execution Playbook')) {
+    throw new Error('Deep elaboration for T014 failed!');
   }
 
   // Test Task toggle
