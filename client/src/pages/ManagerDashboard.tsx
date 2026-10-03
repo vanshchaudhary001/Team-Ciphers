@@ -22,11 +22,14 @@ import {
   Search,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { HierarchicalTaskManager } from '../components/HierarchicalTaskManager.js';
 
 export const ManagerDashboard: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  const [activeTab, setActiveTab] = useState<'overview' | 'task-management'>('overview');
+  const [targetSubordinateId, setTargetSubordinateId] = useState<string | undefined>();
   const [teamData, setTeamData] = useState<TeamOverviewResponse | null>(null);
   const [deptPositions, setDeptPositions] = useState<OrgPosition[]>([]);
   const [posSearch, setPosSearch] = useState('');
@@ -145,6 +148,37 @@ export const ManagerDashboard: React.FC = () => {
         </div>
       </div>
 
+      {/* Workspace Tab Bar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+        <div className="flex items-center gap-2 border-b border-slate-200 pb-3 flex-wrap">
+          <button
+            onClick={() => setActiveTab('overview')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+              activeTab === 'overview'
+                ? 'bg-purple-600 text-white shadow-2xs'
+                : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+            }`}
+          >
+            <FolderTree className="w-3.5 h-3.5" />
+            <span>Overview & Department Telemetry</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('task-management')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+              activeTab === 'task-management'
+                ? 'bg-purple-600 text-white shadow-2xs'
+                : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+            }`}
+          >
+            <Sliders className="w-3.5 h-3.5" />
+            <span>Subordinate Task Management</span>
+            <span className="px-1.5 py-0.5 rounded text-[10px] font-black uppercase bg-purple-100 text-purple-800">
+              Leads & Associates
+            </span>
+          </button>
+        </div>
+      </div>
+
       {notification && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
           <div className="p-4 bg-purple-50 border border-purple-200 text-purple-800 rounded-2xl text-xs font-bold flex items-center justify-between shadow-2xs">
@@ -157,9 +191,13 @@ export const ManagerDashboard: React.FC = () => {
       )}
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-8">
-        {/* Metric Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 space-y-8">
+        {activeTab === 'task-management' ? (
+          <HierarchicalTaskManager defaultSubordinateId={targetSubordinateId} />
+        ) : (
+          <>
+            {/* Metric Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
             <div className="flex items-center justify-between text-slate-500">
               <span className="text-xs font-bold uppercase tracking-wider">Department Joiners</span>
@@ -274,13 +312,25 @@ export const ManagerDashboard: React.FC = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <button
-                          onClick={() => navigate('/rippleview')}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 hover:border-purple-500 hover:text-purple-600 bg-white font-bold text-[11px] transition-all shadow-2xs"
-                        >
-                          <span>Review DAG</span>
-                          <ChevronRight className="w-3.5 h-3.5" />
-                        </button>
+                        <div className="inline-flex items-center gap-2 justify-end">
+                          <button
+                            onClick={() => {
+                              setTargetSubordinateId(member.id);
+                              setActiveTab('task-management');
+                            }}
+                            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-purple-200 bg-purple-50 hover:bg-purple-100 text-purple-700 font-bold text-[11px] transition-all"
+                          >
+                            <Sliders className="w-3.5 h-3.5" />
+                            <span>Manage Tasks</span>
+                          </button>
+                          <button
+                            onClick={() => navigate('/rippleview')}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 hover:border-purple-500 hover:text-purple-600 bg-white font-bold text-[11px] transition-all shadow-2xs"
+                          >
+                            <span>Review DAG</span>
+                            <ChevronRight className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
@@ -363,7 +413,9 @@ export const ManagerDashboard: React.FC = () => {
             })}
           </div>
         </div>
-      </div>
-    </div>
-  );
+      </>
+    )}
+  </div>
+</div>
+);
 };

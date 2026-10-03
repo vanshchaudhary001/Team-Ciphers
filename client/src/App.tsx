@@ -17,6 +17,7 @@ import { OwnerDashboard } from './pages/OwnerDashboard.js';
 import { PreJoinReadinessPage } from './pages/PreJoinReadinessPage.js';
 import { KnowledgePage } from './pages/KnowledgePage.js';
 import { AdminPage } from './pages/AdminPage.js';
+import { TaskManagementPage } from './pages/TaskManagementPage.js';
 
 // Protected Route Wrapper
 const ProtectedRoute: React.FC<{ children: React.ReactNode; allowedRoles?: string[] }> = ({
@@ -143,6 +144,16 @@ export const App: React.FC = () => {
             element={
               <ProtectedRoute>
                 <RippleViewPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Task Management Control Center */}
+          <Route
+            path="/task-management"
+            element={
+              <ProtectedRoute allowedRoles={['MANAGER', 'LEAD', 'CEO', 'PLATFORM_ADMIN', 'COMPANY_ADMIN']}>
+                <TaskManagementPage />
               </ProtectedRoute>
             }
           />

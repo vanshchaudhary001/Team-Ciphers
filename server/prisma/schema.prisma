@@ -275,6 +275,18 @@ model JourneyTask {
   flaggedAt             DateTime?
   delayReason           String?
   orderIndex            Int                     @default(0)
+  // Hierarchical Task Management Fields
+  managementStatus      String                  @default("ACTIVE") // ACTIVE, ARCHIVED
+  originType            String                  @default("DEFAULT") // DEFAULT, CUSTOM, MODIFIED
+  day                   String?                 @default("Day 1")
+  priority              String                  @default("Medium") // High, Medium, Standard, Low
+  estimatedDuration     String?
+  resourceLinks         String?
+  version               Int                     @default(1)
+  isCustom              Boolean                 @default(false)
+  isModified            Boolean                 @default(false)
+  managedByRole         String?                 // MANAGER, LEAD, SYSTEM
+  modifiedById          String?
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
 
@@ -286,10 +298,33 @@ model JourneyTask {
   rootBlockers          Blocker[]               @relation("RootTaskBlockers")
   affectedBlockers      Blocker[]               @relation("AffectedTaskBlockers")
   notes                 TaskNote[]
+  history               TaskAuditHistory[]
 
   @@index([journeyId])
   @@index([companyId])
   @@index([state])
+  @@index([managementStatus])
+}
+
+model TaskAuditHistory {
+  id              String       @id @default(uuid())
+  journeyTaskId   String
+  companyId       String
+  modifiedById    String
+  modifiedByName  String
+  modifiedByRole  String       // MANAGER, LEAD, SYSTEM
+  action          String       // TASK_CREATED, TASK_UPDATED, TASK_ARCHIVED, TASK_RESTORED, TASK_REORDERED, PRIORITY_CHANGED, DEADLINE_CHANGED, DEFAULT_RESTORED
+  fieldName       String?
+  previousValue   String?
+  newValue        String?
+  summary         String?
+  createdAt       DateTime     @default(now())
+
+  task            JourneyTask  @relation(fields: [journeyTaskId], references: [id], onDelete: Cascade)
+
+  @@index([journeyTaskId])
+  @@index([companyId])
+  @@index([modifiedById])
 }
 
 model JourneyTaskDependency {
@@ -511,6 +546,9 @@ model DatasetOnboardingTask {
   resourceId     String?
   isMandatory    Boolean                 @default(true)
   orderIndex     Int                     @default(0)
+  managementStatus String                @default("ACTIVE") // ACTIVE, ARCHIVED
+  originType     String                  @default("DEFAULT") // DEFAULT, CUSTOM, MODIFIED
+  version        Int                     @default(1)
   createdAt      DateTime                @default(now())
 
   checklist      DatasetChecklistTemplate? @relation(fields: [checklistId], references: [checklistId], onDelete: Cascade)

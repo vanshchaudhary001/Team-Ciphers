@@ -157,6 +157,7 @@ export const api = {
   getOrgHierarchy: () => request('/org/hierarchy'),
   getExecutiveOverview: () => request('/org/executive-overview'),
   getTeamOverview: () => request('/org/team-overview'),
+  getPositionTasks: (positionId: string) => request(`/org/positions/${positionId}/tasks`),
 
   // 5 Structured Datasets API
   getDatasetEmployees: () => request('/employees'),
@@ -176,4 +177,38 @@ export const api = {
       body: JSON.stringify(taskData),
     }),
   getDatasetDashboard: (id: string) => request(`/employees/${id}/dashboard`),
+
+  // Role-Based Task Management & Hierarchical Task Control
+  getManagementSubordinates: () => request('/task-management/subordinates'),
+  getEmployeeManagementTasks: (employeeId: string) =>
+    request(`/task-management/employees/${employeeId}/tasks`),
+  createEmployeeTask: (employeeId: string, taskData: any) =>
+    request(`/task-management/employees/${employeeId}/tasks`, {
+      method: 'POST',
+      body: JSON.stringify(taskData),
+    }),
+  updateEmployeeTask: (taskId: string, updates: any) =>
+    request(`/task-management/tasks/${taskId}`, {
+      method: 'PATCH',
+      body: JSON.stringify(updates),
+    }),
+  archiveEmployeeTask: (taskId: string) =>
+    request(`/task-management/tasks/${taskId}/archive`, {
+      method: 'POST',
+    }),
+  restoreEmployeeTask: (taskId: string) =>
+    request(`/task-management/tasks/${taskId}/restore`, {
+      method: 'POST',
+    }),
+  resetEmployeeTaskToDefault: (taskId: string) =>
+    request(`/task-management/tasks/${taskId}/reset-default`, {
+      method: 'POST',
+    }),
+  reorderEmployeeTasks: (orderedTaskIds: string[]) =>
+    request('/task-management/tasks/reorder', {
+      method: 'POST',
+      body: JSON.stringify({ orderedTaskIds }),
+    }),
+  getTaskAuditHistory: (taskId: string) =>
+    request(`/task-management/tasks/${taskId}/history`),
 };

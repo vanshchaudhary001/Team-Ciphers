@@ -1,0 +1,337 @@
+<!-- STEP 4C: HIERARCHICAL TASK MANAGEMENT & SUBORDINATE CONTROL -->
+<section id="step-task-management" class="step-view" style="display: none; width: 100%; max-width: 1600px; margin: 0 auto;">
+  <div class="breadcrumbs-bar" style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <button onclick="goToStep('step-gateway')">Gateway</button>
+      <span class="breadcrumbs-separator">/</span>
+      <button onclick="goToStep('step-joiner-chatbot')">My Checklist</button>
+      <span class="breadcrumbs-separator">/</span>
+      <span style="color: var(--color-slate-900); font-weight: 700;">Subordinate Task Management</span>
+    </div>
+    <div>
+      <button class="persona-pill-btn" onclick="goToStep('step-joiner-chatbot')" style="background: #ffffff; border: 1px solid var(--color-slate-300); font-weight: 600; padding: 6px 14px;">
+        ← Back to My Checklist
+      </button>
+    </div>
+  </div>
+
+  <!-- Manager / Lead Authority Header -->
+  <div class="dashboard-hero-card" style="margin-bottom: 24px; padding: 24px 28px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; width: 100%;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;">
+          <span id="mgmt-authority-badge" class="hero-meta-chip" style="background: #0037b0; color: #ffffff; font-weight: 800; letter-spacing: 0.04em; padding: 4px 10px; border-radius: 6px;">
+            MANAGER HIERARCHY ACTIVE
+          </span>
+          <span id="mgmt-authority-scope-text" style="font-size: 0.8rem; color: #cbd5e1; font-weight: 500;">
+            Authority Scope: Subordinate Leads & Associates Across Department
+          </span>
+        </div>
+        <h1 style="font-size: 1.55rem; font-weight: 800; color: #ffffff; margin: 0 0 6px 0; letter-spacing: -0.02em;">
+          Hierarchical Task Management Control Center
+        </h1>
+        <p style="font-size: 0.88rem; color: #94a3b8; margin: 0; max-width: 800px; line-height: 1.5;">
+          Review, customize, and govern first-week onboarding task plans. Individual customizations modify only that employee's assignment and preserve full version history.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <button class="copilot-chip" style="background: #10b981; color: #ffffff; font-weight: 700; padding: 10px 18px; border-radius: 8px; border: none; font-size: 0.88rem; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);" onclick="openAddTaskModal()">
+          <span style="font-size: 1.1rem; line-height: 1;">+</span> Add Custom Task
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subordinate Filter & Selection Panel -->
+  <div style="background: #ffffff; border: 1px solid var(--color-slate-200); border-radius: var(--radius-xl); padding: 18px 24px; margin-bottom: 24px; box-shadow: var(--shadow-xs);">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <!-- Role Filter Pills -->
+      <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--color-slate-500); text-transform: uppercase; letter-spacing: 0.04em;">Subordinate Role:</span>
+        <button id="sub-filter-all" class="persona-pill-btn active" onclick="filterMgmtSubordinatesByRole('ALL')">All Subordinates (<span id="count-sub-all">0</span>)</button>
+        <button id="sub-filter-lead" class="persona-pill-btn" onclick="filterMgmtSubordinatesByRole('LEAD')">Leads (<span id="count-sub-leads">0</span>)</button>
+        <button id="sub-filter-assoc" class="persona-pill-btn" onclick="filterMgmtSubordinatesByRole('ASSOCIATE')">Associates (<span id="count-sub-assocs">0</span>)</button>
+      </div>
+
+      <!-- Employee Select & Search Box -->
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <div style="position: relative; width: 220px;">
+          <input type="text" id="mgmt-subordinate-search" placeholder="Search subordinate..." oninput="onSubordinateSearchInput()" style="width: 100%; padding: 7px 12px 7px 30px; font-size: 0.82rem; border: 1px solid var(--color-slate-200); border-radius: 8px; background: var(--color-slate-50); outline: none;">
+          <span style="position: absolute; left: 10px; top: 8px; font-size: 13px; color: var(--color-slate-400);">🔍</span>
+        </div>
+        <div style="min-width: 260px;">
+          <select id="mgmt-subordinate-select" onchange="onMgmtSubordinateSelectChange()" style="width: 100%; padding: 8px 12px; font-size: 0.84rem; font-weight: 600; border: 1px solid var(--color-slate-300); border-radius: 8px; background: #ffffff; color: var(--color-slate-800); cursor: pointer; outline: none;">
+            <option value="">Select an employee to manage...</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Active Subordinate Detail Banner -->
+  <div id="mgmt-active-subordinate-card" style="background: #ffffff; border: 1px solid var(--color-slate-200); border-radius: var(--radius-xl); padding: 22px 26px; margin-bottom: 24px; box-shadow: var(--shadow-xs);">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 18px;">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <div id="mgmt-sub-avatar" style="width: 52px; height: 52px; border-radius: 12px; background: linear-gradient(135deg, #0037b0, #0088cc); color: #ffffff; font-weight: 800; font-size: 1.25rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 55, 176, 0.2);">
+          RS
+        </div>
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px; flex-wrap: wrap;">
+            <h2 id="mgmt-sub-name" style="font-size: 1.25rem; font-weight: 800; color: var(--color-slate-900); margin: 0;">
+              Rahul Sharma
+            </h2>
+            <span id="mgmt-sub-role-badge" style="font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: #e0f2fe; color: #0284c7; text-transform: uppercase;">
+              Associate
+            </span>
+            <span id="mgmt-sub-dept" style="font-size: 0.82rem; font-weight: 600; color: var(--color-slate-500);">
+              Engineering · Web & Mobile Development
+            </span>
+          </div>
+          <div style="font-size: 0.8rem; color: var(--color-slate-600); display: flex; gap: 14px; flex-wrap: wrap;">
+            <span>🆔 Emp ID: <strong id="mgmt-sub-empid">EMP-001</strong></span>
+            <span>👔 Manager: <strong id="mgmt-sub-manager">Rohan Verma</strong></span>
+            <span>🤝 Reporting Lead: <strong id="mgmt-sub-lead">Priya Lead</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Completion Telemetry -->
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div style="text-align: right;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-slate-500); text-transform: uppercase; margin-bottom: 2px;">Onboarding Progress</div>
+          <div style="font-size: 1.35rem; font-weight: 800; color: #0f172a;">
+            <span id="mgmt-sub-progress-pct">60</span>% <span style="font-size: 0.82rem; font-weight: 600; color: var(--color-slate-500);">(<span id="mgmt-sub-completed-count">18</span>/<span id="mgmt-sub-total-count">30</span> cleared)</span>
+          </div>
+        </div>
+        <div style="width: 140px; height: 10px; background: var(--color-slate-100); border-radius: 999px; overflow: hidden; border: 1px solid var(--color-slate-200);">
+          <div id="mgmt-sub-progress-bar" style="width: 60%; height: 100%; background: linear-gradient(90deg, #10b981, #3b82f6); border-radius: 999px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day Filter Bar -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 12px;">
+    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+      <button id="mgmt-day-pill-all" class="persona-pill-btn active" onclick="filterMgmtTasksByDay('all')">All Days (<span id="mgmt-count-all">30</span>)</button>
+      <button id="mgmt-day-pill-day1" class="persona-pill-btn" onclick="filterMgmtTasksByDay('Day 1')">Day 1 (<span id="mgmt-count-d1">6</span>)</button>
+      <button id="mgmt-day-pill-day2" class="persona-pill-btn" onclick="filterMgmtTasksByDay('Day 2')">Day 2 (<span id="mgmt-count-d2">6</span>)</button>
+      <button id="mgmt-day-pill-day3" class="persona-pill-btn" onclick="filterMgmtTasksByDay('Day 3')">Day 3 (<span id="mgmt-count-d3">6</span>)</button>
+      <button id="mgmt-day-pill-day4" class="persona-pill-btn" onclick="filterMgmtTasksByDay('Day 4')">Day 4 (<span id="mgmt-count-d4">6</span>)</button>
+      <button id="mgmt-day-pill-day5" class="persona-pill-btn" onclick="filterMgmtTasksByDay('Day 5')">Day 5 (<span id="mgmt-count-d5">6</span>)</button>
+      <button id="mgmt-day-pill-archived" class="persona-pill-btn" style="border-color: #fecdd3; color: #be123c;" onclick="filterMgmtTasksByDay('archived')">📦 Archived (<span id="mgmt-count-archived">0</span>)</button>
+    </div>
+
+    <!-- Quick Legend -->
+    <div style="display: flex; align-items: center; gap: 10px; font-size: 0.72rem; color: var(--color-slate-500); font-weight: 600;">
+      <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #64748b;"></span> Default</span>
+      <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span> Custom</span>
+      <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b;"></span> Modified</span>
+      <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></span> Archived</span>
+    </div>
+  </div>
+
+  <!-- Task Inventory Cards Container -->
+  <div id="mgmt-tasks-container" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px;">
+    <!-- Rendered dynamically by JavaScript -->
+  </div>
+</section>
+
+<!-- ==============================================================
+     MODAL 1: ADD ONBOARDING TASK
+     ============================================================== -->
+<div id="modal-mgmt-add-task" class="enterprise-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+  <div style="background: #ffffff; border-radius: var(--radius-2xl); width: 100%; max-width: 620px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); border: 1px solid var(--color-slate-200); overflow: hidden;">
+    <div style="padding: 20px 24px; border-bottom: 1px solid var(--color-slate-200); display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--color-slate-900); margin: 0;">Add Onboarding Task</h3>
+        <p style="font-size: 0.8rem; color: var(--color-slate-500); margin: 2px 0 0 0;">
+          Create a personalized task for <span id="modal-add-target-name" style="font-weight: 700; color: var(--color-slate-800);">Rahul Sharma</span>.
+        </p>
+      </div>
+      <button onclick="closeAddTaskModal()" style="background: none; border: none; font-size: 1.5rem; line-height: 1; color: var(--color-slate-400); cursor: pointer;">&times;</button>
+    </div>
+
+    <form id="form-mgmt-add-task" onsubmit="submitAddTask(event)" style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+      <div>
+        <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Task Title *</label>
+        <input type="text" id="add-task-title" required placeholder="e.g. Complete department security and compliance training" style="width: 100%; padding: 9px 12px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+      </div>
+
+      <div>
+        <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Task Description</label>
+        <textarea id="add-task-desc" rows="3" placeholder="Provide clear instructions and objectives for the employee..." style="width: 100%; padding: 9px 12px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none; resize: vertical;"></textarea>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Day *</label>
+          <select id="add-task-day" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; background: #fff; outline: none;">
+            <option value="Day 1">Day 1</option>
+            <option value="Day 2" selected>Day 2</option>
+            <option value="Day 3">Day 3</option>
+            <option value="Day 4">Day 4</option>
+            <option value="Day 5">Day 5</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Priority *</label>
+          <select id="add-task-priority" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; background: #fff; outline: none;">
+            <option value="High">High</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="Standard">Standard</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Duration</label>
+          <input type="text" id="add-task-duration" value="45 minutes" placeholder="e.g. 45 mins" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Category</label>
+          <input type="text" id="add-task-category" value="Compliance" placeholder="e.g. Compliance, Access, Tooling" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Resource Link (Optional)</label>
+          <input type="text" id="add-task-resource" placeholder="https://portal.enterprise.demo/docs" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+        <input type="checkbox" id="add-task-required" checked style="width: 16px; height: 16px; cursor: pointer;">
+        <label for="add-task-required" style="font-size: 0.82rem; font-weight: 600; color: var(--color-slate-700); cursor: pointer;">
+          Mandatory Onboarding Task (Required for First-Week Certification)
+        </label>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--color-slate-100);">
+        <button type="button" class="btn-secondary" onclick="closeAddTaskModal()" style="padding: 8px 16px; font-size: 0.85rem;">Cancel</button>
+        <button type="submit" class="btn-primary" style="padding: 8px 20px; font-size: 0.85rem; background: #0037b0; color: #fff;">Create Task</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ==============================================================
+     MODAL 2: EDIT ONBOARDING TASK
+     ============================================================== -->
+<div id="modal-mgmt-edit-task" class="enterprise-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+  <div style="background: #ffffff; border-radius: var(--radius-2xl); width: 100%; max-width: 620px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); border: 1px solid var(--color-slate-200); overflow: hidden;">
+    <div style="padding: 20px 24px; border-bottom: 1px solid var(--color-slate-200); display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--color-slate-900); margin: 0;">Edit Onboarding Task</h3>
+        <p style="font-size: 0.8rem; color: var(--color-slate-500); margin: 2px 0 0 0;">
+          Modifying task configuration with optimistic concurrency & audit trail.
+        </p>
+      </div>
+      <button onclick="closeEditTaskModal()" style="background: none; border: none; font-size: 1.5rem; line-height: 1; color: var(--color-slate-400); cursor: pointer;">&times;</button>
+    </div>
+
+    <form id="form-mgmt-edit-task" onsubmit="submitEditTask(event)" style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+      <input type="hidden" id="edit-task-id">
+      <input type="hidden" id="edit-task-version">
+
+      <div>
+        <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Task Title *</label>
+        <input type="text" id="edit-task-title" required style="width: 100%; padding: 9px 12px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+      </div>
+
+      <div>
+        <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Task Description</label>
+        <textarea id="edit-task-desc" rows="3" style="width: 100%; padding: 9px 12px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none; resize: vertical;"></textarea>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Day *</label>
+          <select id="edit-task-day" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; background: #fff; outline: none;">
+            <option value="Day 1">Day 1</option>
+            <option value="Day 2">Day 2</option>
+            <option value="Day 3">Day 3</option>
+            <option value="Day 4">Day 4</option>
+            <option value="Day 5">Day 5</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Priority *</label>
+          <select id="edit-task-priority" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; background: #fff; outline: none;">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Standard">Standard</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Duration</label>
+          <input type="text" id="edit-task-duration" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Category</label>
+          <input type="text" id="edit-task-category" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Resource Link</label>
+          <input type="text" id="edit-task-resource" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--color-slate-100);">
+        <button type="button" class="btn-secondary" onclick="closeEditTaskModal()" style="padding: 8px 16px; font-size: 0.85rem;">Cancel</button>
+        <button type="submit" class="btn-primary" style="padding: 8px 20px; font-size: 0.85rem; background: #0037b0; color: #fff;">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ==============================================================
+     MODAL 3: ARCHIVE TASK CONFIRMATION (SAFE HISTORICAL PRESERVATION)
+     ============================================================== -->
+<div id="modal-mgmt-archive-confirm" class="enterprise-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+  <div style="background: #ffffff; border-radius: var(--radius-2xl); width: 100%; max-width: 500px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); border: 1px solid var(--color-slate-200); overflow: hidden; padding: 24px;">
+    <div style="width: 48px; height: 48px; border-radius: 12px; background: #fee2e2; color: #dc2626; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 16px;">
+      📦
+    </div>
+    <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--color-slate-900); margin: 0 0 8px 0;">Archive this onboarding task?</h3>
+    <div style="background: var(--color-slate-50); border: 1px solid var(--color-slate-200); border-radius: 8px; padding: 12px 14px; margin-bottom: 14px;">
+      <div style="font-size: 0.85rem; font-weight: 700; color: var(--color-slate-800);" id="archive-task-title-display">Security Training</div>
+      <div style="font-size: 0.78rem; color: var(--color-slate-500);" id="archive-task-sub-display">Assigned to: Rahul Sharma</div>
+    </div>
+    <p style="font-size: 0.85rem; color: var(--color-slate-600); line-height: 1.55; margin: 0 0 20px 0;">
+      This task will be removed from the active onboarding plan. Historical completion information and audit logs will be permanently preserved. You can restore this task at any time.
+    </p>
+    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+      <button class="btn-secondary" onclick="closeArchiveModal()" style="padding: 8px 16px; font-size: 0.85rem;">Cancel</button>
+      <button id="btn-confirm-archive-task" class="btn-primary" style="padding: 8px 18px; font-size: 0.85rem; background: #dc2626; color: #fff;">Archive Task</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================================================
+     MODAL 4: TASK AUDIT HISTORY TIMELINE
+     ============================================================== -->
+<div id="modal-mgmt-history" class="enterprise-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+  <div style="background: #ffffff; border-radius: var(--radius-2xl); width: 100%; max-width: 650px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); border: 1px solid var(--color-slate-200); overflow: hidden; max-height: 85vh; display: flex; flex-direction: column;">
+    <div style="padding: 20px 24px; border-bottom: 1px solid var(--color-slate-200); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
+      <div>
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--color-slate-900); margin: 0;">Task Change History & Audit Trail</h3>
+        <p style="font-size: 0.8rem; color: var(--color-slate-500); margin: 2px 0 0 0;" id="history-task-subtitle">
+          Showing modifications for this task
+        </p>
+      </div>
+      <button onclick="closeHistoryModal()" style="background: none; border: none; font-size: 1.5rem; line-height: 1; color: var(--color-slate-400); cursor: pointer;">&times;</button>
+    </div>
+
+    <div id="history-timeline-container" style="padding: 24px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 14px;">
+      <!-- History items rendered dynamically -->
+    </div>
+
+    <div style="padding: 14px 24px; border-top: 1px solid var(--color-slate-200); display: flex; justify-content: flex-end; background: var(--color-slate-50); flex-shrink: 0;">
+      <button class="btn-secondary" onclick="closeHistoryModal()" style="padding: 7px 16px; font-size: 0.82rem;">Close</button>
+    </div>
+  </div>
+</div>

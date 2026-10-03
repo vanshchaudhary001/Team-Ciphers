@@ -190,6 +190,18 @@ export interface JourneyTask {
   stillNotWorkingReason?: string | null;
   delayReason?: string | null;
   orderIndex: number;
+  // Hierarchical Task Management & Audit fields
+  day?: number;
+  priority?: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+  estimatedDuration?: number;
+  resourceLinks?: string[];
+  managementStatus?: 'ACTIVE' | 'ARCHIVED';
+  originType?: 'DEFAULT' | 'CUSTOM' | 'MODIFIED';
+  version?: number;
+  isCustom?: boolean;
+  isModified?: boolean;
+  managedByRole?: string | null;
+  modifiedById?: string | null;
   prerequisiteIds?: string[];
   downstreamIds?: string[];
   notes?: Array<{
@@ -199,6 +211,42 @@ export interface JourneyTask {
     note: string;
     createdAt: string;
   }>;
+}
+
+export interface TaskAuditRecord {
+  id: string;
+  journeyTaskId: string;
+  companyId: string;
+  modifiedById: string;
+  modifiedByName: string;
+  modifiedByRole: string;
+  action: string;
+  fieldName?: string | null;
+  previousValue?: string | null;
+  newValue?: string | null;
+  summary: string;
+  createdAt: string;
+}
+
+export interface ManagementSubordinate {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  roleLevel: string;
+  title?: string;
+  positionTitle?: string;
+  positionId?: string;
+  departmentId?: string;
+  departmentName?: string;
+  team?: string;
+  branch?: string;
+  reportingManager?: string | null;
+  leadName?: string | null;
+  totalTasks?: number;
+  completedTasks?: number;
+  activeTasks?: number;
+  archivedTasks?: number;
 }
 
 export interface Blocker {

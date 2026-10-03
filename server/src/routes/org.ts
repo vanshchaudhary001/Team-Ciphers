@@ -436,4 +436,34 @@ router.get(
   }
 );
 
+/**
+ * GET /api/v1/org/positions/:posId/tasks
+ * Returns authoritative onboarding tasks and playbook for any position
+ */
+router.get('/positions/:posId/tasks', async (req, res) => {
+  try {
+    const { posId } = req.params;
+    const candidates = [
+      path.resolve(process.cwd(), `../client/public/tasks/${posId}.json`),
+      path.resolve(process.cwd(), `data/tasks/${posId}.json`),
+      path.resolve(process.cwd(), `../data/tasks/${posId}.json`),
+      path.resolve(process.cwd(), `tasks/${posId}.json`),
+    ];
+    for (const c of candidates) {
+      if (fs.existsSync(c)) {
+        const fileData = JSON.parse(fs.readFileSync(c, 'utf-8'));
+        return res.json({
+          success: true,
+          position: fileData,
+          tasks: fileData.tasks || [],
+        });
+      }
+    }
+    return res.status(404).json({ success: false, error: `Position tasks not found for ${posId}` });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 export default router;
+

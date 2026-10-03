@@ -1,0 +1,1184 @@
+1: PROMPT 1
+2: Avoid these 30 things
+3: ❌ Harsh gradients
+4: ❌ Overuse of Lucide/icon-library icons
+5: ❌ Pure white backgrounds everywhere
+6: ❌ Rainbow-colored UI
+7: ❌ Excessive drop shadows
+8: ❌ Three identical feature cards in a row
+9: ❌ Random emojis as UI elements
+10: ❌ “Liquid glass” / excessive glassmorphism
+11: ❌ Excessive em-based spacing/font sizing
+12: ❌ Inter / Geist / Space Grotesk used just because they're popular
+13: ❌ Colored vertical stripes on the left of sections/cards
+14: ❌ Fake testimonials
+15: ❌ Generic Bento grids everywhere
+16: ❌ Fake terminal/code-window sections
+17: ❌ Phrases like “It’s not X, it’s Y” repeatedly
+18: ❌ Checkmark bullets for every feature
+19: ❌ Exactly 3 pricing tiers just because it's conventional
+20: ❌ No real product demonstrations
+21: ❌ Excessively soft/rounded corner radius
+22: ❌ Purple + black as the default “AI” color scheme
+23: ❌ Removing skeleton loaders where loading states are actually needed
+24: ❌ Decorative radial orbs
+25: ❌ Decorative dot-grid backgrounds
+26: ❌ Sparkle ✨ icons used as decoration
+27: ❌ Animated arrows everywhere
+28: ❌ Missing Terms of Service
+29: ❌ Missing Privacy Policy
+30: ❌ Hover animations on everything
+31: ❌ Neon colors used unnecessarily
+32: ❌ Generic pastel colors with no relationship to the brand
+33: PROMPT 2
+34: PROJECT: FIRST-WEEK MAZE
+35: FEATURE: ROLE-BASED TASK MANAGEMENT & HIERARCHICAL TASK CONTROL
+36: You are working on my existing First-Week Maze enterprise onboarding platform.
+37: DO NOT rebuild the application from scratch.
+38: First inspect the existing application, its current frontend, backend, database/schema, authentication, user roles, onboarding/task data, dashboards, routing, and existing manager/lead/associate portals.
+39: Preserve all existing functionality that is already working.
+40: The purpose of this task is to introduce a proper hierarchical task-management system into the existing application.
+41: ============================================================
+42: 1. CORE BUSINESS REQUIREMENT
+43: ============================================================
+44: The current system provides first-week onboarding tasks to:
+45: 1. Associate — entry-level employee
+46: 2. Lead — mid-level employee
+47: 3. Manager — management-level employee
+48: The current problem is that tasks are effectively static.
+49: There needs to be a clear management hierarchy:
+50: MANAGER
+51: /       \
+52: /         \
+53: LEAD        ASSOCIATE
+54: |
+55: |
+56: ASSOCIATE
+57: The Manager has authority over both Leads and Associates.
+58: The Lead has authority over Associates.
+59: The Associate has NO authority to modify task definitions.
+60: Therefore implement the following permission model:
+61: MANAGER:
+62: - Can view own tasks.
+63: - Can complete own tasks.
+64: - Can view Lead tasks.
+65: - Can add Lead tasks.
+66: - Can edit Lead tasks.
+67: - Can remove Lead tasks.
+68: - Can reorder Lead tasks.
+69: - Can change Lead task deadlines where applicable.
+70: - Can modify Lead task descriptions.
+71: - Can modify Lead task priority.
+72: - Can modify Lead task category.
+73: - Can add customized tasks for a specific Lead.
+74: - Can view Associate tasks.
+75: - Can add Associate tasks.
+76: - Can edit Associate tasks.
+77: - Can remove Associate tasks.
+78: - Can reorder Associate tasks.
+79: - Can modify Associate task details.
+80: - Can add customized tasks for a specific Associate.
+81: - Can override default onboarding tasks for Leads and Associates.
+82: - Can restore a customized task back to the original/default task.
+83: LEAD:
+84: - Can view own tasks.
+85: - Can complete own tasks.
+86: - Can view the Associates assigned to that Lead.
+87: - Can view Associate tasks.
+88: - Can add Associate tasks.
+89: - Can edit Associate tasks.
+90: - Can remove Associate tasks.
+91: - Can reorder Associate tasks.
+92: - Can modify Associate task details.
+93: - Can create customized Associate tasks.
+94: - Cannot modify Lead's own assigned task definitions through this feature.
+95: - Cannot modify another Lead's tasks.
+96: - Cannot modify Manager tasks.
+97: - Cannot modify Manager-level onboarding templates.
+98: - Cannot change system-level role permissions.
+99: ASSOCIATE:
+100: - Can view assigned tasks.
+101: - Can mark tasks as started.
+102: - Can mark tasks as completed.
+103: - Can view task descriptions, instructions, priority, due date, resources, etc.
+104: - Can update allowed execution/progress fields.
+105: - CANNOT add tasks.
+106: - CANNOT delete tasks.
+107: - CANNOT edit task definitions.
+108: - CANNOT change task descriptions.
+109: - CANNOT change priority.
+110: - CANNOT change deadlines.
+111: - CANNOT reorder tasks.
+112: - CANNOT assign tasks.
+113: - CANNOT modify another user's tasks.
+114: - CANNOT modify the onboarding template.
+115: ============================================================
+116: 2. VERY IMPORTANT: ROLE-BASED ACCESS CONTROL
+117: ============================================================
+118: Implement this using real role-based authorization.
+119: DO NOT rely only on hiding buttons in the frontend.
+120: The backend/API/database layer must also enforce permissions.
+121: If an Associate manually attempts an unauthorized API request such as:
+122: PUT /tasks/:id
+123: or
+124: DELETE /tasks/:id
+125: the server must reject it.
+126: The same applies to a Lead attempting to modify a Lead/Manager task.
+127: Frontend restrictions are for UX.
+128: Backend authorization is the actual security boundary.
+129: Use a clear authorization policy such as:
+130: MANAGER:
+131: can manage LEAD
+132: can manage ASSOCIATE
+133: LEAD:
+134: can manage ASSOCIATE
+135: ASSOCIATE:
+136: can execute assigned tasks only
+137: Do not allow privilege escalation.
+138: ============================================================
+139: 3. MANAGER PORTAL — ADD TASK MANAGEMENT
+140: ============================================================
+141: Add a dedicated section inside the existing Manager Portal.
+142: Recommended navigation:
+143: Manager Portal
+144: ├── Dashboard
+145: ├── My Tasks
+146: ├── Team
+147: ├── Onboarding
+148: │   ├── Leads
+149: │   └── Associates
+150: ├── Task Management
+151: ├── Progress
+152: └── Settings
+153: Do not blindly add these navigation items if equivalent sections already exist.
+154: Reuse the existing information architecture wherever possible.
+155: The important requirement is that the Manager gets an obvious way to manage subordinate onboarding tasks.
+156: The Manager should be able to select:
+157: MANAGER PORTAL
+158: → TASK MANAGEMENT
+159: → SELECT EMPLOYEE
+160: → VIEW TASKS
+161: → ADD / EDIT / DELETE / REORDER TASKS
+162: ============================================================
+163: 4. MANAGER TASK MANAGEMENT SCREEN
+164: ============================================================
+165: Create a professional enterprise task-management interface.
+166: The Manager should be able to filter employees by:
+167: - Department
+168: - Role
+169: - Employee
+170: - Team
+171: - Onboarding status
+172: - Task completion status
+173: - Week
+174: - Day
+175: At minimum:
+176: Role:
+177: [ All ]
+178: [ Lead ]
+179: [ Associate ]
+180: Employee:
+181: [ Select employee ]
+182: After selecting an employee, show their first-week task plan.
+183: Example:
+184: ---------------------------------------------------------
+185: FIRST WEEK TASK PLAN
+186: Employee: Rahul Sharma
+187: Role: Associate
+188: Department: Engineering
+189: Manager: Priya Mehta
+190: Lead: Arjun Patel
+191: ---------------------------------------------------------
+192: DAY 1
+193: ✓ Complete company orientation
+194: ○ Meet reporting Lead
+195: ○ Set up required tools
+196: ○ Read department documentation
+197: DAY 2
+198: ○ Complete security training
+199: ○ Access development environment
+200: ○ Attend team introduction
+201: DAY 3
+202: ...
+203: Each task should expose management controls.
+204: For example:
+205: Task: Complete security training
+206: Status: Not Started
+207: Priority: High
+208: Day: Day 2
+209: [ Edit ] [ Delete ] [ Move ]
+210: The Manager must be able to modify the task.
+211: ============================================================
+212: 5. ADD TASK
+213: ============================================================
+214: Add a clearly visible:
+215: + Add Task
+216: button.
+217: When clicked, open a professional task creation modal/drawer.
+218: Fields should include:
+219: Task Name
+220: Task Description
+221: Day
+222: Priority
+223: Category
+224: Estimated Duration
+225: Due Date
+226: Instructions
+227: Required/Optional
+228: Resource Links
+229: Attachment/Resource references if supported
+230: Assigned Employee
+231: Assigned Role
+232: Dependencies if the current architecture supports dependencies
+233: Example:
+234: ----------------------------------------
+235: ADD ONBOARDING TASK
+236: ----------------------------------------
+237: Task Name:
+238: [ Complete department security training ]
+239: Description:
+240: [ Complete the mandatory security training
+241: assigned to all new engineering associates. ]
+242: Day:
+243: [ Day 2 ▼ ]
+244: Priority:
+245: [ High ▼ ]
+246: Category:
+247: [ Compliance ▼ ]
+248: Estimated Duration:
+249: [ 45 minutes ]
+250: Required:
+251: [ ✓ ]
+252: Instructions:
+253: [ ... ]
+254: Resources:
+255: [ Add resource ]
+256: [ Cancel ] [ Create Task ]
+257: The new task should immediately appear in the employee's onboarding plan.
+258: ============================================================
+259: 6. EDIT TASK
+260: ============================================================
+261: Every editable task should have an Edit action.
+262: The Edit interface should allow authorized users to modify:
+263: - Task title
+264: - Description
+265: - Instructions
+266: - Day
+267: - Priority
+268: - Category
+269: - Estimated duration
+270: - Due date
+271: - Required/optional status
+272: - Resources
+273: - Dependencies where supported
+274: When the Manager edits a task, the Associate or Lead should see the updated version.
+275: DO NOT require the user to refresh the application manually if the current architecture supports real-time state updates.
+276: Use the existing state/data architecture appropriately.
+277: ============================================================
+278: 7. DELETE / REMOVE TASK
+279: ============================================================
+280: Authorized users should be able to remove a task.
+281: However, do NOT immediately hard-delete completed task records if doing so would destroy progress history.
+282: Use a safe approach.
+283: Preferred behavior:
+284: If task has never been started:
+285: allow removal/deactivation.
+286: If task has progress or is completed:
+287: show confirmation:
+288: "This task has progress associated with it.
+289: Removing it will remove it from the active onboarding plan,
+290: but historical completion information will be preserved."
+291: Then use an archived/deactivated state rather than destroying historical data.
+292: Example:
+293: Task Status:
+294: ACTIVE
+295: ARCHIVED
+296: COMPLETED
+297: Do not destroy audit/history information unnecessarily.
+298: ============================================================
+299: 8. LEAD PORTAL — ASSOCIATE TASK MANAGEMENT
+300: ============================================================
+301: Add a similar task-management capability to the Lead Portal.
+302: The Lead should have a section such as:
+303: Lead Portal
+304: ├── Dashboard
+305: ├── My Tasks
+306: ├── My Associates
+307: ├── Associate Onboarding
+308: └── Task Management
+309: The Lead can select an Associate who reports to them.
+310: Example:
+311: MY ASSOCIATES
+312: ----------------------------------------
+313: Aarav Shah
+314: Associate • Engineering
+315: Week 1 Progress: 62%
+316: ----------------------------------------
+317: [ View Tasks ]
+318: [ Manage Tasks ]
+319: When Lead clicks Manage Tasks:
+320: ----------------------------------------
+321: ASSOCIATE ONBOARDING
+322: Aarav Shah
+323: Engineering • Associate
+324: Week 1
+325: ----------------------------------------
+326: Day 1
+327: ✓ Company Orientation
+328: ✓ Meet Team
+329: ○ Read Engineering Handbook
+330: Day 2
+331: ○ Security Training
+332: ○ Development Environment Setup
+333: ...
+334: The Lead can:
+335: + Add Task
+336: Edit
+337: Remove/Archive
+338: Reorder
+339: Change priority
+340: Change day
+341: Modify instructions
+342: Add resources
+343: But ONLY for Associates under that Lead's management scope.
+344: ============================================================
+345: 9. LEAD CANNOT MODIFY OTHER LEADS
+346: ============================================================
+347: This is critical.
+348: Suppose:
+349: Manager: Priya
+350: Lead A: Arjun
+351: Lead B: Neha
+352: Associates under Arjun:
+353: - Rahul
+354: - Aman
+355: Associates under Neha:
+356: - Riya
+357: - Karan
+358: Arjun can manage:
+359: ✓ Rahul
+360: ✓ Aman
+361: Arjun cannot manage:
+362: ✗ Neha
+363: ✗ Riya
+364: ✗ Karan
+365: ✗ Priya
+366: Neha can manage:
+367: ✓ Riya
+368: ✓ Karan
+369: Neha cannot manage:
+370: ✗ Arjun
+371: ✗ Rahul
+372: ✗ Aman
+373: ✗ Priya
+374: Priya can manage:
+375: ✓ Arjun
+376: ✓ Neha
+377: ✓ Rahul
+378: ✓ Aman
+379: ✓ Riya
+380: ✓ Karan
+381: This must be enforced both in the UI and backend.
+382: ============================================================
+383: 10. ASSOCIATE PORTAL
+384: ============================================================
+385: Do NOT add task editing controls to the Associate Portal.
+386: The Associate should see:
+387: MY FIRST WEEK
+388: Day 1
+389: ✓ Complete HR Orientation
+390: ✓ Meet My Lead
+391: ○ Read Team Documentation
+392: Day 2
+393: ○ Security Training
+394: ○ Tool Setup
+395: ...
+396: The Associate can:
+397: ✓ Start task
+398: ✓ Complete task
+399: ✓ View instructions
+400: ✓ View resources
+401: ✓ View due dates
+402: ✓ View priority
+403: ✓ View progress
+404: ✓ View task details
+405: The Associate cannot:
+406: ✗ Add Task
+407: ✗ Edit Task
+408: ✗ Delete Task
+409: ✗ Reorder Task
+410: ✗ Change Priority
+411: ✗ Change Deadline
+412: ✗ Change Description
+413: ✗ Assign Task
+414: Do not even display management buttons to Associates.
+415: ============================================================
+416: 11. TASK OWNERSHIP VS TASK MANAGEMENT
+417: ============================================================
+418: Make a clear distinction between:
+419: TASK ASSIGNEE
+420: and
+421: TASK MANAGER.
+422: Example:
+423: Task:
+424: "Complete Security Training"
+425: Assigned To:
+426: Rahul Sharma — Associate
+427: Managed By:
+428: Arjun Patel — Lead
+429: Higher-Level Manager:
+430: Priya Mehta — Manager
+431: This makes the organizational hierarchy explicit.
+432: The Associate executes the task.
+433: The Lead manages the Associate's tasks.
+434: The Manager manages both Lead and Associate tasks.
+435: ============================================================
+436: 12. DEFAULT TASKS VS CUSTOM TASKS
+437: ============================================================
+438: This is an extremely important architectural requirement.
+439: Do NOT modify the original master onboarding dataset every time a Manager or Lead customizes a user's tasks.
+440: Separate:
+441: A. DEFAULT TASK TEMPLATE
+442: from
+443: B. EMPLOYEE TASK ASSIGNMENT
+444: from
+445: C. CUSTOM OVERRIDE
+446: For example:
+447: DEFAULT TEMPLATE:
+448: Engineering Associate
+449: Day 1:
+450: - Company Orientation
+451: - Meet Team
+452: - Development Environment Setup
+453: Then a Manager assigns it to Rahul.
+454: Rahul receives an employee-specific task plan.
+455: If the Manager adds:
+456: "Meet Senior Architect"
+457: that should become a customized task for Rahul.
+458: It should NOT permanently modify the default Engineering Associate template.
+459: This allows another Engineering Associate to still receive the original template.
+460: ============================================================
+461: 13. TASK DATA MODEL
+462: ============================================================
+463: Adapt this to the existing database architecture instead of blindly replacing the current schema.
+464: Conceptually, the system should support entities such as:
+465: User
+466: Employee
+467: Department
+468: Role
+469: OnboardingTemplate
+470: TaskTemplate
+471: TaskAssignment
+472: TaskOverride
+473: TaskHistory
+474: TaskCompletion
+475: AuditLog
+476: A TaskAssignment should be associated with:
+477: - task
+478: - employee/assignee
+479: - assigned_by
+480: - manager/owner
+481: - role
+482: - department
+483: - onboarding week
+484: - day
+485: - status
+486: - priority
+487: - due date
+488: - created timestamp
+489: - updated timestamp
+490: If the existing database already has an equivalent model, extend it rather than creating unnecessary duplicate models.
+491: ============================================================
+492: 14. TASK VERSIONING / HISTORY
+493: ============================================================
+494: Whenever an authorized user changes an important task field, preserve an audit history.
+495: Example:
+496: Task:
+497: "Complete Security Training"
+498: History:
+499: Created by:
+500: System Template
+501: Modified by:
+502: Arjun Patel — Lead
+503: Changed:
+504: Priority
+505: Medium → High
+506: Date:
+507: Oct 4, 2026
+508: Another modification:
+509: Modified by:
+510: Priya Mehta — Manager
+511: Changed:
+512: Due Date
+513: Day 2 → Day 3
+514: This is important for enterprise accountability.
+515: The system should be able to answer:
+516: Who changed this task?
+517: What did they change?
+518: When did they change it?
+519: What was the previous value?
+520: What is the new value?
+521: ============================================================
+522: 15. AUDIT LOG
+523: ============================================================
+524: Create an audit mechanism for management actions.
+525: Track actions such as:
+526: TASK_CREATED
+527: TASK_UPDATED
+528: TASK_ARCHIVED
+529: TASK_RESTORED
+530: TASK_REORDERED
+531: TASK_ASSIGNED
+532: TASK_UNASSIGNED
+533: TASK_PRIORITY_CHANGED
+534: TASK_DEADLINE_CHANGED
+535: Example:
+536: Oct 4, 2026 — 10:42 AM
+537: Arjun Patel modified "Security Training"
+538: Priority: Medium → High
+539: Oct 4, 2026 — 11:15 AM
+540: Priya Mehta added "Meet Senior Architect"
+541: to Rahul Sharma's onboarding plan.
+542: The audit log should not be editable by Associates.
+543: ============================================================
+544: 16. TASK REORDERING
+545: ============================================================
+546: Managers and Leads should be able to reorder tasks within their authorized scope.
+547: Example:
+548: Day 2:
+549: 1. Security Training
+550: 2. Tool Setup
+551: 3. Team Documentation
+552: Manager moves:
+553: Team Documentation
+554: from position 3 → position 1
+555: Result:
+556: 1. Team Documentation
+557: 2. Security Training
+558: 3. Tool Setup
+559: Associates only see the final ordered result.
+560: Use drag-and-drop if it fits the existing UI, but do not add drag-and-drop merely as decoration.
+561: A simple move-up/move-down mechanism is acceptable if more robust.
+562: ============================================================
+563: 17. TASK STATUS
+564: ============================================================
+565: Separate task management status from task execution status.
+566: Management lifecycle:
+567: ACTIVE
+568: ARCHIVED
+569: Execution lifecycle:
+570: NOT_STARTED
+571: IN_PROGRESS
+572: BLOCKED
+573: COMPLETED
+574: Do not confuse these.
+575: Example:
+576: A Manager archives a task.
+577: Management status:
+578: ARCHIVED
+579: The Associate's historical completion information should still be preserved.
+580: ============================================================
+581: 18. CUSTOM TASK INDICATOR
+582: ============================================================
+583: When a task has been customized from the default template, clearly indicate this.
+584: Example:
+585: Security Training
+586: [Default]
+587: Meet Senior Architect
+588: [Custom]
+589: Environment Setup
+590: [Modified]
+591: This allows Managers and Leads to understand which tasks came from the standard onboarding plan and which were customized.
+592: ============================================================
+593: 19. MANAGER OVERRIDE
+594: ============================================================
+595: The Manager has final authority over subordinate task configurations.
+596: Example:
+597: Default task:
+598: Day 2
+599: Priority: Medium
+600: Lead changes it to:
+601: Day 2
+602: Priority: High
+603: Manager later changes it to:
+604: Day 3
+605: Priority: Medium
+606: Final state:
+607: Day 3
+608: Priority: Medium
+609: The system should preserve the history showing that the Lead made the first change and the Manager subsequently changed it.
+610: The Manager's current configuration is authoritative.
+611: ============================================================
+612: 20. CONFLICT HANDLING
+613: ============================================================
+614: If a Lead and Manager modify the same task around the same time, avoid silent data loss.
+615: Use updated timestamps/version numbers where appropriate.
+616: If the backend detects a stale update, return a conflict response instead of blindly overwriting newer data.
+617: Show:
+618: "This task was updated by another manager. Please review the latest version before saving your changes."
+619: Do not silently overwrite another user's changes.
+620: ============================================================
+621: 21. PERMISSION MATRIX
+622: ============================================================
+623: Implement and test the following:
+624: ACTION                         MANAGER    LEAD       ASSOCIATE
+625: View own tasks                   ✓         ✓           ✓
+626: Complete own tasks               ✓         ✓           ✓
+627: View Associate tasks             ✓         ✓           ✗
+628: Add Associate task               ✓         ✓           ✗
+629: Edit Associate task              ✓         ✓           ✗
+630: Delete/archive Associate task   ✓         ✓           ✗
+631: Reorder Associate task           ✓         ✓           ✗
+632: View Lead tasks                  ✓         ✗           ✗
+633: Add Lead task                    ✓         ✗           ✗
+634: Edit Lead task                   ✓         ✗           ✗
+635: Delete/archive Lead task         ✓         ✗           ✗
+636: Reorder Lead task                ✓         ✗           ✗
+637: Modify Manager tasks             ✗*        ✗           ✗
+638: *The Manager may manage subordinate onboarding tasks, not bypass
+639: or corrupt system-level Manager task definitions unless explicitly
+640: supported by the existing business rules.
+641: ============================================================
+642: 22. UI/UX REQUIREMENTS
+643: ============================================================
+644: The interface must feel like a real enterprise onboarding product.
+645: Do NOT make it look like a generic AI-generated dashboard.
+646: Avoid:
+647: - excessive gradients
+648: - purple/black AI aesthetic
+649: - glassmorphism
+650: - glowing radial orbs
+651: - decorative dot grids
+652: - sparkle icons
+653: - excessive rounded cards
+654: - excessive shadows
+655: - random emojis
+656: - unnecessary animations
+657: - generic bento layouts
+658: - fake testimonials
+659: - decorative terminal windows
+660: - neon colors
+661: - excessive pastel colors
+662: - unnecessary hover effects
+663: - three-card layouts simply because they are common
+664: - excessive checkmark lists
+665: Use the existing First-Week Maze design language.
+666: Prioritize:
+667: - information hierarchy
+668: - clarity
+669: - usability
+670: - realistic enterprise data
+671: - restrained visual styling
+672: - strong typography
+673: - consistent spacing
+674: - meaningful tables
+675: - useful filters
+676: - clear actions
+677: - accessible contrast
+678: - responsive behavior
+679: This is an enterprise application, not a marketing landing page.
+680: ============================================================
+681: 23. CONFIRMATION DIALOGS
+682: ============================================================
+683: For destructive actions, show confirmation.
+684: Example:
+685: "Archive this task?"
+686: Task:
+687: Security Training
+688: Employee:
+689: Rahul Sharma
+690: "This will remove the task from the active onboarding plan.
+691: Historical information will be preserved."
+692: [Cancel] [Archive Task]
+693: Do not use destructive actions without confirmation.
+694: ============================================================
+695: 24. NOTIFICATIONS
+696: ============================================================
+697: If the existing application has a notification system, integrate task-management changes.
+698: For example, when a Lead adds a new task for an Associate:
+699: "Arjun Patel added a new onboarding task:
+700: Meet Senior Architect"
+701: When a Manager changes an Associate's task:
+702: "Your onboarding task 'Security Training'
+703: has been updated by your Manager."
+704: Do not create a completely separate notification architecture if one already exists.
+705: ============================================================
+706: 25. SEARCH AND FILTERING
+707: ============================================================
+708: Manager:
+709: Search employees by:
+710: - Name
+711: - Employee ID
+712: - Department
+713: - Role
+714: Filter:
+715: - Lead
+716: - Associate
+717: - Department
+718: - Completion percentage
+719: - Task status
+720: - Day
+721: - Priority
+722: Lead:
+723: Only show Associates within their management scope.
+724: Do not expose unrelated employees.
+725: ============================================================
+726: 26. RESPONSIVE DESIGN
+727: ============================================================
+728: The task management system must work on:
+729: - Desktop
+730: - Laptop
+731: - Tablet
+732: - Mobile
+733: On mobile:
+734: Do not force a huge desktop table.
+735: Use:
+736: - stacked task cards
+737: - bottom sheets
+738: - drawers
+739: - responsive filters
+740: - compact action menus
+741: while preserving functionality.
+742: ============================================================
+743: 27. DATABASE AND BACKEND
+744: ============================================================
+745: Before changing the schema:
+746: 1. Inspect the existing database.
+747: 2. Inspect existing task models.
+748: 3. Inspect existing user/role models.
+749: 4. Inspect authentication.
+750: 5. Inspect existing APIs.
+751: 6. Reuse existing entities wherever possible.
+752: 7. Add only the minimum required schema changes.
+753: Do not duplicate existing User, Employee, Task, Role, or Department models.
+754: Create proper relationships between:
+755: Manager
+756: Lead
+757: Associate
+758: Department
+759: Task
+760: Task Assignment
+761: Task History
+762: Make sure cascading deletes do not accidentally destroy historical onboarding data.
+763: ============================================================
+764: 28. API DESIGN
+765: ============================================================
+766: Use the existing API conventions.
+767: Conceptually the system needs operations equivalent to:
+768: GET    /employees/:id/tasks
+769: POST   /employees/:id/tasks
+770: PATCH  /tasks/:taskId
+771: DELETE /tasks/:taskId
+772: POST   /tasks/:taskId/archive
+773: POST   /tasks/:taskId/restore
+774: POST   /tasks/reorder
+775: GET    /tasks/:taskId/history
+776: But use the existing routing architecture if equivalent endpoints already exist.
+777: Every endpoint must verify:
+778: 1. User authentication.
+779: 2. User role.
+780: 3. User's organizational scope.
+781: 4. Target employee's role.
+782: 5. Relationship between manager/lead/associate.
+783: 6. Requested action.
+784: Never trust role information sent by the frontend.
+785: ============================================================
+786: 29. FRONTEND AUTHORIZATION
+787: ============================================================
+788: Create reusable permission checks.
+789: Conceptually:
+790: canEditTask(currentUser, targetTask)
+791: canDeleteTask(currentUser, targetTask)
+792: canCreateTaskFor(currentUser, targetEmployee)
+793: canViewTask(currentUser, targetTask)
+794: Do not scatter hardcoded role checks throughout dozens of components.
+795: Centralize authorization logic where possible.
+796: Example:
+797: if currentUser.role === "ASSOCIATE":
+798: read/execute only
+799: if currentUser.role === "LEAD":
+800: manage Associates within scope
+801: if currentUser.role === "MANAGER":
+802: manage Leads and Associates within scope
+803: ============================================================
+804: 30. EMPTY STATES
+805: ============================================================
+806: If a Lead has no Associates:
+807: "No associates are currently assigned to you."
+808: [View Team]
+809: If an Associate has no tasks:
+810: "No onboarding tasks have been assigned yet."
+811: If a Manager has no Leads:
+812: "No Leads are currently assigned to your team."
+813: Do not show broken blank screens.
+814: ============================================================
+815: 31. LOADING AND ERROR STATES
+816: ============================================================
+817: Implement proper:
+818: - Loading state
+819: - Empty state
+820: - Error state
+821: - Permission denied state
+822: - Save success state
+823: - Save failure state
+824: - Delete confirmation
+825: - Conflict state
+826: Example:
+827: "Unable to save this task.
+828: Please check your connection and try again."
+829: Do not silently fail.
+830: ============================================================
+831: 32. SUCCESS FEEDBACK
+832: ============================================================
+833: After successful task creation:
+834: "Task added successfully."
+835: After edit:
+836: "Task updated successfully."
+837: After archive:
+838: "Task archived successfully."
+839: Keep feedback subtle and professional.
+840: Do not overuse flashy animations.
+841: ============================================================
+842: 33. SECURITY TESTING
+843: ============================================================
+844: After implementation, explicitly test these cases.
+845: TEST 1:
+846: Login as Associate.
+847: Attempt:
+848: Create task.
+849: Expected:
+850: DENIED.
+851: TEST 2:
+852: Login as Associate.
+853: Attempt:
+854: Edit task through UI.
+855: Expected:
+856: No edit controls.
+857: Then attempt API request manually.
+858: Expected:
+859: 403 Forbidden.
+860: TEST 3:
+861: Login as Lead.
+862: Attempt to edit own Lead task through subordinate task-management interface.
+863: Expected:
+864: DENIED if task management permission is only for Associates.
+865: TEST 4:
+866: Login as Lead A.
+867: Attempt to modify Associate belonging to Lead B.
+868: Expected:
+869: DENIED.
+870: TEST 5:
+871: Login as Lead.
+872: Attempt to modify Manager task.
+873: Expected:
+874: DENIED.
+875: TEST 6:
+876: Login as Manager.
+877: Modify Lead task.
+878: Expected:
+879: ALLOWED.
+880: TEST 7:
+881: Login as Manager.
+882: Modify Associate task.
+883: Expected:
+884: ALLOWED.
+885: TEST 8:
+886: Lead creates Associate task.
+887: Associate logs in.
+888: Expected:
+889: New task appears.
+890: TEST 9:
+891: Manager modifies that task.
+892: Expected:
+893: Associate sees Manager's latest version.
+894: TEST 10:
+895: Associate completes task.
+896: Manager and Lead should see updated completion status.
+897: ============================================================
+898: 34. DATA INTEGRITY
+899: ============================================================
+900: Do not allow:
+901: - orphaned tasks
+902: - tasks without an assignee where an assignee is required
+903: - invalid employee relationships
+904: - Associate-to-Associate management
+905: - Lead-to-Lead management
+906: - Manager-to-unrelated employee access
+907: - duplicate task assignments caused by repeated button clicks
+908: - accidental deletion of completed history
+909: Use database constraints and backend validation wherever possible.
+910: ============================================================
+911: 35. EXISTING FIRST-WEEK DATA
+912: ============================================================
+913: VERY IMPORTANT:
+914: Do NOT remove or replace the existing Associate, Lead, Manager, department, and first-week onboarding data already present in the application.
+915: The existing task data should continue to work.
+916: This feature should sit on top of the current onboarding system.
+917: Existing users should automatically receive their existing tasks.
+918: Managers and Leads should then be able to customize those task assignments.
+919: Do not force me to manually recreate all existing tasks.
+920: ============================================================
+921: 36. MANAGER EXPERIENCE
+922: ============================================================
+923: The final Manager workflow should be:
+924: Manager logs in.
+925: ↓
+926: Manager opens Manager Portal.
+927: ↓
+928: Manager opens Team / Task Management.
+929: ↓
+930: Manager sees:
+931: LEADS
+932: --------------------------------
+933: Arjun Patel
+934: Engineering Lead
+935: Week 1 Progress: 78%
+936: Neha Shah
+937: HR Lead
+938: Week 1 Progress: 65%
+939: ASSOCIATES
+940: --------------------------------
+941: Rahul Sharma
+942: Engineering Associate
+943: Progress: 60%
+944: Aman Patel
+945: Engineering Associate
+946: Progress: 42%
+947: ↓
+948: Manager selects an employee.
+949: ↓
+950: Manager sees complete first-week task plan.
+951: ↓
+952: Manager can:
+953: + Add Task
+954: Edit
+955: Archive
+956: Restore
+957: Reorder
+958: Change Priority
+959: Change Day
+960: Change Deadline
+961: View History
+962: ↓
+963: Changes are saved.
+964: ↓
+965: Employee immediately receives the updated task plan.
+966: ============================================================
+967: 37. LEAD EXPERIENCE
+968: ============================================================
+969: Lead logs in.
+970: ↓
+971: Lead Portal.
+972: ↓
+973: My Associates.
+974: ↓
+975: Select Associate.
+976: ↓
+977: View First Week.
+978: ↓
+979: Manage Tasks.
+980: ↓
+981: Lead can:
+982: + Add Task
+983: Edit
+984: Archive
+985: Reorder
+986: Change Priority
+987: Change Day
+988: Add Instructions
+989: Add Resources
+990: ↓
+991: Associate sees updated task plan.
+992: Lead cannot manage other Leads or Managers.
+993: ============================================================
+994: 38. ASSOCIATE EXPERIENCE
+995: ============================================================
+996: Associate logs in.
+997: ↓
+998: Associate Portal.
+999: ↓
+1000: My First Week.
+1001: ↓
+1002: Sees assigned tasks.
+1003: ↓
+1004: Can:
+1005: Start
+1006: Complete
+1007: View Details
+1008: View Resources
+1009: View Instructions
+1010: ↓
+1011: Cannot modify task definitions.
+1012: The Associate experience should remain simple and focused on execution.
+1013: ============================================================
+1014: 39. IMPORTANT ARCHITECTURAL PRINCIPLE
+1015: ============================================================
+1016: Think of the system as:
+1017: ONBOARDING TEMPLATE
+1018: ↓
+1019: TASK ASSIGNMENT
+1020: ↓
+1021: EMPLOYEE
+1022: ↓
+1023: ROLE-BASED MANAGERIAL OVERRIDES
+1024: ↓
+1025: EXECUTION
+1026: ↓
+1027: COMPLETION / PROGRESS
+1028: NOT:
+1029: GLOBAL TASK
+1030: ↓
+1031: EVERYONE EDITS SAME TASK
+1032: A customization for one Associate must NOT accidentally modify every Associate in the company.
+1033: For example:
+1034: If Manager changes Rahul's task:
+1035: "Meet Team Lead"
+1036: →
+1037: "Meet Engineering Team Lead"
+1038: This should affect Rahul's task only unless the Manager explicitly chooses:
+1039: "Apply to all Engineering Associates"
+1040: If implementing a bulk/template update capability, require a separate explicit action and confirmation.
+1041: ============================================================
+1042: 40. BULK / TEMPLATE MANAGEMENT
+1043: ============================================================
+1044: Do NOT implement bulk changes automatically.
+1045: Initially focus on individual employee task customization.
+1046: However, structure the architecture so future functionality can support:
+1047: "Apply this task to all Engineering Associates"
+1048: or
+1049: "Update Engineering Associate onboarding template."
+1050: These should be separate concepts from modifying one employee's task.
+1051: ============================================================
+1052: 41. DO NOT BREAK EXISTING FUNCTIONALITY
+1053: ============================================================
+1054: Before implementation:
+1055: Audit the current project.
+1056: Identify:
+1057: - Current authentication
+1058: - Current roles
+1059: - Current task schema
+1060: - Current onboarding data
+1061: - Current dashboards
+1062: - Current API endpoints
+1063: - Current database
+1064: - Current navigation
+1065: - Current employee relationships
+1066: Then implement the feature incrementally.
+1067: Do not replace working components just to introduce the feature.
+1068: Do not create duplicate dashboards.
+1069: Do not create duplicate authentication.
+1070: Do not create duplicate task systems.
+1071: Extend the current system.
+1072: ============================================================
+1073: 42. FINAL UI REQUIREMENT
+1074: ============================================================
+1075: The new feature should look native to the existing First-Week Maze application.
+1076: It should NOT look like a separate admin template.
+1077: The Manager and Lead should feel like they are using the same product.
+1078: The visual hierarchy should clearly communicate:
+1079: MANAGER
+1080: ↓
+1081: MANAGES LEADS + ASSOCIATES
+1082: LEAD
+1083: ↓
+1084: MANAGES ASSOCIATES
+1085: ASSOCIATE
+1086: ↓
+1087: EXECUTES TASKS
+1088: Use clear role badges where useful:
+1089: MANAGER
+1090: LEAD
+1091: ASSOCIATE
+1092: Use status badges:
+1093: NOT STARTED
+1094: IN PROGRESS
+1095: BLOCKED
+1096: COMPLETED
+1097: Use management indicators:
+1098: DEFAULT
+1099: CUSTOM
+1100: MODIFIED
+1101: ARCHIVED
+1102: ============================================================
+1103: 43. IMPLEMENTATION PROCESS
+1104: ============================================================
+1105: Follow this order:
+1106: PHASE 1
+1107: Inspect existing project architecture.
+1108: PHASE 2
+1109: Identify current task/user/role models.
+1110: PHASE 3
+1111: Design the minimum database changes.
+1112: PHASE 4
+1113: Implement backend authorization.
+1114: PHASE 5
+1115: Implement task CRUD/management APIs.
+1116: PHASE 6
+1117: Implement task history/audit system.
+1118: PHASE 7
+1119: Implement Manager task-management UI.
+1120: PHASE 8
+1121: Implement Lead Associate-task-management UI.
+1122: PHASE 9
+1123: Ensure Associate remains execution-only.
+1124: PHASE 10
+1125: Integrate notifications if the existing system supports them.
+1126: PHASE 11
+1127: Test all permission combinations.
+1128: PHASE 12
+1129: Test responsive layouts.
+1130: PHASE 13
+1131: Verify that existing onboarding data still works.
+1132: PHASE 14
+1133: Run the application and fix all resulting errors.
+1134: ============================================================
+1135: 44. ACCEPTANCE CRITERIA
+1136: ============================================================
+1137: The feature is NOT complete unless all of the following are true:
+1138: [ ] Manager can manage Lead tasks.
+1139: [ ] Manager can manage Associate tasks.
+1140: [ ] Lead can manage Associate tasks.
+1141: [ ] Lead cannot manage another Lead.
+1142: [ ] Lead cannot manage Manager tasks.
+1143: [ ] Associate cannot modify tasks.
+1144: [ ] Associate can still complete tasks.
+1145: [ ] Manager can add custom tasks.
+1146: [ ] Lead can add custom Associate tasks.
+1147: [ ] Authorized users can edit tasks.
+1148: [ ] Authorized users can archive/remove tasks.
+1149: [ ] Authorized users can restore archived tasks.
+1150: [ ] Authorized users can reorder tasks.
+1151: [ ] Task history is preserved.
+1152: [ ] Custom tasks are distinguishable from default tasks.
+1153: [ ] Individual customizations do not modify the global template.
+1154: [ ] Backend authorization prevents unauthorized API operations.
+1155: [ ] Existing onboarding data remains intact.
+1156: [ ] Existing authentication remains intact.
+1157: [ ] Existing dashboards remain functional.
+1158: [ ] No duplicate task systems are created.
+1159: [ ] No unrelated employee data is exposed.
+1160: [ ] Responsive UI works.
+1161: [ ] Loading/error/empty states work.
+1162: [ ] Permission-denied states work.
+1163: [ ] Changes made by a Lead appear to the Associate.
+1164: [ ] Changes made by a Manager override subordinate changes appropriately.
+1165: [ ] Completion progress remains intact after task edits.
+1166: [ ] Audit/history correctly records management changes.
+1167: ============================================================
+1168: 45. FINAL INSTRUCTION
+1169: ============================================================
+1170: DO NOT just create a visual mockup.
+1171: Implement this as a functioning feature in the existing First-Week Maze application.
+1172: Before making major architectural changes, inspect the existing codebase and reuse the current architecture.
+1173: Do not replace working functionality.
+1174: Do not invent fake backend behavior.
+1175: Do not create buttons that do nothing.
+1176: Every visible Add/Edit/Delete/Archive/Reorder control must be connected to real application state and, where applicable, persistent backend/database operations.
+1177: If something already exists in the application, extend it instead of creating a duplicate.
+1178: After implementation, test the complete hierarchy:
+1179: Manager → Lead → Associate
+1180: and verify that the permissions are enforced at BOTH:
+1181: 1. Frontend/UI level
+1182: 2. Backend/API level
+1183: The final result should be a production-quality hierarchical onboarding task-management system for the First-Week Maze.
+1184: PROMPT-3

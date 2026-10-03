@@ -31,3 +31,6 @@ Thumbs.db
 
 .vercel
 .env*
+
+# Generated large composite data files (>50MB)
+data/authoritative_tasks_by_position.json

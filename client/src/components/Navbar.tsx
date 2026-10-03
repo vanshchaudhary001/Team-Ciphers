@@ -115,6 +115,12 @@ export const Navbar: React.FC = () => {
       roles: ['MANAGER', 'COMPANY_ADMIN', 'PLATFORM_ADMIN'],
     },
     {
+      label: 'Task Management',
+      path: '/task-management',
+      icon: 'tune',
+      roles: ['MANAGER', 'LEAD', 'CEO', 'COMPANY_ADMIN', 'PLATFORM_ADMIN'],
+    },
+    {
       label: 'Executive CEO Portal',
       path: '/dashboard/ceo',
       icon: 'military_tech',

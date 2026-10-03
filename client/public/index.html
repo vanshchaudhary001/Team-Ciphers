@@ -597,6 +597,242 @@
       margin-top: 2px;
     }
 
+  
+    /* =========================================================================
+       PERSISTENT COPILOT: 3-STATE SYSTEM (FULLSCREEN, MEDIUM, COMPACT)
+       ========================================================================= */
+
+    /* Panel base with smooth rolling / morphing transition */
+    #copilot-persistent-panel {
+      transition: all 420ms cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 420ms cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-radius 420ms cubic-bezier(0.16, 1, 0.3, 1), 
+                  opacity 300ms ease;
+      will-change: transform, width, height, top, left, right, bottom, border-radius, opacity;
+      box-sizing: border-box;
+    }
+
+    #copilot-persistent-panel.copilot-rolling-morph {
+      transform: scale(0.97) rotate(-1.5deg) translateY(6px) !important;
+    }
+
+    /* STATE 1: FULL SCREEN (100% of Viewport) */
+    #copilot-persistent-panel.copilot-state-fullscreen {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: 100vw !important;
+      max-height: 100vh !important;
+      z-index: 99999 !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
+      border: none !important;
+      background: #090d16 !important;
+      box-shadow: none !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      transform: scale(1) rotate(0deg) !important;
+      opacity: 1 !important;
+    }
+
+    #copilot-persistent-panel.copilot-state-fullscreen .copilot-sidebar-header {
+      padding: 18px 36px;
+      background: #0d1322;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    }
+
+    #copilot-persistent-panel.copilot-state-fullscreen .copilot-messages-feed {
+      max-width: 1080px;
+      width: 100%;
+      margin: 0 auto;
+      flex: 1;
+      padding: 28px 36px;
+      overflow-y: auto;
+    }
+
+    #copilot-persistent-panel.copilot-state-fullscreen .copilot-quick-prompts {
+      max-width: 1080px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 36px 12px 36px;
+    }
+
+    #copilot-persistent-panel.copilot-state-fullscreen .copilot-composer {
+      max-width: 1080px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 12px 36px 28px 36px;
+    }
+
+    /* STATE 2: MEDIUM FLOATING COPILOT (30–40% Viewport) */
+    #copilot-persistent-panel.copilot-state-medium {
+      position: fixed !important;
+      bottom: 24px !important;
+      right: 24px !important;
+      top: auto !important;
+      left: auto !important;
+      width: min(460px, calc(100vw - 32px)) !important;
+      height: min(720px, calc(100vh - 48px)) !important;
+      z-index: 99990 !important;
+      border-radius: 20px !important;
+      border: 1px solid rgba(148, 163, 184, 0.25) !important;
+      background: #0f172a !important;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      transform: scale(1) rotate(0deg) !important;
+      opacity: 1 !important;
+    }
+
+    #copilot-persistent-panel.copilot-state-medium .copilot-sidebar-header {
+      padding: 14px 18px;
+    }
+
+    #copilot-persistent-panel.copilot-state-medium .copilot-messages-feed {
+      width: 100%;
+      flex: 1;
+      padding: 16px 18px;
+      overflow-y: auto;
+    }
+
+    #copilot-persistent-panel.copilot-state-medium .copilot-quick-prompts {
+      width: 100%;
+      padding: 0 16px 8px 16px;
+    }
+
+    #copilot-persistent-panel.copilot-state-medium .copilot-composer {
+      width: 100%;
+      padding: 10px 16px 16px 16px;
+    }
+
+    /* STATE 3: COMPACT BOTTOM-RIGHT COPILOT (Panel hidden, Pill trigger shown) */
+    #copilot-persistent-panel.copilot-state-compact {
+      transform: scale(0.2) translate(100%, 100%) !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      position: fixed !important;
+      bottom: 24px !important;
+      right: 24px !important;
+      width: 440px !important;
+      height: 600px !important;
+      z-index: 99990 !important;
+    }
+
+    /* Compact Pill Trigger Badge */
+    #copilot-compact-trigger {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 99990;
+      background: #0f172a;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 9999px;
+      padding: 10px 20px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+      user-select: none;
+    }
+
+    #copilot-compact-trigger:hover {
+      transform: translateY(-2px) scale(1.02);
+      border-color: rgba(56, 189, 248, 0.6);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 18px rgba(56, 189, 248, 0.2);
+    }
+
+    #copilot-compact-trigger .compact-copilot-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    #copilot-compact-trigger .compact-copilot-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    #copilot-compact-trigger .compact-copilot-dot {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #10b981;
+      border: 2px solid #0f172a;
+    }
+
+    #copilot-compact-trigger .compact-copilot-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #copilot-compact-trigger .compact-copilot-title {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: #f8fafc;
+      line-height: 1.2;
+    }
+
+    #copilot-compact-trigger .compact-copilot-sub {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #94a3b8;
+      line-height: 1.2;
+    }
+
+    /* Copilot Window Controls */
+    .copilot-ctrl-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #cbd5e1;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .copilot-ctrl-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
+    }
+
+    /* Full-Screen Loading Overlay after Login */
+    #copilot-login-loading-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100001;
+      background: #090d16;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      transition: opacity 0.35s ease;
+    }
+
   </style>
   <script src="org_structure_data.js"></script>
 </head>
@@ -1575,6 +1811,27 @@
       </div>
 
       <!-- 70% / 30% Split Workspace Container -->
+      
+      <!-- Role-Based Hierarchical Workspace Switcher Bar (Appears for Manager & Lead) -->
+      <div id="role-workspace-nav-bar" style="display: none; margin-bottom: 20px; background: #ffffff; border: 1px solid var(--color-slate-200); border-radius: 12px; padding: 10px 18px; box-shadow: var(--shadow-xs); justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span id="role-workspace-role-badge" style="font-size: 0.74rem; font-weight: 800; padding: 3px 9px; border-radius: 6px; background: #0037b0; color: #ffffff; letter-spacing: 0.04em;">
+            MANAGEMENT WORKSPACE
+          </span>
+          <span id="role-workspace-scope-text" style="font-size: 0.82rem; font-weight: 500; color: var(--color-slate-600);">
+            Hierarchical Task Control Active
+          </span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button id="tab-my-checklist-btn" class="persona-pill-btn active" onclick="switchJoinerWorkspaceTab('checklist')">
+            📋 My Onboarding Tasks
+          </button>
+          <button id="tab-subordinate-management-btn" class="persona-pill-btn" onclick="switchJoinerWorkspaceTab('management')">
+            ⚡ Subordinate Task Management
+          </button>
+        </div>
+      </div>
+
       <div class="joiner-split-container">
 
         <!-- ==========================================================
@@ -1833,14 +2090,12 @@
                 style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-top: 1px solid var(--color-slate-100); padding-top: 12px;">
                 <!-- Day Filter Tabs -->
                 <div class="day-filter-bar">
-                  <button type="button" class="btn-day-pill active" id="day-pill-day1"
-                    onclick="filterByDay('Day 1')">Day 1 (Today)</button>
-                  <button type="button" class="btn-day-pill" id="day-pill-day2" onclick="filterByDay('Day 2')">Day
-                    2</button>
-                  <button type="button" class="btn-day-pill" id="day-pill-day3" onclick="filterByDay('Day 3')">Day
-                    3</button>
-                  <button type="button" class="btn-day-pill" id="day-pill-all" onclick="filterByDay('all')">All
-                    Days</button>
+                  <button type="button" class="btn-day-pill active" id="day-pill-day1" onclick="filterByDay('Day 1')">Day 1 (Today)</button>
+                  <button type="button" class="btn-day-pill" id="day-pill-day2" onclick="filterByDay('Day 2')">Day 2</button>
+                  <button type="button" class="btn-day-pill" id="day-pill-day3" onclick="filterByDay('Day 3')">Day 3</button>
+                  <button type="button" class="btn-day-pill" id="day-pill-day4" onclick="filterByDay('Day 4')">Day 4</button>
+                  <button type="button" class="btn-day-pill" id="day-pill-day5" onclick="filterByDay('Day 5')">Day 5</button>
+                  <button type="button" class="btn-day-pill" id="day-pill-all" onclick="filterByDay('all')">All Days (30 Tasks)</button>
                 </div>
 
                 <!-- Status Filter Pills -->
@@ -1864,54 +2119,42 @@
         </div>
 
         <!-- ==========================================================
-             RIGHT 30%: AI ONBOARDING COPILOT CHATBOT (STICKY SIDEBAR)
+             PERSISTENT AI ONBOARDING COPILOT (3-STATE SYSTEM: FULLSCREEN, MEDIUM, COMPACT)
              ========================================================== -->
-        <div class="joiner-chat-panel">
+        <div id="copilot-persistent-panel" class="joiner-chat-panel copilot-state-fullscreen">
           <!-- Chatbot Header -->
           <div class="copilot-sidebar-header">
             <div class="copilot-header-brand">
               <div class="copilot-avatar-wrapper"
-                style="width: 38px; height: 38px; min-width: 38px; border-radius: 10px; background: #ffffff; border: 1px solid rgba(99, 102, 241, 0.4); display: flex; align-items: center; justify-content: center; padding: 3px; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45); flex-shrink: 0;">
+                style="width: 38px; height: 38px; min-width: 38px; border-radius: 10px; background: #ffffff; border: 1px solid rgba(148, 163, 184, 0.4); display: flex; align-items: center; justify-content: center; padding: 3px; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35); flex-shrink: 0;">
                 <img src="copilot-icon.png" onerror="this.src='/copilot-icon.png'" alt="AI Copilot Logo"
                   style="width: 100%; height: 100%; object-fit: contain; display: block;">
               </div>
               <div>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <span class="copilot-title-text" style="font-weight: 800; font-size: 1rem; color: #ffffff;">AI
-                    Onboarding Copilot</span>
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                  <span class="copilot-title-text" style="font-weight: 800; font-size: 1.05rem; color: #ffffff;">
+                    First-Week Maze Onboarding Copilot
+                  </span>
                   <span class="copilot-live-pill"
                     style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 9999px; display: inline-flex; align-items: center; gap: 4px;">
-                    <span
-                      style="width: 6px; height: 6px; border-radius: 50%; background: #34d399; display: inline-block;"></span>
-                    LIVE
+                    <span style="width: 6px; height: 6px; border-radius: 50%; background: #34d399; display: inline-block;"></span>
+                    LIVE SESSION
                   </span>
                 </div>
-                <div class="copilot-subtitle-text">
+                <div class="copilot-subtitle-text" id="copilot-context-subtitle">
                   Context: <strong id="copilot-context-user">Aarav Sharma</strong> · Day 1 Guide
                 </div>
               </div>
             </div>
-            <button class="copilot-minimize-btn"
-              onclick="showNotification('Copilot synchronized with your onboarding workflow.')" title="Copilot Status">
-              ✓
-            </button>
-          </div>
-
-          <!-- Fast Quick Actions Bar -->
-          <div class="copilot-quick-prompts">
-            <div
-              style="font-size: 0.7rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;">
-              Instant Copilot Actions:
-            </div>
-            <div class="copilot-chips-scroll" id="copilot-chips-container">
-              <button class="copilot-chip" onclick="handleChatOption('contacts')">📞 Contacts</button>
-              <button class="copilot-chip" onclick="handleChatOption('checklist')">📋 Day 1 Tasks</button>
-              <button class="copilot-chip" onclick="explainTaskById(1)">💡 Task 1: SSO</button>
-              <button class="copilot-chip" onclick="explainTaskById(2)">💡 Task 2: Agreement</button>
-              <button class="copilot-chip" onclick="explainTaskById(3)">💡 Task 3: Buddy 1:1</button>
-              <button class="copilot-chip" onclick="explainTaskById(4)">💡 Task 4: Dev Tunnel</button>
-              <button class="copilot-chip" onclick="explainTaskById(5)">💡 Task 5: Repo Setup</button>
-              <button class="copilot-chip" onclick="handleChatOption('stuck')">🚨 I'm Stuck</button>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <!-- Expand Button (visible in medium state to return to full-screen) -->
+              <button id="copilot-expand-btn" class="copilot-ctrl-btn" onclick="setCopilotState('fullscreen')" title="Expand to Full Screen" aria-label="Expand chatbot to full screen" style="display: none;">
+                <span class="material-symbols-outlined" style="font-size: 18px;">open_in_full</span>
+              </button>
+              <!-- Minimize Button (transitions full-screen -> medium, or medium -> compact) -->
+              <button id="copilot-minimize-btn" class="copilot-ctrl-btn" onclick="handleCopilotMinimizeClick()" title="Minimize chatbot" aria-label="Minimize chatbot to medium window">
+                <span class="material-symbols-outlined" style="font-size: 20px;">remove</span>
+              </button>
             </div>
           </div>
 
@@ -1920,14 +2163,24 @@
             <!-- Dynamic AI messages stream -->
           </div>
 
+          <!-- Suggested FAQ Questions Bar (Direct Shortcuts into Chatbot) -->
+          <div class="copilot-quick-prompts">
+            <div style="font-size: 0.72rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+              <span>💬</span> Suggested Questions:
+            </div>
+            <div class="copilot-chips-scroll" id="copilot-chips-container" style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <!-- Populated dynamically by renderSuggestedFaqQuestions() based on role -->
+            </div>
+          </div>
+
           <!-- Chatbot Sticky Input Box -->
           <div class="copilot-composer">
             <div class="composer-inner">
               <textarea id="chatbot-input" class="copilot-textarea"
-                placeholder="Ask Copilot anything about tasks, team, or setup..." rows="1"
+                placeholder="Ask your onboarding copilot anything about tasks, role, or company..." rows="1"
                 onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); sendChatMessage(); }"></textarea>
               <button id="chatbot-send-btn" class="copilot-send-button" onclick="sendChatMessage()"
-                title="Send prompt to AI Copilot">
+                title="Send prompt to AI Copilot" aria-label="Send message to Copilot">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <line x1="22" y1="2" x2="11" y2="13"></line>
                   <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -1935,7 +2188,7 @@
               </button>
             </div>
             <div class="composer-footnote">
-              <span>⚡ Live Context Aware · Enterprise Day-1 Grounded</span>
+              <span>⚡ Live Context Aware · Enterprise Grounded · Role-Governed Access</span>
             </div>
           </div>
 
@@ -1950,6 +2203,345 @@
     <!-- ==============================================================
          STEP 4B: HR PARTNER WORKSPACE & ONBOARDING COMMAND CENTER
          ============================================================== -->
+    <!-- STEP 4C: HIERARCHICAL TASK MANAGEMENT & SUBORDINATE CONTROL -->
+<section id="step-task-management" class="step-view" style="display: none; width: 100%; max-width: 1600px; margin: 0 auto;">
+  <div class="breadcrumbs-bar" style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <button onclick="goToStep('step-gateway')">Gateway</button>
+      <span class="breadcrumbs-separator">/</span>
+      <button onclick="goToStep('step-joiner-chatbot')">My Checklist</button>
+      <span class="breadcrumbs-separator">/</span>
+      <span style="color: var(--color-slate-900); font-weight: 700;">Subordinate Task Management</span>
+    </div>
+    <div>
+      <button class="persona-pill-btn" onclick="goToStep('step-joiner-chatbot')" style="background: #ffffff; border: 1px solid var(--color-slate-300); font-weight: 600; padding: 6px 14px;">
+        ← Back to My Checklist
+      </button>
+    </div>
+  </div>
+
+  <!-- Manager / Lead Authority Header -->
+  <div class="dashboard-hero-card" style="margin-bottom: 24px; padding: 24px 28px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; width: 100%;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;">
+          <span id="mgmt-authority-badge" class="hero-meta-chip" style="background: #0037b0; color: #ffffff; font-weight: 800; letter-spacing: 0.04em; padding: 4px 10px; border-radius: 6px;">
+            MANAGER HIERARCHY ACTIVE
+          </span>
+          <span id="mgmt-authority-scope-text" style="font-size: 0.8rem; color: #cbd5e1; font-weight: 500;">
+            Authority Scope: Subordinate Leads & Associates Across Department
+          </span>
+        </div>
+        <h1 style="font-size: 1.55rem; font-weight: 800; color: #ffffff; margin: 0 0 6px 0; letter-spacing: -0.02em;">
+          Hierarchical Task Management Control Center
+        </h1>
+        <p style="font-size: 0.88rem; color: #94a3b8; margin: 0; max-width: 800px; line-height: 1.5;">
+          Review, customize, and govern first-week onboarding task plans. Individual customizations modify only that employee's assignment and preserve full version history.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <button class="copilot-chip" style="background: #10b981; color: #ffffff; font-weight: 700; padding: 10px 18px; border-radius: 8px; border: none; font-size: 0.88rem; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);" onclick="openAddTaskModal()">
+          <span style="font-size: 1.1rem; line-height: 1;">+</span> Add Custom Task
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subordinate Filter & Selection Panel -->
+  <div style="background: #ffffff; border: 1px solid var(--color-slate-200); border-radius: var(--radius-xl); padding: 18px 24px; margin-bottom: 24px; box-shadow: var(--shadow-xs);">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <!-- Role Filter Pills -->
+      <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--color-slate-500); text-transform: uppercase; letter-spacing: 0.04em;">Subordinate Role:</span>
+        <button id="sub-filter-all" class="persona-pill-btn active" onclick="filterMgmtSubordinatesByRole('ALL')">All Subordinates (<span id="count-sub-all">0</span>)</button>
+        <button id="sub-filter-lead" class="persona-pill-btn" onclick="filterMgmtSubordinatesByRole('LEAD')">Leads (<span id="count-sub-leads">0</span>)</button>
+        <button id="sub-filter-assoc" class="persona-pill-btn" onclick="filterMgmtSubordinatesByRole('ASSOCIATE')">Associates (<span id="count-sub-assocs">0</span>)</button>
+      </div>
+
+      <!-- Employee Select & Search Box -->
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <div style="position: relative; width: 220px;">
+          <input type="text" id="mgmt-subordinate-search" placeholder="Search subordinate..." oninput="onSubordinateSearchInput()" style="width: 100%; padding: 7px 12px 7px 30px; font-size: 0.82rem; border: 1px solid var(--color-slate-200); border-radius: 8px; background: var(--color-slate-50); outline: none;">
+          <span style="position: absolute; left: 10px; top: 8px; font-size: 13px; color: var(--color-slate-400);">🔍</span>
+        </div>
+        <div style="min-width: 260px;">
+          <select id="mgmt-subordinate-select" onchange="onMgmtSubordinateSelectChange()" style="width: 100%; padding: 8px 12px; font-size: 0.84rem; font-weight: 600; border: 1px solid var(--color-slate-300); border-radius: 8px; background: #ffffff; color: var(--color-slate-800); cursor: pointer; outline: none;">
+            <option value="">Select an employee to manage...</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Active Subordinate Detail Banner -->
+  <div id="mgmt-active-subordinate-card" style="background: #ffffff; border: 1px solid var(--color-slate-200); border-radius: var(--radius-xl); padding: 22px 26px; margin-bottom: 24px; box-shadow: var(--shadow-xs);">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 18px;">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <div id="mgmt-sub-avatar" style="width: 52px; height: 52px; border-radius: 12px; background: linear-gradient(135deg, #0037b0, #0088cc); color: #ffffff; font-weight: 800; font-size: 1.25rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 55, 176, 0.2);">
+          RS
+        </div>
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px; flex-wrap: wrap;">
+            <h2 id="mgmt-sub-name" style="font-size: 1.25rem; font-weight: 800; color: var(--color-slate-900); margin: 0;">
+              Rahul Sharma
+            </h2>
+            <span id="mgmt-sub-role-badge" style="font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: #e0f2fe; color: #0284c7; text-transform: uppercase;">
+              Associate
+            </span>
+            <span id="mgmt-sub-dept" style="font-size: 0.82rem; font-weight: 600; color: var(--color-slate-500);">
+              Engineering · Web & Mobile Development
+            </span>
+          </div>
+          <div style="font-size: 0.8rem; color: var(--color-slate-600); display: flex; gap: 14px; flex-wrap: wrap;">
+            <span>🆔 Emp ID: <strong id="mgmt-sub-empid">EMP-001</strong></span>
+            <span>👔 Manager: <strong id="mgmt-sub-manager">Rohan Verma</strong></span>
+            <span>🤝 Reporting Lead: <strong id="mgmt-sub-lead">Priya Lead</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Completion Telemetry -->
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div style="text-align: right;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-slate-500); text-transform: uppercase; margin-bottom: 2px;">Onboarding Progress</div>
+          <div style="font-size: 1.35rem; font-weight: 800; color: #0f172a;">
+            <span id="mgmt-sub-progress-pct">60</span>% <span style="font-size: 0.82rem; font-weight: 600; color: var(--color-slate-500);">(<span id="mgmt-sub-completed-count">18</span>/<span id="mgmt-sub-total-count">30</span> cleared)</span>
+          </div>
+        </div>
+        <div style="width: 140px; height: 10px; background: var(--color-slate-100); border-radius: 999px; overflow: hidden; border: 1px solid var(--color-slate-200);">
+          <div id="mgmt-sub-progress-bar" style="width: 60%; height: 100%; background: linear-gradient(90deg, #10b981, #3b82f6); border-radius: 999px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day Filter Bar -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 12px;">
+    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+      <button id="mgmt-day-pill-all" class="persona-pill-btn active" onclick="filterMgmtTasksByDay('all')">All Days (<span id="mgmt-count-all">30</span>)</button>
+      <button id="mgmt-day-pill-day1" class="persona-pill-btn" onclick="filterMgmtTasksByDay('Day 1')">Day 1 (<span id="mgmt-count-d1">6</span>)</button>
+      <button id="mgmt-day-pill-day2" class="persona-pill-btn" onclick="filterMgmtTasksByDay('Day 2')">Day 2 (<span id="mgmt-count-d2">6</span>)</button>
+      <button id="mgmt-day-pill-day3" class="persona-pill-btn" onclick="filterMgmtTasksByDay('Day 3')">Day 3 (<span id="mgmt-count-d3">6</span>)</button>
+      <button id="mgmt-day-pill-day4" class="persona-pill-btn" onclick="filterMgmtTasksByDay('Day 4')">Day 4 (<span id="mgmt-count-d4">6</span>)</button>
+      <button id="mgmt-day-pill-day5" class="persona-pill-btn" onclick="filterMgmtTasksByDay('Day 5')">Day 5 (<span id="mgmt-count-d5">6</span>)</button>
+      <button id="mgmt-day-pill-archived" class="persona-pill-btn" style="border-color: #fecdd3; color: #be123c;" onclick="filterMgmtTasksByDay('archived')">📦 Archived (<span id="mgmt-count-archived">0</span>)</button>
+    </div>
+
+    <!-- Quick Legend -->
+    <div style="display: flex; align-items: center; gap: 10px; font-size: 0.72rem; color: var(--color-slate-500); font-weight: 600;">
+      <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #64748b;"></span> Default</span>
+      <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span> Custom</span>
+      <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b;"></span> Modified</span>
+      <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></span> Archived</span>
+    </div>
+  </div>
+
+  <!-- Task Inventory Cards Container -->
+  <div id="mgmt-tasks-container" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px;">
+    <!-- Rendered dynamically by JavaScript -->
+  </div>
+</section>
+
+<!-- ==============================================================
+     MODAL 1: ADD ONBOARDING TASK
+     ============================================================== -->
+<div id="modal-mgmt-add-task" class="enterprise-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+  <div style="background: #ffffff; border-radius: var(--radius-2xl); width: 100%; max-width: 620px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); border: 1px solid var(--color-slate-200); overflow: hidden;">
+    <div style="padding: 20px 24px; border-bottom: 1px solid var(--color-slate-200); display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--color-slate-900); margin: 0;">Add Onboarding Task</h3>
+        <p style="font-size: 0.8rem; color: var(--color-slate-500); margin: 2px 0 0 0;">
+          Create a personalized task for <span id="modal-add-target-name" style="font-weight: 700; color: var(--color-slate-800);">Rahul Sharma</span>.
+        </p>
+      </div>
+      <button onclick="closeAddTaskModal()" style="background: none; border: none; font-size: 1.5rem; line-height: 1; color: var(--color-slate-400); cursor: pointer;">&times;</button>
+    </div>
+
+    <form id="form-mgmt-add-task" onsubmit="submitAddTask(event)" style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+      <div>
+        <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Task Title *</label>
+        <input type="text" id="add-task-title" required placeholder="e.g. Complete department security and compliance training" style="width: 100%; padding: 9px 12px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+      </div>
+
+      <div>
+        <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Task Description</label>
+        <textarea id="add-task-desc" rows="3" placeholder="Provide clear instructions and objectives for the employee..." style="width: 100%; padding: 9px 12px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none; resize: vertical;"></textarea>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Day *</label>
+          <select id="add-task-day" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; background: #fff; outline: none;">
+            <option value="Day 1">Day 1</option>
+            <option value="Day 2" selected>Day 2</option>
+            <option value="Day 3">Day 3</option>
+            <option value="Day 4">Day 4</option>
+            <option value="Day 5">Day 5</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Priority *</label>
+          <select id="add-task-priority" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; background: #fff; outline: none;">
+            <option value="High">High</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="Standard">Standard</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Duration</label>
+          <input type="text" id="add-task-duration" value="45 minutes" placeholder="e.g. 45 mins" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Category</label>
+          <input type="text" id="add-task-category" value="Compliance" placeholder="e.g. Compliance, Access, Tooling" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Resource Link (Optional)</label>
+          <input type="text" id="add-task-resource" placeholder="https://portal.enterprise.demo/docs" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+        <input type="checkbox" id="add-task-required" checked style="width: 16px; height: 16px; cursor: pointer;">
+        <label for="add-task-required" style="font-size: 0.82rem; font-weight: 600; color: var(--color-slate-700); cursor: pointer;">
+          Mandatory Onboarding Task (Required for First-Week Certification)
+        </label>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--color-slate-100);">
+        <button type="button" class="btn-secondary" onclick="closeAddTaskModal()" style="padding: 8px 16px; font-size: 0.85rem;">Cancel</button>
+        <button type="submit" class="btn-primary" style="padding: 8px 20px; font-size: 0.85rem; background: #0037b0; color: #fff;">Create Task</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ==============================================================
+     MODAL 2: EDIT ONBOARDING TASK
+     ============================================================== -->
+<div id="modal-mgmt-edit-task" class="enterprise-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+  <div style="background: #ffffff; border-radius: var(--radius-2xl); width: 100%; max-width: 620px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); border: 1px solid var(--color-slate-200); overflow: hidden;">
+    <div style="padding: 20px 24px; border-bottom: 1px solid var(--color-slate-200); display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--color-slate-900); margin: 0;">Edit Onboarding Task</h3>
+        <p style="font-size: 0.8rem; color: var(--color-slate-500); margin: 2px 0 0 0;">
+          Modifying task configuration with optimistic concurrency & audit trail.
+        </p>
+      </div>
+      <button onclick="closeEditTaskModal()" style="background: none; border: none; font-size: 1.5rem; line-height: 1; color: var(--color-slate-400); cursor: pointer;">&times;</button>
+    </div>
+
+    <form id="form-mgmt-edit-task" onsubmit="submitEditTask(event)" style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+      <input type="hidden" id="edit-task-id">
+      <input type="hidden" id="edit-task-version">
+
+      <div>
+        <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Task Title *</label>
+        <input type="text" id="edit-task-title" required style="width: 100%; padding: 9px 12px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+      </div>
+
+      <div>
+        <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Task Description</label>
+        <textarea id="edit-task-desc" rows="3" style="width: 100%; padding: 9px 12px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none; resize: vertical;"></textarea>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Day *</label>
+          <select id="edit-task-day" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; background: #fff; outline: none;">
+            <option value="Day 1">Day 1</option>
+            <option value="Day 2">Day 2</option>
+            <option value="Day 3">Day 3</option>
+            <option value="Day 4">Day 4</option>
+            <option value="Day 5">Day 5</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Priority *</label>
+          <select id="edit-task-priority" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; background: #fff; outline: none;">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Standard">Standard</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Duration</label>
+          <input type="text" id="edit-task-duration" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Category</label>
+          <input type="text" id="edit-task-category" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-slate-700); margin-bottom: 6px;">Resource Link</label>
+          <input type="text" id="edit-task-resource" style="width: 100%; padding: 8px 10px; font-size: 0.85rem; border: 1px solid var(--color-slate-300); border-radius: 8px; outline: none;">
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--color-slate-100);">
+        <button type="button" class="btn-secondary" onclick="closeEditTaskModal()" style="padding: 8px 16px; font-size: 0.85rem;">Cancel</button>
+        <button type="submit" class="btn-primary" style="padding: 8px 20px; font-size: 0.85rem; background: #0037b0; color: #fff;">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ==============================================================
+     MODAL 3: ARCHIVE TASK CONFIRMATION (SAFE HISTORICAL PRESERVATION)
+     ============================================================== -->
+<div id="modal-mgmt-archive-confirm" class="enterprise-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+  <div style="background: #ffffff; border-radius: var(--radius-2xl); width: 100%; max-width: 500px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); border: 1px solid var(--color-slate-200); overflow: hidden; padding: 24px;">
+    <div style="width: 48px; height: 48px; border-radius: 12px; background: #fee2e2; color: #dc2626; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 16px;">
+      📦
+    </div>
+    <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--color-slate-900); margin: 0 0 8px 0;">Archive this onboarding task?</h3>
+    <div style="background: var(--color-slate-50); border: 1px solid var(--color-slate-200); border-radius: 8px; padding: 12px 14px; margin-bottom: 14px;">
+      <div style="font-size: 0.85rem; font-weight: 700; color: var(--color-slate-800);" id="archive-task-title-display">Security Training</div>
+      <div style="font-size: 0.78rem; color: var(--color-slate-500);" id="archive-task-sub-display">Assigned to: Rahul Sharma</div>
+    </div>
+    <p style="font-size: 0.85rem; color: var(--color-slate-600); line-height: 1.55; margin: 0 0 20px 0;">
+      This task will be removed from the active onboarding plan. Historical completion information and audit logs will be permanently preserved. You can restore this task at any time.
+    </p>
+    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+      <button class="btn-secondary" onclick="closeArchiveModal()" style="padding: 8px 16px; font-size: 0.85rem;">Cancel</button>
+      <button id="btn-confirm-archive-task" class="btn-primary" style="padding: 8px 18px; font-size: 0.85rem; background: #dc2626; color: #fff;">Archive Task</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================================================
+     MODAL 4: TASK AUDIT HISTORY TIMELINE
+     ============================================================== -->
+<div id="modal-mgmt-history" class="enterprise-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+  <div style="background: #ffffff; border-radius: var(--radius-2xl); width: 100%; max-width: 650px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); border: 1px solid var(--color-slate-200); overflow: hidden; max-height: 85vh; display: flex; flex-direction: column;">
+    <div style="padding: 20px 24px; border-bottom: 1px solid var(--color-slate-200); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
+      <div>
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--color-slate-900); margin: 0;">Task Change History & Audit Trail</h3>
+        <p style="font-size: 0.8rem; color: var(--color-slate-500); margin: 2px 0 0 0;" id="history-task-subtitle">
+          Showing modifications for this task
+        </p>
+      </div>
+      <button onclick="closeHistoryModal()" style="background: none; border: none; font-size: 1.5rem; line-height: 1; color: var(--color-slate-400); cursor: pointer;">&times;</button>
+    </div>
+
+    <div id="history-timeline-container" style="padding: 24px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 14px;">
+      <!-- History items rendered dynamically -->
+    </div>
+
+    <div style="padding: 14px 24px; border-top: 1px solid var(--color-slate-200); display: flex; justify-content: flex-end; background: var(--color-slate-50); flex-shrink: 0;">
+      <button class="btn-secondary" onclick="closeHistoryModal()" style="padding: 7px 16px; font-size: 0.82rem;">Close</button>
+    </div>
+  </div>
+</div>
+
+
     <section id="step-hr-portal" class="step-view"
       style="display: none; max-width: 1300px; margin: 0 auto; width: 100%;">
       <div class="breadcrumbs-bar">
@@ -3341,13 +3933,18 @@
 
     function filterByDay(dayKey) {
       currentDayFilter = dayKey;
-      ['day1', 'day2', 'day3', 'all'].forEach(k => {
+      ['day1', 'day2', 'day3', 'day4', 'day5', 'all'].forEach(k => {
         const btn = document.getElementById(`day-pill-${k}`);
         if (btn) btn.classList.remove('active');
       });
-      const activeBtn = document.getElementById(
-        dayKey === 'all' ? 'day-pill-all' : (dayKey === 'Day 1' ? 'day-pill-day1' : (dayKey === 'Day 2' ? 'day-pill-day2' : 'day-pill-day3'))
-      );
+      let targetId = 'day-pill-all';
+      if (dayKey === 'Day 1') targetId = 'day-pill-day1';
+      else if (dayKey === 'Day 2') targetId = 'day-pill-day2';
+      else if (dayKey === 'Day 3') targetId = 'day-pill-day3';
+      else if (dayKey === 'Day 4') targetId = 'day-pill-day4';
+      else if (dayKey === 'Day 5') targetId = 'day-pill-day5';
+
+      const activeBtn = document.getElementById(targetId);
       if (activeBtn) activeBtn.classList.add('active');
 
       applyTaskFilters();
@@ -4227,12 +4824,60 @@
     }
 
     // Step 2C Action: Select Role Level -> Routes to Step 3 (Sign In with Position Context)
+    
+    // ==============================================================
+    // AUTHORITATIVE ONBOARDING TASKS LOADER (30 TASKS PER POSITION)
+    // ==============================================================
+    window._cachedPositionTasks = window._cachedPositionTasks || {};
+
+    async function fetchAuthoritativeTasksForPosition(posId, posObj) {
+      if (!posId) return null;
+      if (window._cachedPositionTasks[posId]) {
+        return window._cachedPositionTasks[posId];
+      }
+
+      // Priority 1: Static JSON asset (/tasks/{posId}.json)
+      try {
+        const res = await fetch(`/tasks/${posId}.json`);
+        if (res.ok) {
+          const data = await res.json();
+          window._cachedPositionTasks[posId] = data;
+          return data;
+        }
+      } catch (err) {
+        console.debug('Static task fetch failed, trying API route...', err);
+      }
+
+      // Priority 2: Express API endpoint (/api/v1/org/positions/{posId}/tasks)
+      try {
+        const res = await fetch(`/api/v1/org/positions/${posId}/tasks`);
+        if (res.ok) {
+          const data = await res.json();
+          const posData = data.position || data;
+          window._cachedPositionTasks[posId] = posData;
+          return posData;
+        }
+      } catch (err) {
+        console.debug('API task fetch failed...', err);
+      }
+
+      // Priority 3: Fallback from in-memory global dataset
+      if (window.AUTHORITATIVE_TASKS_BY_POSITION && window.AUTHORITATIVE_TASKS_BY_POSITION[posId]) {
+        window._cachedPositionTasks[posId] = window.AUTHORITATIVE_TASKS_BY_POSITION[posId];
+        return window._cachedPositionTasks[posId];
+      }
+
+      return null;
+    }
+
     function selectRoleLevel(roleLevel, posId) {
       if (!currentSelectedTeam) return;
       const pos = currentSelectedTeam.positions.find(p => p.id === posId || p.roleLevel === roleLevel);
       if (!pos) return;
 
       currentSelectedPosition = pos;
+      // Pre-fetch 30 authoritative tasks into memory cache
+      fetchAuthoritativeTasksForPosition(pos.id, pos);
       const comp = companiesDatabase[currentSelectedCompany] || companiesDatabase.microsoft;
       const domain = comp.domain ? comp.domain.replace('@', '') : 'microsoft.in';
       const cleanTitle = pos.title.toLowerCase().replace(/[^a-z0-9]+/g, '.').replace(/^\.|\.$/g, '');
@@ -4666,156 +5311,168 @@
         const deptName = currentSelectedDept.name;
         const teamName = currentSelectedTeam.name;
         const branchName = currentSelectedBranch ? currentSelectedBranch.name : 'Executive Administration';
+        const subBranchName = currentSelectedSubBranch ? currentSelectedSubBranch.name : teamName;
         const posTitle = currentSelectedPosition.title;
-        const fullTitle = currentSelectedPosition.fullTitle;
-        const roleLevel = currentSelectedPosition.roleLevel;
+        const fullTitle = currentSelectedPosition.fullTitle || `${currentSelectedPosition.roleLevel} - ${posTitle}`;
+        const roleLevel = currentSelectedPosition.roleLevel || 'Associate';
+        const posId = currentSelectedPosition.id || 'POS-0001';
 
-        // Domain-specific tailored onboarding tasks
-        let tailoredTasks = [];
-        if (deptName.toUpperCase().includes('ADMIN') || deptName.toUpperCase().includes('EXECUTIVE')) {
-          tailoredTasks = [
-            {
-              id: 1,
-              title: `Day 1 Welcome & Administration Department Orientation`,
-              desc: `Complete official Microsoft Administration department induction for ${teamName} and review executive office protocols.`,
-              day: 'Day 1',
-              category: 'Administration',
-              priority: 'High',
-              done: true
-            },
-            {
-              id: 2,
-              title: `Executive Calendar & VIP Scheduling Tooling Setup`,
-              desc: `Configure Outlook Executive Delegation, Teams Room booking rights, and executive priority scheduling systems.`,
-              day: 'Day 1',
-              category: 'Setup',
-              priority: 'High',
-              done: false
-            },
-            {
-              id: 3,
-              title: `1:1 Executive Briefing Kickoff with Senior Team Buddy`,
-              desc: `Connect with senior buddy Rahul Pandey for executive briefing packs, travel logistics, and expense reimbursement standards.`,
-              day: 'Day 1',
-              category: 'Mentoring',
-              priority: 'Medium',
-              done: false
-            },
-            {
-              id: 4,
-              title: `Executive Confidentiality & Board Governance Compliance`,
-              desc: `Complete corporate non-disclosure certification, executive correspondence security, and compliance protocols.`,
-              day: 'Day 2',
-              category: 'Security',
-              priority: 'High',
-              done: false
-            },
-            {
-              id: 5,
-              title: `Review Weekly Leadership Cadence & Starter Deliverables in ${teamName}`,
-              desc: `Prepare upcoming leadership briefing packet and align on weekly executive office deliverables as ${fullTitle}.`,
-              day: 'Day 3',
-              category: 'Administration',
-              priority: 'Medium',
-              done: false
-            }
-          ];
+        // Show spinner / loading feedback on button
+        const submitBtnText = document.getElementById('signin-btn-text');
+        const origBtnText = submitBtnText ? submitBtnText.textContent : 'Authenticate & Access Dashboard';
+        if (submitBtnText) submitBtnText.textContent = 'Loading 30 Authoritative Tasks...';
+
+        // Fetch 30 authoritative tasks from dataset
+        let posTaskData = await fetchAuthoritativeTasksForPosition(posId, currentSelectedPosition);
+        if (submitBtnText) submitBtnText.textContent = origBtnText;
+
+        const rawTasks = (posTaskData && posTaskData.tasks && posTaskData.tasks.length > 0) ? posTaskData.tasks : [];
+
+        let mappedTasks = [];
+        if (rawTasks.length > 0) {
+          mappedTasks = rawTasks.map((t, idx) => {
+            const tNum = t.num || (idx + 1);
+            const tId = t.taskId || ('T' + String(tNum).padStart(3, '0'));
+            const isDone = (tNum === 1); // Pre-unlock task 1 for instant evaluation
+            return {
+              taskId: tId,
+              id: t.id || `TASK_${posId}_${String(tNum).padStart(2, '0')}`,
+              progressId: `PROG_${posId}_${tNum}`,
+              num: tNum,
+              day: t.day || (tNum <= 6 ? 'Day 1' : (tNum <= 12 ? 'Day 2' : (tNum <= 18 ? 'Day 3' : (tNum <= 24 ? 'Day 4' : 'Day 5')))),
+              taskName: t.title,
+              title: t.title,
+              description: t.desc,
+              desc: t.desc,
+              duration: t.duration || '45 mins',
+              category: t.category || subBranchName || deptName,
+              department: deptName,
+              subDepartment: subBranchName,
+              priority: t.priority || (tNum <= 6 ? 'High' : (tNum <= 20 ? 'Medium' : 'Standard')),
+              status: isDone ? 'Completed' : 'Pending',
+              done: isDone,
+              isMandatory: (tNum <= 6),
+              objective: t.objective || '',
+              prerequisites: t.prerequisites || '',
+              chatbotExecution: t.chatbotExecution || [],
+              definitionOfDone: t.definitionOfDone || '',
+              supervisorCheckIn: t.supervisorCheckIn || '',
+              chatbotBrief: t.chatbotBrief || ''
+            };
+          });
         } else {
-          tailoredTasks = [
-            {
-              id: 1,
-              title: `Day 1 Welcome & ${deptName} Department Orientation`,
-              desc: `Complete the official department orientation for ${teamName} and review your responsibilities as ${fullTitle}.`,
-              day: 'Day 1',
-              category: deptName,
-              priority: 'High',
-              done: true
-            },
-            {
-              id: 2,
-              title: `Workspace & Tooling Configuration for ${posTitle}`,
-              desc: `Set up corporate access credentials, security tokens, and workflow tooling for ${teamName}.`,
-              day: 'Day 1',
-              category: 'Setup',
-              priority: 'High',
-              done: false
-            },
-            {
-              id: 3,
-              title: `1:1 Mentorship Kickoff with Senior Team Buddy`,
-              desc: `Connect with your assigned mentor for team overview, sprint cadence, and ${roleLevel} role expectations.`,
-              day: 'Day 1',
-              category: 'Mentoring',
-              priority: 'Medium',
-              done: false
-            },
-            {
-              id: 4,
-              title: `Complete Confidential Information & Compliance Certification`,
-              desc: `Review Microsoft confidential information protection rules and complete compliance module for ${deptName}.`,
-              day: 'Day 2',
-              category: 'Security',
-              priority: 'High',
-              done: false
-            },
-            {
-              id: 5,
-              title: `Sprint Backlog & First Deliverables Review in ${teamName}`,
-              desc: `Review your squad roadmap and pick up your first starter assignment as ${fullTitle}.`,
-              day: 'Day 3',
-              category: deptName,
-              priority: 'Medium',
-              done: false
-            }
-          ];
+          // Robust fallback generator if network fetch unreachable
+          for (let i = 1; i <= 30; i++) {
+            const dayStr = i <= 6 ? 'Day 1' : (i <= 12 ? 'Day 2' : (i <= 18 ? 'Day 3' : (i <= 24 ? 'Day 4' : 'Day 5')));
+            mappedTasks.push({
+              taskId: 'T' + String(i).padStart(3, '0'),
+              id: `TASK_${posId}_${String(i).padStart(2, '0')}`,
+              progressId: `PROG_${posId}_${i}`,
+              num: i,
+              day: dayStr,
+              taskName: i === 1 ? `Secure Account & Workspace Setup` : (i === 2 ? `Role Charter & Success Measures` : `${subBranchName} Milestone #${i}`),
+              title: i === 1 ? `Secure Account & Workspace Setup` : (i === 2 ? `Role Charter & Success Measures` : `${subBranchName} Milestone #${i}`),
+              description: `Complete authoritative onboarding activity for ${fullTitle} within ${subBranchName} (${deptName}).`,
+              desc: `Complete authoritative onboarding activity for ${fullTitle} within ${subBranchName} (${deptName}).`,
+              duration: '60 minutes',
+              category: subBranchName,
+              department: deptName,
+              subDepartment: subBranchName,
+              priority: i <= 6 ? 'High' : 'Medium',
+              status: i === 1 ? 'Completed' : 'Pending',
+              done: (i === 1),
+              isMandatory: (i <= 6),
+              objective: `Establish core proficiency as ${fullTitle} in ${deptName}.`,
+              prerequisites: 'Verified corporate credentials and workspace.',
+              chatbotExecution: [
+                `Confirm objective with supervisor for ${fullTitle}.`,
+                `Review authoritative ${deptName} and ${subBranchName} standards.`,
+                `Perform assignment in approved enterprise systems.`,
+                `Validate deliverable and review with supervisor.`
+              ],
+              definitionOfDone: `Activity completed with zero open blockers for ${fullTitle}.`,
+              supervisorCheckIn: `Supervisor verifies understanding and completion of ${subBranchName} standards.`
+            });
+          }
         }
 
+        const comp = companiesDatabase[currentSelectedCompany] || companiesDatabase.microsoft;
+        const buddy = {
+          name: roleLevel === 'Manager' ? 'Vikram Shah' : (roleLevel === 'Lead' ? 'Ananya Sen' : 'Rahul Pandey'),
+          role: roleLevel === 'Manager' ? 'Senior Director of Operations · Executive Sponsor' : (roleLevel === 'Lead' ? 'Staff Lead Engineer · Technical Mentor' : 'Senior Peer Buddy · Day-1 Guide'),
+          phone: '+91 (80) 6789-89928',
+          email: `${roleLevel === 'Manager' ? 'vikram.shah' : (roleLevel === 'Lead' ? 'ananya.sen' : 'rahul.pandey')}@${comp.domain || 'microsoft.in'}`
+        };
+
+        const hr = {
+          name: 'Priya Sharma',
+          role: 'Lead HR People Partner · Employee Success',
+          phone: '+91 (80) 6789-89912',
+          email: `priya.sharma@${comp.domain || 'microsoft.in'}`
+        };
+
+        const completedCount = mappedTasks.filter(t => t.status === 'Completed' || t.done).length;
+        const pendingCount = mappedTasks.length - completedCount;
+        const percentage = Math.round((completedCount / mappedTasks.length) * 100);
+
         const synthesized = {
-          company: { name: 'Microsoft Corporation', tenantId: 'microsoft-corp-in-prod' },
+          company: { name: comp.name || 'Microsoft Corporation', tenantId: comp.key || 'microsoft' },
           employee: {
-            employeeId: 'MSFT-' + (currentSelectedPosition.id || 'POS-0001'),
+            employeeId: `EMP-${posId}`,
+            positionId: posId,
             name: formattedName,
             email: email,
             role: posTitle,
             fullTitle: fullTitle,
             roleLevel: roleLevel,
             department: deptName,
+            deptNumber: currentSelectedDept.deptNumber || 1,
             team: teamName,
             branch: branchName,
+            subDepartment: subBranchName,
             location: 'Microsoft Corporate Campus · Bengaluru / Redmond IDC',
             joiningDate: '2026-10-04',
             startDate: '2026-10-04',
             status: 'Active',
-            buddy: {
-              name: 'Rahul Pandey',
-              role: 'Senior Executive Assistant · Peer Mentor',
-              phone: '+91 (80) 6789-89928',
-              email: 'rahul.pandey@microsoft.in'
-            },
-            hr: {
-              name: 'Priya Sharma',
-              role: 'Lead HR People Partner · Employee Success',
-              phone: '+91 (80) 6789-89912',
-              email: 'priya.sharma@microsoft.in'
-            }
+            buddy: buddy,
+            hr: hr
           },
           metrics: {
-            totalTasks: tailoredTasks.length,
-            completedTasks: 1,
-            pendingTasks: tailoredTasks.length - 1,
-            percentage: Math.round((1 / tailoredTasks.length) * 100)
+            totalTasks: mappedTasks.length,
+            completedTasks: completedCount,
+            pendingTasks: pendingCount,
+            percentage: percentage
           },
-          tasks: tailoredTasks
+          tasks: mappedTasks
         };
 
         currentLiveDashboard = synthesized;
         window.currentLiveDashboard = synthesized;
         currentLiveEmployeeId = synthesized.employee.employeeId;
         liveTasksList = synthesized.tasks;
+
+        // Render dashboard
         renderManualDashboardFromLive(synthesized);
+        filterByDay('Day 1');
         initJoinerChatbot(synthesized.employee);
+        updateLiveCopilotChips(synthesized.tasks);
+
         goToStep('step-joiner-chatbot');
-        showNotification(`Welcome to Microsoft, ${formattedName}! Loaded workspace for ${fullTitle}.`);
+        // Show Loading Overlay (Requirement 26)
+        const overlay = document.getElementById('copilot-login-loading-overlay');
+        const ctxText = document.getElementById('copilot-loading-context-text');
+        if (ctxText) {
+          ctxText.textContent = `Configuring personalized onboarding workspace for ${formattedName} (${fullTitle} · ${deptName})...`;
+        }
+        if (overlay) overlay.style.display = 'flex';
+
+        setTimeout(() => {
+          goToStep('step-joiner-chatbot');
+          if (overlay) overlay.style.display = 'none';
+          // Open Chatbot in FULL SCREEN mode immediately after successful login (Requirement 1 & 8)
+          setCopilotState('fullscreen');
+          showNotification(`🎉 Welcome to ${comp.name}, ${formattedName}! Loaded ${mappedTasks.length} authoritative tasks for ${fullTitle}.`);
+        }, 500);
         return;
       }
 
@@ -4957,6 +5614,45 @@
     }
 
     function renderManualDashboardFromLive(data) {
+
+      // Toggle Hierarchical Workspace Switcher Bar based on authentic role
+      const roleNav = document.getElementById('role-workspace-nav-bar');
+      const roleBadge = document.getElementById('role-workspace-role-badge');
+      const roleScope = document.getElementById('role-workspace-scope-text');
+      const subMgmtBtn = document.getElementById('tab-subordinate-management-btn');
+
+      if (roleNav) {
+        const rLevel = (data.employee.roleLevel || data.employee.role || '').toLowerCase();
+        const isMgr = rLevel.includes('manager') || rLevel === 'ceo' || rLevel.includes('director');
+        const isLd = rLevel.includes('lead') || rLevel.includes('senior');
+
+        if (isMgr || isLd) {
+          roleNav.style.display = 'flex';
+          if (isMgr) {
+            if (roleBadge) {
+              roleBadge.textContent = 'MANAGER WORKSPACE';
+              roleBadge.style.background = '#0037b0';
+            }
+            if (roleScope) {
+              roleScope.textContent = 'Authority Scope: Leads & Associates Across Department';
+            }
+            if (subMgmtBtn) subMgmtBtn.textContent = '⚡ Manage Subordinate Tasks (Leads & Associates)';
+          } else {
+            if (roleBadge) {
+              roleBadge.textContent = 'LEAD WORKSPACE';
+              roleBadge.style.background = '#0d9488';
+            }
+            if (roleScope) {
+              roleScope.textContent = 'Authority Scope: Assigned Associates (Direct Reports)';
+            }
+            if (subMgmtBtn) subMgmtBtn.textContent = '⚡ Manage My Associates Tasks';
+          }
+        } else {
+          // Associate is strictly execution-only (Section 10)
+          roleNav.style.display = 'none';
+        }
+      }
+
       if (!data || !data.employee) return;
       const emp = data.employee;
       const metrics = data.metrics || { totalTasks: data.tasks.length, completedTasks: 0, pendingTasks: data.tasks.length, percentage: 0 };
@@ -5141,17 +5837,42 @@
 
     async function toggleLiveTask(progressId, currentStatus, taskId) {
       const nextStatus = currentStatus === 'Completed' ? 'Pending' : 'Completed';
+      const isNowDone = (nextStatus === 'Completed');
 
-      // 1. Update localStorage status store immediately
+      // 1. Update task in currentLiveDashboard if present
+      if (currentLiveDashboard && currentLiveDashboard.tasks) {
+        const task = currentLiveDashboard.tasks.find(t =>
+          String(t.taskId).toLowerCase() === String(taskId).toLowerCase() ||
+          String(t.id).toLowerCase() === String(taskId).toLowerCase() ||
+          String(t.progressId).toLowerCase() === String(progressId).toLowerCase()
+        );
+        if (task) {
+          task.status = nextStatus;
+          task.done = isNowDone;
+        }
+
+        // Recalculate metrics
+        const total = currentLiveDashboard.tasks.length;
+        const completed = currentLiveDashboard.tasks.filter(t => t.status === 'Completed' || t.done).length;
+        const pending = total - completed;
+        const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+        currentLiveDashboard.metrics = {
+          totalTasks: total,
+          completedTasks: completed,
+          pendingTasks: pending,
+          percentage: pct
+        };
+
+        renderManualDashboardFromLive(currentLiveDashboard);
+      }
+
+      // 2. Update localStorage status store immediately
       const statusStore = getTaskStatusStore();
       const key = `${currentLiveEmployeeId}_${taskId}`;
       statusStore[key] = nextStatus;
       saveTaskStatusStore(statusStore);
 
       showNotification(`✓ ${taskId}: Marked as ${nextStatus}!`);
-
-      // 2. Reload employee dashboard
-      await loadLiveEmployeeDashboard(currentLiveEmployeeId);
 
       // Refresh HR view and roster if visible
       const hrPortal = document.getElementById('step-hr-portal');
@@ -5164,31 +5885,18 @@
       try {
         const base = getApiBaseUrl();
         if (base && window.location.port === '3000') {
-          await fetch(`${base}/api/progress/${progressId}`, {
+          fetch(`${base}/api/progress/${progressId}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ status: nextStatus })
-          });
+          }).catch(() => {});
         }
       } catch (err) { }
     }
 
     function updateLiveCopilotChips(tasks) {
-      const container = document.getElementById('copilot-chips-container');
-      if (!container) return;
-
-      let chipsHtml = `
-        <button class="copilot-chip" onclick="handleChatOption('contacts')">📞 Contacts</button>
-        <button class="copilot-chip" onclick="handleChatOption('checklist')">📋 Day 1 Tasks</button>
-      `;
-
-      (tasks || []).slice(0, 5).forEach(task => {
-        const shortTitle = (task.taskName || task.title).split(' ').slice(0, 3).join(' ');
-        chipsHtml += `<button class="copilot-chip" onclick="askCopilotToExplainTask('${task.taskId || task.id}')">💡 ${task.taskId || 'T'}: ${shortTitle}</button>`;
-      });
-
-      chipsHtml += `<button class="copilot-chip" onclick="handleChatOption('stuck')">🚨 I'm Stuck</button>`;
-      container.innerHTML = chipsHtml;
+      const emp = currentLiveDashboard?.employee || currentAuthenticatedUser;
+      renderSuggestedFaqQuestions(emp);
     }
 
     // ==============================================================
@@ -5831,39 +6539,47 @@
       const feed = document.getElementById('chatbot-messages-feed');
       if (!feed) return;
 
-      const compName = user?.company?.name || (currentLiveDashboard?.company?.name) || 'your organization';
+      const compName = currentLiveDashboard?.company?.name || user?.company?.name || 'Company';
       const firstName = user?.name ? user.name.split(' ')[0] : 'there';
-      const buddyName = user?.buddy?.name || (currentLiveDashboard?.employee?.buddy?.name) || 'Dhruv Agarwal';
-      const hrName = user?.hr?.name || (currentLiveDashboard?.employee?.hr?.name) || 'Priya Nair';
+      const fullTitle = user?.fullTitle || (currentLiveDashboard?.employee?.fullTitle) || user?.role || 'Associate';
+      const roleLevel = user?.roleLevel || (currentLiveDashboard?.employee?.roleLevel) || 'Associate';
+      const deptName = user?.department || (currentLiveDashboard?.employee?.department) || 'Department';
+      const subDeptName = user?.subDepartment || (currentLiveDashboard?.employee?.subDepartment) || (currentLiveDashboard?.employee?.team) || 'Operations';
 
       const ctxUserEl = document.getElementById('copilot-context-user');
       if (ctxUserEl) ctxUserEl.textContent = user?.name || 'Aarav Sharma';
 
+      const ctxSubEl = document.getElementById('copilot-context-subtitle');
+      if (ctxSubEl) {
+        ctxSubEl.innerHTML = `Context: <strong>${escapeHtml(user?.name || 'New Joiner')}</strong> (${escapeHtml(roleLevel)}) · ${escapeHtml(deptName)} > ${escapeHtml(subDeptName)}`;
+      }
+
+      const miniNameEl = document.getElementById('copilot-mini-name');
+      if (miniNameEl) miniNameEl.textContent = firstName;
+
       feed.innerHTML = `
         <div class="chat-bubble assistant">
-          <div class="chat-avatar ai" title="AI Onboarding Copilot">
+          <div class="chat-avatar ai" title="First-Week Maze Copilot">
             <img src="copilot-icon.png" onerror="this.src='/copilot-icon.png'" alt="Copilot" />
           </div>
           <div class="chat-bubble-body">
-            <div style="font-size: 0.98rem; font-weight: 800; color: #f8fafc; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
-              <span>👋</span> Hi ${escapeHtml(firstName)}! Welcome to ${escapeHtml(compName)}!
+            <div style="font-size: 1.15rem; font-weight: 800; color: #f8fafc; margin-bottom: 4px;">
+              Hi ${escapeHtml(firstName)} 👋
             </div>
-            <p style="color: #cbd5e1; margin-bottom: 12px; font-size: 0.84rem; line-height: 1.55;">
-              I am your <strong>AI Onboarding Copilot</strong>. I have real-time access to your <strong>Day 1 Work Checklist</strong>, verified <strong>Contact Directory</strong>, assigned <strong>Buddy (${escapeHtml(buddyName)})</strong>, and <strong>HR Partner (${escapeHtml(hrName)})</strong>.
+            <div style="font-size: 1rem; font-weight: 700; color: #e2e8f0; margin-bottom: 12px;">
+              Welcome to your First-Week Maze at ${escapeHtml(compName)}.
+            </div>
+            <p style="color: #cbd5e1; margin-bottom: 14px; font-size: 0.9rem; line-height: 1.6;">
+              I'm your onboarding copilot for <strong>${escapeHtml(fullTitle)}</strong> in <strong>${escapeHtml(deptName)}</strong>. I can help you understand your tasks, find company resources, answer questions, and guide you through your first week.
             </p>
-            <div style="font-size: 0.78rem; font-weight: 700; color: #818cf8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.03em;">
-              Recommended Day-1 Actions:
-            </div>
-            <div class="chat-options-group">
-              <button class="chat-action-chip" onclick="handleChatOption('contacts')">📞 Contact Directory</button>
-              <button class="chat-action-chip" onclick="handleChatOption('checklist')">📋 Today's Checklist</button>
-              <button class="chat-action-chip" onclick="explainTaskById(1)">💡 Explain Task 1</button>
-              <button class="chat-action-chip" onclick="explainTaskById(2)">💡 Explain Task 2</button>
-              <button class="chat-action-chip" onclick="handleChatOption('stuck')">🚨 I'm Stuck</button>
+            <div style="font-size: 0.78rem; font-weight: 700; color: #818cf8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em;">
+              Select a suggested question below or type anything in the chat:
             </div>
           </div>
         </div>
       `;
+
+      renderSuggestedFaqQuestions(user);
     }
 
     function getContactDirectoryResponseHtml() {
@@ -5959,6 +6675,148 @@
                 <div style="color: #94a3b8; font-size: 0.72rem; margin-top: 3px;">🎯 Purpose: Laptop provisioning, MFA resets, VPN approvals, tokens</div>
               </div>
             </div>
+          </div>
+        </div>
+      `;
+    }
+
+    
+    function getWhatIHaveToDoResponseHtml() {
+      const emp = currentLiveDashboard?.employee || { name: 'New Joiner', role: 'Associate', fullTitle: 'Associate - Executive Assistant', department: 'Administration' };
+      const allTasks = (currentLiveDashboard && currentLiveDashboard.tasks && currentLiveDashboard.tasks.length > 0)
+        ? currentLiveDashboard.tasks
+        : (dailyTasksState || []);
+
+      const totalTasks = allTasks.length;
+      const completedTasks = allTasks.filter(t => t.status === 'Completed' || t.done).length;
+      const pendingTasks = allTasks.filter(t => t.status !== 'Completed' && !t.done);
+      const nextPending = pendingTasks[0] || allTasks[0];
+      const day1Tasks = allTasks.filter(t => (t.day === 'Day 1' || String(t.day).toLowerCase().includes('1')));
+
+      let html = `
+        <div style="font-family: inherit; line-height: 1.5;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 10px;">
+            <div>
+              <div style="font-weight: 800; font-size: 0.98rem; color: #f8fafc; display: flex; align-items: center; gap: 8px;">
+                <span>🎯</span> Your Day-1 Execution Blueprint
+              </div>
+              <div style="font-size: 0.76rem; color: #94a3b8; margin-top: 2px;">
+                Role: <strong>${escapeHtml(emp.fullTitle || emp.role)}</strong> · ${escapeHtml(emp.department)}
+              </div>
+            </div>
+            <span style="font-size: 0.72rem; font-weight: 800; color: #34d399; background: rgba(16, 185, 129, 0.18); padding: 3px 9px; border-radius: 9999px;">
+              ${completedTasks}/${totalTasks} Tasks Done
+            </span>
+          </div>
+
+          <div style="background: rgba(99, 102, 241, 0.12); border-left: 3px solid #818cf8; padding: 10px 12px; border-radius: 6px; margin-bottom: 14px; font-size: 0.82rem; color: #e2e8f0;">
+            <div style="font-weight: 700; color: #a5b4fc; margin-bottom: 3px;">👋 What you need to do right now:</div>
+            Your onboarding plan contains <strong>30 authoritative tasks</strong> designed specifically for your post in <strong>${escapeHtml(emp.subBranch || emp.team || emp.department)}</strong>. For Day 1, focus on completing your first 6 foundational setup, charter, and workflow tasks.
+          </div>
+
+          ${nextPending ? `
+            <div style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px;">
+              <div style="font-size: 0.72rem; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;">
+                <span>👉</span> Immediate Next Action Item
+              </div>
+              <div style="font-weight: 800; font-size: 0.92rem; color: #ffffff; margin-top: 4px;">
+                #Task ${nextPending.num || nextPending.taskId}: ${escapeHtml(nextPending.taskName || nextPending.title)}
+              </div>
+              <div style="font-size: 0.8rem; color: #cbd5e1; margin-top: 4px; line-height: 1.45;">
+                ${escapeHtml(nextPending.desc || nextPending.description || nextPending.objective)}
+              </div>
+              <div style="margin-top: 8px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                <button class="chat-action-chip" onclick="explainTaskById('${nextPending.taskId || nextPending.id}')" style="background: #4f46e5; color: #ffffff; border-color: #6366f1; padding: 4px 10px; font-weight: 700;">
+                  💡 Open Step-by-Step Playbook
+                </button>
+                <span style="font-size: 0.72rem; color: #94a3b8;">⏱️ Duration: ${nextPending.duration || '60 mins'}</span>
+              </div>
+            </div>
+          ` : ''}
+
+          <div style="font-size: 0.8rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px;">
+            Day-1 Task Priority Briefs:
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; max-height: 240px; overflow-y: auto; padding-right: 4px;">
+      `;
+
+      day1Tasks.slice(0, 6).forEach((t, i) => {
+        const isDone = t.status === 'Completed' || t.done;
+        html += `
+          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 8px 10px; font-size: 0.8rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <div style="font-weight: 700; color: #f8fafc; display: flex; align-items: center; gap: 6px;">
+                <span>${isDone ? '✅' : '⏳'}</span>
+                <span>#Task ${t.num || (i + 1)}: ${escapeHtml(t.taskName || t.title)}</span>
+              </div>
+              <button class="chat-action-chip" onclick="explainTaskById('${t.taskId || t.id}')" style="padding: 2px 7px; font-size: 0.7rem;">
+                💡 Playbook
+              </button>
+            </div>
+            <div style="font-size: 0.76rem; color: #94a3b8; line-height: 1.4;">
+              ${escapeHtml(t.desc || t.description)}
+            </div>
+          </div>
+        `;
+      });
+
+      html += `
+          </div>
+
+          <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; gap: 6px; flex-wrap: wrap;">
+            <button class="chat-action-chip" onclick="explainTaskById(1)">💡 Explain Task 1</button>
+            <button class="chat-action-chip" onclick="explainTaskById(2)">💡 Explain Task 2</button>
+            <button class="chat-action-chip" onclick="filterByDay('all')">📋 View All 30 Tasks</button>
+            <button class="chat-action-chip" onclick="handleChatOption('contacts')">📞 Contact Buddy</button>
+          </div>
+        </div>
+      `;
+      return html;
+    }
+
+    function getConfusionResolutionResponseHtml() {
+      const emp = currentLiveDashboard?.employee || { name: 'New Joiner', role: 'Associate', fullTitle: 'Associate - Executive Assistant', department: 'Administration' };
+      const buddy = emp.buddy || { name: 'Rahul Pandey', role: 'Senior Peer Mentor', phone: '+91 80 6789 89928', email: 'buddy@microsoft.in' };
+      const hr = emp.hr || { name: 'Priya Sharma', role: 'Lead HR People Partner', phone: '+91 80 6789 89912', email: 'hr@microsoft.in' };
+
+      return `
+        <div style="font-family: inherit; line-height: 1.5;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 8px;">
+            <div style="font-weight: 800; font-size: 0.95rem; color: #f8fafc; display: flex; align-items: center; gap: 8px;">
+              <span>💡</span> Role Clarity & Confusion Resolution
+            </div>
+            <span style="font-size: 0.72rem; font-weight: 800; color: #38bdf8; background: rgba(56, 189, 248, 0.18); padding: 3px 9px; border-radius: 9999px;">
+              AI Guidance
+            </span>
+          </div>
+
+          <p style="font-size: 0.82rem; color: #cbd5e1; margin-bottom: 12px; line-height: 1.55;">
+            It is completely normal to feel confused or overwhelmed during your first week! Here is how to navigate your onboarding cleanly as <strong>${escapeHtml(emp.fullTitle || emp.role)}</strong> in <strong>${escapeHtml(emp.department)}</strong>:
+          </p>
+
+          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; font-size: 0.8rem;">
+            <div style="font-weight: 700; color: #a5b4fc; margin-bottom: 4px;">1. Focus on one day at a time:</div>
+            <div style="color: #cbd5e1;">Your 30 onboarding tasks are staggered across 5 days. For today, only focus on <strong>Day 1 (Tasks 1 to 6)</strong>. Click the Day 1 pill above your checklist to isolate today's deliverables.</div>
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; font-size: 0.8rem;">
+            <div style="font-weight: 700; color: #a5b4fc; margin-bottom: 4px;">2. Ask Copilot to break down any task:</div>
+            <div style="color: #cbd5e1;">Whenever you are unsure of how to execute a requirement, click <strong>"💡 Explain in Copilot"</strong> on any task card, or ask me <em>"Explain task 2"</em> to receive the exact step-by-step instructions.</div>
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; font-size: 0.8rem;">
+            <div style="font-weight: 700; color: #a5b4fc; margin-bottom: 4px;">3. Direct Human Support:</div>
+            <div style="color: #cbd5e1; display: flex; flex-direction: column; gap: 4px; margin-top: 4px;">
+              <div>🤝 <strong>Assigned Buddy:</strong> ${escapeHtml(buddy.name)} (${escapeHtml(buddy.role)}) · <a href="mailto:${buddy.email}" style="color: #38bdf8;">${buddy.email}</a> · ${buddy.phone}</div>
+              <div>💼 <strong>HR Partner:</strong> ${escapeHtml(hr.name)} (${escapeHtml(hr.role)}) · <a href="mailto:${hr.email}" style="color: #38bdf8;">${hr.email}</a> · ${hr.phone}</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <button class="chat-action-chip" onclick="handleChatOption('what_to_do')">❓ What I Have To Do</button>
+            <button class="chat-action-chip" onclick="explainTaskById(1)">💡 Explain Task 1</button>
+            <button class="chat-action-chip" onclick="explainTaskById(2)">💡 Explain Task 2</button>
+            <button class="chat-action-chip" onclick="handleChatOption('contacts')">📞 Call Support</button>
           </div>
         </div>
       `;
@@ -6062,14 +6920,80 @@
       };
     }
 
+    function getRoleOverviewResponseHtml() {
+      const emp = currentLiveDashboard?.employee || { name: 'Aarav Sharma', role: 'Software Engineer', department: 'Engineering' };
+      const comp = currentLiveDashboard?.company || { name: 'Microsoft Corporation' };
+      const tasks = currentLiveDashboard?.tasks || [];
+      const metrics = currentLiveDashboard?.metrics || { totalTasks: tasks.length, completedTasks: 1, pendingTasks: tasks.length - 1, percentage: 3 };
+      const buddy = emp.buddy || { name: 'Rahul Pandey', role: 'Senior Peer Mentor', phone: '+91 80 6789 89928' };
+      const hr = emp.hr || { name: 'Priya Sharma', role: 'Lead HR People Partner', phone: '+91 80 6789 89912' };
+
+      return `
+        <div style="font-family: var(--font-sans); color: #f8fafc;">
+          <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; margin-bottom: 12px;">
+            <div style="font-weight: 800; font-size: 1rem; color: #f8fafc; display: flex; align-items: center; gap: 8px;">
+              <span>👤</span> Role Charter & Position Overview
+            </div>
+            <span style="font-size: 0.72rem; font-weight: 700; color: #818cf8; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); padding: 3px 10px; border-radius: 9999px;">
+              ${escapeHtml(emp.roleLevel || 'Role Level')}
+            </span>
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px;">
+            <div style="font-size: 0.95rem; font-weight: 800; color: #f8fafc; margin-bottom: 4px;">
+              ${escapeHtml(emp.fullTitle || emp.role)}
+            </div>
+            <div style="font-size: 0.8rem; color: #94a3b8; display: flex; flex-direction: column; gap: 4px; margin-top: 6px;">
+              <div>🏢 <strong>Department:</strong> ${escapeHtml(emp.department)}</div>
+              <div>📂 <strong>Sub-department / Team:</strong> ${escapeHtml(emp.subDepartment || emp.team || emp.branch || 'Specialized Workstream')}</div>
+              <div>📍 <strong>Location / Campus:</strong> ${escapeHtml(emp.location || 'Bengaluru / Redmond IDC')}</div>
+            </div>
+          </div>
+
+          <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.25); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px;">
+            <div style="font-size: 0.78rem; font-weight: 800; color: #c7d2fe; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">
+              🎯 5-Day Onboarding Mandate & Progress:
+            </div>
+            <div style="font-size: 0.82rem; color: #e0e7ff; line-height: 1.55;">
+              You have <strong>${metrics.totalTasks} authoritative onboarding tasks</strong> assigned across Day 1 to Day 5, tailored specifically to your role and functional domain.
+              Currently, <strong>${metrics.completedTasks} of ${metrics.totalTasks} tasks</strong> are cleared (<strong>${metrics.percentage}%</strong> progress).
+            </div>
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px;">
+            <div style="font-size: 0.76rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px;">Assigned Mentors:</div>
+            <div style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;">
+              👥 <strong>Peer Buddy:</strong> ${escapeHtml(buddy.name)} (${escapeHtml(buddy.role)})<br>
+              💼 <strong>People Partner:</strong> ${escapeHtml(hr.name)} (${escapeHtml(hr.role)})
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="copilot-chip" onclick="handleChatOption('checklist')" style="background: #4f46e5; color: #fff; padding: 6px 14px; font-size: 0.76rem; border-radius: 6px; cursor: pointer; border: none; font-weight: 700;">
+              📋 View Day 1 Checklist
+            </button>
+            <button class="copilot-chip" onclick="explainTaskById(1)" style="background: rgba(255,255,255,0.1); color: #cbd5e1; padding: 6px 12px; font-size: 0.76rem; border-radius: 6px; cursor: pointer; border: none;">
+              💡 Explain Task 1
+            </button>
+            <button class="copilot-chip" onclick="handleChatOption('contacts')" style="background: rgba(255,255,255,0.1); color: #cbd5e1; padding: 6px 12px; font-size: 0.76rem; border-radius: 6px; cursor: pointer; border: none;">
+              📞 Contact Directory
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
     function getExplainTaskResponseHtml(taskId) {
-      const allTasks = (currentLiveDashboard && currentLiveDashboard.tasks) ? currentLiveDashboard.tasks : (ALL_40_TASKS || []);
+      const allTasks = (currentLiveDashboard && currentLiveDashboard.tasks && currentLiveDashboard.tasks.length > 0)
+        ? currentLiveDashboard.tasks
+        : (ALL_40_TASKS || []);
       const numId = parseInt(String(taskId).replace(/\D/g, ''), 10) || 1;
 
       let task = allTasks.find(t =>
         String(t.taskId).toLowerCase() === String(taskId).toLowerCase() ||
         String(t.taskId).replace(/\D/g, '') === String(taskId).replace(/\D/g, '') ||
-        parseInt(String(t.taskId).replace(/\D/g, ''), 10) === numId
+        String(t.id).toLowerCase() === String(taskId).toLowerCase() ||
+        parseInt(String(t.taskId || t.id).replace(/\D/g, ''), 10) === numId
       );
 
       if (!task && dailyTasksState) {
@@ -6080,12 +7004,13 @@
         task = {
           taskId: 'T' + String(numId).padStart(3, '0'),
           taskName: 'Enterprise Onboarding Task #' + taskId,
-          department: 'Engineering',
-          applicableRole: 'Software Engineer',
+          title: 'Enterprise Onboarding Task #' + taskId,
+          department: currentLiveDashboard?.employee?.department || 'Engineering',
+          applicableRole: currentLiveDashboard?.employee?.fullTitle || 'Professional',
           day: 'Day 1',
           priority: 'High',
-          duration: '25 mins',
-          description: 'Standard enterprise onboarding checklist requirement.'
+          duration: '45 mins',
+          description: 'Authoritative onboarding checklist requirement.'
         };
       }
 
@@ -6093,27 +7018,30 @@
       const tId = task.taskId || ('T' + String(numId).padStart(3, '0'));
       const tTitle = task.taskName || task.title;
 
-      const detail = DEEP_TASK_DETAILS[tId] || DEEP_TASK_DETAILS['T' + String(numId).padStart(3, '0')] || generateGenericDeepElaboration(task);
+      let detail = null;
+      if (task.chatbotExecution && Array.isArray(task.chatbotExecution) && task.chatbotExecution.length > 0) {
+        detail = {
+          objective: task.objective || `${tTitle} is an authoritative requirement for ${task.department || 'Enterprise'} (${task.category || 'Specialized Workstream'}).`,
+          steps: task.chatbotExecution,
+          verification: task.definitionOfDone || 'Completed according to standard operating criteria and verified by supervisor check-in.',
+          supervisor: task.supervisorCheckIn || 'Confirm with your supervisor or team lead that the output meets the expected quality and documentation standards.',
+          prerequisites: task.prerequisites || 'Account credentials, workspace access, and relevant departmental guidance are available.',
+          troubleshooting: [
+            `<strong>Scope & Authority Boundary:</strong> If any activity falls outside assigned authority, escalate immediately to your supervisor.`,
+            `<strong>Access & Environmental Checks:</strong> Confirm that you are operating in the approved systems for ${task.department || 'your department'}.`
+          ]
+        };
+      } else if (DEEP_TASK_DETAILS[tId] || DEEP_TASK_DETAILS['T' + String(numId).padStart(3, '0')]) {
+        detail = DEEP_TASK_DETAILS[tId] || DEEP_TASK_DETAILS['T' + String(numId).padStart(3, '0')];
+      } else {
+        detail = generateGenericDeepElaboration(task);
+      }
 
-      const helperName = (task.assignedBy === 'IT') ? 'Rahul Mehta' :
-        (task.assignedBy === 'HR') ? 'Priya Nair' :
-          (task.assignedBy === 'Security') ? 'Karan Patel' :
-            'Dhruv Agarwal';
-      const helperRole = (task.assignedBy === 'IT') ? 'Lead IT Systems Architect' :
-        (task.assignedBy === 'HR') ? 'Senior HR Business Partner' :
-          (task.assignedBy === 'Security') ? 'Information Security Officer' :
-            'Senior Onboarding Buddy & Mentor';
-      const helperPhone = (task.assignedBy === 'IT') ? '+91 80 6789 89910' :
-        (task.assignedBy === 'HR') ? '+91 80 6789 89912' :
-          (task.assignedBy === 'Security') ? '+91 80 6789 89915' :
-            '+91 80 6789 89928';
-      const helperEmail = (task.assignedBy === 'IT') ? 'it@demo-company.com' :
-        (task.assignedBy === 'HR') ? 'hr@demo-company.com' :
-          (task.assignedBy === 'Security') ? 'security@demo-company.com' :
-            'buddy@demo-company.com';
+      const buddy = currentLiveDashboard?.employee?.buddy || { name: 'Rahul Pandey', role: 'Senior Peer Mentor', phone: '+91 80 6789 89928', email: 'buddy@microsoft.in' };
+      const hr = currentLiveDashboard?.employee?.hr || { name: 'Priya Sharma', role: 'Lead HR People Partner', phone: '+91 80 6789 89912', email: 'hr@microsoft.in' };
 
       let stepsHtml = '';
-      detail.steps.forEach((step, idx) => {
+      (detail.steps || []).forEach((step, idx) => {
         stepsHtml += `
           <div style="display: flex; gap: 10px; margin-bottom: 8px; align-items: flex-start;">
             <span style="background: rgba(99, 102, 241, 0.3); color: #c7d2fe; font-weight: 800; font-size: 0.72rem; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">${idx + 1}</span>
@@ -6122,53 +7050,60 @@
         `;
       });
 
-      let troubleshootHtml = '';
-      detail.troubleshooting.forEach(tb => {
-        troubleshootHtml += `
-          <div style="background: rgba(239, 68, 68, 0.08); border-left: 3px solid #ef4444; padding: 6px 10px; border-radius: 0 6px 6px 0; margin-bottom: 6px; font-size: 0.78rem; color: #e2e8f0; line-height: 1.45;">
-            ${tb}
+      let prereqHtml = '';
+      if (detail.prerequisites) {
+        prereqHtml = `
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; font-size: 0.78rem; color: #cbd5e1;">
+            <strong style="color: #fbbf24;">🔐 Prerequisites:</strong> ${escapeHtml(detail.prerequisites)}
           </div>
         `;
-      });
+      }
 
-      const resourceLink = task.resource?.link || '/resources/onboarding-playbook';
-      const resourceName = task.resource?.resourceName || task.resource?.name || 'Enterprise Onboarding & Security Standard Manual';
+      let supervisorHtml = '';
+      if (detail.supervisor) {
+        supervisorHtml = `
+          <div style="background: rgba(147, 51, 234, 0.1); border: 1px solid rgba(147, 51, 234, 0.25); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px;">
+            <div style="font-size: 0.78rem; font-weight: 800; color: #c084fc; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+              <span>👥</span> Supervisor Check-In & Feedback Standard:
+            </div>
+            <div style="font-size: 0.78rem; color: #e2e8f0; line-height: 1.5;">
+              ${escapeHtml(detail.supervisor)}
+            </div>
+          </div>
+        `;
+      }
 
       return `
-        <div class="deep-task-elaboration" style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(99, 102, 241, 0.4); border-radius: 12px; padding: 16px; margin-top: 6px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); font-family: var(--font-sans);">
-          
-          <!-- Top Metadata Header -->
-          <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.12); padding-bottom: 8px; margin-bottom: 10px; flex-wrap: wrap; gap: 6px;">
-            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-              <span style="font-size: 0.72rem; font-weight: 800; background: rgba(99, 102, 241, 0.35); color: #c7d2fe; padding: 2px 8px; border-radius: 4px; font-family: var(--font-mono);">
-                ${escapeHtml(tId)}
-              </span>
-              <span style="font-size: 0.72rem; font-weight: 700; background: rgba(56, 189, 248, 0.15); color: #7dd3fc; padding: 2px 8px; border-radius: 4px;">
-                ${escapeHtml(task.department || 'Core')} · ${escapeHtml(task.applicableRole || 'All')}
-              </span>
-              <span style="font-size: 0.72rem; font-weight: 700; background: rgba(245, 158, 11, 0.15); color: #fcd34d; padding: 2px 8px; border-radius: 4px;">
-                📅 ${escapeHtml(task.day || 'Day 1')}
-              </span>
-              <span style="font-size: 0.72rem; font-weight: 700; background: rgba(239, 68, 68, 0.15); color: #fca5a5; padding: 2px 8px; border-radius: 4px;">
-                ★ ${escapeHtml(task.priority || 'High')}
-              </span>
+        <div style="font-family: var(--font-sans); color: #f8fafc;">
+
+          <!-- Header -->
+          <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; margin-bottom: 12px;">
+            <div>
+              <div style="font-size: 0.7rem; font-weight: 800; color: #818cf8; text-transform: uppercase; letter-spacing: 0.06em;">
+                ${tId} · ${task.day || 'Day 1'} · ${task.duration || '45 mins'}
+              </div>
+              <div style="font-weight: 800; font-size: 0.98rem; color: #ffffff; margin-top: 2px;">
+                ${escapeHtml(tTitle)}
+              </div>
             </div>
-            <span style="font-size: 0.72rem; font-weight: 800; color: ${isDone ? '#34d399' : '#f87171'}; background: ${isDone ? 'rgba(52, 211, 153, 0.15)' : 'rgba(248, 113, 113, 0.15)'}; padding: 2px 8px; border-radius: 4px;">
+            <span style="font-size: 0.7rem; font-weight: 700; color: ${isDone ? '#34d399' : '#fbbf24'}; background: ${isDone ? 'rgba(16, 185, 129, 0.15)' : 'rgba(245, 158, 11, 0.15)'}; border: 1px solid ${isDone ? 'rgba(16, 185, 129, 0.3)' : 'rgba(245, 158, 11, 0.3)'}; padding: 3px 8px; border-radius: 9999px;">
               ${isDone ? '✓ Completed' : '● Action Required'}
             </span>
           </div>
 
-          <!-- Task Title & Quick Info -->
-          <h3 style="font-size: 1.05rem; font-weight: 800; color: #ffffff; margin-bottom: 6px; line-height: 1.35;">
-            ${escapeHtml(tTitle)}
-          </h3>
-          <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 12px; display: flex; gap: 14px; flex-wrap: wrap;">
-            <span>⏱️ Estimated Duration: <strong style="color: #f1f5f9;">${escapeHtml(task.duration || '25 mins')}</strong></span>
-            <span>📌 Assigned By: <strong style="color: #f1f5f9;">${escapeHtml(task.assignedBy || 'IT Operations')}</strong></span>
+          <!-- Grounding Badge -->
+          <div style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 6px; padding: 6px 10px; margin-bottom: 12px; font-size: 0.74rem; color: #c7d2fe; display: flex; align-items: center; gap: 6px;">
+            <span>⚡</span>
+            <span><strong>Role Grounding:</strong> ${escapeHtml(task.department || 'Enterprise')} > ${escapeHtml(task.category || 'Specialized Workstream')} (${escapeHtml(currentLiveDashboard?.employee?.fullTitle || 'Onboarding Position')})</span>
           </div>
 
-          <!-- SECTION 1: Deep Strategic Objective & Impact -->
-          <div style="background: rgba(30, 41, 59, 0.55); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+          <!-- Description -->
+          <div style="font-size: 0.82rem; color: #e2e8f0; line-height: 1.55; margin-bottom: 12px; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 6px; border-left: 3px solid #6366f1;">
+            ${escapeHtml(task.description || task.desc || '')}
+          </div>
+
+          <!-- SECTION 1: Strategic Objective -->
+          <div style="background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px;">
             <div style="font-size: 0.8rem; font-weight: 800; color: #a5b4fc; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
               <span>🎯</span> Strategic Objective & System Impact:
             </div>
@@ -6176,6 +7111,8 @@
               ${detail.objective}
             </p>
           </div>
+
+          ${prereqHtml}
 
           <!-- SECTION 2: Step-by-Step Implementation Guide -->
           <div style="margin-bottom: 12px;">
@@ -6197,37 +7134,12 @@
             </div>
           </div>
 
-          <!-- SECTION 4: Common Pitfalls & Blocker Troubleshooting -->
-          <div style="margin-bottom: 12px;">
-            <div style="font-size: 0.78rem; font-weight: 800; color: #f87171; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
-              <span>⚠️</span> Common Pitfalls & Self-Service Troubleshooting:
-            </div>
-            <div>
-              ${troubleshootHtml}
-            </div>
-          </div>
+          ${supervisorHtml}
 
-          <!-- SECTION 5: Official Documentation -->
-          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 9px 12px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 20px;">📄</span>
-            <div>
-              <div style="font-size: 0.72rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Official Documentation:</div>
-              <a href="${escapeHtml(resourceLink)}" target="_blank" style="color: #38bdf8; font-weight: 700; text-decoration: underline; font-size: 0.8rem;">
-                ${escapeHtml(resourceName)}
-              </a>
-            </div>
-          </div>
-
-          <!-- SECTION 6: Support Lead & Escalation -->
-          <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-            <div>
-              <div style="font-size: 0.7rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Designated Support Contact:</div>
-              <div style="color: #f8fafc; font-weight: 800; font-size: 0.84rem;">${escapeHtml(helperName)} <span style="font-weight: 500; color: #cbd5e1; font-size: 0.75rem;">(${escapeHtml(helperRole)})</span></div>
-              <div style="color: #cbd5e1; font-size: 0.74rem; font-family: var(--font-mono); margin-top: 2px;">📞 ${escapeHtml(helperPhone)} · 📧 ${escapeHtml(helperEmail)}</div>
-            </div>
-            <a href="tel:${escapeHtml(helperPhone)}" style="background: #059669; color: #ffffff; font-weight: 700; font-size: 0.75rem; padding: 5px 12px; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
-              📞 Direct Call
-            </a>
+          <!-- Support Contacts -->
+          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; font-size: 0.78rem; color: #cbd5e1; line-height: 1.5;">
+            👥 <strong>Designated Buddy:</strong> ${escapeHtml(buddy.name)} (${escapeHtml(buddy.role)} · 📞 ${escapeHtml(buddy.phone)})<br>
+            💼 <strong>People Partner:</strong> ${escapeHtml(hr.name)} (📞 ${escapeHtml(hr.phone)})
           </div>
 
           <!-- Action Footer -->
@@ -6235,8 +7147,11 @@
             <button class="copilot-chip" style="background: ${isDone ? 'rgba(255,255,255,0.12)' : '#4f46e5'}; color: #fff; padding: 7px 16px; font-size: 0.78rem; font-weight: 700; border-radius: 6px; cursor: pointer; border: none;" onclick="toggleLiveTask('${task.progressId || ('P_' + tId)}', '${task.status}', '${tId}')">
               ${isDone ? '✓ Mark as Pending' : '✓ Mark Task as Completed'}
             </button>
+            <button class="copilot-chip" style="background: rgba(255,255,255,0.08); color: #cbd5e1; padding: 7px 14px; font-size: 0.78rem; border-radius: 6px; cursor: pointer; border: none;" onclick="handleChatOption('checklist')">
+              📋 Today's Checklist
+            </button>
             <button class="copilot-chip" style="background: rgba(255,255,255,0.08); color: #cbd5e1; padding: 7px 14px; font-size: 0.78rem; border-radius: 6px; cursor: pointer; border: none;" onclick="handleChatOption('contacts')">
-              👥 All Direct Contacts
+              📞 All Contacts
             </button>
           </div>
 
@@ -6300,16 +7215,360 @@
 
     // Handle Quick Options in Chat
     function handleChatOption(optionKey) {
-      if (optionKey === 'contacts') {
+      if (optionKey === 'what_to_do') {
+        runCopilotResponseWithThinking('What do I have to do today?', getWhatIHaveToDoResponseHtml);
+      } else if (optionKey === 'contacts') {
         runCopilotResponseWithThinking('Show me the verified Contact Directory and emergency support numbers.', getContactDirectoryResponseHtml);
       } else if (optionKey === 'checklist') {
         runCopilotResponseWithThinking("Show my Today's Work and Day 1 onboarding checklist.", getChecklistResponseHtml);
-      } else if (optionKey === 'stuck') {
-        runCopilotResponseWithThinking("I'm stuck on one of my onboarding tasks. What should I do?", getStuckTroubleshootingResponseHtml);
+      } else if (optionKey === 'stuck' || optionKey === 'confused') {
+        runCopilotResponseWithThinking("I'm confused or stuck on my tasks. What should I do?", getConfusionResolutionResponseHtml);
       }
     }
 
-    // Send Free-Form Chat Message to AI Onboarding Copilot
+    // ==============================================================
+    // FULL-SCREEN COPILOT 3-STATE INTERACTION CONTROLLER
+    // ==============================================================
+    let copilotCurrentState = 'fullscreen';
+
+    function setCopilotState(targetState) {
+      const panel = document.getElementById('copilot-persistent-panel');
+      const compactTrigger = document.getElementById('copilot-compact-trigger');
+      const expandBtn = document.getElementById('copilot-expand-btn');
+      const minimizeBtn = document.getElementById('copilot-minimize-btn');
+      const splitContainer = document.querySelector('.joiner-split-container');
+
+      if (!panel) return;
+
+      // Add rolling morph transition class for subtle tactile animation (Requirement 10 & 21)
+      panel.classList.add('copilot-rolling-morph');
+      setTimeout(() => {
+        panel.classList.remove('copilot-rolling-morph');
+      }, 420);
+
+      if (targetState === 'fullscreen') {
+        copilotCurrentState = 'fullscreen';
+        panel.classList.remove('copilot-state-medium', 'copilot-state-compact');
+        panel.classList.add('copilot-state-fullscreen');
+        panel.style.display = 'flex';
+        if (compactTrigger) compactTrigger.style.display = 'none';
+        if (expandBtn) expandBtn.style.display = 'none';
+        if (minimizeBtn) {
+          minimizeBtn.title = 'Minimize chatbot';
+          minimizeBtn.setAttribute('aria-label', 'Minimize chatbot to medium window');
+        }
+        if (splitContainer) splitContainer.style.gridTemplateColumns = '1fr';
+        const input = document.getElementById('chatbot-input');
+        if (input) setTimeout(() => input.focus(), 150);
+      } else if (targetState === 'medium') {
+        copilotCurrentState = 'medium';
+        panel.classList.remove('copilot-state-fullscreen', 'copilot-state-compact');
+        panel.classList.add('copilot-state-medium');
+        panel.style.display = 'flex';
+        if (compactTrigger) compactTrigger.style.display = 'none';
+        if (expandBtn) expandBtn.style.display = 'inline-flex';
+        if (minimizeBtn) {
+          minimizeBtn.title = 'Minimize to Compact Copilot';
+          minimizeBtn.setAttribute('aria-label', 'Minimize chatbot to compact copilot');
+        }
+        if (splitContainer) splitContainer.style.gridTemplateColumns = '1fr';
+      } else if (targetState === 'compact') {
+        copilotCurrentState = 'compact';
+        panel.classList.remove('copilot-state-fullscreen', 'copilot-state-medium');
+        panel.classList.add('copilot-state-compact');
+        if (expandBtn) expandBtn.style.display = 'none';
+        setTimeout(() => {
+          if (copilotCurrentState === 'compact') {
+            panel.style.display = 'none';
+            if (compactTrigger) compactTrigger.style.display = 'flex';
+          }
+        }, 320);
+        if (splitContainer) splitContainer.style.gridTemplateColumns = '1fr';
+      }
+    }
+
+    function handleCopilotMinimizeClick() {
+      if (copilotCurrentState === 'fullscreen') {
+        setCopilotState('medium');
+      } else if (copilotCurrentState === 'medium') {
+        setCopilotState('compact');
+      }
+    }
+
+    function askCopilotDirect(queryText) {
+      const input = document.getElementById('chatbot-input');
+      if (input) {
+        input.value = queryText;
+      }
+      return sendChatMessage();
+    }
+
+    function renderSuggestedFaqQuestions(emp) {
+      const container = document.getElementById('copilot-chips-container');
+      if (!container) return;
+
+      const roleLevel = (emp?.roleLevel || emp?.role || '').toLowerCase();
+      let questions = [];
+
+      if (roleLevel.includes('manager') || roleLevel.includes('director') || roleLevel === 'ceo') {
+        questions = [
+          "How is my team progressing?",
+          "Which Associates are behind?",
+          "What are my Leads working on?",
+          "What SLA blockers are pending?",
+          "What is the department completion rate?",
+          "Who should I contact if I need help?"
+        ];
+      } else if (roleLevel.includes('lead') || roleLevel.includes('senior')) {
+        questions = [
+          "What are my priorities today?",
+          "How are my Associates progressing?",
+          "What Associate tasks need attention?",
+          "Who is my Manager?",
+          "What is my team's onboarding status?",
+          "Who should I contact if I need help?"
+        ];
+      } else {
+        // Associate (Default)
+        questions = [
+          "What's my task for today?",
+          "What do I need to complete this week?",
+          "Who is my reporting manager?",
+          "Who is my Lead?",
+          "What should I complete on Day 1?",
+          "How do I access my department resources?",
+          "What's my onboarding progress?",
+          "Who should I contact if I need help?"
+        ];
+      }
+
+      container.innerHTML = questions.map(q => `
+        <button class="copilot-chip" onclick="askCopilotDirect('${escapeHtml(q)}')" style="cursor: pointer; transition: all 0.15s ease;">
+          ${escapeHtml(q)}
+        </button>
+      `).join('');
+    }
+
+    // Role-Aware Real Data Response Generators
+    function getReportingManagerResponseHtml() {
+      const emp = currentLiveDashboard?.employee;
+      const managerName = emp?.reportingManager || (emp?.roleLevel === 'Manager' ? 'Senior VP of Operations' : (emp?.roleLevel === 'Lead' ? 'Engineering Manager (Vikram Shah)' : 'Rohan Verma (Engineering Manager)'));
+      const managerEmail = emp?.managerEmail || 'rohan.manager@meridian.internal';
+      return `
+        <div style="color: #f8fafc;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">👔 Reporting Manager Information</div>
+          <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.55; margin-bottom: 12px;">
+            Your designated reporting manager is <strong>${escapeHtml(managerName)}</strong>. They oversee department progression, milestone evaluations, and final first-week sign-off.
+          </p>
+          <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 10px 14px; font-size: 0.8rem; margin-bottom: 10px;">
+            <div>📧 Email: <strong>${escapeHtml(managerEmail)}</strong></div>
+            <div>📞 Direct Phone: <strong>+91 (80) 6789-89944</strong></div>
+            <div>🗓️ Scheduled 1:1 Check-In: <strong>Day 1 at 4:30 PM & Day 5 Milestone Review</strong></div>
+          </div>
+          <div style="font-size: 0.8rem; color: #94a3b8;">
+            💡 <em>Your manager receives automatic updates as you complete Day 1 requirements.</em>
+          </div>
+        </div>
+      `;
+    }
+
+    function getReportingLeadResponseHtml() {
+      const emp = currentLiveDashboard?.employee;
+      const isLeadOrManager = emp?.roleLevel === 'Lead' || emp?.roleLevel === 'Manager';
+      if (isLeadOrManager) {
+        return `
+          <div style="color: #f8fafc;">
+            <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">👥 Lead & Supervisory Structure</div>
+            <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.55;">
+              You are authenticated as <strong>${escapeHtml(emp.fullTitle || emp.role)}</strong> (${escapeHtml(emp.roleLevel)}). You report directly to Department Management and oversee your assigned Associates.
+            </p>
+          </div>
+        `;
+      }
+      const leadName = emp?.leadName || 'Priya Sharma (Staff Technical Lead)';
+      return `
+        <div style="color: #f8fafc;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">🤝 Assigned Technical Lead</div>
+          <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.55; margin-bottom: 12px;">
+            Your direct reporting lead is <strong>${escapeHtml(leadName)}</strong>. Your Lead provides technical pair programming, code reviews, and daily unblocking support.
+          </p>
+          <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 10px 14px; font-size: 0.8rem;">
+            <div>📧 Email: <strong>priya.lead@meridian.internal</strong></div>
+            <div>💬 Team Channel: <strong>#eng-dev-team</strong></div>
+            <div>⚡ Next Action: <strong>Day 1 Task 3 (Buddy & Lead Pairing Sync)</strong></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function getOnboardingProgressResponseHtml() {
+      const metrics = currentLiveDashboard?.metrics || { totalTasks: 30, completedTasks: 1, pendingTasks: 29, percentage: 3 };
+      const emp = currentLiveDashboard?.employee || {};
+      return `
+        <div style="color: #f8fafc;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 8px;">📊 Real-Time Onboarding Telemetry</div>
+          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 12px;">
+            Here is your current first-week progress for <strong>${escapeHtml(emp.fullTitle || 'Your Role')}</strong>:
+          </p>
+          <div style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 12px; padding: 14px 18px; margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 0.85rem; font-weight: 700; color: #e2e8f0;">Completion Rate</span>
+              <span style="font-size: 1.1rem; font-weight: 900; color: #34d399;">${metrics.percentage}%</span>
+            </div>
+            <div style="width: 100%; height: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 9999px; overflow: hidden; margin-bottom: 10px;">
+              <div style="width: ${metrics.percentage}%; height: 100%; background: linear-gradient(90deg, #10b981, #06b6d4); border-radius: 9999px;"></div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; text-align: center; font-size: 0.76rem;">
+              <div><strong style="color: #f8fafc; font-size: 0.9rem;">${metrics.completedTasks}</strong><br><span style="color: #94a3b8;">Completed</span></div>
+              <div><strong style="color: #f8fafc; font-size: 0.9rem;">${metrics.pendingTasks}</strong><br><span style="color: #94a3b8;">Pending</span></div>
+              <div><strong style="color: #f8fafc; font-size: 0.9rem;">${metrics.totalTasks}</strong><br><span style="color: #94a3b8;">Total Tasks</span></div>
+            </div>
+          </div>
+          <div style="font-size: 0.8rem; color: #94a3b8;">
+            Cohort Status: <strong style="color: #34d399;">FLOWING</strong> · All systems operational.
+          </div>
+        </div>
+      `;
+    }
+
+    function getWeeklyPlanResponseHtml() {
+      const tasks = currentLiveDashboard?.tasks || [];
+      const days = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'];
+      const daySummaries = days.map(d => {
+        const dayTasks = tasks.filter(t => t.day === d);
+        const done = dayTasks.filter(t => t.status === 'Completed' || t.done).length;
+        return { day: d, count: dayTasks.length, done };
+      });
+
+      return `
+        <div style="color: #f8fafc;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">📅 First-Week Task Roadmap (5-Day Plan)</div>
+          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 12px;">
+            Your first week is structured into 30 authoritative milestones across 5 dedicated days:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">
+            ${daySummaries.map(s => `
+              <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <strong style="color: #f8fafc; font-size: 0.84rem;">${s.day}</strong>
+                  <span style="font-size: 0.74rem; color: #94a3b8; margin-left: 8px;">${s.count} Milestones (${s.done} completed)</span>
+                </div>
+                <button class="copilot-chip" style="padding: 3px 9px; font-size: 0.72rem;" onclick="filterByDay('${s.day}'); setCopilotState('medium');">View ${s.day}</button>
+              </div>
+            `).join('')}
+          </div>
+          <div style="font-size: 0.8rem; color: #94a3b8;">
+            💡 <em>Complete your Day 1 mandatory items first to unlock downstream technical milestones.</em>
+          </div>
+        </div>
+      `;
+    }
+
+    function getDepartmentResourcesResponseHtml() {
+      const emp = currentLiveDashboard?.employee || {};
+      return `
+        <div style="color: #f8fafc;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">📚 Departmental Resources & Access Portals</div>
+          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 12px;">
+            Verified internal links for <strong>${escapeHtml(emp.department || 'Your Department')}</strong>:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.82rem;">
+            <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px;">
+              🔗 <strong>Architecture & Standards Wiki:</strong> <a href="#" style="color: #38bdf8; text-decoration: underline;">wiki.internal/${escapeHtml((emp.department || 'eng').toLowerCase())}/standards</a>
+            </div>
+            <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px;">
+              🐙 <strong>Enterprise GitHub Org:</strong> <a href="#" style="color: #38bdf8; text-decoration: underline;">github.internal/enterprise-org</a>
+            </div>
+            <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px;">
+              🛡️ <strong>IT Service Desk & Provisioning:</strong> <a href="#" style="color: #38bdf8; text-decoration: underline;">servicedesk.internal/access-requests</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function getHighestPriorityTaskResponseHtml() {
+      const tasks = currentLiveDashboard?.tasks || [];
+      const pending = tasks.filter(t => !t.done && t.status !== 'Completed');
+      const critical = pending.find(t => t.priority === 'Critical') || pending.find(t => t.priority === 'High') || pending[0];
+      if (!critical) {
+        return `<div style="color: #34d399; font-weight: 700;">🎉 All high-priority onboarding tasks are completed!</div>`;
+      }
+      return `
+        <div style="color: #f8fafc;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">⚡ Highest Priority Pending Task</div>
+          <div style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span style="font-size: 0.74rem; font-weight: 800; padding: 2px 7px; border-radius: 6px; background: #f59e0b; color: #000;">${critical.priority} PRIORITY</span>
+              <span style="font-size: 0.74rem; color: #fbbf24;">${critical.day} · ${critical.duration}</span>
+            </div>
+            <div style="font-size: 0.92rem; font-weight: 800; color: #ffffff; margin-bottom: 4px;">${escapeHtml(critical.title || critical.taskName)}</div>
+            <div style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.45;">${escapeHtml(critical.description || critical.desc)}</div>
+          </div>
+          <button class="copilot-chip" onclick="explainTaskById('${critical.taskId || 1}')">💡 View Step-by-Step Playbook</button>
+        </div>
+      `;
+    }
+
+    function getLeadAssociateProgressResponseHtml() {
+      return `
+        <div style="color: #f8fafc;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">👥 Assigned Associate Progression Overview</div>
+          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 10px;">
+            Here is the status of Associates assigned under your technical guidance:
+          </p>
+          <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px 16px; font-size: 0.8rem; margin-bottom: 10px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <strong>Aarav Sharma (Associate - Engineer)</strong>
+              <span style="color: #34d399; font-weight: 700;">Day 1 · Flowing</span>
+            </div>
+            <div style="color: #94a3b8; font-size: 0.76rem;">Completed: 2/30 (7%) · Pending: Task 3 (Buddy Pairing)</div>
+          </div>
+          <button class="copilot-chip" onclick="goToStep('step-task-management'); setCopilotState('medium');">⚡ Open Subordinate Task Management</button>
+        </div>
+      `;
+    }
+
+    function getManagerTeamProgressResponseHtml() {
+      return `
+        <div style="color: #f8fafc;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">👔 Departmental Joiner Progression Overview</div>
+          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 10px;">
+            Department onboarding velocity and SLA compliance summary:
+          </p>
+          <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px 16px; font-size: 0.8rem; margin-bottom: 10px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span>Active Department Joiners:</span>
+              <strong style="color: #ffffff;">14 Active</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span>Cohort Velocity:</span>
+              <strong style="color: #34d399;">12 Flowing · 2 Detouring</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Average Completion Rate:</span>
+              <strong style="color: #38bdf8;">68% Overall</strong>
+            </div>
+          </div>
+          <button class="copilot-chip" onclick="goToStep('step-task-management'); setCopilotState('medium');">⚡ Open Management Control Center</button>
+        </div>
+      `;
+    }
+
+    function getRbacRestrictedResponseHtml() {
+      return `
+        <div style="color: #f8fafc;">
+          <div style="font-size: 0.95rem; font-weight: 800; color: #f87171; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+            <span>🔒</span> Role-Based Authorization Policy
+          </div>
+          <p style="font-size: 0.84rem; color: #cbd5e1; line-height: 1.55;">
+            This information is restricted to Management level according to enterprise role governance. As an Associate, you have authorized access to your assigned onboarding roadmap, team directory, and technical documentation.
+          </p>
+        </div>
+      `;
+    }
+
+
     async function sendChatMessage() {
       const input = document.getElementById('chatbot-input');
       const query = input.value.trim();
@@ -6318,14 +7577,62 @@
       input.value = '';
       const lower = query.toLowerCase();
 
-      // Route natural language queries intelligently with 3.5s thinking delay
-      if (lower.includes('contact') || lower.includes('phone') || lower.includes('call') || lower.includes('directory') || lower.includes('number') || lower.includes('who to call') || lower.includes('who to contact')) {
-        runCopilotResponseWithThinking(query, getContactDirectoryResponseHtml);
+      // Comprehensive role-aware natural language query routing
+      if (lower.includes('salary') || lower.includes('compensation') || lower.includes('peer review') || lower.includes('confidential performance')) {
+        return runCopilotResponseWithThinking(query, getRbacRestrictedResponseHtml);
+      }
+
+      if (lower.includes('manager') || lower.includes('reporting manager') || lower.includes('who is my manager') || lower.includes('my manager')) {
+        return runCopilotResponseWithThinking(query, getReportingManagerResponseHtml);
+      }
+
+      if (lower.includes('lead') || lower.includes('reporting lead') || lower.includes('who is my lead') || lower.includes('my lead')) {
+        return runCopilotResponseWithThinking(query, getReportingLeadResponseHtml);
+      }
+
+      if (lower.includes('progress') || lower.includes('how much') || lower.includes('completed') || lower.includes('completion rate')) {
+        return runCopilotResponseWithThinking(query, getOnboardingProgressResponseHtml);
+      }
+
+      if (lower.includes('week') || lower.includes('this week') || lower.includes('5 day') || lower.includes('remaining tasks') || lower.includes('all tasks')) {
+        return runCopilotResponseWithThinking(query, getWeeklyPlanResponseHtml);
+      }
+
+      if (lower.includes('resource') || lower.includes('department resource') || lower.includes('wiki') || lower.includes('docs') || lower.includes('repo')) {
+        return runCopilotResponseWithThinking(query, getDepartmentResourcesResponseHtml);
+      }
+
+      if (lower.includes('highest') || lower.includes('priority') || lower.includes('critical task') || lower.includes('urgent')) {
+        return runCopilotResponseWithThinking(query, getHighestPriorityTaskResponseHtml);
+      }
+
+      if (lower.includes('associates progressing') || lower.includes('associate tasks') || lower.includes('my associates')) {
+        return runCopilotResponseWithThinking(query, getLeadAssociateProgressResponseHtml);
+      }
+
+      if (lower.includes('team progressing') || lower.includes('associates behind') || lower.includes('leads working')) {
+        return runCopilotResponseWithThinking(query, getManagerTeamProgressResponseHtml);
+      }
+
+
+      // Route natural language queries intelligently with realistic thinking delay
+      if (lower.includes('what i have to do') || lower.includes('what do i have to do') || lower.includes('what to do') || lower.includes('what should i do') || lower.includes('what are my tasks') || lower.includes('what is my work') || lower.includes('what do i do') || lower.includes('my tasks')) {
+        return runCopilotResponseWithThinking(query, getWhatIHaveToDoResponseHtml);
         return;
       }
 
-      if (lower.includes('checklist') || (lower.includes('show') && lower.includes('task')) || lower.includes('today') || lower.includes('complete today') || lower.includes('day 1 tasks') || lower.includes('what to do')) {
-        runCopilotResponseWithThinking(query, getChecklistResponseHtml);
+      if (lower.includes('confus') || lower.includes('not sure') || lower.includes('dont know') || lower.includes("don't know") || lower.includes('dont understand') || lower.includes("don't understand") || lower.includes('lost') || lower.includes('clarify')) {
+        return runCopilotResponseWithThinking(query, getConfusionResolutionResponseHtml);
+        return;
+      }
+
+      if (lower.includes('contact') || lower.includes('phone') || lower.includes('call') || lower.includes('directory') || lower.includes('number') || lower.includes('who to call') || lower.includes('who to contact')) {
+        return runCopilotResponseWithThinking(query, getContactDirectoryResponseHtml);
+        return;
+      }
+
+      if (lower.includes('checklist') || (lower.includes('show') && lower.includes('task')) || lower.includes('today') || lower.includes('complete today') || lower.includes('day 1 tasks')) {
+        return runCopilotResponseWithThinking(query, getChecklistResponseHtml);
         return;
       }
 
@@ -6333,7 +7640,7 @@
       const taskNumMatch = lower.match(/(?:explain|what is|tell me about|how to do|help with|details of)?\s*(?:task\s*#?\s*|t\s*)(\d+)/);
       if (taskNumMatch && (lower.includes('explain') || lower.includes('what') || lower.includes('how') || lower.includes('task') || lower.includes('help'))) {
         const taskIdNum = parseInt(taskNumMatch[1], 10);
-        runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(taskIdNum));
+        return runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(taskIdNum));
         return;
       }
 
@@ -6352,17 +7659,17 @@
       });
 
       if (matchedTask && (lower.includes('explain') || lower.includes('how') || lower.includes('what') || lower.includes('help') || lower.includes('guide'))) {
-        runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(matchedTask.taskId));
+        return runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(matchedTask.taskId));
         return;
       }
 
       if (lower.includes('stuck') || lower.includes('blocked') || lower.includes('issue') || lower.includes('problem')) {
-        runCopilotResponseWithThinking(query, getStuckTroubleshootingResponseHtml);
+        return runCopilotResponseWithThinking(query, getStuckTroubleshootingResponseHtml);
         return;
       }
 
       // General query with fallback
-      runCopilotResponseWithThinking(query, async () => {
+      return runCopilotResponseWithThinking(query, async () => {
         const currentEmp = currentLiveDashboard?.employee || { name: 'Aarav Sharma', role: 'Software Engineer', buddy: { name: 'Dhruv Agarwal' } };
         const comp = currentLiveDashboard?.company || { name: 'TechNova' };
 
@@ -7169,6 +8476,1007 @@
     }
 
     // Initialize on load: set Step 1 Gateway active & attach interactive listeners
+    // ==============================================================
+// ROLE-BASED TASK MANAGEMENT & HIERARCHICAL TASK CONTROL ENGINE
+// ==============================================================
+
+let currentMgmtSubordinates = [];
+let filteredMgmtSubordinates = [];
+let currentActiveSubordinate = null;
+let currentSubordinateTasks = [];
+let currentSubordinateDayFilter = 'all';
+let currentSubordinateRoleFilter = 'ALL';
+let currentSubordinateSearchQuery = '';
+
+// Check if current authenticated user has authority to manage tasks
+function isCurrentUserManager() {
+  if (!window.currentLiveDashboard?.employee) return false;
+  const role = (window.currentLiveDashboard.employee.roleLevel || window.currentLiveDashboard.employee.role || '').toLowerCase();
+  return role.includes('manager') || role === 'ceo' || role.includes('director') || role.includes('executive');
+}
+
+function isCurrentUserDataLead() {
+  if (!window.currentLiveDashboard?.employee) return false;
+  const role = (window.currentLiveDashboard.employee.roleLevel || window.currentLiveDashboard.employee.role || '').toLowerCase();
+  return role.includes('lead') || role.includes('senior');
+}
+
+function canCurrentSessionManageTasks() {
+  return isCurrentUserManager() || isCurrentUserDataLead();
+}
+
+// Switch between My Checklist and Subordinate Management inside Step 4A
+function switchJoinerWorkspaceTab(tab) {
+  const checklistBtn = document.getElementById('tab-my-checklist-btn');
+  const mgmtBtn = document.getElementById('tab-subordinate-management-btn');
+  const splitContainer = document.querySelector('.joiner-split-container');
+
+  if (tab === 'management') {
+    if (!canCurrentSessionManageTasks()) {
+      showNotification('🚫 Access Restricted: Associates have execution-only access.');
+      return;
+    }
+    openTaskManagement();
+  } else {
+    goToStep('step-joiner-chatbot');
+    if (checklistBtn) checklistBtn.classList.add('active');
+    if (mgmtBtn) mgmtBtn.classList.remove('active');
+  }
+}
+
+// Open Task Management Control Center
+async function openTaskManagement() {
+  if (!canCurrentSessionManageTasks()) {
+    showNotification('🚫 Access Restricted: Associates have execution-only access.');
+    return;
+  }
+
+  const isMgr = isCurrentUserManager();
+  const isLd = isCurrentUserDataLead();
+
+  // Update Authority Badge
+  const authBadge = document.getElementById('mgmt-authority-badge');
+  const authScope = document.getElementById('mgmt-authority-scope-text');
+  const subLeadFilterBtn = document.getElementById('sub-filter-lead');
+
+  if (isMgr) {
+    if (authBadge) {
+      authBadge.textContent = 'MANAGER HIERARCHY ACTIVE';
+      authBadge.style.background = '#0037b0';
+    }
+    if (authScope) {
+      authScope.textContent = 'Authority Scope: Leads & Associates Across Department';
+    }
+    if (subLeadFilterBtn) subLeadFilterBtn.style.display = 'inline-block';
+  } else if (isLd) {
+    if (authBadge) {
+      authBadge.textContent = 'LEAD HIERARCHY ACTIVE';
+      authBadge.style.background = '#0d9488';
+    }
+    if (authScope) {
+      authScope.textContent = 'Authority Scope: Assigned Associates (Direct Reports)';
+    }
+    // Lead CANNOT manage other leads (Section 9)
+    if (subLeadFilterBtn) subLeadFilterBtn.style.display = 'none';
+  }
+
+  goToStep('step-task-management');
+  await loadSubordinatesList();
+}
+
+// Load manageable subordinates from backend or authoritative dataset
+async function loadSubordinatesList() {
+  const isMgr = isCurrentUserManager();
+  const currentUser = window.currentLiveDashboard?.employee || {};
+  const currentDept = currentUser.department || 'Software Engineering';
+  const currentTeam = currentUser.team || 'Web and Mobile Development';
+
+  let subs = [];
+
+  // Try live API first
+  try {
+    const token = localStorage.getItem('startsmart_token');
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+    const res = await fetch('/api/v1/task-management/subordinates', { headers });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && data.subordinates && data.subordinates.length > 0) {
+        subs = data.subordinates;
+      }
+    }
+  } catch (err) {
+    console.debug('Live subordinates fetch error, using authoritative department roster:', err);
+  }
+
+  // Fallback to authoritative departmental subordinates
+  if (subs.length === 0) {
+    if (isMgr) {
+      // Manager can see both Leads and Associates in team & department
+      subs = [
+        {
+          id: 'sub-lead-01',
+          employeeId: 'EMP-LED-001',
+          name: 'Arjun Patel',
+          role: 'Lead - Senior Software Engineer',
+          roleLevel: 'Lead',
+          department: currentDept,
+          team: currentTeam,
+          managerEmail: currentUser.email || 'manager@technova.demo',
+          buddyEmail: 'admin@technova.demo',
+          totalTasks: 30,
+          completedTasks: 22,
+          progress: 73
+        },
+        {
+          id: 'sub-assoc-01',
+          employeeId: 'EMP-ASC-001',
+          name: 'Rahul Sharma',
+          role: 'Associate - Software Engineer',
+          roleLevel: 'Associate',
+          department: currentDept,
+          team: currentTeam,
+          managerEmail: currentUser.email || 'manager@technova.demo',
+          buddyEmail: 'arjun.patel@technova.demo',
+          totalTasks: 30,
+          completedTasks: 18,
+          progress: 60
+        },
+        {
+          id: 'sub-assoc-02',
+          employeeId: 'EMP-ASC-002',
+          name: 'Aman Patel',
+          role: 'Associate - Frontend Developer',
+          roleLevel: 'Associate',
+          department: currentDept,
+          team: currentTeam,
+          managerEmail: currentUser.email || 'manager@technova.demo',
+          buddyEmail: 'arjun.patel@technova.demo',
+          totalTasks: 30,
+          completedTasks: 12,
+          progress: 40
+        }
+      ];
+    } else {
+      // Lead can ONLY see assigned Associates (Section 8 & 9)
+      subs = [
+        {
+          id: 'sub-assoc-01',
+          employeeId: 'EMP-ASC-001',
+          name: 'Rahul Sharma',
+          role: 'Associate - Software Engineer',
+          roleLevel: 'Associate',
+          department: currentDept,
+          team: currentTeam,
+          managerEmail: 'manager@technova.demo',
+          buddyEmail: currentUser.email || 'lead@technova.demo',
+          totalTasks: 30,
+          completedTasks: 18,
+          progress: 60
+        },
+        {
+          id: 'sub-assoc-02',
+          employeeId: 'EMP-ASC-002',
+          name: 'Aman Patel',
+          role: 'Associate - Frontend Developer',
+          roleLevel: 'Associate',
+          department: currentDept,
+          team: currentTeam,
+          managerEmail: 'manager@technova.demo',
+          buddyEmail: currentUser.email || 'lead@technova.demo',
+          totalTasks: 30,
+          completedTasks: 12,
+          progress: 40
+        }
+      ];
+    }
+  }
+
+  currentMgmtSubordinates = subs;
+  applySubordinateFilters();
+}
+
+function applySubordinateFilters() {
+  let list = currentMgmtSubordinates;
+
+  // Filter by role
+  if (currentSubordinateRoleFilter === 'LEAD') {
+    list = list.filter(s => s.roleLevel === 'Lead' || s.role.toLowerCase().includes('lead'));
+  } else if (currentSubordinateRoleFilter === 'ASSOCIATE') {
+    list = list.filter(s => s.roleLevel === 'Associate' || s.role.toLowerCase().includes('associate'));
+  }
+
+  // Filter by search query
+  if (currentSubordinateSearchQuery) {
+    const q = currentSubordinateSearchQuery.toLowerCase();
+    list = list.filter(s =>
+      s.name.toLowerCase().includes(q) ||
+      (s.employeeId && s.employeeId.toLowerCase().includes(q)) ||
+      s.role.toLowerCase().includes(q)
+    );
+  }
+
+  filteredMgmtSubordinates = list;
+
+  // Update counts
+  const allCount = currentMgmtSubordinates.length;
+  const leadCount = currentMgmtSubordinates.filter(s => s.roleLevel === 'Lead' || s.role.toLowerCase().includes('lead')).length;
+  const assocCount = currentMgmtSubordinates.filter(s => s.roleLevel === 'Associate' || s.role.toLowerCase().includes('associate')).length;
+
+  const countAllEl = document.getElementById('count-sub-all');
+  const countLeadEl = document.getElementById('count-sub-leads');
+  const countAssocEl = document.getElementById('count-sub-assocs');
+  if (countAllEl) countAllEl.textContent = allCount;
+  if (countLeadEl) countLeadEl.textContent = leadCount;
+  if (countAssocEl) countAssocEl.textContent = assocCount;
+
+  // Populate Select Dropdown
+  const select = document.getElementById('mgmt-subordinate-select');
+  if (select) {
+    select.innerHTML = '';
+    if (filteredMgmtSubordinates.length === 0) {
+      select.innerHTML = '<option value="">No matching subordinates found</option>';
+    } else {
+      filteredMgmtSubordinates.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = `${s.name} (${s.roleLevel || 'Associate'} · ${s.progress}%)`;
+        select.appendChild(opt);
+      });
+    }
+  }
+
+  // Auto-select first subordinate if none selected or previous selection gone
+  if (filteredMgmtSubordinates.length > 0) {
+    const prevId = currentActiveSubordinate ? currentActiveSubordinate.id : null;
+    const matched = filteredMgmtSubordinates.find(s => s.id === prevId) || filteredMgmtSubordinates[0];
+    selectSubordinate(matched);
+  } else {
+    currentActiveSubordinate = null;
+    renderSubordinateDetailBanner();
+    renderSubordinateTasksList([]);
+  }
+}
+
+function filterMgmtSubordinatesByRole(role) {
+  currentSubordinateRoleFilter = role;
+  ['all', 'lead', 'assoc'].forEach(k => {
+    const btn = document.getElementById(`sub-filter-${k}`);
+    if (btn) btn.classList.remove('active');
+  });
+
+  if (role === 'ALL') {
+    const b = document.getElementById('sub-filter-all');
+    if (b) b.classList.add('active');
+  } else if (role === 'LEAD') {
+    const b = document.getElementById('sub-filter-lead');
+    if (b) b.classList.add('active');
+  } else if (role === 'ASSOCIATE') {
+    const b = document.getElementById('sub-filter-assoc');
+    if (b) b.classList.add('active');
+  }
+
+  applySubordinateFilters();
+}
+
+function onSubordinateSearchInput() {
+  const input = document.getElementById('mgmt-subordinate-search');
+  currentSubordinateSearchQuery = input ? input.value.trim() : '';
+  applySubordinateFilters();
+}
+
+function onMgmtSubordinateSelectChange() {
+  const select = document.getElementById('mgmt-subordinate-select');
+  const selId = select ? select.value : '';
+  const found = currentMgmtSubordinates.find(s => s.id === selId);
+  if (found) selectSubordinate(found);
+}
+
+// Select and load tasks for subordinate
+async function selectSubordinate(subordinate) {
+  currentActiveSubordinate = subordinate;
+  renderSubordinateDetailBanner();
+  await loadSubordinateTasks(subordinate);
+}
+
+function renderSubordinateDetailBanner() {
+  const card = document.getElementById('mgmt-active-subordinate-card');
+  if (!card) return;
+
+  if (!currentActiveSubordinate) {
+    card.innerHTML = `
+      <div style="text-align: center; padding: 24px; color: var(--color-slate-500);">
+        <p style="font-weight: 600;">No subordinate selected or available.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const s = currentActiveSubordinate;
+  const initials = s.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+
+  const avatar = document.getElementById('mgmt-sub-avatar');
+  const nameEl = document.getElementById('mgmt-sub-name');
+  const roleBadge = document.getElementById('mgmt-sub-role-badge');
+  const deptEl = document.getElementById('mgmt-sub-dept');
+  const empidEl = document.getElementById('mgmt-sub-empid');
+  const mgrEl = document.getElementById('mgmt-sub-manager');
+  const leadEl = document.getElementById('mgmt-sub-lead');
+  const progressPctEl = document.getElementById('mgmt-sub-progress-pct');
+  const completedCountEl = document.getElementById('mgmt-sub-completed-count');
+  const totalCountEl = document.getElementById('mgmt-sub-total-count');
+  const progressBarEl = document.getElementById('mgmt-sub-progress-bar');
+  const modalTargetName = document.getElementById('modal-add-target-name');
+
+  if (avatar) avatar.textContent = initials;
+  if (nameEl) nameEl.textContent = s.name;
+  if (roleBadge) {
+    roleBadge.textContent = s.roleLevel || 'Associate';
+    if (s.roleLevel === 'Lead') {
+      roleBadge.style.background = '#ccfbf1';
+      roleBadge.style.color = '#0f766e';
+    } else {
+      roleBadge.style.background = '#e0f2fe';
+      roleBadge.style.color = '#0284c7';
+    }
+  }
+  if (deptEl) deptEl.textContent = `${s.department} · ${s.team}`;
+  if (empidEl) empidEl.textContent = s.employeeId || 'EMP-001';
+  if (mgrEl) mgrEl.textContent = s.managerEmail ? s.managerEmail.split('@')[0] : 'Rohan Verma (Manager)';
+  if (leadEl) leadEl.textContent = s.buddyEmail ? s.buddyEmail.split('@')[0] : 'Priya Lead';
+  if (progressPctEl) progressPctEl.textContent = s.progress;
+  if (completedCountEl) completedCountEl.textContent = s.completedTasks;
+  if (totalCountEl) totalCountEl.textContent = s.totalTasks;
+  if (progressBarEl) progressBarEl.style.width = `${s.progress}%`;
+  if (modalTargetName) modalTargetName.textContent = s.name;
+}
+
+// Fetch tasks for the active subordinate
+async function loadSubordinateTasks(subordinate) {
+  let tasks = [];
+
+  // Try live API
+  try {
+    const token = localStorage.getItem('startsmart_token');
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+    const res = await fetch(`/api/v1/task-management/employees/${subordinate.id}/tasks`, { headers });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && data.tasks && data.tasks.length > 0) {
+        tasks = data.tasks;
+      }
+    }
+  } catch (err) {
+    console.debug('Error loading live subordinate tasks:', err);
+  }
+
+  // Fallback to authoritative 30-task template with individual custom state
+  if (tasks.length === 0) {
+    // Check if we already cached modified tasks in memory for this employee
+    if (window._employeeTaskStore && window._employeeTaskStore[subordinate.id]) {
+      tasks = window._employeeTaskStore[subordinate.id];
+    } else {
+      // Generate 30 authoritative tasks for the subordinate's role
+      for (let i = 1; i <= 30; i++) {
+        const dayStr = i <= 6 ? 'Day 1' : (i <= 12 ? 'Day 2' : (i <= 18 ? 'Day 3' : (i <= 24 ? 'Day 4' : 'Day 5')));
+        const isDone = (i <= Math.round((subordinate.completedTasks || 18)));
+        tasks.push({
+          id: `TASK_${subordinate.id}_${i}`,
+          taskId: `T${String(i).padStart(3, '0')}`,
+          title: i === 1 ? 'Complete Enterprise Security & Compliance Orientation' : (i === 2 ? 'Meet Reporting Lead & Review Sprint Objectives' : `${subordinate.team} Core Playbook Milestone #${i}`),
+          taskName: i === 1 ? 'Complete Enterprise Security & Compliance Orientation' : (i === 2 ? 'Meet Reporting Lead & Review Sprint Objectives' : `${subordinate.team} Core Playbook Milestone #${i}`),
+          description: `Mandatory onboarding activity for ${subordinate.name} in ${subordinate.department} (${subordinate.team}).`,
+          day: dayStr,
+          priority: i <= 6 ? 'High' : (i <= 20 ? 'Medium' : 'Standard'),
+          category: i % 2 === 0 ? 'Engineering' : 'Compliance',
+          estimatedDuration: '45 mins',
+          state: isDone ? 'DONE' : 'AVAILABLE',
+          status: isDone ? 'Completed' : 'Pending',
+          managementStatus: 'ACTIVE',
+          originType: 'DEFAULT', // DEFAULT, CUSTOM, MODIFIED, ARCHIVED
+          version: 1,
+          orderIndex: i,
+          history: [
+            {
+              modifiedByName: 'System Template',
+              modifiedByRole: 'SYSTEM',
+              action: 'TASK_CREATED',
+              createdAt: '2026-10-04T00:00:00.000Z',
+              summary: 'Initial assignment from authoritative onboarding template'
+            }
+          ]
+        });
+      }
+      if (!window._employeeTaskStore) window._employeeTaskStore = {};
+      window._employeeTaskStore[subordinate.id] = tasks;
+    }
+  }
+
+  currentSubordinateTasks = tasks;
+  updateSubordinateDayCounts();
+  filterMgmtTasksByDay(currentSubordinateDayFilter);
+}
+
+function updateSubordinateDayCounts() {
+  const activeTasks = currentSubordinateTasks.filter(t => t.managementStatus !== 'ARCHIVED');
+  const archivedTasks = currentSubordinateTasks.filter(t => t.managementStatus === 'ARCHIVED');
+
+  const d1 = activeTasks.filter(t => t.day === 'Day 1').length;
+  const d2 = activeTasks.filter(t => t.day === 'Day 2').length;
+  const d3 = activeTasks.filter(t => t.day === 'Day 3').length;
+  const d4 = activeTasks.filter(t => t.day === 'Day 4').length;
+  const d5 = activeTasks.filter(t => t.day === 'Day 5').length;
+
+  const setT = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  setT('mgmt-count-all', activeTasks.length);
+  setT('mgmt-count-d1', d1);
+  setT('mgmt-count-d2', d2);
+  setT('mgmt-count-d3', d3);
+  setT('mgmt-count-d4', d4);
+  setT('mgmt-count-d5', d5);
+  setT('mgmt-count-archived', archivedTasks.length);
+}
+
+function filterMgmtTasksByDay(day) {
+  currentSubordinateDayFilter = day;
+
+  ['all', 'day1', 'day2', 'day3', 'day4', 'day5', 'archived'].forEach(k => {
+    const btn = document.getElementById(`mgmt-day-pill-${k}`);
+    if (btn) btn.classList.remove('active');
+  });
+
+  const activeBtn = document.getElementById(day === 'all' ? 'mgmt-day-pill-all' : (day === 'archived' ? 'mgmt-day-pill-archived' : `mgmt-day-pill-${day.toLowerCase().replace(' ', '')}`));
+  if (activeBtn) activeBtn.classList.add('active');
+
+  let list = currentSubordinateTasks;
+  if (day === 'archived') {
+    list = list.filter(t => t.managementStatus === 'ARCHIVED');
+  } else {
+    list = list.filter(t => t.managementStatus !== 'ARCHIVED');
+    if (day !== 'all') {
+      list = list.filter(t => t.day === day);
+    }
+  }
+
+  // Sort by orderIndex
+  list.sort((a, b) => (a.orderIndex || 0) - (b.orderIndex || 0));
+
+  renderSubordinateTasksList(list);
+}
+
+function renderSubordinateTasksList(tasks) {
+  const container = document.getElementById('mgmt-tasks-container');
+  if (!container) return;
+
+  if (tasks.length === 0) {
+    container.innerHTML = `
+      <div style="background: #ffffff; border: 1px dashed var(--color-slate-300); border-radius: 12px; padding: 36px 20px; text-align: center; color: var(--color-slate-500);">
+        <p style="font-size: 0.95rem; font-weight: 700; color: var(--color-slate-700); margin: 0 0 6px 0;">No tasks found for this filter.</p>
+        <p style="font-size: 0.82rem; margin: 0 0 16px 0;">Use "+ Add Custom Task" to personalize this onboarding plan.</p>
+        <button class="btn-primary" onclick="openAddTaskModal()" style="padding: 6px 14px; font-size: 0.82rem; background: #0037b0; color: #fff;">+ Add Task</button>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = tasks.map((t, idx) => {
+    const isCompleted = t.state === 'DONE' || t.status === 'Completed';
+    const isArchived = t.managementStatus === 'ARCHIVED';
+
+    // Origin Badge
+    let originBadge = '<span style="font-size: 0.7rem; font-weight: 700; padding: 2px 7px; border-radius: 4px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1;">DEFAULT</span>';
+    if (t.originType === 'CUSTOM' || t.isCustom) {
+      originBadge = '<span style="font-size: 0.7rem; font-weight: 800; padding: 2px 7px; border-radius: 4px; background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0;">CUSTOM</span>';
+    } else if (t.originType === 'MODIFIED' || t.isModified) {
+      originBadge = '<span style="font-size: 0.7rem; font-weight: 800; padding: 2px 7px; border-radius: 4px; background: #fef3c7; color: #92400e; border: 1px solid #fde68a;">MODIFIED</span>';
+    }
+    if (isArchived) {
+      originBadge = '<span style="font-size: 0.7rem; font-weight: 800; padding: 2px 7px; border-radius: 4px; background: #fee2e2; color: #991b1b; border: 1px solid #fecaca;">ARCHIVED</span>';
+    }
+
+    // Priority styling
+    let priorityBadge = '<span style="font-size: 0.7rem; font-weight: 700; color: #0284c7; background: #e0f2fe; padding: 2px 7px; border-radius: 4px;">Standard</span>';
+    if (t.priority === 'High') {
+      priorityBadge = '<span style="font-size: 0.7rem; font-weight: 700; color: #be123c; background: #ffe4e6; padding: 2px 7px; border-radius: 4px;">High</span>';
+    } else if (t.priority === 'Medium') {
+      priorityBadge = '<span style="font-size: 0.7rem; font-weight: 700; color: #b45309; background: #fef3c7; padding: 2px 7px; border-radius: 4px;">Medium</span>';
+    }
+
+    return `
+      <div class="manual-task-card" style="background: #ffffff; border: 1px solid ${isArchived ? '#fecaca' : 'var(--color-slate-200)'}; border-radius: 12px; padding: 18px 22px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; box-shadow: var(--shadow-xs); transition: all 0.2s ease;">
+        <div style="flex: 1;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;">
+            ${originBadge}
+            <span style="font-size: 0.74rem; font-weight: 700; color: var(--color-slate-500); background: var(--color-slate-100); padding: 2px 8px; border-radius: 4px;">${t.day || 'Day 1'}</span>
+            ${priorityBadge}
+            <span style="font-size: 0.72rem; color: var(--color-slate-400); font-weight: 600;">⏱ ${t.estimatedDuration || '45 mins'}</span>
+            <span style="font-size: 0.72rem; color: var(--color-slate-400);">·</span>
+            <span style="font-size: 0.72rem; color: var(--color-slate-500); font-weight: 600;">📂 ${t.category || 'General'}</span>
+            ${isCompleted ? '<span style="font-size: 0.72rem; font-weight: 700; color: #059669; background: #ecfdf5; padding: 1px 6px; border-radius: 4px;">✓ Completed</span>' : '<span style="font-size: 0.72rem; font-weight: 700; color: #64748b; background: #f1f5f9; padding: 1px 6px; border-radius: 4px;">○ Pending</span>'}
+          </div>
+
+          <h3 style="font-size: 0.98rem; font-weight: 800; color: ${isArchived ? '#94a3b8' : 'var(--color-slate-900)'}; margin: 0 0 6px 0; text-decoration: ${isArchived ? 'line-through' : 'none'};">
+            ${escapeHtml(t.title || t.taskName)}
+          </h3>
+
+          <p style="font-size: 0.83rem; color: var(--color-slate-600); margin: 0; line-height: 1.5; max-width: 900px;">
+            ${escapeHtml(t.description || t.purpose || '')}
+          </p>
+
+          ${t.resourceLinks ? `
+            <div style="margin-top: 8px; font-size: 0.75rem;">
+              🔗 <a href="${escapeHtml(t.resourceLinks)}" target="_blank" style="color: #0284c7; text-decoration: underline;">${escapeHtml(t.resourceLinks)}</a>
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- Management Actions Toolbar -->
+        <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0; flex-wrap: wrap;">
+          <!-- Move Up / Down -->
+          ${!isArchived ? `
+            <button title="Move Task Up" class="persona-pill-btn" onclick="moveTaskOrder('${t.id}', 'up')" style="padding: 4px 8px; font-size: 0.75rem;">⬆</button>
+            <button title="Move Task Down" class="persona-pill-btn" onclick="moveTaskOrder('${t.id}', 'down')" style="padding: 4px 8px; font-size: 0.75rem;">⬇</button>
+            <button class="persona-pill-btn" onclick="openEditTaskModal('${t.id}')" style="padding: 4px 10px; font-size: 0.75rem; background: #f8fafc; font-weight: 600;">
+              ✏️ Edit
+            </button>
+            <button class="persona-pill-btn" onclick="promptArchiveTask('${t.id}')" style="padding: 4px 10px; font-size: 0.75rem; color: #be123c; border-color: #fecdd3; background: #fff;">
+              📦 Archive
+            </button>
+          ` : `
+            <button class="persona-pill-btn" onclick="restoreArchivedTask('${t.id}')" style="padding: 4px 12px; font-size: 0.75rem; background: #ecfdf5; color: #047857; border-color: #a7f3d0; font-weight: 700;">
+              🔄 Restore
+            </button>
+          `}
+
+          ${t.isModified ? `
+            <button title="Reset to Default Onboarding Plan" class="persona-pill-btn" onclick="resetTaskToDefault('${t.id}')" style="padding: 4px 8px; font-size: 0.72rem; color: #d97706; border-color: #fde68a;">
+              ↩ Reset Default
+            </button>
+          ` : ''}
+
+          <button class="persona-pill-btn" onclick="openTaskHistoryModal('${t.id}')" style="padding: 4px 8px; font-size: 0.75rem; color: var(--color-slate-600);" title="View Change Audit Log">
+            📜 History
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Modal 1: Add Custom Task
+function openAddTaskModal() {
+  if (!currentActiveSubordinate) {
+    showNotification('Please select a subordinate employee first.');
+    return;
+  }
+  const modal = document.getElementById('modal-mgmt-add-task');
+  const targetName = document.getElementById('modal-add-target-name');
+  if (targetName) targetName.textContent = currentActiveSubordinate.name;
+  if (modal) modal.style.display = 'flex';
+}
+
+function closeAddTaskModal() {
+  const modal = document.getElementById('modal-mgmt-add-task');
+  if (modal) modal.style.display = 'none';
+}
+
+async function submitAddTask(e) {
+  e.preventDefault();
+  if (!currentActiveSubordinate) return;
+
+  const title = document.getElementById('add-task-title').value.trim();
+  const desc = document.getElementById('add-task-desc').value.trim();
+  const day = document.getElementById('add-task-day').value;
+  const priority = document.getElementById('add-task-priority').value;
+  const duration = document.getElementById('add-task-duration').value.trim();
+  const category = document.getElementById('add-task-category').value.trim();
+  const resource = document.getElementById('add-task-resource').value.trim();
+  const required = document.getElementById('add-task-required').checked;
+
+  if (!title) return;
+
+  const taskData = {
+    title,
+    description: desc,
+    day,
+    priority,
+    category: category || 'Engineering',
+    estimatedDuration: duration || '45 mins',
+    resourceLinks: resource || null,
+    required,
+  };
+
+  // Try live API first
+  let created = null;
+  try {
+    const token = localStorage.getItem('startsmart_token');
+    const headers = token ? { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } : { 'Content-Type': 'application/json' };
+    const res = await fetch(`/api/v1/task-management/employees/${currentActiveSubordinate.id}/tasks`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(taskData)
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && data.task) {
+        created = data.task;
+      }
+    }
+  } catch (err) {
+    console.debug('Live add task request error:', err);
+  }
+
+  // Fallback in-memory persistence
+  if (!created) {
+    const newIdx = currentSubordinateTasks.length + 1;
+    created = {
+      id: `TASK_${currentActiveSubordinate.id}_CUSTOM_${Date.now()}`,
+      taskId: `T${String(newIdx).padStart(3, '0')}`,
+      title,
+      taskName: title,
+      description: desc,
+      day,
+      priority,
+      category,
+      estimatedDuration: duration,
+      resourceLinks: resource,
+      state: 'AVAILABLE',
+      status: 'Pending',
+      managementStatus: 'ACTIVE',
+      originType: 'CUSTOM',
+      isCustom: true,
+      version: 1,
+      orderIndex: newIdx,
+      history: [
+        {
+          modifiedByName: window.currentLiveDashboard?.employee?.name || 'Current Manager',
+          modifiedByRole: isCurrentUserManager() ? 'MANAGER' : 'LEAD',
+          action: 'TASK_CREATED',
+          createdAt: new Date().toISOString(),
+          summary: `Custom task added by ${isCurrentUserManager() ? 'Manager' : 'Lead'}`
+        }
+      ]
+    };
+  }
+
+  currentSubordinateTasks.push(created);
+  if (window._employeeTaskStore && window._employeeTaskStore[currentActiveSubordinate.id]) {
+    window._employeeTaskStore[currentActiveSubordinate.id] = currentSubordinateTasks;
+  }
+
+  closeAddTaskModal();
+  document.getElementById('form-mgmt-add-task').reset();
+  updateSubordinateDayCounts();
+  filterMgmtTasksByDay(currentSubordinateDayFilter);
+  showNotification('✓ Task added successfully.');
+}
+
+// Modal 2: Edit Task
+let currentEditingTaskId = null;
+
+function openEditTaskModal(taskId) {
+  const task = currentSubordinateTasks.find(t => t.id === taskId);
+  if (!task) return;
+
+  currentEditingTaskId = taskId;
+  document.getElementById('edit-task-id').value = taskId;
+  document.getElementById('edit-task-version').value = task.version || 1;
+  document.getElementById('edit-task-title').value = task.title || task.taskName || '';
+  document.getElementById('edit-task-desc').value = task.description || task.purpose || '';
+  document.getElementById('edit-task-day').value = task.day || 'Day 1';
+  document.getElementById('edit-task-priority').value = task.priority || 'Medium';
+  document.getElementById('edit-task-duration').value = task.estimatedDuration || '45 mins';
+  document.getElementById('edit-task-category').value = task.category || 'Engineering';
+  document.getElementById('edit-task-resource').value = task.resourceLinks || '';
+
+  const modal = document.getElementById('modal-mgmt-edit-task');
+  if (modal) modal.style.display = 'flex';
+}
+
+function closeEditTaskModal() {
+  const modal = document.getElementById('modal-mgmt-edit-task');
+  if (modal) modal.style.display = 'none';
+  currentEditingTaskId = null;
+}
+
+async function submitEditTask(e) {
+  e.preventDefault();
+  const taskId = document.getElementById('edit-task-id').value;
+  const version = Number(document.getElementById('edit-task-version').value);
+  const task = currentSubordinateTasks.find(t => t.id === taskId);
+  if (!task) return;
+
+  const updates = {
+    title: document.getElementById('edit-task-title').value.trim(),
+    description: document.getElementById('edit-task-desc').value.trim(),
+    day: document.getElementById('edit-task-day').value,
+    priority: document.getElementById('edit-task-priority').value,
+    estimatedDuration: document.getElementById('edit-task-duration').value.trim(),
+    category: document.getElementById('edit-task-category').value.trim(),
+    resourceLinks: document.getElementById('edit-task-resource').value.trim(),
+    expectedVersion: version,
+  };
+
+  // Try live API
+  let updated = null;
+  try {
+    const token = localStorage.getItem('startsmart_token');
+    const headers = token ? { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } : { 'Content-Type': 'application/json' };
+    const res = await fetch(`/api/v1/task-management/tasks/${taskId}`, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify(updates)
+    });
+    if (res.status === 409) {
+      showNotification('⚠️ Conflict: This task was updated by another manager. Please review latest version.');
+      return;
+    }
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && data.task) {
+        updated = data.task;
+      }
+    }
+  } catch (err) {
+    console.debug('Live task edit error:', err);
+  }
+
+  // Update in local task store
+  task.title = updates.title;
+  task.taskName = updates.title;
+  task.description = updates.description;
+  task.purpose = updates.description;
+  task.day = updates.day;
+  task.priority = updates.priority;
+  task.estimatedDuration = updates.estimatedDuration;
+  task.category = updates.category;
+  task.resourceLinks = updates.resourceLinks;
+  task.isModified = true;
+  if (task.originType !== 'CUSTOM') task.originType = 'MODIFIED';
+  task.version = (task.version || 1) + 1;
+
+  if (!task.history) task.history = [];
+  task.history.unshift({
+    modifiedByName: window.currentLiveDashboard?.employee?.name || 'Manager',
+    modifiedByRole: isCurrentUserManager() ? 'MANAGER' : 'LEAD',
+    action: 'TASK_UPDATED',
+    createdAt: new Date().toISOString(),
+    summary: `Task updated by ${isCurrentUserManager() ? 'Manager' : 'Lead'}`
+  });
+
+  closeEditTaskModal();
+  updateSubordinateDayCounts();
+  filterMgmtTasksByDay(currentSubordinateDayFilter);
+  showNotification('✓ Task updated successfully.');
+}
+
+// Modal 3: Archive Task (Safe)
+let pendingArchiveTaskId = null;
+
+function promptArchiveTask(taskId) {
+  const task = currentSubordinateTasks.find(t => t.id === taskId);
+  if (!task) return;
+
+  pendingArchiveTaskId = taskId;
+  const titleDisplay = document.getElementById('archive-task-title-display');
+  const subDisplay = document.getElementById('archive-task-sub-display');
+  if (titleDisplay) titleDisplay.textContent = task.title || task.taskName;
+  if (subDisplay) subDisplay.textContent = `Assigned to: ${currentActiveSubordinate?.name || 'Employee'}`;
+
+  const confirmBtn = document.getElementById('btn-confirm-archive-task');
+  if (confirmBtn) {
+    confirmBtn.onclick = () => confirmArchiveTask(taskId);
+  }
+
+  const modal = document.getElementById('modal-mgmt-archive-confirm');
+  if (modal) modal.style.display = 'flex';
+}
+
+function closeArchiveModal() {
+  const modal = document.getElementById('modal-mgmt-archive-confirm');
+  if (modal) modal.style.display = 'none';
+  pendingArchiveTaskId = null;
+}
+
+async function confirmArchiveTask(taskId) {
+  const task = currentSubordinateTasks.find(t => t.id === taskId);
+  if (!task) return;
+
+  // Try live API
+  try {
+    const token = localStorage.getItem('startsmart_token');
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+    await fetch(`/api/v1/task-management/tasks/${taskId}/archive`, {
+      method: 'POST',
+      headers
+    });
+  } catch (err) {
+    console.debug('Live archive call error:', err);
+  }
+
+  task.managementStatus = 'ARCHIVED';
+  task.version = (task.version || 1) + 1;
+  if (!task.history) task.history = [];
+  task.history.unshift({
+    modifiedByName: window.currentLiveDashboard?.employee?.name || 'Manager',
+    modifiedByRole: isCurrentUserManager() ? 'MANAGER' : 'LEAD',
+    action: 'TASK_ARCHIVED',
+    createdAt: new Date().toISOString(),
+    summary: `Archived from active plan by ${isCurrentUserManager() ? 'Manager' : 'Lead'}`
+  });
+
+  closeArchiveModal();
+  updateSubordinateDayCounts();
+  filterMgmtTasksByDay(currentSubordinateDayFilter);
+  showNotification('✓ Task archived successfully.');
+}
+
+async function restoreArchivedTask(taskId) {
+  const task = currentSubordinateTasks.find(t => t.id === taskId);
+  if (!task) return;
+
+  try {
+    const token = localStorage.getItem('startsmart_token');
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+    await fetch(`/api/v1/task-management/tasks/${taskId}/restore`, {
+      method: 'POST',
+      headers
+    });
+  } catch (err) {
+    console.debug('Live restore call error:', err);
+  }
+
+  task.managementStatus = 'ACTIVE';
+  task.version = (task.version || 1) + 1;
+  if (!task.history) task.history = [];
+  task.history.unshift({
+    modifiedByName: window.currentLiveDashboard?.employee?.name || 'Manager',
+    modifiedByRole: isCurrentUserManager() ? 'MANAGER' : 'LEAD',
+    action: 'TASK_RESTORED',
+    createdAt: new Date().toISOString(),
+    summary: `Restored to active plan by ${isCurrentUserManager() ? 'Manager' : 'Lead'}`
+  });
+
+  updateSubordinateDayCounts();
+  filterMgmtTasksByDay(currentSubordinateDayFilter);
+  showNotification('✓ Task restored successfully.');
+}
+
+async function resetTaskToDefault(taskId) {
+  const task = currentSubordinateTasks.find(t => t.id === taskId);
+  if (!task) return;
+
+  try {
+    const token = localStorage.getItem('startsmart_token');
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+    await fetch(`/api/v1/task-management/tasks/${taskId}/reset-default`, {
+      method: 'POST',
+      headers
+    });
+  } catch (err) {
+    console.debug('Live reset-default call error:', err);
+  }
+
+  task.originType = 'DEFAULT';
+  task.isModified = false;
+  task.version = (task.version || 1) + 1;
+  if (!task.history) task.history = [];
+  task.history.unshift({
+    modifiedByName: window.currentLiveDashboard?.employee?.name || 'Manager',
+    modifiedByRole: isCurrentUserManager() ? 'MANAGER' : 'LEAD',
+    action: 'DEFAULT_RESTORED',
+    createdAt: new Date().toISOString(),
+    summary: 'Restored back to default template configuration'
+  });
+
+  filterMgmtTasksByDay(currentSubordinateDayFilter);
+  showNotification('✓ Task restored to default template.');
+}
+
+// Reordering Tasks
+async function moveTaskOrder(taskId, direction) {
+  const activeTasks = currentSubordinateTasks.filter(t => t.managementStatus !== 'ARCHIVED');
+  const idx = activeTasks.findIndex(t => t.id === taskId);
+  if (idx === -1) return;
+
+  if (direction === 'up' && idx > 0) {
+    const temp = activeTasks[idx].orderIndex;
+    activeTasks[idx].orderIndex = activeTasks[idx - 1].orderIndex;
+    activeTasks[idx - 1].orderIndex = temp;
+  } else if (direction === 'down' && idx < activeTasks.length - 1) {
+    const temp = activeTasks[idx].orderIndex;
+    activeTasks[idx].orderIndex = activeTasks[idx + 1].orderIndex;
+    activeTasks[idx + 1].orderIndex = temp;
+  } else {
+    return;
+  }
+
+  activeTasks.sort((a, b) => a.orderIndex - b.orderIndex);
+  const orderedIds = activeTasks.map(t => t.id);
+
+  try {
+    const token = localStorage.getItem('startsmart_token');
+    const headers = token ? { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } : { 'Content-Type': 'application/json' };
+    await fetch('/api/v1/task-management/tasks/reorder', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ orderedTaskIds: orderedIds })
+    });
+  } catch (err) {
+    console.debug('Live reorder error:', err);
+  }
+
+  filterMgmtTasksByDay(currentSubordinateDayFilter);
+  showNotification('✓ Tasks reordered successfully.');
+}
+
+// Modal 4: Audit History
+async function openTaskHistoryModal(taskId) {
+  const task = currentSubordinateTasks.find(t => t.id === taskId);
+  if (!task) return;
+
+  const modal = document.getElementById('modal-mgmt-history');
+  const subtitle = document.getElementById('history-task-subtitle');
+  const container = document.getElementById('history-timeline-container');
+  if (subtitle) subtitle.textContent = `Showing audit history for "${task.title || task.taskName}"`;
+
+  let historyList = task.history || [];
+
+  // Try live API for full server audit trail
+  try {
+    const token = localStorage.getItem('startsmart_token');
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+    const res = await fetch(`/api/v1/task-management/tasks/${taskId}/history`, { headers });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && data.history && data.history.length > 0) {
+        historyList = data.history;
+      }
+    }
+  } catch (err) {
+    console.debug('Error loading live history:', err);
+  }
+
+  if (container) {
+    if (historyList.length === 0) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 24px; color: var(--color-slate-500);">
+          No audit entries recorded yet for this task.
+        </div>
+      `;
+    } else {
+      container.innerHTML = historyList.map(h => {
+        const dateStr = h.createdAt ? new Date(h.createdAt).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Recently';
+        return `
+          <div style="background: var(--color-slate-50); border: 1px solid var(--color-slate-200); border-radius: 8px; padding: 12px 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span style="font-size: 0.78rem; font-weight: 800; color: var(--color-slate-800);">
+                ${escapeHtml(h.modifiedByName || 'System')} · <span style="color: #0284c7;">${escapeHtml(h.modifiedByRole || 'MANAGER')}</span>
+              </span>
+              <span style="font-size: 0.72rem; color: var(--color-slate-400);">${dateStr}</span>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--color-slate-600); line-height: 1.45;">
+              ${escapeHtml(h.summary || h.action || 'Task state updated')}
+            </div>
+            ${h.previousValue !== undefined && h.newValue !== undefined ? `
+              <div style="font-size: 0.74rem; font-family: monospace; color: var(--color-slate-500); margin-top: 4px;">
+                ${escapeHtml(String(h.previousValue))} → <strong>${escapeHtml(String(h.newValue))}</strong>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  if (modal) modal.style.display = 'flex';
+}
+
+function closeHistoryModal() {
+  const modal = document.getElementById('modal-mgmt-history');
+  if (modal) modal.style.display = 'none';
+}
+
+
     window.addEventListener('DOMContentLoaded', () => {
       goToStep('step-gateway');
       resetCorporateSlideTimer();
@@ -7188,6 +9496,37 @@
       }
     });
   </script>
+
+  <!-- State 3: Compact Bottom-Right Copilot Trigger Button -->
+  <div id="copilot-compact-trigger" onclick="setCopilotState('medium')" role="button" tabindex="0" aria-label="Open onboarding copilot" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setCopilotState('medium');}">
+    <div class="compact-copilot-icon">
+      <img src="copilot-icon.png" onerror="this.src='/copilot-icon.png'" alt="Copilot" />
+      <span class="compact-copilot-dot"></span>
+    </div>
+    <div class="compact-copilot-text">
+      <div class="compact-copilot-title">First-Week Maze Copilot</div>
+      <div class="compact-copilot-sub">Click to expand · <span id="copilot-mini-name">Onboarding</span></div>
+    </div>
+  </div>
+
+  <!-- Polished Loading Overlay after login (Requirement 26) -->
+  <div id="copilot-login-loading-overlay" style="display: none;">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; max-width: 440px; padding: 32px 28px; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 24px; box-shadow: 0 25px 60px rgba(0,0,0,0.85);">
+      <div style="width: 58px; height: 58px; border-radius: 16px; background: #ffffff; padding: 6px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);">
+        <img src="copilot-icon.png" onerror="this.src='/copilot-icon.png'" alt="Copilot Logo" style="width: 100%; height: 100%; object-fit: contain;">
+      </div>
+      <div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #f8fafc; margin-bottom: 6px;">Preparing your onboarding copilot...</div>
+        <div id="copilot-loading-context-text" style="font-size: 0.85rem; color: #94a3b8; line-height: 1.5;">Loading company, department, and authoritative task plan...</div>
+      </div>
+      <div class="thinking-spinner" style="margin-top: 6px;">
+        <span class="spinner-dot dot-1"></span>
+        <span class="spinner-dot dot-2"></span>
+        <span class="spinner-dot dot-3"></span>
+      </div>
+    </div>
+  </div>
+
 </body>
 
 </html>

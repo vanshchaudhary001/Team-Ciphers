@@ -1,8 +1,21 @@
 import { Router, Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+import { JWT_SECRET } from '../middleware/auth.js';
 import { csvDataLoader } from '../services/csvDataLoader.js';
 import { logger } from '../utils/logger.js';
 
 const router = Router();
+
+function getAuthUserFromReq(req: Request): any {
+  const authHeader = req.headers['authorization'];
+  if (!authHeader || !authHeader.startsWith('Bearer ')) return null;
+  const token = authHeader.split(' ')[1];
+  try {
+    return jwt.verify(token, JWT_SECRET);
+  } catch {
+    return null;
+  }
+}
 
 // Helper to sanitize param to string
 function paramToStr(p: string | string[] | undefined): string {
@@ -203,6 +216,14 @@ router.patch('/progress/:progressId', async (req: Request, res: Response) => {
  */
 router.post('/tasks', async (req: Request, res: Response) => {
   try {
+    const caller = getAuthUserFromReq(req);
+    if (caller && (caller.role === 'ASSOCIATE' || caller.role === 'EMPLOYEE')) {
+      return res.status(403).json({
+        success: false,
+        error: 'Forbidden: Associates have execution-only access and cannot create tasks.',
+      });
+    }
+
     const { taskName, applicableRole, department, day, priority, assignedBy, employeeId, resourceId } = req.body;
 
     if (!taskName) {
@@ -472,6 +493,26 @@ router.post('/checklists/:id/tasks', async (req: Request, res: Response) => {
  */
 router.put('/tasks/:id', async (req: Request, res: Response) => {
   try {
+    const caller = getAuthUserFromReq(req);
+    if (caller) {
+      if (caller.role === 'ASSOCIATE' || caller.role === 'EMPLOYEE') {
+        return res.status(403).json({
+          success: false,
+          error: 'Forbidden: Associates have execution-only access and cannot modify tasks.',
+        });
+      }
+      if (caller.role === 'LEAD') {
+        const id = paramToStr(req.params.id);
+        const existing = await csvDataLoader.getTask(id);
+        if (existing && (existing.applicableRole?.includes('Manager') || existing.applicableRole?.includes('Lead'))) {
+          return res.status(403).json({
+            success: false,
+            error: 'Forbidden: Leads cannot modify Manager or Lead tasks.',
+          });
+        }
+      }
+    }
+
     const id = paramToStr(req.params.id);
     const task = await csvDataLoader.updateTask(id, req.body);
     res.json({
@@ -490,6 +531,26 @@ router.put('/tasks/:id', async (req: Request, res: Response) => {
  */
 router.delete('/tasks/:id', async (req: Request, res: Response) => {
   try {
+    const caller = getAuthUserFromReq(req);
+    if (caller) {
+      if (caller.role === 'ASSOCIATE' || caller.role === 'EMPLOYEE') {
+        return res.status(403).json({
+          success: false,
+          error: 'Forbidden: Associates have execution-only access and cannot delete tasks.',
+        });
+      }
+      if (caller.role === 'LEAD') {
+        const id = paramToStr(req.params.id);
+        const existing = await csvDataLoader.getTask(id);
+        if (existing && (existing.applicableRole?.includes('Manager') || existing.applicableRole?.includes('Lead'))) {
+          return res.status(403).json({
+            success: false,
+            error: 'Forbidden: Leads cannot delete Manager or Lead tasks.',
+          });
+        }
+      }
+    }
+
     const id = paramToStr(req.params.id);
     const result = await csvDataLoader.deleteTask(id);
     res.json(result);
