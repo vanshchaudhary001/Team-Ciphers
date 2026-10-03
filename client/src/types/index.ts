@@ -1,19 +1,151 @@
 export type TaskState = 'AVAILABLE' | 'WAITING' | 'LOCKED' | 'DONE';
 export type JourneyHealth = 'FLOWING' | 'DETOURING' | 'STALLED';
-export type UserRole = 'EMPLOYEE' | 'HR_ADMIN' | 'TASK_OWNER' | 'COMPANY_ADMIN' | 'PLATFORM_ADMIN';
+export type UserRole =
+  | 'ASSOCIATE'
+  | 'LEAD'
+  | 'MANAGER'
+  | 'CEO'
+  | 'EMPLOYEE'
+  | 'HR_ADMIN'
+  | 'TASK_OWNER'
+  | 'COMPANY_ADMIN'
+  | 'PLATFORM_ADMIN';
+
+export type RoleLevel = 'Associate' | 'Lead' | 'Manager' | 'CEO';
 
 export interface User {
   id: string;
   name: string;
   email: string;
   role: UserRole;
+  roleLevel?: RoleLevel | string;
+  employeeId?: string;
+  departmentId?: string;
+  departmentName?: string;
+  branch?: string;
+  subBranch?: string;
+  team?: string;
+  positionId?: string;
+  positionTitle?: string;
   title?: string;
+  accountStatus?: string;
   company: {
     id: string;
     name: string;
     emailDomain: string;
   };
   employeeProfileId?: string;
+}
+
+export interface OrgPositionNode {
+  id: string;
+  roleLevel: 'Associate' | 'Lead' | 'Manager';
+  roleTier: string;
+  title: string;
+  fullTitle: string;
+  isCeo: boolean;
+  hierarchyPath: string;
+}
+
+export interface OrgTeamNode {
+  name: string;
+  positions: OrgPositionNode[];
+}
+
+export interface OrgSubBranchNode {
+  name: string;
+  teams: OrgTeamNode[];
+}
+
+export interface OrgBranchNode {
+  name: string;
+  subBranches: OrgSubBranchNode[];
+}
+
+export interface OrgDepartment {
+  id: string;
+  code: string;
+  name: string;
+  deptNumber?: number;
+  branches?: OrgBranchNode[];
+}
+
+export interface OrgPosition {
+  id: string;
+  departmentId: string;
+  departmentCode: string;
+  departmentName: string;
+  branch: string;
+  subBranch: string;
+  team: string;
+  roleLevel: 'Associate' | 'Lead' | 'Manager';
+  roleTier: string;
+  title: string;
+  fullTitle: string;
+  isExecutive: boolean;
+  isCeo: boolean;
+  hierarchyPath: string;
+}
+
+export interface ExecutiveMetrics {
+  totalWorkforce: number;
+  activeOnboardings: number;
+  totalDepartments: number;
+  totalAuthoritativePositions: number;
+  overallCompletionRate: number;
+  totalTasks: number;
+  completedTasks: number;
+  blockedTasks: number;
+  availableTasks: number;
+  cohortHealth: {
+    FLOWING: number;
+    DETOURING: number;
+    STALLED: number;
+  };
+  roleDistribution: {
+    associate: number;
+    lead: number;
+    manager: number;
+    executive: number;
+  };
+  activeBlockersCount: number;
+}
+
+export interface DepartmentSummary {
+  id: string;
+  code: string;
+  name: string;
+  totalPositions: number;
+  headcount: number;
+  activeJoiners: number;
+  completionRate: number;
+  health: 'FLOWING' | 'DETOURING' | 'STALLED';
+}
+
+export interface TeamMemberSummary {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  roleLevel: string;
+  title: string;
+  team: string;
+  branch: string;
+  employeeId?: string;
+  preJoinStatus: string;
+  health: 'FLOWING' | 'DETOURING' | 'STALLED';
+  progress: number;
+  completedTasks: number;
+  totalTasks: number;
+  activeBlockers: Blocker[];
+}
+
+export interface TeamOverviewResponse {
+  teamName: string;
+  departmentId?: string;
+  memberCount: number;
+  members: TeamMemberSummary[];
+  teamBlockers: Blocker[];
 }
 
 export interface EmployeeProfile {
@@ -26,6 +158,13 @@ export interface EmployeeProfile {
   managerEmail?: string;
   buddyName?: string;
   buddyEmail?: string;
+  employeeId?: string;
+  branch?: string;
+  subBranch?: string;
+  team?: string;
+  roleLevel?: string;
+  positionId?: string;
+  positionTitle?: string;
   workMode: string;
   joiningDate: string;
   preJoinStatus: string;

@@ -40,7 +40,16 @@ model User {
   email           String           @unique
   passwordHash    String
   name            String
-  role            String           // EMPLOYEE, HR_ADMIN, TASK_OWNER, COMPANY_ADMIN, PLATFORM_ADMIN
+  role            String           // ASSOCIATE, LEAD, MANAGER, CEO, EMPLOYEE, HR_ADMIN, TASK_OWNER, COMPANY_ADMIN, PLATFORM_ADMIN
+  employeeId      String?
+  departmentId    String?
+  branch          String?
+  subBranch       String?
+  team            String?
+  roleLevel       String?          // Associate, Lead, Manager, CEO
+  positionId      String?
+  accountStatus   String           @default("ACTIVE") // ACTIVE, INACTIVE, SUSPENDED
+  permissions     String?
   avatarUrl       String?
   title           String?
   createdAt       DateTime         @default(now())
@@ -57,6 +66,8 @@ model User {
 
   @@index([companyId])
   @@index([email])
+  @@index([role])
+  @@index([roleLevel])
 }
 
 model EmployeeProfile {
@@ -70,6 +81,13 @@ model EmployeeProfile {
   managerEmail    String?
   buddyName       String?
   buddyEmail      String?
+  employeeId      String?
+  branch          String?
+  subBranch       String?
+  team            String?
+  roleLevel       String?          // Associate, Lead, Manager, CEO
+  positionId      String?
+  positionTitle   String?
   workMode        String           @default("HYBRID") // REMOTE, HYBRID, ONSITE
   joiningDate     DateTime
   preJoinStatus   String           @default("READY")  // READY, AT_RISK, BLOCKED
@@ -531,3 +549,30 @@ model DatasetProgress {
   @@index([employeeId])
   @@index([taskId])
 }
+
+// ==============================================================
+// AUTHORITATIVE ORGANIZATIONAL STRUCTURE (18 DEPARTMENTS & POSITIONS)
+// ==============================================================
+
+model OrgPosition {
+  id             String      @id // e.g. POS-0001
+  departmentId   String      // e.g. DEP-01
+  departmentCode String      // e.g. DEP_01
+  departmentName String      // e.g. ADMINISTRATION
+  branch         String      // e.g. Executive Administration
+  subBranch      String      // e.g. Executive Office Support
+  team           String      // e.g. Executive Office Support
+  roleLevel      String      // Associate, Lead, Manager
+  roleTier       String      // ENTRY, MID, SENIOR
+  title          String      // Executive Assistant
+  fullTitle      String      // Associate - Executive Assistant
+  isExecutive    Boolean     @default(false)
+  isCeo          Boolean     @default(false)
+  hierarchyPath  String
+  createdAt      DateTime    @default(now())
+
+  @@index([departmentId])
+  @@index([roleLevel])
+  @@index([isCeo])
+}
+

@@ -83,9 +83,10 @@ export const LandingPage: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {/* Option 1: Already a Company Member */}
-              <a
-                href="/index.html"
-                className="group relative bg-white border border-slate-200 hover:border-indigo-500 rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
+              <button
+                type="button"
+                onClick={() => navigate('/gateway')}
+                className="group relative bg-white border border-slate-200 hover:border-indigo-500 rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between text-left cursor-pointer"
               >
                 <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 rounded-t-3xl" />
                 <div>
@@ -101,31 +102,31 @@ export const LandingPage: React.FC = () => {
                     Already a Company Member
                   </h3>
                   <p className="mt-3 text-sm text-slate-500 leading-relaxed">
-                    I am an employee, HR partner, mentor buddy, or administrator of an enrolled organization (Microsoft, Amazon, Google, NVIDIA, etc.).
+                    Sign in to your personalized day-one workspace by selecting your role: Associate (Entry Level), Lead (Mid Level), Manager (Senior Level), or CEO (Executive Access).
                   </p>
                   <div className="mt-6 pt-5 border-t border-slate-100 space-y-2.5 text-xs text-slate-700 font-medium">
                     <div className="flex items-center gap-2 text-emerald-600">
-                      <CheckCircle2 className="w-4 h-4 shrink-0" /> Select from enrolled companies (Microsoft, Google, Amazon, NVIDIA)
+                      <CheckCircle2 className="w-4 h-4 shrink-0" /> Dynamic 4-Role Gateway (Associate, Lead, Manager, CEO)
                     </div>
                     <div className="flex items-center gap-2 text-emerald-600">
-                      <CheckCircle2 className="w-4 h-4 shrink-0" /> Automatic role detection (Joiner, HR, Buddy, Admin)
+                      <CheckCircle2 className="w-4 h-4 shrink-0" /> Authoritative 18-Department position mapping
                     </div>
                     <div className="flex items-center gap-2 text-emerald-600">
-                      <CheckCircle2 className="w-4 h-4 shrink-0" /> Interactive AI Onboarding Chatbot for new joiners
+                      <CheckCircle2 className="w-4 h-4 shrink-0" /> Personalized role-specific dashboards & workflows
                     </div>
                   </div>
                 </div>
                 <div className="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between text-sm font-bold text-indigo-600">
-                  <span>Select Your Company</span>
+                  <span>Select Your Role</span>
                   <div className="w-8 h-8 rounded-full bg-indigo-50 group-hover:bg-indigo-600 group-hover:text-white transition-colors flex items-center justify-center">
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                   </div>
                 </div>
-              </a>
+              </button>
 
               {/* Option 2: Register a Company */}
               <a
-                href="/index.html"
+                href="/register.html"
                 className="group relative bg-white border border-slate-200 hover:border-emerald-500 rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
               >
                 <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-green-500 rounded-t-3xl" />

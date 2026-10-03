@@ -1,10 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import fs from 'fs';
+import path from 'path';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('🌱 Starting Start Smart database seed...');
+  console.log('🌱 Starting Start Smart database seed with authoritative organizational structure...');
 
   const passwordHash = await bcrypt.hash('demo1234', 10);
 
@@ -43,69 +45,106 @@ async function main() {
     },
   });
 
-  const medcore = await prisma.company.upsert({
-    where: { emailDomain: 'medcore.demo' },
-    update: {
-      name: 'MedCore Health Systems',
-      industry: 'Healthcare',
-      defaultLocation: 'Delhi',
-      timezone: 'Asia/Kolkata',
-    },
-    create: {
-      name: 'MedCore Health Systems',
-      emailDomain: 'medcore.demo',
-      industry: 'Healthcare',
-      defaultLocation: 'Delhi',
-      timezone: 'Asia/Kolkata',
-    },
-  });
+  console.log('✅ Companies seeded: TechNova Solutions, Finwise Capital');
 
-  console.log('✅ Companies seeded: TechNova, Finwise, MedCore');
+  // 2. Load and Seed Authoritative Organizational Structure
+  // Try locating data/org_structure.json
+  const orgJsonPathCandidates = [
+    path.resolve(process.cwd(), 'data/org_structure.json'),
+    path.resolve(process.cwd(), '../data/org_structure.json'),
+    path.resolve(process.cwd(), '../../data/org_structure.json'),
+  ];
+  let orgData: any = null;
+  for (const p of orgJsonPathCandidates) {
+    if (fs.existsSync(p)) {
+      orgData = JSON.parse(fs.readFileSync(p, 'utf-8'));
+      break;
+    }
+  }
 
-  // 2. Seed Departments, Locations, Roles for TechNova
-  const engDept = await prisma.department.upsert({
-    where: { companyId_code: { companyId: technova.id, code: 'ENG' } },
-    update: {},
-    create: { companyId: technova.id, name: 'Engineering', code: 'ENG' },
-  });
+  if (!orgData) {
+    throw new Error('data/org_structure.json not found! Run scripts/generate_authoritative_org_data.py first.');
+  }
 
-  const hrDept = await prisma.department.upsert({
-    where: { companyId_code: { companyId: technova.id, code: 'HR' } },
-    update: {},
-    create: { companyId: technova.id, name: 'Human Resources', code: 'HR' },
-  });
+  console.log(`📊 Found ${orgData.departments.length} departments and ${orgData.positions.length} positions from authoritative document.`);
 
-  const itDept = await prisma.department.upsert({
-    where: { companyId_code: { companyId: technova.id, code: 'IT' } },
-    update: {},
-    create: { companyId: technova.id, name: 'Information Technology', code: 'IT' },
-  });
+  // Seed all 18 Departments in DB
+  const deptMap = new Map<string, any>();
+  for (const d of orgData.departments) {
+    const dept = await prisma.department.upsert({
+      where: {
+        companyId_code: {
+          companyId: technova.id,
+          code: d.code,
+        },
+      },
+      update: {
+        name: d.name,
+      },
+      create: {
+        companyId: technova.id,
+        name: d.name,
+        code: d.code,
+      },
+    });
+    deptMap.set(d.id, dept);
+    deptMap.set(d.name, dept);
+    deptMap.set(d.code, dept);
+  }
+  console.log(`✅ Seeded all 18 authoritative departments for TechNova.`);
 
+  // Seed all 423 OrgPositions
+  // Clear existing positions to ensure fresh clean mapping
+  await prisma.orgPosition.deleteMany({});
+  
+  for (const pos of orgData.positions) {
+    await prisma.orgPosition.create({
+      data: {
+        id: pos.id,
+        departmentId: pos.departmentId,
+        departmentCode: pos.departmentCode,
+        departmentName: pos.departmentName,
+        branch: pos.branch,
+        subBranch: pos.subBranch,
+        team: pos.team,
+        roleLevel: pos.roleLevel,
+        roleTier: pos.roleTier,
+        title: pos.title,
+        fullTitle: pos.fullTitle,
+        isExecutive: pos.isExecutive || false,
+        isCeo: pos.isCeo || false,
+        hierarchyPath: pos.hierarchyPath,
+      },
+    });
+  }
+  console.log(`✅ Seeded all ${orgData.positions.length} authoritative positions into OrgPosition table.`);
+
+  // 3. Locations
   const blrLoc = await prisma.location.findFirst({
     where: { companyId: technova.id, name: 'Bengaluru' },
   }) || await prisma.location.create({
     data: { companyId: technova.id, name: 'Bengaluru', timezone: 'Asia/Kolkata' },
   });
 
-  await prisma.location.findFirst({
+  const hydLoc = await prisma.location.findFirst({
+    where: { companyId: technova.id, name: 'Hyderabad' },
+  }) || await prisma.location.create({
+    data: { companyId: technova.id, name: 'Hyderabad', timezone: 'Asia/Kolkata' },
+  });
+
+  const delLoc = await prisma.location.findFirst({
     where: { companyId: technova.id, name: 'Delhi' },
   }) || await prisma.location.create({
     data: { companyId: technova.id, name: 'Delhi', timezone: 'Asia/Kolkata' },
   });
 
-  await prisma.location.findFirst({
+  const remoteLoc = await prisma.location.findFirst({
     where: { companyId: technova.id, name: 'Remote' },
   }) || await prisma.location.create({
     data: { companyId: technova.id, name: 'Remote', timezone: 'Asia/Kolkata', isRemote: true },
   });
 
-  const seRole = await prisma.role.findFirst({
-    where: { companyId: technova.id, title: 'Software Engineer' },
-  }) || await prisma.role.create({
-    data: { companyId: technova.id, departmentId: engDept.id, title: 'Software Engineer' },
-  });
-
-  // 3. Seed Owner Groups
+  // 4. Owner Groups
   const itOwnerGroup = await prisma.ownerGroup.upsert({
     where: { companyId_code: { companyId: technova.id, code: 'IT_OPS' } },
     update: { name: 'IT Operations' },
@@ -128,60 +167,314 @@ async function main() {
     },
   });
 
-  // 4. Seed Users for TechNova
+  const secOwnerGroup = await prisma.ownerGroup.upsert({
+    where: { companyId_code: { companyId: technova.id, code: 'SECURITY' } },
+    update: { name: 'Cybersecurity Engineering' },
+    create: {
+      companyId: technova.id,
+      name: 'Cybersecurity Engineering',
+      code: 'SECURITY',
+      description: 'Handles security audits, SSO setup, and compliance tokens',
+    },
+  });
+
+  // 5. Seed Core Role Personas
+  // Get departments
+  const engDept = deptMap.get('DEP-06');
+  const genMgmtDept = deptMap.get('DEP-08');
+  const hrDept = deptMap.get('DEP-10');
+  const sharedDept = deptMap.get('DEP-04');
+  const analyticsDept = deptMap.get('DEP-02');
+  const designDept = deptMap.get('DEP-05');
+  const marketingDept = deptMap.get('DEP-13');
+  const secDept = deptMap.get('DEP-18');
+  const salesDept = deptMap.get('DEP-17');
+  const finDept = deptMap.get('DEP-07');
+
+  // CEO Position from docx: Manager - Chief Executive Officer under GENERAL MANAGEMENT
+  const ceoPos = orgData.positions.find((p: any) => p.isCeo) || orgData.positions.find((p: any) => p.title === 'Chief Executive Officer');
+  // Manager Position from docx: Manager - Engineering Manager under Software Engineering
+  const mgrPos = orgData.positions.find((p: any) => p.departmentId === 'DEP-06' && p.roleLevel === 'Manager' && p.title.includes('Manager')) || orgData.positions.find((p: any) => p.fullTitle === 'Manager - Principal Software Engineer');
+  // Lead Position from docx: Lead - Senior Software Engineer under Software Engineering
+  const leadPos = orgData.positions.find((p: any) => p.departmentId === 'DEP-06' && p.roleLevel === 'Lead' && p.title.includes('Senior')) || orgData.positions.find((p: any) => p.fullTitle === 'Lead - Senior Software Engineer');
+  // Associate Position from docx: Associate - Software Engineer under Software Engineering
+  const assocPos = orgData.positions.find((p: any) => p.departmentId === 'DEP-06' && p.roleLevel === 'Associate' && p.title === 'Software Engineer') || orgData.positions.find((p: any) => p.fullTitle === 'Associate - Software Engineer');
+
+  // A. ASSOCIATE USER
+  const associateUser = await prisma.user.upsert({
+    where: { email: 'associate@technova.demo' },
+    update: {
+      passwordHash,
+      name: 'Aarav Sharma',
+      role: 'ASSOCIATE',
+      employeeId: 'EMP-ASC-001',
+      departmentId: engDept?.id,
+      branch: assocPos?.branch || 'Software Engineering',
+      subBranch: assocPos?.subBranch || 'Web and Mobile Development',
+      team: assocPos?.team || 'Web and Mobile Development',
+      roleLevel: 'Associate',
+      positionId: assocPos?.id || 'POS-0112',
+      title: assocPos?.title || 'Software Engineer',
+      accountStatus: 'ACTIVE',
+    },
+    create: {
+      companyId: technova.id,
+      email: 'associate@technova.demo',
+      passwordHash,
+      name: 'Aarav Sharma',
+      role: 'ASSOCIATE',
+      employeeId: 'EMP-ASC-001',
+      departmentId: engDept?.id,
+      branch: assocPos?.branch || 'Software Engineering',
+      subBranch: assocPos?.subBranch || 'Web and Mobile Development',
+      team: assocPos?.team || 'Web and Mobile Development',
+      roleLevel: 'Associate',
+      positionId: assocPos?.id || 'POS-0112',
+      title: assocPos?.title || 'Software Engineer',
+      accountStatus: 'ACTIVE',
+    },
+  });
+
+  // Also preserve aarav@technova.demo as Associate alias
   const aaravUser = await prisma.user.upsert({
     where: { email: 'aarav@technova.demo' },
-    update: { passwordHash, name: 'Aarav Sharma', role: 'EMPLOYEE', title: 'Software Engineer' },
+    update: {
+      passwordHash,
+      name: 'Aarav Sharma',
+      role: 'ASSOCIATE',
+      employeeId: 'EMP-ASC-001',
+      departmentId: engDept?.id,
+      branch: assocPos?.branch || 'Software Engineering',
+      subBranch: assocPos?.subBranch || 'Web and Mobile Development',
+      team: assocPos?.team || 'Web and Mobile Development',
+      roleLevel: 'Associate',
+      positionId: assocPos?.id || 'POS-0112',
+      title: assocPos?.title || 'Software Engineer',
+      accountStatus: 'ACTIVE',
+    },
     create: {
       companyId: technova.id,
       email: 'aarav@technova.demo',
       passwordHash,
       name: 'Aarav Sharma',
-      role: 'EMPLOYEE',
-      title: 'Software Engineer',
+      role: 'ASSOCIATE',
+      employeeId: 'EMP-ASC-001',
+      departmentId: engDept?.id,
+      branch: assocPos?.branch || 'Software Engineering',
+      subBranch: assocPos?.subBranch || 'Web and Mobile Development',
+      team: assocPos?.team || 'Web and Mobile Development',
+      roleLevel: 'Associate',
+      positionId: assocPos?.id || 'POS-0112',
+      title: assocPos?.title || 'Software Engineer',
+      accountStatus: 'ACTIVE',
     },
   });
 
+  // B. LEAD USER
+  const leadUser = await prisma.user.upsert({
+    where: { email: 'lead@technova.demo' },
+    update: {
+      passwordHash,
+      name: 'Priya Lead',
+      role: 'LEAD',
+      employeeId: 'EMP-LED-001',
+      departmentId: engDept?.id,
+      branch: leadPos?.branch || 'Software Engineering',
+      subBranch: leadPos?.subBranch || 'Web and Mobile Development',
+      team: leadPos?.team || 'Web and Mobile Development',
+      roleLevel: 'Lead',
+      positionId: leadPos?.id || 'POS-0113',
+      title: leadPos?.title || 'Senior Software Engineer',
+      accountStatus: 'ACTIVE',
+    },
+    create: {
+      companyId: technova.id,
+      email: 'lead@technova.demo',
+      passwordHash,
+      name: 'Priya Lead',
+      role: 'LEAD',
+      employeeId: 'EMP-LED-001',
+      departmentId: engDept?.id,
+      branch: leadPos?.branch || 'Software Engineering',
+      subBranch: leadPos?.subBranch || 'Web and Mobile Development',
+      team: leadPos?.team || 'Web and Mobile Development',
+      roleLevel: 'Lead',
+      positionId: leadPos?.id || 'POS-0113',
+      title: leadPos?.title || 'Senior Software Engineer',
+      accountStatus: 'ACTIVE',
+    },
+  });
+
+  // C. MANAGER USER
+  const managerUser = await prisma.user.upsert({
+    where: { email: 'manager@technova.demo' },
+    update: {
+      passwordHash,
+      name: 'Rohan Verma',
+      role: 'MANAGER',
+      employeeId: 'EMP-MGR-001',
+      departmentId: engDept?.id,
+      branch: mgrPos?.branch || 'Software Engineering',
+      subBranch: mgrPos?.subBranch || 'Web and Mobile Development',
+      team: mgrPos?.team || 'Web and Mobile Development',
+      roleLevel: 'Manager',
+      positionId: mgrPos?.id || 'POS-0114',
+      title: mgrPos?.title || 'Principal Software Engineer',
+      accountStatus: 'ACTIVE',
+    },
+    create: {
+      companyId: technova.id,
+      email: 'manager@technova.demo',
+      passwordHash,
+      name: 'Rohan Verma',
+      role: 'MANAGER',
+      employeeId: 'EMP-MGR-001',
+      departmentId: engDept?.id,
+      branch: mgrPos?.branch || 'Software Engineering',
+      subBranch: mgrPos?.subBranch || 'Web and Mobile Development',
+      team: mgrPos?.team || 'Web and Mobile Development',
+      roleLevel: 'Manager',
+      positionId: mgrPos?.id || 'POS-0114',
+      title: mgrPos?.title || 'Principal Software Engineer',
+      accountStatus: 'ACTIVE',
+    },
+  });
+
+  // D. CEO USER (EXECUTIVE ACCESS)
+  const ceoUser = await prisma.user.upsert({
+    where: { email: 'ceo@technova.demo' },
+    update: {
+      passwordHash,
+      name: 'Rajesh Mehta',
+      role: 'CEO',
+      employeeId: 'EMP-CEO-001',
+      departmentId: genMgmtDept?.id,
+      branch: ceoPos?.branch || 'Executive Leadership',
+      subBranch: ceoPos?.subBranch || 'Executive Leadership',
+      team: ceoPos?.team || 'Executive Leadership',
+      roleLevel: 'Manager',
+      positionId: ceoPos?.id || 'POS-0182',
+      title: ceoPos?.title || 'Chief Executive Officer',
+      accountStatus: 'ACTIVE',
+      permissions: JSON.stringify(['ALL', 'EXECUTIVE_VIEW', 'ORG_WIDE_AUDIT']),
+    },
+    create: {
+      companyId: technova.id,
+      email: 'ceo@technova.demo',
+      passwordHash,
+      name: 'Rajesh Mehta',
+      role: 'CEO',
+      employeeId: 'EMP-CEO-001',
+      departmentId: genMgmtDept?.id,
+      branch: ceoPos?.branch || 'Executive Leadership',
+      subBranch: ceoPos?.subBranch || 'Executive Leadership',
+      team: ceoPos?.team || 'Executive Leadership',
+      roleLevel: 'Manager',
+      positionId: ceoPos?.id || 'POS-0182',
+      title: ceoPos?.title || 'Chief Executive Officer',
+      accountStatus: 'ACTIVE',
+      permissions: JSON.stringify(['ALL', 'EXECUTIVE_VIEW', 'ORG_WIDE_AUDIT']),
+    },
+  });
+
+  // Other system users
   const hrUser = await prisma.user.upsert({
     where: { email: 'hr@technova.demo' },
-    update: { passwordHash, name: 'Priya Sharma (HR)', role: 'HR_ADMIN', title: 'Lead People Partner' },
+    update: {
+      passwordHash,
+      name: 'Priya Sharma (HR)',
+      role: 'HR_ADMIN',
+      employeeId: 'EMP-HR-001',
+      departmentId: hrDept?.id,
+      branch: 'Human Resources Operations',
+      subBranch: 'People Operations',
+      team: 'People Operations',
+      roleLevel: 'Lead',
+      title: 'Lead People Partner',
+      accountStatus: 'ACTIVE',
+    },
     create: {
       companyId: technova.id,
       email: 'hr@technova.demo',
       passwordHash,
       name: 'Priya Sharma (HR)',
       role: 'HR_ADMIN',
+      employeeId: 'EMP-HR-001',
+      departmentId: hrDept?.id,
+      branch: 'Human Resources Operations',
+      subBranch: 'People Operations',
+      team: 'People Operations',
+      roleLevel: 'Lead',
       title: 'Lead People Partner',
+      accountStatus: 'ACTIVE',
     },
   });
 
   const itOwnerUser = await prisma.user.upsert({
     where: { email: 'it.owner@technova.demo' },
-    update: { passwordHash, name: 'Vikram IT (IT Ops)', role: 'TASK_OWNER', title: 'IT Systems Lead' },
+    update: {
+      passwordHash,
+      name: 'Vikram IT (IT Ops)',
+      role: 'TASK_OWNER',
+      employeeId: 'EMP-IT-001',
+      departmentId: sharedDept?.id,
+      branch: 'Business Operations',
+      subBranch: 'Infrastructure Support',
+      team: 'IT Operations',
+      roleLevel: 'Lead',
+      title: 'IT Systems Lead',
+      accountStatus: 'ACTIVE',
+    },
     create: {
       companyId: technova.id,
       email: 'it.owner@technova.demo',
       passwordHash,
       name: 'Vikram IT (IT Ops)',
       role: 'TASK_OWNER',
+      employeeId: 'EMP-IT-001',
+      departmentId: sharedDept?.id,
+      branch: 'Business Operations',
+      subBranch: 'Infrastructure Support',
+      team: 'IT Operations',
+      roleLevel: 'Lead',
       title: 'IT Systems Lead',
+      accountStatus: 'ACTIVE',
     },
   });
 
   const adminUser = await prisma.user.upsert({
     where: { email: 'admin@technova.demo' },
-    update: { passwordHash, name: 'Neha Admin', role: 'COMPANY_ADMIN', title: 'Director of Operations' },
+    update: {
+      passwordHash,
+      name: 'Neha Admin',
+      role: 'COMPANY_ADMIN',
+      employeeId: 'EMP-ADM-001',
+      departmentId: genMgmtDept?.id,
+      branch: 'Business Leadership',
+      subBranch: 'Business Unit Management',
+      team: 'Business Unit Management',
+      roleLevel: 'Manager',
+      title: 'Director of Operations',
+      accountStatus: 'ACTIVE',
+    },
     create: {
       companyId: technova.id,
       email: 'admin@technova.demo',
       passwordHash,
       name: 'Neha Admin',
       role: 'COMPANY_ADMIN',
+      employeeId: 'EMP-ADM-001',
+      departmentId: genMgmtDept?.id,
+      branch: 'Business Leadership',
+      subBranch: 'Business Unit Management',
+      team: 'Business Unit Management',
+      roleLevel: 'Manager',
       title: 'Director of Operations',
+      accountStatus: 'ACTIVE',
     },
   });
 
-  // Connect IT Owner to IT Operations group
+  // Link IT Owner to group
   await prisma.ownerGroupMember.upsert({
     where: {
       ownerGroupId_userId: {
@@ -196,74 +489,405 @@ async function main() {
     },
   });
 
-  // 5. Seed Aarav Employee Profile
-  const aaravProfile = await prisma.employeeProfile.upsert({
-    where: { userId: aaravUser.id },
+  // 6. Additional Team Members across Departments (Real Workforce Data)
+  const additionalEmployees = [
+    {
+      name: 'Diya Singh',
+      email: 'diya.singh@technova.demo',
+      role: 'ASSOCIATE',
+      roleLevel: 'Associate',
+      deptId: analyticsDept?.id,
+      branch: 'Data Analytics',
+      subBranch: 'Product Analytics',
+      team: 'Product Analytics',
+      posTitle: 'Associate - Data Analyst',
+      title: 'Data Analyst',
+      managerName: 'Karan Iyer',
+      managerEmail: 'manager@technova.demo',
+      buddyName: 'Priya Lead',
+      buddyEmail: 'lead@technova.demo',
+      locationId: delLoc.id,
+      health: 'FLOWING',
+    },
+    {
+      name: 'Rohan Kapoor',
+      email: 'rohan.kapoor@technova.demo',
+      role: 'ASSOCIATE',
+      roleLevel: 'Associate',
+      deptId: designDept?.id,
+      branch: 'Product Design',
+      subBranch: 'UX Design',
+      team: 'UX Design',
+      posTitle: 'Associate - UX Designer',
+      title: 'UX Designer',
+      managerName: 'Rohan Verma',
+      managerEmail: 'manager@technova.demo',
+      buddyName: 'Priya Lead',
+      buddyEmail: 'lead@technova.demo',
+      locationId: blrLoc.id,
+      health: 'FLOWING',
+    },
+    {
+      name: 'Meera Iyer',
+      email: 'meera.iyer@technova.demo',
+      role: 'ASSOCIATE',
+      roleLevel: 'Associate',
+      deptId: marketingDept?.id,
+      branch: 'Digital Marketing',
+      subBranch: 'Growth Marketing',
+      team: 'Growth Marketing',
+      posTitle: 'Associate - Growth Specialist',
+      title: 'Growth Specialist',
+      managerName: 'Rohan Verma',
+      managerEmail: 'manager@technova.demo',
+      buddyName: 'Priya Lead',
+      buddyEmail: 'lead@technova.demo',
+      locationId: blrLoc.id,
+      health: 'FLOWING',
+    },
+    {
+      name: 'Arjun Malhotra',
+      email: 'arjun.malhotra@technova.demo',
+      role: 'ASSOCIATE',
+      roleLevel: 'Associate',
+      deptId: secDept?.id,
+      branch: 'Cybersecurity Engineering',
+      subBranch: 'Cloud Security',
+      team: 'Cloud Security',
+      posTitle: 'Associate - Cloud Security Engineer',
+      title: 'Cloud Security Engineer',
+      managerName: 'Rohan Verma',
+      managerEmail: 'manager@technova.demo',
+      buddyName: 'Priya Lead',
+      buddyEmail: 'lead@technova.demo',
+      locationId: hydLoc.id,
+      health: 'DETOURING',
+    },
+  ];
+
+  for (let i = 0; i < additionalEmployees.length; i++) {
+    const emp = additionalEmployees[i];
+    const u = await prisma.user.upsert({
+      where: { email: emp.email },
+      update: {
+        passwordHash,
+        name: emp.name,
+        role: emp.role,
+        employeeId: `EMP-ASC-${100 + i}`,
+        departmentId: emp.deptId,
+        branch: emp.branch,
+        subBranch: emp.subBranch,
+        team: emp.team,
+        roleLevel: emp.roleLevel,
+        title: emp.title,
+        accountStatus: 'ACTIVE',
+      },
+      create: {
+        companyId: technova.id,
+        email: emp.email,
+        passwordHash,
+        name: emp.name,
+        role: emp.role,
+        employeeId: `EMP-ASC-${100 + i}`,
+        departmentId: emp.deptId,
+        branch: emp.branch,
+        subBranch: emp.subBranch,
+        team: emp.team,
+        roleLevel: emp.roleLevel,
+        title: emp.title,
+        accountStatus: 'ACTIVE',
+      },
+    });
+
+    const prof = await prisma.employeeProfile.upsert({
+      where: { userId: u.id },
+      update: {
+        companyId: technova.id,
+        departmentId: emp.deptId,
+        locationId: emp.locationId,
+        managerName: emp.managerName,
+        managerEmail: emp.managerEmail,
+        buddyName: emp.buddyName,
+        buddyEmail: emp.buddyEmail,
+        employeeId: `EMP-ASC-${100 + i}`,
+        branch: emp.branch,
+        subBranch: emp.subBranch,
+        team: emp.team,
+        roleLevel: emp.roleLevel,
+        positionTitle: emp.posTitle,
+        workMode: 'HYBRID',
+        preJoinStatus: 'READY',
+        joiningDate: new Date(Date.now() - (i + 1) * 24 * 60 * 60 * 1000),
+      },
+      create: {
+        userId: u.id,
+        companyId: technova.id,
+        departmentId: emp.deptId,
+        locationId: emp.locationId,
+        managerName: emp.managerName,
+        managerEmail: emp.managerEmail,
+        buddyName: emp.buddyName,
+        buddyEmail: emp.buddyEmail,
+        employeeId: `EMP-ASC-${100 + i}`,
+        branch: emp.branch,
+        subBranch: emp.subBranch,
+        team: emp.team,
+        roleLevel: emp.roleLevel,
+        positionTitle: emp.posTitle,
+        workMode: 'HYBRID',
+        preJoinStatus: 'READY',
+        joiningDate: new Date(Date.now() - (i + 1) * 24 * 60 * 60 * 1000),
+      },
+    });
+
+    // Create a journey for each employee
+    const ej = await prisma.journey.create({
+      data: {
+        companyId: technova.id,
+        employeeProfileId: prof.id,
+        name: `${emp.title} Onboarding Journey`,
+        health: emp.health,
+        startDate: new Date(Date.now() - (i + 1) * 24 * 60 * 60 * 1000),
+      },
+    });
+
+    // Seed standard tasks
+    await prisma.journeyTask.create({
+      data: {
+        journeyId: ej.id,
+        companyId: technova.id,
+        title: 'Device & MDM Configuration',
+        category: 'EQUIPMENT',
+        state: 'DONE',
+        required: true,
+        completedAt: new Date(Date.now() - 12 * 60 * 60 * 1000),
+        orderIndex: 1,
+      },
+    });
+
+    await prisma.journeyTask.create({
+      data: {
+        journeyId: ej.id,
+        companyId: technova.id,
+        title: 'Team Orientation & 1-on-1 Meet',
+        category: 'ORIENTATION',
+        state: emp.health === 'FLOWING' ? 'DONE' : 'AVAILABLE',
+        required: true,
+        completedAt: emp.health === 'FLOWING' ? new Date(Date.now() - 6 * 60 * 60 * 1000) : null,
+        orderIndex: 2,
+      },
+    });
+
+    await prisma.journeyTask.create({
+      data: {
+        journeyId: ej.id,
+        companyId: technova.id,
+        title: `${emp.branch} Tooling Access & Provisioning`,
+        category: 'ACCESS',
+        state: emp.health === 'FLOWING' ? 'AVAILABLE' : 'WAITING',
+        required: true,
+        orderIndex: 3,
+      },
+    });
+  }
+
+  // 7. Seed Associate Profile & Full Journey for Aarav / Associate
+  const associateProfile = await prisma.employeeProfile.upsert({
+    where: { userId: associateUser.id },
     update: {
       companyId: technova.id,
-      departmentId: engDept.id,
+      departmentId: engDept?.id,
       locationId: blrLoc.id,
-      roleId: seRole.id,
-      managerName: 'Priya Sharma',
-      managerEmail: 'hr@technova.demo',
-      buddyName: 'Rahul Mehta',
-      buddyEmail: 'rahul.mehta@technova.demo',
+      managerName: 'Rohan Verma',
+      managerEmail: 'manager@technova.demo',
+      buddyName: 'Priya Lead',
+      buddyEmail: 'lead@technova.demo',
+      employeeId: 'EMP-ASC-001',
+      branch: assocPos?.branch || 'Software Engineering',
+      subBranch: assocPos?.subBranch || 'Web and Mobile Development',
+      team: assocPos?.team || 'Web and Mobile Development',
+      roleLevel: 'Associate',
+      positionId: assocPos?.id || 'POS-0112',
+      positionTitle: assocPos?.fullTitle || 'Associate - Software Engineer',
       workMode: 'HYBRID',
       preJoinStatus: 'AT_RISK',
       joiningDate: new Date(),
     },
     create: {
-      userId: aaravUser.id,
+      userId: associateUser.id,
       companyId: technova.id,
-      departmentId: engDept.id,
+      departmentId: engDept?.id,
       locationId: blrLoc.id,
-      roleId: seRole.id,
-      managerName: 'Priya Sharma',
-      managerEmail: 'hr@technova.demo',
-      buddyName: 'Rahul Mehta',
-      buddyEmail: 'rahul.mehta@technova.demo',
+      managerName: 'Rohan Verma',
+      managerEmail: 'manager@technova.demo',
+      buddyName: 'Priya Lead',
+      buddyEmail: 'lead@technova.demo',
+      employeeId: 'EMP-ASC-001',
+      branch: assocPos?.branch || 'Software Engineering',
+      subBranch: assocPos?.subBranch || 'Web and Mobile Development',
+      team: assocPos?.team || 'Web and Mobile Development',
+      roleLevel: 'Associate',
+      positionId: assocPos?.id || 'POS-0112',
+      positionTitle: assocPos?.fullTitle || 'Associate - Software Engineer',
       workMode: 'HYBRID',
       preJoinStatus: 'AT_RISK',
       joiningDate: new Date(),
     },
   });
 
-  // 6. Seed Onboarding Journey for Aarav
-  // Clean existing journey tasks & dependencies for idempotency
-  const existingJourney = await prisma.journey.findFirst({
-    where: { employeeProfileId: aaravProfile.id },
+  // Seed Lead Employee Profile
+  await prisma.employeeProfile.upsert({
+    where: { userId: leadUser.id },
+    update: {
+      companyId: technova.id,
+      departmentId: engDept?.id,
+      locationId: blrLoc.id,
+      managerName: 'Rohan Verma',
+      managerEmail: 'manager@technova.demo',
+      buddyName: 'Neha Admin',
+      buddyEmail: 'admin@technova.demo',
+      employeeId: 'EMP-LED-001',
+      branch: leadPos?.branch || 'Software Engineering',
+      subBranch: leadPos?.subBranch || 'Web and Mobile Development',
+      team: leadPos?.team || 'Web and Mobile Development',
+      roleLevel: 'Lead',
+      positionId: leadPos?.id || 'POS-0113',
+      positionTitle: leadPos?.fullTitle || 'Lead - Senior Software Engineer',
+      workMode: 'HYBRID',
+      preJoinStatus: 'READY',
+      joiningDate: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000),
+    },
+    create: {
+      userId: leadUser.id,
+      companyId: technova.id,
+      departmentId: engDept?.id,
+      locationId: blrLoc.id,
+      managerName: 'Rohan Verma',
+      managerEmail: 'manager@technova.demo',
+      buddyName: 'Neha Admin',
+      buddyEmail: 'admin@technova.demo',
+      employeeId: 'EMP-LED-001',
+      branch: leadPos?.branch || 'Software Engineering',
+      subBranch: leadPos?.subBranch || 'Web and Mobile Development',
+      team: leadPos?.team || 'Web and Mobile Development',
+      roleLevel: 'Lead',
+      positionId: leadPos?.id || 'POS-0113',
+      positionTitle: leadPos?.fullTitle || 'Lead - Senior Software Engineer',
+      workMode: 'HYBRID',
+      preJoinStatus: 'READY',
+      joiningDate: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000),
+    },
   });
 
-  if (existingJourney) {
+  // Seed Manager Employee Profile
+  await prisma.employeeProfile.upsert({
+    where: { userId: managerUser.id },
+    update: {
+      companyId: technova.id,
+      departmentId: engDept?.id,
+      locationId: blrLoc.id,
+      managerName: 'Rajesh Mehta',
+      managerEmail: 'ceo@technova.demo',
+      employeeId: 'EMP-MGR-001',
+      branch: mgrPos?.branch || 'Software Engineering',
+      subBranch: mgrPos?.subBranch || 'Web and Mobile Development',
+      team: mgrPos?.team || 'Web and Mobile Development',
+      roleLevel: 'Manager',
+      positionId: mgrPos?.id || 'POS-0114',
+      positionTitle: mgrPos?.fullTitle || 'Manager - Principal Software Engineer',
+      workMode: 'HYBRID',
+      preJoinStatus: 'READY',
+      joiningDate: new Date(Date.now() - 180 * 24 * 60 * 60 * 1000),
+    },
+    create: {
+      userId: managerUser.id,
+      companyId: technova.id,
+      departmentId: engDept?.id,
+      locationId: blrLoc.id,
+      managerName: 'Rajesh Mehta',
+      managerEmail: 'ceo@technova.demo',
+      employeeId: 'EMP-MGR-001',
+      branch: mgrPos?.branch || 'Software Engineering',
+      subBranch: mgrPos?.subBranch || 'Web and Mobile Development',
+      team: mgrPos?.team || 'Web and Mobile Development',
+      roleLevel: 'Manager',
+      positionId: mgrPos?.id || 'POS-0114',
+      positionTitle: mgrPos?.fullTitle || 'Manager - Principal Software Engineer',
+      workMode: 'HYBRID',
+      preJoinStatus: 'READY',
+      joiningDate: new Date(Date.now() - 180 * 24 * 60 * 60 * 1000),
+    },
+  });
+
+  // Seed CEO Employee Profile
+  await prisma.employeeProfile.upsert({
+    where: { userId: ceoUser.id },
+    update: {
+      companyId: technova.id,
+      departmentId: genMgmtDept?.id,
+      locationId: blrLoc.id,
+      employeeId: 'EMP-CEO-001',
+      branch: ceoPos?.branch || 'Executive Leadership',
+      subBranch: ceoPos?.subBranch || 'Executive Leadership',
+      team: ceoPos?.team || 'Executive Leadership',
+      roleLevel: 'Manager',
+      positionId: ceoPos?.id || 'POS-0182',
+      positionTitle: ceoPos?.fullTitle || 'Manager - Chief Executive Officer',
+      workMode: 'HYBRID',
+      preJoinStatus: 'READY',
+      joiningDate: new Date(Date.now() - 365 * 24 * 60 * 60 * 1000),
+    },
+    create: {
+      userId: ceoUser.id,
+      companyId: technova.id,
+      departmentId: genMgmtDept?.id,
+      locationId: blrLoc.id,
+      employeeId: 'EMP-CEO-001',
+      branch: ceoPos?.branch || 'Executive Leadership',
+      subBranch: ceoPos?.subBranch || 'Executive Leadership',
+      team: ceoPos?.team || 'Executive Leadership',
+      roleLevel: 'Manager',
+      positionId: ceoPos?.id || 'POS-0182',
+      positionTitle: ceoPos?.fullTitle || 'Manager - Chief Executive Officer',
+      workMode: 'HYBRID',
+      preJoinStatus: 'READY',
+      joiningDate: new Date(Date.now() - 365 * 24 * 60 * 60 * 1000),
+    },
+  });
+
+  // Clean and recreate Aarav's detailed onboarding DAG journey
+  const existingJourneys = await prisma.journey.findMany({
+    where: { employeeProfileId: associateProfile.id },
+  });
+  for (const ej of existingJourneys) {
     await prisma.journeyTaskDependency.deleteMany({
-      where: { journeyTask: { journeyId: existingJourney.id } },
+      where: { journeyTask: { journeyId: ej.id } },
     });
     await prisma.blocker.deleteMany({
-      where: { journeyId: existingJourney.id },
+      where: { journeyId: ej.id },
     });
     await prisma.taskNote.deleteMany({
-      where: { task: { journeyId: existingJourney.id } },
+      where: { task: { journeyId: ej.id } },
     });
     await prisma.journeyTask.deleteMany({
-      where: { journeyId: existingJourney.id },
+      where: { journeyId: ej.id },
     });
     await prisma.journey.delete({
-      where: { id: existingJourney.id },
+      where: { id: ej.id },
     });
   }
 
   const aaravJourney = await prisma.journey.create({
     data: {
       companyId: technova.id,
-      employeeProfileId: aaravProfile.id,
-      name: 'Software Engineer First-Week Journey',
-      health: 'DETOURING', // VPN is waiting, but SideQuests like Security Training are available!
-      startDate: new Date(Date.now() - 24 * 60 * 60 * 1000), // Started yesterday
+      employeeProfileId: associateProfile.id,
+      name: 'Associate Software Engineer First-Week Journey',
+      health: 'DETOURING',
+      startDate: new Date(Date.now() - 24 * 60 * 60 * 1000),
     },
   });
 
-  // Tasks in exact required order & states:
-  // 1. Laptop Provisioning -> DONE
+  // Task 1: Laptop Provisioning -> DONE
   const tLaptop = await prisma.journeyTask.create({
     data: {
       journeyId: aaravJourney.id,
@@ -280,7 +904,7 @@ async function main() {
     },
   });
 
-  // 2. VPN Approval -> WAITING (Owner: IT Operations)
+  // Task 2: VPN Approval -> WAITING (Root Blocker)
   const tVpn = await prisma.journeyTask.create({
     data: {
       journeyId: aaravJourney.id,
@@ -298,7 +922,7 @@ async function main() {
     },
   });
 
-  // 3. GitHub Access -> LOCKED (Prereq: VPN Approval)
+  // Task 3: GitHub Access -> LOCKED (Prereq: VPN)
   const tGithub = await prisma.journeyTask.create({
     data: {
       journeyId: aaravJourney.id,
@@ -313,7 +937,7 @@ async function main() {
     },
   });
 
-  // 4. Repository Access -> LOCKED (Prereq: GitHub Access)
+  // Task 4: Repository Access -> LOCKED (Prereq: GitHub)
   const tRepo = await prisma.journeyTask.create({
     data: {
       journeyId: aaravJourney.id,
@@ -328,7 +952,7 @@ async function main() {
     },
   });
 
-  // 5. Development Environment -> LOCKED (Prereq: Repository Access)
+  // Task 5: Development Environment -> LOCKED (Prereq: Repo)
   const tDevEnv = await prisma.journeyTask.create({
     data: {
       journeyId: aaravJourney.id,
@@ -343,7 +967,7 @@ async function main() {
     },
   });
 
-  // 6. First Coding Task -> LOCKED (Prereq: Development Environment)
+  // Task 6: First Coding Task -> LOCKED (Prereq: DevEnv)
   const tFirstCode = await prisma.journeyTask.create({
     data: {
       journeyId: aaravJourney.id,
@@ -358,8 +982,7 @@ async function main() {
     },
   });
 
-  // Independent tasks:
-  // 7. Security Training -> AVAILABLE (Prereq: Laptop Provisioning)
+  // Task 7: Security Training -> AVAILABLE (SideQuest)
   const tSecurity = await prisma.journeyTask.create({
     data: {
       journeyId: aaravJourney.id,
@@ -375,14 +998,14 @@ async function main() {
     },
   });
 
-  // 8. Engineering Orientation -> AVAILABLE (Prereq: Laptop Provisioning)
+  // Task 8: Engineering Orientation -> AVAILABLE (SideQuest)
   const tOrientation = await prisma.journeyTask.create({
     data: {
       journeyId: aaravJourney.id,
       companyId: technova.id,
       title: 'Engineering Culture & Architecture Deep Dive',
-      purpose: 'Review engineering handbook, PR review etiquette, and deployment guidelines.',
-      instructions: 'Watch recorded 45-minute architectural walkthrough in Notion.',
+      purpose: 'Read the architectural design records (ADRs) and watch the recorded system overview video.',
+      instructions: 'Review Notion wiki: /engineering/architecture-overview-2026.',
       category: 'ORIENTATION',
       state: 'AVAILABLE',
       required: false,
@@ -391,14 +1014,14 @@ async function main() {
     },
   });
 
-  // 9. Meet Your Buddy -> AVAILABLE (No prereqs)
+  // Task 9: Buddy 1-on-1 -> AVAILABLE (SideQuest)
   const tBuddy = await prisma.journeyTask.create({
     data: {
       journeyId: aaravJourney.id,
       companyId: technova.id,
-      title: '1-on-1 Coffee Chat with Onboarding Buddy',
-      purpose: 'Meet Rahul Mehta to discuss team norms, questions, and get your first week bearings.',
-      instructions: 'Schedule 30 mins on Google Calendar with Rahul Mehta.',
+      title: '1-on-1 Coffee Chat with Onboarding Lead',
+      purpose: 'Schedule a 30-minute introduction call to discuss team rituals and get unblocked.',
+      instructions: 'Book a slot on Google Calendar with Priya Lead.',
       category: 'HR',
       state: 'AVAILABLE',
       required: false,
@@ -407,24 +1030,7 @@ async function main() {
     },
   });
 
-  // 10. Company Policies Acknowledgment -> AVAILABLE (No prereqs)
-  const tPolicy = await prisma.journeyTask.create({
-    data: {
-      journeyId: aaravJourney.id,
-      companyId: technova.id,
-      title: 'Code of Conduct & Remote Work Policy',
-      purpose: 'Acknowledge company code of ethics, IP assignment, and remote work policy.',
-      instructions: 'Review and sign electronic consent form in BambooHR.',
-      category: 'HR',
-      state: 'AVAILABLE',
-      required: true,
-      slaHours: 48,
-      orderIndex: 10,
-    },
-  });
-
-  // Create Dependencies:
-  // Primary chain: Laptop -> VPN -> GitHub -> Repo -> DevEnv -> FirstCode
+  // Wire up Dependencies:
   await prisma.journeyTaskDependency.createMany({
     data: [
       { journeyTaskId: tVpn.id, dependsOnTaskId: tLaptop.id },
@@ -432,13 +1038,13 @@ async function main() {
       { journeyTaskId: tRepo.id, dependsOnTaskId: tGithub.id },
       { journeyTaskId: tDevEnv.id, dependsOnTaskId: tRepo.id },
       { journeyTaskId: tFirstCode.id, dependsOnTaskId: tDevEnv.id },
-      // Security & Orientation depend on Laptop
       { journeyTaskId: tSecurity.id, dependsOnTaskId: tLaptop.id },
       { journeyTaskId: tOrientation.id, dependsOnTaskId: tLaptop.id },
+      { journeyTaskId: tBuddy.id, dependsOnTaskId: tLaptop.id },
     ],
   });
 
-  // Create Active Blocker Record for Aarav
+  // Blocker for VPN
   await prisma.blocker.create({
     data: {
       journeyId: aaravJourney.id,
@@ -446,325 +1052,74 @@ async function main() {
       rootTaskId: tVpn.id,
       affectedTaskId: tGithub.id,
       status: 'ACTIVE',
-      rootCauseSummary: 'GitHub access is waiting because VPN approval is incomplete with IT Operations. 4 downstream tasks are blocked.',
+      rootCauseSummary: 'VPN Certificate is awaiting IT Operations approval. Downstream tasks (GitHub, Repos, DevEnv, PR) are locked.',
       responsibleOwnerGroupId: itOwnerGroup.id,
       responsibleUserId: itOwnerUser.id,
-      detectedAt: new Date(Date.now() - 8 * 60 * 60 * 1000), // 8 hours ago
+      detectedAt: new Date(Date.now() - 4 * 60 * 60 * 1000),
     },
   });
 
-  // 7. Seed Sample Secondary Employees for TechNova HR View
-  // Riya Mehta - Laptop Delivery Blocker
-  const riyaUser = await prisma.user.upsert({
-    where: { email: 'riya.mehta@technova.demo' },
-    update: { passwordHash, name: 'Riya Mehta', role: 'EMPLOYEE', title: 'Data Analyst' },
-    create: {
-      companyId: technova.id,
-      email: 'riya.mehta@technova.demo',
-      passwordHash,
-      name: 'Riya Mehta',
-      role: 'EMPLOYEE',
-      title: 'Data Analyst',
-    },
-  });
-
-  const riyaProfile = await prisma.employeeProfile.upsert({
-    where: { userId: riyaUser.id },
-    update: {
-      companyId: technova.id,
-      departmentId: engDept.id,
-      locationId: blrLoc.id,
-      managerName: 'Priya Sharma',
-      buddyName: 'Ankit Data',
-      workMode: 'REMOTE',
-      preJoinStatus: 'BLOCKED',
-      joiningDate: new Date(),
-    },
-    create: {
-      userId: riyaUser.id,
-      companyId: technova.id,
-      departmentId: engDept.id,
-      locationId: blrLoc.id,
-      managerName: 'Priya Sharma',
-      buddyName: 'Ankit Data',
-      workMode: 'REMOTE',
-      preJoinStatus: 'BLOCKED',
-      joiningDate: new Date(),
-    },
-  });
-
-  const riyaJourney = await prisma.journey.create({
-    data: {
-      companyId: technova.id,
-      employeeProfileId: riyaProfile.id,
-      name: 'Data Analyst First-Week Journey',
-      health: 'STALLED',
-      startDate: new Date(Date.now() - 32 * 60 * 60 * 1000),
-    },
-  });
-
-  const riyaLaptop = await prisma.journeyTask.create({
-    data: {
-      journeyId: riyaJourney.id,
-      companyId: technova.id,
-      title: 'Laptop Courier Delivery & Tracking',
-      purpose: 'MacBook shipment delivery via BlueDart.',
-      category: 'EQUIPMENT',
-      state: 'WAITING',
-      ownerGroupId: itOwnerGroup.id,
-      assignedUserId: itOwnerUser.id,
-      orderIndex: 1,
-    },
-  });
-
-  await prisma.blocker.create({
-    data: {
-      journeyId: riyaJourney.id,
-      companyId: technova.id,
-      rootTaskId: riyaLaptop.id,
-      affectedTaskId: riyaLaptop.id,
-      status: 'ACTIVE',
-      rootCauseSummary: 'Laptop shipment delayed in transit with BlueDart courier.',
-      responsibleOwnerGroupId: itOwnerGroup.id,
-      responsibleUserId: itOwnerUser.id,
-      detectedAt: new Date(Date.now() - 30 * 60 * 60 * 1000),
-    },
-  });
-
-  // Kabir Singh - HR Documentation Blocker
-  const kabirUser = await prisma.user.upsert({
-    where: { email: 'kabir.singh@technova.demo' },
-    update: { passwordHash, name: 'Kabir Singh', role: 'EMPLOYEE', title: 'Product Manager' },
-    create: {
-      companyId: technova.id,
-      email: 'kabir.singh@technova.demo',
-      passwordHash,
-      name: 'Kabir Singh',
-      role: 'EMPLOYEE',
-      title: 'Product Manager',
-    },
-  });
-
-  const kabirProfile = await prisma.employeeProfile.upsert({
-    where: { userId: kabirUser.id },
-    update: {
-      companyId: technova.id,
-      departmentId: hrDept.id,
-      locationId: blrLoc.id,
-      managerName: 'Priya Sharma',
-      buddyName: 'Sunita PM',
-      workMode: 'ONSITE',
-      preJoinStatus: 'AT_RISK',
-      joiningDate: new Date(),
-    },
-    create: {
-      userId: kabirUser.id,
-      companyId: technova.id,
-      departmentId: hrDept.id,
-      locationId: blrLoc.id,
-      managerName: 'Priya Sharma',
-      buddyName: 'Sunita PM',
-      workMode: 'ONSITE',
-      preJoinStatus: 'AT_RISK',
-      joiningDate: new Date(),
-    },
-  });
-
-  const kabirJourney = await prisma.journey.create({
-    data: {
-      companyId: technova.id,
-      employeeProfileId: kabirProfile.id,
-      name: 'Product Manager Journey',
-      health: 'DETOURING',
-      startDate: new Date(Date.now() - 20 * 60 * 60 * 1000),
-    },
-  });
-
-  const kabirDoc = await prisma.journeyTask.create({
-    data: {
-      journeyId: kabirJourney.id,
-      companyId: technova.id,
-      title: 'HR Background Verification & Documentation',
-      purpose: 'Submit previous employment certificate and government ID.',
-      category: 'HR',
-      state: 'WAITING',
-      ownerGroupId: hrOwnerGroup.id,
-      orderIndex: 1,
-    },
-  });
-
-  await prisma.blocker.create({
-    data: {
-      journeyId: kabirJourney.id,
-      companyId: technova.id,
-      rootTaskId: kabirDoc.id,
-      affectedTaskId: kabirDoc.id,
-      status: 'ACTIVE',
-      rootCauseSummary: 'Pending background check documents verification.',
-      responsibleOwnerGroupId: hrOwnerGroup.id,
-      detectedAt: new Date(Date.now() - 20 * 60 * 60 * 1000),
-    },
-  });
-
-  // 8. Seed Knowledge Sources for TechNova
-  await prisma.knowledgeSource.deleteMany({ where: { companyId: technova.id } });
+  // 8. Seed Knowledge Base Sources
+  await prisma.knowledgeSource.deleteMany({});
   await prisma.knowledgeSource.createMany({
     data: [
       {
         companyId: technova.id,
-        title: 'TechNova VPN & Zero-Trust Remote Access Policy',
-        excerpt: 'VPN approval is handled by IT Operations and requires verified device posture in Jamf Pro.',
-        content: `TechNova employs WireGuard-based Zero Trust Network Access (ZTNA). 
-1. New joiners must have their laptop provisioned and enrolled in Jamf Pro before a VPN certificate is issued.
-2. IT Operations reviews device integrity within 8 business hours.
-3. Once approved, the WireGuard configuration file is automatically pushed to your managed device profile.
-4. You do not need to submit manual Jira tickets; IT is notified automatically upon laptop enrollment.`,
-        sourceUrl: 'https://wiki.technova.internal/it/vpn-guide',
-        category: 'GUIDE',
-        owner: 'IT Operations Team',
-        status: 'APPROVED',
-      },
-      {
-        companyId: technova.id,
-        title: 'GitHub Enterprise Organization & Repository Onboarding',
-        excerpt: 'GitHub access requires active TechNova VPN and mandatory hardware 2FA key configuration.',
-        content: `Access to TechNova GitHub Enterprise (github.com/technova-solutions):
-1. Prerequisites: Active VPN approval is strictly mandatory before GitHub IP allowlisting will succeed.
-2. Once your VPN is active, visit sso.technova.internal/github to link your verified work email.
-3. You will receive an invitation to join the 'technova-engineers' team within 15 minutes.
-4. Ensure hardware FIDO2 or 1Password WebAuthn 2FA is enabled.`,
-        sourceUrl: 'https://wiki.technova.internal/eng/github-access',
-        category: 'GUIDE',
-        owner: 'DevOps & Infrastructure',
-        status: 'APPROVED',
-      },
-      {
-        companyId: technova.id,
-        title: 'Local Development Environment & Docker Microservices Standard',
-        excerpt: 'Step-by-step setup guide for Node.js 22, Docker Compose, and PostgreSQL 16 runtimes.',
-        content: `Standard engineering stack setup:
-1. Clone the core repository with 'git clone git@github.com:technova/core-platform.git'.
-2. Execute 'make bootstrap' to install node packages, configure local envs, and pull containers.
-3. Run 'docker compose up -d' to start local Redis and Postgres databases.
-4. Health checks are accessible at http://localhost:8080/health.`,
-        sourceUrl: 'https://wiki.technova.internal/eng/local-dev-guide',
+        title: 'VPN Certificate & Access Runbook (IT-RB-004)',
+        excerpt: 'Standard operating procedure for issuing internal WireGuard VPN certificates and handling SLA escalation.',
+        content: `### WireGuard VPN Issuance Runbook
+1. Ensure the employee laptop is registered in Jamf Pro MDM.
+2. Verify hardware certificate and serial number against the inventory database.
+3. Generate profile using internal CLI: \`vpn-admin issue --user {email}\`.
+4. The employee receives an automated invite containing their tunnel config.
+5. In case of delay beyond 4 hours, employee can trigger 1-click Nudge to IT Operations on-call engineer.`,
         category: 'RUNBOOK',
-        owner: 'Core Engineering Guild',
+        owner: 'IT Operations (Vikram IT)',
         status: 'APPROVED',
       },
       {
         companyId: technova.id,
-        title: 'Security Compliance & SOC2 Type II Engineering Guidelines',
-        excerpt: 'Mandatory guidelines on code reviews, secret management, and customer data privacy.',
-        content: `TechNova Security Handbook:
-1. Never commit secrets, API keys, or raw JWTs into version control. GitGuardian will automatically revoke exposed credentials.
-2. All pull requests require at least 2 approving reviews and green automated test pipelines.
-3. Complete your KnowBe4 security awareness module within your first 48 hours.`,
-        sourceUrl: 'https://wiki.technova.internal/security/soc2-handbook',
+        title: 'GitHub Enterprise Access & Team Allocation Policy',
+        excerpt: 'Rules governing automated invite dispatch to github.com/technova-solutions upon VPN clearance.',
+        content: `### GitHub Organization Access
+- Prerequisites: Verified VPN certificate and active SSO identity.
+- Team assignment: Employees in Engineering are added to @technova/engineering and their respective team repos.
+- 2FA Requirement: Strict mandatory hardware key (YubiKey) or TOTP authenticator app.`,
         category: 'POLICY',
-        owner: 'InfoSec Team',
+        owner: 'Security Engineering',
+        status: 'APPROVED',
+      },
+      {
+        companyId: technova.id,
+        title: 'TechNova Onboarding FAQ & First-Week Survival Guide',
+        excerpt: 'Frequently asked questions covering meal allowances, Slack channels, buddy pairing, and expense reimbursements.',
+        content: `### Welcome to TechNova Solutions!
+- **Where do I get IT support?** #it-helpdesk or the UNSTICK button in StartSmart.
+- **How does Buddy pairing work?** Every joiner is assigned a Lead/Mentor in their sub-branch to guide daily tasks.
+- **What if a prerequisite task is stuck?** StartSmart will immediately identify SideQuests (Compliance training, ADR reading, Coffee chats) so your Day 1 is never wasted.`,
+        category: 'GUIDE',
+        owner: 'HR People Operations',
         status: 'APPROVED',
       },
     ],
   });
 
-  // 9. Seed Sample Knowledge Gap
-  await prisma.knowledgeGap.deleteMany({ where: { companyId: technova.id } });
-  await prisma.knowledgeGap.create({
-    data: {
-      companyId: technova.id,
-      normalizedQuestion: 'how to request aws staging sandbox credentials',
-      category: 'ACCESS',
-      occurrenceCount: 3,
-      status: 'OPEN',
-      suggestedOwner: 'Cloud Infrastructure Team',
-    },
-  });
-
-  // 10. Seed Notifications for Aarav and IT Owner
-  await prisma.notification.deleteMany({ where: { companyId: technova.id } });
-  await prisma.notification.createMany({
-    data: [
-      {
-        companyId: technova.id,
-        userId: aaravUser.id,
-        type: 'TASK_COMPLETED',
-        title: 'Laptop Provisioning Completed',
-        message: 'Your laptop setup was verified by IT Operations. Welcome to TechNova!',
-        relatedTaskId: tLaptop.id,
-        isRead: true,
-      },
-      {
-        companyId: technova.id,
-        userId: aaravUser.id,
-        type: 'BLOCKER_DETECTED',
-        title: 'Waiting for VPN Approval',
-        message: 'GitHub access is locked until IT Operations issues your VPN certificate. You can work on Security Training meanwhile.',
-        relatedTaskId: tVpn.id,
-        isRead: false,
-      },
-      {
-        companyId: technova.id,
-        userId: itOwnerUser.id,
-        type: 'TASK_ASSIGNED',
-        title: 'Action Required: VPN Certificate for Aarav Sharma',
-        message: 'Aarav completed laptop setup. Please review and approve VPN certificate generation.',
-        relatedTaskId: tVpn.id,
-        isRead: false,
-      },
-    ],
-  });
-
-  // 11. Seed Finwise & MedCore for Tenant Isolation Demonstrations
-  const finwiseAdmin = await prisma.user.upsert({
-    where: { email: 'admin@finwise.demo' },
-    update: { passwordHash, name: 'Finwise Admin', role: 'COMPANY_ADMIN' },
-    create: {
-      companyId: finwise.id,
-      email: 'admin@finwise.demo',
-      passwordHash,
-      name: 'Finwise Admin',
-      role: 'COMPANY_ADMIN',
-    },
-  });
-
-  const finwiseEmployee = await prisma.user.upsert({
-    where: { email: 'rohit@finwise.demo' },
-    update: { passwordHash, name: 'Rohit Verma', role: 'EMPLOYEE' },
-    create: {
-      companyId: finwise.id,
-      email: 'rohit@finwise.demo',
-      passwordHash,
-      name: 'Rohit Verma',
-      role: 'EMPLOYEE',
-    },
-  });
-
-  const medcoreAdmin = await prisma.user.upsert({
-    where: { email: 'admin@medcore.demo' },
-    update: { passwordHash, name: 'MedCore Admin', role: 'COMPANY_ADMIN' },
-    create: {
-      companyId: medcore.id,
-      email: 'admin@medcore.demo',
-      passwordHash,
-      name: 'MedCore Admin',
-      role: 'COMPANY_ADMIN',
-    },
-  });
-
-  console.log('🎉 Seed completed successfully!');
-  console.log('TechNova Demo Accounts:');
-  console.log(' - Employee: aarav@technova.demo (Password: demo1234)');
-  console.log(' - HR Admin: hr@technova.demo (Password: demo1234)');
-  console.log(' - IT Owner: it.owner@technova.demo (Password: demo1234)');
-  console.log(' - Company Admin: admin@technova.demo (Password: demo1234)');
-  console.log('Finwise Demo: admin@finwise.demo / rohit@finwise.demo');
-  console.log('MedCore Demo: admin@medcore.demo');
+  console.log('✅ Seed completed successfully!');
+  console.log('==================================================');
+  console.log('DEMO ACCOUNTS FOR EVALUATION (Password: demo1234):');
+  console.log('1. ASSOCIATE : associate@technova.demo  (Aarav Sharma - Associate Software Engineer)');
+  console.log('2. LEAD      : lead@technova.demo       (Priya Lead - Lead Senior Software Engineer)');
+  console.log('3. MANAGER   : manager@technova.demo    (Rohan Verma - Manager Engineering Manager)');
+  console.log('4. CEO       : ceo@technova.demo        (Rajesh Mehta - Chief Executive Officer)');
+  console.log('5. HR ADMIN  : hr@technova.demo         (Priya Sharma - Lead People Partner)');
+  console.log('6. IT OWNER  : it.owner@technova.demo   (Vikram IT - IT Systems Lead)');
+  console.log('7. ADMIN     : admin@technova.demo      (Neha Admin - Director of Operations)');
+  console.log('==================================================');
 }
 
 main()
   .catch((e) => {
-    console.error('Seed error:', e);
+    console.error('❌ Error during seeding:', e);
     process.exit(1);
   })
   .finally(async () => {

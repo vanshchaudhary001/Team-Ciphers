@@ -11,6 +11,33 @@ describe('START SMART Acceptance Tests', () => {
   let finwiseToken: string;
 
   beforeAll(async () => {
+    // Reset Aarav tasks to initial state for test repeatability
+    const aaravUser = await prisma.user.findUnique({
+      where: { email: 'aarav@technova.demo' },
+      include: { employeeProfile: { include: { journeys: { include: { tasks: true } } } } },
+    });
+
+    if (aaravUser?.employeeProfile?.journeys?.[0]) {
+      const journey = aaravUser.employeeProfile.journeys[0];
+      for (const t of journey.tasks) {
+        let state: any = 'LOCKED';
+        if (t.title.includes('Laptop')) state = 'DONE';
+        else if (t.title.includes('VPN')) state = 'WAITING';
+        else if (t.title.includes('Security')) state = 'AVAILABLE';
+        else if (t.title.includes('GitHub')) state = 'LOCKED';
+
+        await prisma.journeyTask.update({
+          where: { id: t.id },
+          data: { state },
+        });
+      }
+
+      await prisma.journey.update({
+        where: { id: journey.id },
+        data: { health: 'DETOURING' },
+      });
+    }
+
     // 1. Sign in as Aarav Sharma (Employee)
     const aaravRes = await request(app)
       .post('/api/v1/auth/login')

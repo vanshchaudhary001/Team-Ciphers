@@ -96,34 +96,39 @@ export const EmployeeDashboard: React.FC = () => {
       <div className="bg-white border-b border-slate-200 py-8 px-4 sm:px-6 lg:px-8 shadow-2xs">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mb-1.5 flex-wrap">
               <span className="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200">
-                New Joiner Portal
+                {user?.roleLevel || 'Associate'} · Entry Level
               </span>
-              <span className="text-xs text-slate-400">·</span>
-              <span className="text-xs text-slate-500 font-medium">Day 2 of Week 1</span>
+              <span className="text-xs font-semibold text-slate-500">
+                {user?.departmentName || 'ENGINEERING, DEVELOPMENT AND SERVICES'}
+              </span>
+              <span className="text-slate-300">•</span>
+              <span className="text-xs font-semibold text-slate-500">
+                {user?.branch || 'Software Engineering'}
+              </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1.5">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
               Good morning, {user?.name?.split(' ')[0] || 'Aarav'}.
             </h1>
-            <p className="text-sm text-slate-600 mt-1">
-              Welcome to <strong className="text-indigo-950 font-bold">TechNova Solutions</strong>. Let's get you set up for your first contribution.
+            <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
+              Position: <strong className="text-slate-900 font-bold">{user?.positionTitle || user?.title || 'Associate - Software Engineer'}</strong> · Team: <span className="font-semibold text-slate-700">{user?.team || 'Web and Mobile Development'}</span> · ID: <code className="font-mono text-slate-700 font-bold">{user?.employeeId || 'EMP-ASC-001'}</code>
             </p>
 
             {/* People & Context Badges */}
-            <div className="flex flex-wrap items-center gap-3 mt-4 text-xs text-slate-600">
+            <div className="flex flex-wrap items-center gap-2.5 mt-3 text-xs text-slate-600">
               <span className="inline-flex items-center gap-1.5 bg-slate-100 px-3 py-1 rounded-lg font-medium">
                 <Users className="w-3.5 h-3.5 text-indigo-600" />
-                Manager: <strong>Priya Sharma</strong>
+                Manager: <strong>Rohan Verma</strong>
               </span>
               <span className="inline-flex items-center gap-1.5 bg-slate-100 px-3 py-1 rounded-lg font-medium">
-                <Users className="w-3.5 h-3.5 text-emerald-600" />
-                Buddy: <strong>Rahul Mehta</strong>
+                <Users className="w-3.5 h-3.5 text-teal-600" />
+                Lead Mentor: <strong>Priya Lead</strong>
               </span>
               <span className="inline-flex items-center gap-1.5 bg-slate-100 px-3 py-1 rounded-lg font-medium">
                 <MapPin className="w-3.5 h-3.5 text-slate-500" />
-                Bengaluru Office (Hybrid)
+                Bengaluru Campus (Hybrid)
               </span>
             </div>
           </div>

@@ -9,6 +9,15 @@ export interface AuthUser {
   email: string;
   name: string;
   role: string;
+  roleLevel?: string | null;
+  employeeId?: string | null;
+  departmentId?: string | null;
+  branch?: string | null;
+  subBranch?: string | null;
+  team?: string | null;
+  positionId?: string | null;
+  title?: string | null;
+  accountStatus?: string;
   companyId: string;
   employeeProfileId?: string;
 }
@@ -24,6 +33,15 @@ export function generateToken(user: AuthUser): string {
       email: user.email,
       name: user.name,
       role: user.role,
+      roleLevel: user.roleLevel,
+      employeeId: user.employeeId,
+      departmentId: user.departmentId,
+      branch: user.branch,
+      subBranch: user.subBranch,
+      team: user.team,
+      positionId: user.positionId,
+      title: user.title,
+      accountStatus: user.accountStatus,
       companyId: user.companyId,
       employeeProfileId: user.employeeProfileId,
     },
@@ -63,11 +81,27 @@ export async function authenticateToken(
       });
     }
 
+    if (dbUser.accountStatus && dbUser.accountStatus !== 'ACTIVE') {
+      return res.status(403).json({
+        success: false,
+        error: 'Account is inactive. Please contact your organization administrator.',
+      });
+    }
+
     req.user = {
       id: dbUser.id,
       email: dbUser.email,
       name: dbUser.name,
       role: dbUser.role,
+      roleLevel: dbUser.roleLevel,
+      employeeId: dbUser.employeeId,
+      departmentId: dbUser.departmentId,
+      branch: dbUser.branch,
+      subBranch: dbUser.subBranch,
+      team: dbUser.team,
+      positionId: dbUser.positionId,
+      title: dbUser.title,
+      accountStatus: dbUser.accountStatus,
       companyId: dbUser.companyId,
       employeeProfileId: dbUser.employeeProfile?.id,
     };

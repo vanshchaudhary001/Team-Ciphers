@@ -37,14 +37,40 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ success: false, error: 'Invalid email or password' });
     }
 
+    if (user.accountStatus && user.accountStatus !== 'ACTIVE') {
+      return res.status(403).json({
+        success: false,
+        error: 'Account is inactive. Please contact your organization administrator.',
+      });
+    }
+
     const token = generateToken({
       id: user.id,
       email: user.email,
       name: user.name,
       role: user.role,
+      roleLevel: user.roleLevel,
+      employeeId: user.employeeId,
+      departmentId: user.departmentId,
+      branch: user.branch,
+      subBranch: user.subBranch,
+      team: user.team,
+      positionId: user.positionId,
+      title: user.title,
+      accountStatus: user.accountStatus,
       companyId: user.companyId,
       employeeProfileId: user.employeeProfile?.id,
     });
+
+    // Lookup department info if departmentId exists
+    const dept = user.departmentId
+      ? await prisma.department.findUnique({ where: { id: user.departmentId } })
+      : null;
+
+    // Lookup position info if positionId exists
+    const position = user.positionId
+      ? await prisma.orgPosition.findUnique({ where: { id: user.positionId } })
+      : null;
 
     return res.json({
       success: true,
@@ -54,7 +80,17 @@ router.post('/login', async (req, res) => {
         email: user.email,
         name: user.name,
         role: user.role,
+        roleLevel: user.roleLevel || 'Associate',
+        employeeId: user.employeeId,
+        departmentId: user.departmentId,
+        departmentName: dept?.name,
+        branch: user.branch,
+        subBranch: user.subBranch,
+        team: user.team,
+        positionId: user.positionId,
+        positionTitle: position?.fullTitle || user.title,
         title: user.title,
+        accountStatus: user.accountStatus,
         company: {
           id: user.company.id,
           name: user.company.name,
@@ -90,9 +126,26 @@ router.post('/demo-switch', async (req, res) => {
       email: user.email,
       name: user.name,
       role: user.role,
+      roleLevel: user.roleLevel,
+      employeeId: user.employeeId,
+      departmentId: user.departmentId,
+      branch: user.branch,
+      subBranch: user.subBranch,
+      team: user.team,
+      positionId: user.positionId,
+      title: user.title,
+      accountStatus: user.accountStatus,
       companyId: user.companyId,
       employeeProfileId: user.employeeProfile?.id,
     });
+
+    const dept = user.departmentId
+      ? await prisma.department.findUnique({ where: { id: user.departmentId } })
+      : null;
+
+    const position = user.positionId
+      ? await prisma.orgPosition.findUnique({ where: { id: user.positionId } })
+      : null;
 
     return res.json({
       success: true,
@@ -102,7 +155,17 @@ router.post('/demo-switch', async (req, res) => {
         email: user.email,
         name: user.name,
         role: user.role,
+        roleLevel: user.roleLevel || 'Associate',
+        employeeId: user.employeeId,
+        departmentId: user.departmentId,
+        departmentName: dept?.name,
+        branch: user.branch,
+        subBranch: user.subBranch,
+        team: user.team,
+        positionId: user.positionId,
+        positionTitle: position?.fullTitle || user.title,
         title: user.title,
+        accountStatus: user.accountStatus,
         company: {
           id: user.company.id,
           name: user.company.name,
@@ -137,6 +200,14 @@ router.get('/me', authenticateToken, async (req: AuthenticatedRequest, res: Resp
       return res.status(404).json({ success: false, error: 'User not found' });
     }
 
+    const dept = user.departmentId
+      ? await prisma.department.findUnique({ where: { id: user.departmentId } })
+      : null;
+
+    const position = user.positionId
+      ? await prisma.orgPosition.findUnique({ where: { id: user.positionId } })
+      : null;
+
     return res.json({
       success: true,
       user: {
@@ -144,7 +215,17 @@ router.get('/me', authenticateToken, async (req: AuthenticatedRequest, res: Resp
         email: user.email,
         name: user.name,
         role: user.role,
+        roleLevel: user.roleLevel || 'Associate',
+        employeeId: user.employeeId,
+        departmentId: user.departmentId,
+        departmentName: dept?.name || user.employeeProfile?.department?.name,
+        branch: user.branch || user.employeeProfile?.branch,
+        subBranch: user.subBranch || user.employeeProfile?.subBranch,
+        team: user.team || user.employeeProfile?.team,
+        positionId: user.positionId || user.employeeProfile?.positionId,
+        positionTitle: position?.fullTitle || user.employeeProfile?.positionTitle || user.title,
         title: user.title,
+        accountStatus: user.accountStatus,
         company: user.company,
         profile: user.employeeProfile,
       },

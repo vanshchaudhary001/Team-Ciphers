@@ -97,10 +97,28 @@ export const Navbar: React.FC = () => {
   // Role-based Navigation Items
   const navItems: NavItem[] = [
     {
-      label: 'My Journey',
-      path: '/dashboard',
+      label: 'My Onboarding',
+      path: '/dashboard/associate',
       icon: 'explore',
-      roles: ['EMPLOYEE'],
+      roles: ['ASSOCIATE', 'EMPLOYEE'],
+    },
+    {
+      label: 'Lead Control Hub',
+      path: '/dashboard/lead',
+      icon: 'groups',
+      roles: ['LEAD', 'COMPANY_ADMIN', 'PLATFORM_ADMIN'],
+    },
+    {
+      label: 'Management Hub',
+      path: '/dashboard/manager',
+      icon: 'business_center',
+      roles: ['MANAGER', 'COMPANY_ADMIN', 'PLATFORM_ADMIN'],
+    },
+    {
+      label: 'Executive CEO Portal',
+      path: '/dashboard/ceo',
+      icon: 'military_tech',
+      roles: ['CEO', 'COMPANY_ADMIN', 'PLATFORM_ADMIN'],
     },
     {
       label: 'HR Command',
@@ -118,19 +136,19 @@ export const Navbar: React.FC = () => {
       label: 'Access Map',
       path: '/rippleview',
       icon: 'hub',
-      roles: ['EMPLOYEE', 'HR_ADMIN', 'TASK_OWNER', 'COMPANY_ADMIN'],
+      roles: ['ASSOCIATE', 'LEAD', 'MANAGER', 'CEO', 'EMPLOYEE', 'HR_ADMIN', 'TASK_OWNER', 'COMPANY_ADMIN'],
     },
     {
       label: 'People & Support',
       path: '/knowledge',
       icon: 'support_agent',
-      roles: ['EMPLOYEE', 'HR_ADMIN', 'TASK_OWNER', 'COMPANY_ADMIN'],
+      roles: ['ASSOCIATE', 'LEAD', 'MANAGER', 'CEO', 'EMPLOYEE', 'HR_ADMIN', 'TASK_OWNER', 'COMPANY_ADMIN'],
     },
     {
       label: 'Pre-Join',
       path: '/pre-join',
       icon: 'verified_user',
-      roles: ['HR_ADMIN', 'EMPLOYEE', 'COMPANY_ADMIN'],
+      roles: ['HR_ADMIN', 'ASSOCIATE', 'LEAD', 'MANAGER', 'EMPLOYEE', 'COMPANY_ADMIN'],
     },
     {
       label: 'Admin Setup',

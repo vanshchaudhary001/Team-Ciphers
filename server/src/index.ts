@@ -11,6 +11,7 @@ import notificationsRouter from './routes/notifications.js';
 import helpRouter from './routes/help.js';
 import aiRouter from './routes/ai.js';
 import adminRouter from './routes/admin.js';
+import orgRouter from './routes/org.js';
 import datasetRouter from './routes/datasetRoutes.js';
 import { csvDataLoader } from './services/csvDataLoader.js';
 import { logger } from './utils/logger.js';
@@ -58,6 +59,7 @@ app.get('/api/v1/health', (_req: Request, res: Response) => {
 
 // Versioned API v1 Routes
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/org', orgRouter);
 app.use('/api/v1/me', employeeRouter);
 app.use('/api/v1/tasks', employeeRouter);
 app.use('/api/v1/unstick', unstickRouter);

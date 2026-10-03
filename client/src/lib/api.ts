@@ -148,6 +148,16 @@ export const api = {
     }),
   resetDemoData: () => request('/admin/reset-demo', { method: 'POST' }),
 
+  // Organizational Structure & Hierarchy APIs (Authoritative Source of Truth)
+  getOrgDepartments: () => request('/org/departments'),
+  getOrgPositions: (params?: { departmentId?: string; departmentCode?: string; roleLevel?: string; search?: string; limit?: string }) => {
+    const q = new URLSearchParams((params || {}) as any).toString();
+    return request(`/org/positions${q ? `?${q}` : ''}`);
+  },
+  getOrgHierarchy: () => request('/org/hierarchy'),
+  getExecutiveOverview: () => request('/org/executive-overview'),
+  getTeamOverview: () => request('/org/team-overview'),
+
   // 5 Structured Datasets API
   getDatasetEmployees: () => request('/employees'),
   getDatasetEmployee: (id: string) => request(`/employees/${id}`),

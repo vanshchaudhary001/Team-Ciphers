@@ -55,6 +55,12 @@ Start Smart answers five vital questions whenever an employee becomes blocked:
 - Shows joiner context, time in queue, and downstream impact.
 - Actions: **Approve & Unlock**, **Log Delay** (with reason & ETA), **Reassign**, and **Add Status Notes**.
 
+### 6. Authoritative Enterprise Organizational Hierarchy & Dynamic Onboarding
+- **18 Departments & 423 Authoritative Positions**: Grounded in the authoritative corporate organizational structure (`DEP_01` to `DEP_18`), structured by Department, Branch, Sub-Branch, Team, and Role Level (`Associate`, `Lead`, `Manager`, `CEO`).
+- **Progressive Disclosure Flow**: Multi-level navigation ensuring teams and role levels are uncovered step-by-step (`Departments` → `Sub-Departments` → `Role Level & Exact Position Title`).
+- **Dynamic 1-Click Credentials & Role-Aware Sign-In**: Automatically assigns clean, role-tailored corporate emails (e.g. `aarav.executive.assistant@microsoft.in`) and 1-click test credentials matching the exact team and position.
+- **Tailored 70/30 Workspace & AI Copilot**: Generates domain-specific Day 1 onboarding tasks (e.g. Administration, Engineering, Finance), assigned buddy and HR contacts, and interactive AI assistance.
+
 ---
 
 ## 🛠️ Technology Stack
