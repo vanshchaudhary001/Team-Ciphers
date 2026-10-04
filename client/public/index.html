@@ -1498,6 +1498,132 @@
         </p>
       </div>
 
+      
+      <!-- ==============================================================
+           DIRECT CORPORATE SIGN-IN CARD (ABOVE 18 DEPARTMENTS SEARCH BAR)
+           ============================================================== -->
+      <div class="dept-direct-signin-container" style="max-width: 960px; margin: 0 auto 30px; width: 100%;">
+        <div class="signin-card" style="padding: 28px 32px; border-radius: 20px; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(24px) saturate(190%); border: 1px solid rgba(226, 232, 240, 0.9); box-shadow: 0 16px 40px -10px rgba(0, 55, 176, 0.12), 0 0 0 1px rgba(0, 55, 176, 0.05);">
+          
+          <!-- Card Header Row -->
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+            <div>
+              <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 9999px; background: rgba(0, 55, 176, 0.08); color: var(--stitch-primary, #0037b0); font-weight: 700; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">
+                <span class="material-symbols-outlined" style="font-size: 15px;">vpn_key</span>
+                Direct Corporate Authentication
+              </div>
+              <h3 style="font-size: 1.45rem; font-weight: 800; color: #0f172a; margin: 0 0 4px 0; letter-spacing: -0.02em;">
+                Sign in with Corporate Credentials
+              </h3>
+              <p style="font-size: 0.86rem; color: #64748b; margin: 0; line-height: 1.45;">
+                Already have your corporate email and password? Sign in directly below to launch your personalized workspace and AI Copilot — or browse the 18 departments and branches below to explore step-by-step.
+              </p>
+            </div>
+            
+            <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 9999px; font-size: 0.78rem; font-weight: 600; color: #166534;">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);"></span>
+              <span>Entra ID Active</span>
+            </div>
+          </div>
+
+          <!-- 1-Click Quick Credentials (Demo Shortcuts) -->
+          <div style="background: rgba(248, 250, 252, 0.85); border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 16px; margin-bottom: 18px;">
+            <div style="font-size: 0.75rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+              <span class="material-symbols-outlined" style="font-size: 15px; color: var(--stitch-primary, #0037b0);">bolt</span>
+              1-Click Demo Credentials:
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+              <button type="button" class="persona-pill-btn" style="border: 1.5px solid #2563eb; background: #eff6ff; color: #1e40af; font-weight: 700; font-size: 0.76rem; padding: 5px 12px; border-radius: 9999px; cursor: pointer; transition: all 0.2s;"
+                onclick="applyDeptDirectPersona('aarav.executive.assistant@microsoft.in', 'demo1234', 'POS-0001')">
+                🟢 Aarav Sharma (Software Engineer / Assoc · POS-0001)
+              </button>
+              <button type="button" class="persona-pill-btn" style="border: 1.5px solid #9333ea; background: #faf5ff; color: #6b21a8; font-weight: 700; font-size: 0.76rem; padding: 5px 12px; border-radius: 9999px; cursor: pointer; transition: all 0.2s;"
+                onclick="applyDeptDirectPersona('priya.senior.executive.assistant@microsoft.in', 'demo1234', 'POS-0002')">
+                🟣 Priya Nair (Lead · POS-0002)
+              </button>
+              <button type="button" class="persona-pill-btn" style="border: 1.5px solid #0284c7; background: #f0f9ff; color: #0369a1; font-weight: 700; font-size: 0.76rem; padding: 5px 12px; border-radius: 9999px; cursor: pointer; transition: all 0.2s;"
+                onclick="applyDeptDirectPersona('rahul.executive.business.partner@microsoft.in', 'demo1234', 'POS-0003')">
+                🔵 Rahul Kapoor (Manager · POS-0003)
+              </button>
+              <button type="button" class="persona-pill-btn" style="border: 1.5px solid #059669; background: #ecfdf5; color: #047857; font-weight: 700; font-size: 0.76rem; padding: 5px 12px; border-radius: 9999px; cursor: pointer; transition: all 0.2s;"
+                onclick="applyDeptDirectPersona('hr@microsoft.in', 'demo1234', null, 'hr')">
+                👤 Priya Sharma (HR Partner)
+              </button>
+              <button type="button" class="persona-pill-btn" style="border: 1.5px solid #d97706; background: #fffbeb; color: #b45309; font-weight: 700; font-size: 0.76rem; padding: 5px 12px; border-radius: 9999px; cursor: pointer; transition: all 0.2s;"
+                onclick="applyDeptDirectPersona('buddy@microsoft.in', 'demo1234', null, 'buddy')">
+                🤝 Rahul Pandey (Mentor Buddy)
+              </button>
+            </div>
+          </div>
+
+          <!-- Direct Sign-In Form Fields -->
+          <form id="dept-direct-signin-form" onsubmit="event.preventDefault(); handleDeptDirectSignIn();" style="margin: 0;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) 180px; gap: 14px; align-items: end;">
+              
+              <!-- Work Email Field -->
+              <div class="form-group" style="margin: 0;">
+                <label class="input-label" for="dept-direct-email" style="font-size: 0.78rem; font-weight: 700; margin-bottom: 6px; display: block; color: #334155;">
+                  Corporate Work Email
+                </label>
+                <div class="input-with-icon" style="position: relative;">
+                  <span class="material-symbols-outlined input-prefix-icon" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 19px; color: #64748b; pointer-events: none;">mail</span>
+                  <input type="email" id="dept-direct-email" class="styled-input-icon" placeholder="name@microsoft.in"
+                    value="aarav.executive.assistant@microsoft.in" required oninput="handleDeptDirectEmailInput(this.value)"
+                    style="width: 100%; height: 46px; padding-left: 40px; padding-right: 12px; border-radius: 10px; border: 1.5px solid #cbd5e1; background: #ffffff; font-size: 0.88rem; box-sizing: border-box; transition: all 0.2s;">
+                </div>
+              </div>
+
+              <!-- Password Field -->
+              <div class="form-group" style="margin: 0;">
+                <label class="input-label" for="dept-direct-password" style="font-size: 0.78rem; font-weight: 700; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; color: #334155;">
+                  <span>Password</span>
+                  <a href="javascript:void(0)" onclick="showNotification('Password reset instructions sent to registered address.')" style="font-size: 0.72rem; color: var(--stitch-primary, #0037b0); text-decoration: none; font-weight: 600;">Forgot?</a>
+                </label>
+                <div class="input-with-icon" style="position: relative;">
+                  <span class="material-symbols-outlined input-prefix-icon" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 19px; color: #64748b; pointer-events: none;">key</span>
+                  <input type="password" id="dept-direct-password" class="styled-input-icon" value="demo1234" required
+                    style="width: 100%; height: 46px; padding-left: 40px; padding-right: 42px; border-radius: 10px; border: 1.5px solid #cbd5e1; background: #ffffff; font-size: 0.88rem; box-sizing: border-box; transition: all 0.2s;">
+                  <button type="button" id="dept-direct-toggle-password" class="password-eye-btn" aria-label="Toggle password"
+                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #64748b; display: flex; align-items: center; justify-content: center; padding: 4px;">
+                    <span class="material-symbols-outlined" id="dept-direct-eye-icon" style="font-size: 18px;">visibility</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" id="dept-direct-submit-btn" class="signin-primary-btn"
+                style="height: 46px; margin: 0; width: 100%; border-radius: 10px; background: linear-gradient(135deg, #0037b0 0%, #1e40af 100%); color: #ffffff; border: none; font-weight: 700; font-size: 0.88rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; box-shadow: 0 4px 14px rgba(0, 55, 176, 0.3); transition: all 0.2s;">
+                <span id="dept-direct-btn-text">Sign In</span>
+                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+              </button>
+            </div>
+
+            <!-- Real-Time Role Detection Banner -->
+            <div id="dept-direct-role-badge" style="margin-top: 14px; background: rgba(240, 253, 244, 0.95); border: 1px solid #86efac; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 10px;">
+              <span class="material-symbols-outlined" style="color: #059669; font-size: 20px; flex-shrink: 0;">verified_user</span>
+              <div style="flex: 1; min-width: 0;">
+                <div id="dept-direct-role-title" style="font-size: 0.84rem; font-weight: 700; color: #15803d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  Detected Role: Aarav Sharma (Associate - Executive Assistant · POS-0001)
+                </div>
+                <div id="dept-direct-role-desc" style="font-size: 0.74rem; color: #166534; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  Administration · Direct Onboarding Workspace &amp; 30 Authoritative Tasks with AI Copilot
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Section Transition Divider -->
+        <div class="dept-step-or-divider" style="display: flex; align-items: center; gap: 16px; margin: 24px 0 16px; width: 100%;">
+          <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(203, 213, 225, 0.9), transparent);"></div>
+          <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 18px; border-radius: 9999px; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(226, 232, 240, 0.9); font-size: 0.78rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.06em; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+            <span class="material-symbols-outlined" style="font-size: 16px; color: var(--stitch-primary, #0037b0);">account_tree</span>
+            Or Select from 18 Departments &amp; Branches Below
+          </div>
+          <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(203, 213, 225, 0.9), transparent);"></div>
+        </div>
+      </div>
+
       <!-- Department Directory Toolbar -->
       <div class="directory-toolbar-container" style="margin-bottom: 20px;">
         <div class="directory-search-bar">
@@ -4351,6 +4477,14 @@
         window.scrollTo(0, 0);
       }
 
+      if (stepId === 'step-departments') {
+        renderDepartmentsList();
+        if (typeof handleDeptDirectEmailInput === 'function') {
+          const emailInp = document.getElementById('dept-direct-email');
+          handleDeptDirectEmailInput(emailInp ? emailInp.value : 'aarav.executive.assistant@microsoft.in');
+        }
+      }
+
       if (stepId === 'step-hr-portal') {
         renderLiveHRPortal();
       }
@@ -4613,6 +4747,161 @@
     }
 
     // Step 2A Action: Select Department -> Routes to Step 2B (Sub-Departments & Teams)
+    
+    // ==============================================================
+    // STEP 2A DIRECT CREDENTIALS AUTHENTICATION (ABOVE 18 DEPARTMENTS)
+    // ==============================================================
+    window._deptDirectSelectedPosId = 'POS-0001';
+
+    function applyDeptDirectPersona(email, password, posId, roleType) {
+      const emailInp = document.getElementById('dept-direct-email');
+      const passInp = document.getElementById('dept-direct-password');
+      if (emailInp) emailInp.value = email;
+      if (passInp) passInp.value = password;
+      window._deptDirectSelectedPosId = posId || null;
+
+      const mainEmail = document.getElementById('signin-email');
+      const mainPass = document.getElementById('signin-password');
+      if (mainEmail) mainEmail.value = email;
+      if (mainPass) mainPass.value = password;
+
+      handleDeptDirectEmailInput(email);
+      showNotification('Loaded credentials for ' + email);
+    }
+
+    function handleDeptDirectEmailInput(email) {
+      const em = (email || '').toLowerCase().trim();
+      const badge = document.getElementById('dept-direct-role-badge');
+      const title = document.getElementById('dept-direct-role-title');
+      const desc = document.getElementById('dept-direct-role-desc');
+
+      if (!em) {
+        if (title) title.textContent = 'Enter Corporate Credentials';
+        if (desc) desc.textContent = 'Type your work email to automatically detect role and assigned department.';
+        return;
+      }
+
+      // Check if email corresponds to a position ID
+      const posMatch = em.match(/pos-(\d+)/i) || (window._deptDirectSelectedPosId ? [null, window._deptDirectSelectedPosId] : null);
+      if (posMatch && posMatch[1]) {
+        const orgData = getAuthoritativeOrgData();
+        const targetPosId = posMatch[1].startsWith('POS-') ? posMatch[1].toUpperCase() : ('POS-' + posMatch[1].padStart(4, '0'));
+        for (const d of orgData.departments) {
+          for (const b of d.branches) {
+            for (const sb of b.subBranches) {
+              for (const t of sb.teams) {
+                const p = t.positions.find(pos => pos.id === targetPosId);
+                if (p) {
+                  if (title) title.textContent = 'Detected: ' + p.roleLevel + ' - ' + p.title + ' (' + p.id + ')';
+                  if (desc) desc.textContent = d.name + ' · ' + sb.name + ' · Instant Onboarding Workspace Access';
+                  return;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      const detection = detectRoleFromEmail(email);
+      if (detection) {
+        if (title) title.textContent = 'Detected Role: ' + (detection.user?.name || detection.title) + ' (' + (detection.title || detection.role) + ')';
+        if (desc) desc.textContent = detection.desc || (detection.title + ' · Instant Workspace Access');
+      }
+    }
+
+    async function handleDeptDirectSignIn() {
+      const emailInput = document.getElementById('dept-direct-email');
+      const passwordInput = document.getElementById('dept-direct-password');
+      const email = emailInput ? emailInput.value.trim() : '';
+      const password = passwordInput ? passwordInput.value : '';
+
+      if (!email) {
+        showNotification('⚠️ Please enter your corporate work email.');
+        if (emailInput) emailInput.focus();
+        return;
+      }
+      if (!password) {
+        showNotification('⚠️ Please enter your corporate password.');
+        if (passwordInput) passwordInput.focus();
+        return;
+      }
+
+      // Sync inputs with the main sign-in form for internal compatibility
+      const mainEmail = document.getElementById('signin-email');
+      const mainPass = document.getElementById('signin-password');
+      if (mainEmail) mainEmail.value = email;
+      if (mainPass) mainPass.value = password;
+
+      const submitBtnText = document.getElementById('dept-direct-btn-text');
+      const origText = submitBtnText ? submitBtnText.textContent : 'Sign In';
+      if (submitBtnText) submitBtnText.textContent = 'Authenticating...';
+
+      // Check if a specific position is matched
+      const orgData = getAuthoritativeOrgData();
+      let matchedPos = null;
+      let matchedDept = null;
+      let matchedBranch = null;
+      let matchedSubBranch = null;
+      let matchedTeam = null;
+
+      const posIdMatch = email.match(/POS-(\d+)/i) || (window._deptDirectSelectedPosId ? [null, window._deptDirectSelectedPosId] : null);
+      let targetPosId = null;
+      if (posIdMatch && posIdMatch[1]) {
+        targetPosId = posIdMatch[1].startsWith('POS-') ? posIdMatch[1] : ('POS-' + posIdMatch[1].padStart(4, '0'));
+      } else if (window._deptDirectSelectedPosId) {
+        targetPosId = window._deptDirectSelectedPosId;
+      }
+
+      if (targetPosId && orgData && orgData.departments) {
+        for (const d of orgData.departments) {
+          for (const b of d.branches) {
+            for (const sb of b.subBranches) {
+              for (const t of sb.teams) {
+                const p = t.positions.find(pos => pos.id === targetPosId);
+                if (p) {
+                  matchedDept = d;
+                  matchedBranch = b;
+                  matchedSubBranch = sb;
+                  matchedTeam = t;
+                  matchedPos = p;
+                  break;
+                }
+              }
+              if (matchedPos) break;
+            }
+            if (matchedPos) break;
+          }
+          if (matchedPos) break;
+        }
+      }
+
+      // If email has aarav or executive assistant and no matchedPos yet
+      if (!matchedPos && (email.toLowerCase().includes('aarav') || email.toLowerCase().includes('executive.assistant')) && orgData && orgData.departments) {
+        const adminDept = orgData.departments.find(d => d.code === 'DEP_01' || d.name.toLowerCase().includes('administration'));
+        if (adminDept && adminDept.branches[0]?.subBranches[0]?.teams[0]?.positions[0]) {
+          matchedDept = adminDept;
+          matchedBranch = adminDept.branches[0];
+          matchedSubBranch = adminDept.branches[0].subBranches[0];
+          matchedTeam = adminDept.branches[0].subBranches[0].teams[0];
+          matchedPos = adminDept.branches[0].subBranches[0].teams[0].positions[0];
+        }
+      }
+
+      if (matchedPos) {
+        currentSelectedDept = matchedDept;
+        currentSelectedBranch = matchedBranch;
+        currentSelectedSubBranch = matchedSubBranch;
+        currentSelectedTeam = matchedTeam;
+        currentSelectedPosition = matchedPos;
+      }
+
+      try {
+        await handleMemberSignIn();
+      } finally {
+        if (submitBtnText) submitBtnText.textContent = origText;
+      }
+    }
+
     function selectDepartment(deptCode) {
       const orgData = getAuthoritativeOrgData();
       const dept = orgData.departments.find(d => d.code === deptCode || d.name === deptCode);
@@ -9493,6 +9782,36 @@ function closeHistoryModal() {
           passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
           eyeIcon.textContent = isPassword ? 'visibility_off' : 'visibility';
         });
+      }
+
+      // Department Direct Sign-In Eye Toggle
+      const deptToggleBtn = document.getElementById('dept-direct-toggle-password');
+      const deptPasswordInput = document.getElementById('dept-direct-password');
+      const deptEyeIcon = document.getElementById('dept-direct-eye-icon');
+      if (deptToggleBtn && deptPasswordInput && deptEyeIcon) {
+        deptToggleBtn.addEventListener('click', function () {
+          const isPassword = deptPasswordInput.getAttribute('type') === 'password';
+          deptPasswordInput.setAttribute('type', isPassword ? 'text' : 'password');
+          deptEyeIcon.textContent = isPassword ? 'visibility_off' : 'visibility';
+        });
+      }
+
+      // Render 18 departments cards
+      renderDepartmentsList();
+
+      // Initialize detection on default pre-filled credentials
+      if (typeof handleDeptDirectEmailInput === 'function') {
+        const emailInp = document.getElementById('dept-direct-email');
+        handleDeptDirectEmailInput(emailInp ? emailInp.value : 'aarav.executive.assistant@microsoft.in');
+      }
+
+      // Check step persistence or URL hash
+      const savedStep = sessionStorage.getItem('startsmart_active_step');
+      const currentHash = window.location.hash;
+      if (currentHash === '#departments' || currentHash === '#signin' || savedStep === 'step-departments') {
+        selectCompany('microsoft');
+      } else if (savedStep && document.getElementById(savedStep)) {
+        goToStep(savedStep);
       }
     });
   </script>
