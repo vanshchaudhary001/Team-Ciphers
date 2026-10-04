@@ -1923,16 +1923,22 @@ button {
 /* 70/30 Split Screen Container */
 .joiner-split-container {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(360px, 3fr);
-  gap: 28px;
+  grid-template-columns: minmax(0, 1fr) 390px;
+  gap: 24px;
   align-items: start;
   width: 100%;
   margin-top: 12px;
+  transition: grid-template-columns 0.32s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (max-width: 1180px) {
+.joiner-split-container.copilot-minimized {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+@media (max-width: 1024px) {
   .joiner-split-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    gap: 20px;
   }
 }
 

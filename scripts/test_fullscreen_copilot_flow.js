@@ -137,15 +137,15 @@ async function runCopilotTests() {
 
   const state1 = vm.runInContext('copilotCurrentState', vmCtx);
   console.log(`   Copilot state immediately after login: "${state1}"`);
-  if (state1 !== 'fullscreen') {
-    throw new Error(`Expected state 'fullscreen', got '${state1}'`);
+  if (state1 !== 'medium') {
+    throw new Error(`Expected state 'medium' (Side-by-Side), got '${state1}'`);
   }
 
   const panel = domNodes.get('copilot-persistent-panel');
-  if (!panel.classList.contains('copilot-state-fullscreen')) {
-    throw new Error("Panel DOM missing 'copilot-state-fullscreen' class!");
+  if (!panel.classList.contains('copilot-state-medium')) {
+    throw new Error("Panel DOM missing 'copilot-state-medium' class!");
   }
-  console.log('   ✅ Copilot opens in FULL-SCREEN mode immediately upon login!');
+  console.log('   ✅ Copilot opens in SIDE-BY-SIDE (medium) mode immediately upon login alongside tasks!');
 
   console.log('\n--- 2. Verifying Welcome State ---');
   console.log('   Welcome bubble HTML snippet:\n', feed.innerHTML.slice(0, 220).replace(/\s+/g, ' '));
@@ -162,44 +162,44 @@ async function runCopilotTests() {
   }
   console.log('   ✅ Role-aware suggested questions loaded for Associate!');
 
-  console.log('\n--- 4. Testing First Minimize: Full-Screen -> Medium Window ---');
+  console.log('\n--- 4. Testing Minimize from Side-by-Side: Medium -> Compact Pill ---');
   vm.runInContext('handleCopilotMinimizeClick()', vmCtx);
   const state2 = vm.runInContext('copilotCurrentState', vmCtx);
-  console.log(`   Copilot state after first minimize: "${state2}"`);
-  if (state2 !== 'medium') {
-    throw new Error(`Expected state 'medium', got '${state2}'`);
+  console.log(`   Copilot state after minimize: "${state2}"`);
+  if (state2 !== 'compact') {
+    throw new Error(`Expected state 'compact', got '${state2}'`);
   }
-  if (!panel.classList.contains('copilot-state-medium')) {
-    throw new Error("Panel DOM missing 'copilot-state-medium' class!");
+  if (!panel.classList.contains('copilot-state-compact')) {
+    throw new Error("Panel DOM missing 'copilot-state-compact' class!");
   }
-  console.log('   ✅ First minimize smoothly transforms copilot into Medium floating panel!');
+  console.log('   ✅ Minimize smoothly transforms copilot into Compact bottom-right pill!');
 
-  console.log('\n--- 5. Testing Second Minimize: Medium Window -> Compact Pill ---');
-  vm.runInContext('handleCopilotMinimizeClick()', vmCtx);
-  const state3 = vm.runInContext('copilotCurrentState', vmCtx);
-  console.log(`   Copilot state after second minimize: "${state3}"`);
-  if (state3 !== 'compact') {
-    throw new Error(`Expected state 'compact', got '${state3}'`);
-  }
-  console.log('   ✅ Second minimize collapses copilot into Compact bottom-right pill!');
-
-  console.log('\n--- 6. Testing Compact Trigger Click: Compact -> Medium ---');
+  console.log('\n--- 5. Testing Compact Trigger Click: Compact -> Medium (Side-by-Side) ---');
   vm.runInContext('setCopilotState("medium")', vmCtx);
-  const state4 = vm.runInContext('copilotCurrentState', vmCtx);
-  console.log(`   Copilot state after clicking compact trigger: "${state4}"`);
-  if (state4 !== 'medium') {
-    throw new Error(`Expected state 'medium', got '${state4}'`);
+  const state3 = vm.runInContext('copilotCurrentState', vmCtx);
+  console.log(`   Copilot state after clicking compact trigger: "${state3}"`);
+  if (state3 !== 'medium') {
+    throw new Error(`Expected state 'medium', got '${state3}'`);
   }
-  console.log('   ✅ Clicking compact copilot re-expands to Medium!');
+  console.log('   ✅ Clicking compact copilot re-expands to Medium (Side-by-Side)!');
 
-  console.log('\n--- 7. Testing Expand Button: Medium -> Full-Screen ---');
+  console.log('\n--- 6. Testing Expand Button: Medium -> Full-Screen ---');
   vm.runInContext('setCopilotState("fullscreen")', vmCtx);
-  const state5 = vm.runInContext('copilotCurrentState', vmCtx);
-  console.log(`   Copilot state after clicking expand: "${state5}"`);
-  if (state5 !== 'fullscreen') {
-    throw new Error(`Expected state 'fullscreen', got '${state5}'`);
+  const state4 = vm.runInContext('copilotCurrentState', vmCtx);
+  console.log(`   Copilot state after clicking expand: "${state4}"`);
+  if (state4 !== 'fullscreen') {
+    throw new Error(`Expected state 'fullscreen', got '${state4}'`);
   }
-  console.log('   ✅ Expand button returns copilot to Full-Screen!');
+  console.log('   ✅ Expand button transitions copilot to Full-Screen!');
+
+  console.log('\n--- 7. Testing Minimize from Full-Screen: Fullscreen -> Medium (Side-by-Side) ---');
+  vm.runInContext('handleCopilotMinimizeClick()', vmCtx);
+  const state5 = vm.runInContext('copilotCurrentState', vmCtx);
+  console.log(`   Copilot state after minimizing from fullscreen: "${state5}"`);
+  if (state5 !== 'medium') {
+    throw new Error(`Expected state 'medium', got '${state5}'`);
+  }
+  console.log('   ✅ Minimizing from fullscreen restores Side-by-Side layout!');
 
   console.log('\n--- 8. Testing FAQ Prompt Interaction: "Who is my reporting manager?" ---');
   await vm.runInContext('askCopilotDirect("Who is my reporting manager?")', vmCtx);
