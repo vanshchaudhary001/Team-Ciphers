@@ -99,7 +99,7 @@ export const LandingPage: React.FC = () => {
                     </span>
                   </div>
                   <h3 className="text-2xl font-black text-slate-900 group-hover:text-indigo-600 transition-colors">
-                    Already a Company Member
+                    Already a Company Member or New Joiner
                   </h3>
                   <p className="mt-3 text-sm text-slate-500 leading-relaxed">
                     Sign in to your personalized day-one workspace by selecting your role: Associate (Entry Level), Lead (Mid Level), Manager (Senior Level), or CEO (Executive Access).

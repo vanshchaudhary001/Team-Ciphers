@@ -853,6 +853,21 @@
       const query = input.value.trim();
       if (!query) return;
 
+      // Pre-inference Onboarding Scope Guardrail
+      const qLower = query.toLowerCase();
+      const isOos = (
+        /(write|create|generate|code)\s+(a|an|the)?\s*(python|javascript|c\+\+|java|program|script|function|app)/i.test(qLower) ||
+        /(capital\s+of|president\s+of|weather|joke|funny|elon\s+musk|quantum\s+physics|eat\s+for\s+dinner|meaning\s+of\s+life)/i.test(qLower)
+      ) && !/(onboarding|task|handbook|contact|guide|mentor|buddy|hr|it)/i.test(qLower);
+
+      if (isOos) {
+        answerText.innerHTML = '<span style="color: #f8fafc;">Sorry, I can only help with onboarding-related questions.</span>';
+        if (modelTag) modelTag.textContent = 'Onboarding Scope Guard';
+        btn.disabled = false;
+        btn.innerHTML = '<span>Ask AI Copilot</span> 🚀';
+        return;
+      }
+
       btn.disabled = true;
       btn.innerHTML = '<span>Analyzing...</span> ⏳';
       responseBox.style.display = 'block';

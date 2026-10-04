@@ -599,18 +599,33 @@
 
   
     /* =========================================================================
-       PERSISTENT COPILOT: SIDE-BY-SIDE DYNAMIC LAYOUT & 3-STATE SYSTEM
+       PERSISTENT COPILOT: SIDE-BY-SIDE DYNAMIC LAYOUT
        ========================================================================= */
 
-    /* Split Container: Grid side-by-side layout ensuring dashboard and copilot are both visible */
+    /* Split Container: Side-by-Side Zero-Overlap Grid Layout (Enlarged 3 Boxes + Enlarged Chatbot) */
     .joiner-split-container {
       display: grid !important;
-      grid-template-columns: minmax(0, 1fr) 390px !important;
-      gap: 24px !important;
+      grid-template-columns: minmax(0, 1fr) 540px !important;
+      gap: 36px !important;
       align-items: start !important;
       width: 100% !important;
-      margin-top: 12px !important;
+      position: relative !important;
+      margin-top: 14px !important;
       transition: grid-template-columns 320ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @media (min-width: 1600px) {
+      .joiner-split-container {
+        grid-template-columns: minmax(0, 1fr) 580px !important;
+        gap: 40px !important;
+      }
+    }
+
+    @media (max-width: 1180px) {
+      .joiner-split-container {
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+      }
     }
 
     /* Full width dashboard when Copilot is minimized */
@@ -620,11 +635,12 @@
 
     /* Left area: Adapts dynamically, preserving all tasks, checklist, contacts, and telemetry */
     .joiner-main-dashboard {
+      grid-column: 1 !important;
       min-width: 0 !important;
       width: 100% !important;
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 34px !important;
     }
 
     /* Panel base styling */
@@ -678,11 +694,7 @@
     }
 
     #copilot-persistent-panel.copilot-state-fullscreen .copilot-quick-prompts {
-      max-width: 1080px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 0 36px 12px 36px;
-      flex-shrink: 0;
+      display: none !important;
     }
 
     #copilot-persistent-panel.copilot-state-fullscreen .copilot-composer {
@@ -693,32 +705,52 @@
       flex-shrink: 0;
     }
 
-    /* STATE 2: SIDE-BY-SIDE FLOATING COPILOT PANEL (Controlled 390px Width, Sticky) */
+    /* STATE 2: SIDE-BY-SIDE DOCKED COPILOT PANEL (Enlarged 540px-580px Width & Increased Length, Zero Overlap) */
     #copilot-persistent-panel.copilot-state-medium {
+      grid-column: 2 !important;
       position: sticky !important;
       top: 20px !important;
       bottom: auto !important;
       right: auto !important;
       left: auto !important;
-      width: 390px !important;
-      max-width: 390px !important;
+      width: 100% !important;
+      max-width: 540px !important;
       height: calc(100vh - 40px) !important;
       max-height: calc(100vh - 40px) !important;
-      z-index: 50 !important;
-      border-radius: 20px !important;
+      min-height: 840px !important;
+      z-index: 20 !important;
+      border-radius: 24px !important;
       border: 1px solid rgba(148, 163, 184, 0.25) !important;
       background: #0f172a !important;
-      box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+      box-shadow: 0 24px 50px -10px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
       display: flex !important;
       flex-direction: column !important;
       overflow: hidden !important;
-      transform: scale(1) rotate(0deg) !important;
+      transform: none !important;
       opacity: 1 !important;
       pointer-events: auto !important;
     }
 
+    @media (min-width: 1600px) {
+      #copilot-persistent-panel.copilot-state-medium {
+        max-width: 580px !important;
+      }
+    }
+
+    @media (max-width: 1180px) {
+      #copilot-persistent-panel.copilot-state-medium {
+        grid-column: 1 !important;
+        position: relative !important;
+        top: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 680px !important;
+        min-height: 600px !important;
+      }
+    }
+
     #copilot-persistent-panel.copilot-state-medium .copilot-sidebar-header {
-      padding: 14px 18px;
+      padding: 18px 24px;
       background: #0d1322;
       border-bottom: 1px solid rgba(148, 163, 184, 0.15);
       flex-shrink: 0;
@@ -726,22 +758,56 @@
 
     #copilot-persistent-panel.copilot-state-medium .copilot-messages-feed {
       width: 100%;
-      flex: 1;
-      min-height: 0;
-      padding: 16px 18px;
+      flex: 1 1 auto;
+      min-height: 520px;
+      padding: 24px 26px;
       overflow-y: auto;
     }
 
     #copilot-persistent-panel.copilot-state-medium .copilot-quick-prompts {
-      width: 100%;
-      padding: 0 16px 8px 16px;
-      flex-shrink: 0;
+      display: none !important;
     }
 
     #copilot-persistent-panel.copilot-state-medium .copilot-composer {
       width: 100%;
-      padding: 10px 16px 16px 16px;
+      padding: 14px 22px 22px 22px;
       flex-shrink: 0;
+      background: #0d1322;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Extra sizing for the 3 Dashboard Boxes */
+    .dashboard-hero-card {
+      padding: 48px 56px !important;
+      min-height: 260px !important;
+      border-radius: 24px !important;
+    }
+    .hero-welcome-title {
+      font-size: 2.5rem !important;
+    }
+    .hero-welcome-subtitle {
+      font-size: 1.1rem !important;
+    }
+    .hero-meta-chip {
+      padding: 10px 18px !important;
+      font-size: 0.9rem !important;
+      border-radius: 10px !important;
+    }
+    .hero-card-progress {
+      padding: 28px 34px !important;
+      min-width: 260px !important;
+      border-radius: 20px !important;
+    }
+    #section-contacts-directory.dashboard-section-card,
+    #section-tasks-checklist.dashboard-section-card {
+      padding: 44px 50px !important;
+      border-radius: 24px !important;
+      margin-bottom: 34px !important;
+    }
+    .manual-task-card {
+      padding: 22px 26px !important;
+      border-radius: 16px !important;
+      margin-bottom: 14px !important;
     }
 
     /* STATE 3: COMPACT BOTTOM-RIGHT COPILOT (Panel hidden, Pill trigger shown) */
@@ -957,10 +1023,14 @@
     </button>
   </div>
 
+
   <!-- Sticky Google Stitch Enterprise Header -->
   <header class="app-header">
     <div class="header-container">
-      <div class="brand-wrapper">
+      <div class="brand-wrapper" style="display: flex; align-items: center; gap: 10px;">
+        <button type="button" id="global-header-back-btn" class="header-back-btn" onclick="goBackStep()" style="display: none;" title="Go back">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
         <a href="javascript:void(0)" onclick="goToStep('step-gateway')" class="brand-icon"
           title="Return to StartSmart Gateway"
           style="background: #ffffff; border: 1px solid rgba(0, 55, 176, 0.15); width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; padding: 2px; box-shadow: 0 2px 8px rgba(0, 34, 68, 0.08);">
@@ -978,29 +1048,8 @@
             Your Future</span>
         </div>
       </div>
-
       <div class="header-nav">
-        <div class="nav-status-pill">
-          <span class="status-dot"></span>
-          <span>Enterprise Auth Guard</span>
-        </div>
-        <a href="javascript:void(0)" onclick="goToStep('step-gateway')" class="nav-link" title="Gateway Home">
-          <span class="material-symbols-outlined" style="font-size: 17px;">login</span>
-          Gateway
-        </a>
-        <a href="javascript:void(0)" onclick="goToStep('step-joiner-chatbot')" class="nav-link"
-          style="color: #4f46e5; font-weight: 700; background: rgba(79, 70, 229, 0.08); border-radius: 8px; padding: 6px 12px;"
-          title="Open Start Smart DAG Platform & Chatbot">
-          <span class="material-symbols-outlined" style="font-size: 17px;">hub</span>
-          DAG Platform
-        </a>
-        <a href="javascript:void(0)" onclick="goToStep('step-companies')" class="nav-link" title="Workspaces Directory">
-          <span class="material-symbols-outlined" style="font-size: 17px;">domain</span>
-          Workspaces
-        </a>
-        <div class="user-avatar-pill" title="Security Active">
-          <span class="material-symbols-outlined" style="font-size: 16px;">shield</span>
-        </div>
+        <a href="javascript:void(0)" onclick="goToStep('step-gateway')" class="nav-link-home-only" title="Home">Home</a>
       </div>
     </div>
   </header>
@@ -1012,171 +1061,192 @@
          STEP 1: PRIMARY GATEWAY (2 OPTIONS: Already a Member vs Register a Company)
          ============================================================== -->
     <section id="step-gateway" class="step-view">
-      <div class="gateway-hero">
-        <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 24px;">
-          <img src="start-smart-logo-transparent.png" alt="Start Smart - Building Your Future"
-            style="height: 84px; max-width: 90%; object-fit: contain; filter: drop-shadow(0 6px 20px rgba(0, 34, 68, 0.12));">
-        </div>
-        <div class="hero-pill">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <div class="gateway-portal-wrap">
+        <!-- Top Pill -->
+        <div class="portal-security-badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:middle;">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
           </svg>
-          Secure Enterprise Gateway
+          <span>Secure Enterprise Portal Access</span>
         </div>
 
-        <h1 class="hero-heading">
-          Welcome to the <span class="highlight">Enterprise Onboarding Portal</span>.<br>
-          Please choose an option to continue:
-        </h1>
+        <!-- Headline & Subtitle -->
+        <div class="portal-title-block">
+          <h1 class="portal-main-heading">
+            Welcome to the Enterprise<br>Onboarding Portal.
+          </h1>
+          <p class="portal-main-subtitle">
+            Select your enrolled company to access personalized workflows, team assignments, and<br>AI-guided onboarding.
+          </p>
+        </div>
 
-        <p class="hero-subtitle">
-          Select whether you are an employee/member of an enrolled company, or registering a brand-new organization
-          workspace.
-        </p>
-      </div>
-
-      <!-- The Two Primary Options Grid -->
-      <div class="two-options-grid" aria-label="Primary Gateway Options">
-
-        <!-- Option 1: Already a Company Member / My Company -->
-        <div class="role-card" data-role="existing-company" onclick="goToStep('step-companies')" tabindex="0"
-          role="button" aria-label="Already a Company Member - Select your enrolled organization">
-          <div>
-            <div class="card-header-top">
-              <div class="card-icon-wrapper"
-                style="background: var(--surface-container); color: var(--stitch-primary);">
-                <span class="material-symbols-outlined" style="font-size: 28px;">domain</span>
+        <!-- Card 1: Already a Company Member -->
+        <div class="portal-card-primary" data-role="existing-company">
+          <div class="portal-card-primary-body">
+            <div class="portal-primary-left">
+              <div class="portal-badges-row">
+                <div class="portal-icon-box-blue" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                    <path d="M9 22v-4h6v4"></path>
+                    <path d="M8 6h.01"></path>
+                    <path d="M16 6h.01"></path>
+                    <path d="M12 6h.01"></path>
+                    <path d="M12 10h.01"></path>
+                    <path d="M12 14h.01"></path>
+                    <path d="M16 10h.01"></path>
+                    <path d="M16 14h.01"></path>
+                    <path d="M8 10h.01"></path>
+                    <path d="M8 14h.01"></path>
+                  </svg>
+                </div>
+                <span class="badge-enrolled-org">ENROLLED ORGANIZATION</span>
+                <span class="badge-ready-signin"><span class="ready-pulse-dot"></span> Ready for Sign-in</span>
               </div>
-              <span class="role-badge-tag">Enrolled Organization</span>
-            </div>
 
-            <div class="card-body">
-              <h2 class="card-title">Already a Company Member</h2>
-              <p class="card-description">
-                I am an employee, HR partner, mentor buddy, or administrator of an enrolled organization (Microsoft,
-                Amazon, Google, etc.).
+              <h2 class="portal-primary-heading">Already a Company Member</h2>
+              <p class="portal-primary-desc">
+                I am an employee, HR partner, mentor buddy, or administrator of an enrolled organization (Microsoft, Amazon, Google, etc.).
               </p>
 
-              <ul class="card-features">
-                <li>
-                  <span class="material-symbols-outlined"
-                    style="font-size: 16px; color: var(--color-emerald-600); margin-right: 6px;">check_circle</span>
-                  Select from enrolled companies (Microsoft, Amazon, Google)
+              <ul class="portal-checks-stack">
+                <li class="portal-check-item">
+                  <span class="portal-check-badge">✓</span>
+                  <span>Select from enrolled companies (Microsoft, Amazon, Google)</span>
                 </li>
-                <li>
-                  <span class="material-symbols-outlined"
-                    style="font-size: 16px; color: var(--color-emerald-600); margin-right: 6px;">check_circle</span>
-                  Automatic role detection (Joiner, HR, Buddy, Admin)
+                <li class="portal-check-item">
+                  <span class="portal-check-badge">✓</span>
+                  <span>Automatic role detection (Joiner, HR, Buddy, Admin)</span>
                 </li>
-                <li>
-                  <span class="material-symbols-outlined"
-                    style="font-size: 16px; color: var(--color-emerald-600); margin-right: 6px;">check_circle</span>
-                  Interactive AI Onboarding Chatbot for new joiners
+                <li class="portal-check-item">
+                  <span class="portal-check-badge">✓</span>
+                  <span>Interactive AI Onboarding Chatbot for new joiners</span>
                 </li>
               </ul>
             </div>
-          </div>
 
-          <div class="card-footer">
-            <span class="action-label">Select Your Company</span>
-            <div class="action-arrow">
-              <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+            <div class="portal-primary-right">
+              <span class="portal-sso-caption">Single Sign-On &amp; Direct Access</span>
+              <button class="btn-select-company-dark" onclick="goToStep('step-companies')">
+                <span>Select Your Company</span>
+                <span style="font-size: 1.15rem; line-height: 1;">→</span>
+              </button>
+              <span class="portal-federated-caption">Federated with Microsoft Azure AD &amp; Google Workspace</span>
             </div>
           </div>
         </div>
 
-        <!-- Option 2: Register a Company -->
-        <div class="role-card" data-role="register-company" onclick="goToStep('step-register')" tabindex="0"
-          role="button" aria-label="Register a Company - Master setup form for new organizations">
-          <div>
-            <div class="card-header-top">
-              <div class="card-icon-wrapper"
-                style="background: var(--surface-container); color: var(--stitch-secondary);">
-                <span class="material-symbols-outlined" style="font-size: 28px;">add_business</span>
+        <!-- Card 2: Register a Company Workspace -->
+        <div class="portal-card-secondary" data-role="register-company">
+          <div class="portal-sec-left">
+            <div class="portal-sec-header">
+              <div class="portal-icon-box-gray" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
               </div>
-              <span class="role-badge-tag">New Organization</span>
+              <h3 class="portal-sec-title">Register a Company Workspace</h3>
+              <span class="badge-new-org">NEW ORGANIZATION</span>
             </div>
 
-            <div class="card-body">
-              <h2 class="card-title">Register a Company</h2>
-              <p class="card-description">
-                Deploy a master onboarding workspace for a new company. Set up departments, workflow pipelines, and
-                automatic buddy pairing.
-              </p>
+            <p class="portal-sec-desc">
+              Deploy a master onboarding workspace for a new company. Set up departments, workflow pipelines, and automatic buddy pairing.
+            </p>
 
-              <ul class="card-features">
-                <li>
-                  <span class="material-symbols-outlined"
-                    style="font-size: 16px; color: var(--color-emerald-600); margin-right: 6px;">check_circle</span>
-                  Configure company domain & admin account
-                </li>
-                <li>
-                  <span class="material-symbols-outlined"
-                    style="font-size: 16px; color: var(--color-emerald-600); margin-right: 6px;">check_circle</span>
-                  Engineering, Sales, & Corporate blueprints
-                </li>
-                <li>
-                  <span class="material-symbols-outlined"
-                    style="font-size: 16px; color: var(--color-emerald-600); margin-right: 6px;">check_circle</span>
-                  14-day enterprise pilot trial
-                </li>
-              </ul>
+            <div class="portal-sec-checks">
+              <span class="portal-sec-check-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Configure company domain &amp; admin account</span>
+              </span>
+              <span class="portal-sec-check-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Engineering, Sales, &amp; Corporate blueprints</span>
+              </span>
+              <span class="portal-sec-check-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>14-day enterprise pilot trial</span>
+              </span>
             </div>
           </div>
 
-          <div class="card-footer">
-            <span class="action-label">Register New Workspace</span>
-            <div class="action-arrow">
-              <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+          <div class="portal-sec-right">
+            <button class="btn-register-workspace-white" onclick="goToStep('step-register')">
+              <span>Register New Workspace</span>
+              <span style="font-size: 1.1rem; line-height: 1;">→</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Trust / Feature Bar (4 columns) -->
+        <div class="portal-features-bar" aria-label="Enterprise capabilities">
+          <div class="portal-feature-item">
+            <div class="portal-feature-icon feature-icon-blue">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="8.5" cy="7" r="4"></circle>
+                <line x1="20" y1="8" x2="20" y2="14"></line>
+                <line x1="23" y1="11" x2="17" y2="11"></line>
+              </svg>
+            </div>
+            <div class="portal-feature-text">
+              <h4>Automated Role Routing</h4>
+              <p>Joiner, HR, buddy &amp; admin roles</p>
+            </div>
+          </div>
+
+          <div class="portal-feature-item">
+            <div class="portal-feature-icon feature-icon-green">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 11l3 3L22 4"></path>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+              </svg>
+            </div>
+            <div class="portal-feature-text">
+              <h4>Guided Day 1 Checklist</h4>
+              <p>Curated tracks &amp; team setups</p>
+            </div>
+          </div>
+
+          <div class="portal-feature-item">
+            <div class="portal-feature-icon feature-icon-purple">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+            <div class="portal-feature-text">
+              <h4>AI Knowledge Assistant</h4>
+              <p>Instant workplace &amp; policy FAQs</p>
+            </div>
+          </div>
+
+          <div class="portal-feature-item">
+            <div class="portal-feature-icon feature-icon-amber">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+            <div class="portal-feature-text">
+              <h4>Enterprise SSO Ready</h4>
+              <p>SAML 2.0 &amp; directory sync</p>
             </div>
           </div>
         </div>
 
+        <!-- Clean Footer -->
+        <div class="portal-clean-footer">
+          <div class="portal-footer-copy">
+            © 2025 StartSmart Inc. Enterprise Gateway. All rights reserved.
+          </div>
+          <div class="portal-footer-links">
+            <a href="javascript:void(0)">Privacy Policy</a>
+            <a href="javascript:void(0)">Terms of Service</a>
+            <a href="javascript:void(0)">Security Whitepaper</a>
+          </div>
+        </div>
       </div>
-
-      <!-- Trust & Security Strip -->
-      <section class="trust-section" aria-label="Platform metrics">
-        <div class="trust-stat">
-          <div class="stat-icon" style="background: #ecfdf5; color: #059669;">
-            <span class="material-symbols-outlined" style="font-size: 22px;">task_alt</span>
-          </div>
-          <div class="stat-details">
-            <span class="stat-value">99.8%</span>
-            <span class="stat-label">Day 1 Readiness Rate</span>
-          </div>
-        </div>
-        <div class="trust-divider"></div>
-        <div class="trust-stat">
-          <div class="stat-icon" style="background: #eff4ff; color: #0037b0;">
-            <span class="material-symbols-outlined" style="font-size: 22px;">timer</span>
-          </div>
-          <div class="stat-details">
-            <span class="stat-value">&lt; 15 mins</span>
-            <span class="stat-label">Average Blocker Resolution</span>
-          </div>
-        </div>
-        <div class="trust-divider"></div>
-        <div class="trust-stat">
-          <div class="stat-icon" style="background: #faf5ff; color: #712ae2;">
-            <span class="material-symbols-outlined" style="font-size: 22px;">corporate_fare</span>
-          </div>
-          <div class="stat-details">
-            <span class="stat-value">500+</span>
-            <span class="stat-label">Enterprise Organizations</span>
-          </div>
-        </div>
-        <div class="trust-divider"></div>
-        <div class="trust-stat">
-          <div class="stat-icon" style="background: #e0f2fe; color: #006398;">
-            <span class="material-symbols-outlined" style="font-size: 22px;">verified_user</span>
-          </div>
-          <div class="stat-details">
-            <span class="stat-value">SOC-2 Type II</span>
-            <span class="stat-label">ISO 27001 &amp; GDPR Compliant</span>
-          </div>
-        </div>
-      </section>
     </section>
 
     <!-- ==============================================================
@@ -1186,66 +1256,34 @@
          STEP 2: SELECT COMPANY (Microsoft, Amazon, Google, etc.)
          ============================================================== -->
     <section id="step-companies" class="step-view"
-      style="display: none; max-width: 1200px; margin: 0 auto; width: 100%;">
-      <div class="breadcrumbs-bar">
-        <button onclick="goToStep('step-gateway')" style="display: inline-flex; align-items: center; gap: 4px;">
-          <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
-          <span>Gateway</span>
-        </button>
-        <span class="breadcrumbs-separator">/</span>
-        <span>Select Company</span>
-      </div>
+      style="display: none; max-width: 1280px; margin: 0 auto; width: 100%; padding: 24px 24px 48px 24px;">
 
-      <div class="gateway-hero" style="margin-bottom: 28px;">
-        <div class="hero-pill" style="margin-bottom: 12px;">
-          <span class="material-symbols-outlined" style="font-size: 15px; color: var(--stitch-primary);">domain</span>
-          Verified Enterprise Directories
+      <!-- Centered Hero -->
+      <div class="companies-hero-wrap" style="text-align: center; margin-bottom: 24px;">
+        <div class="hero-pill-verified">
+          <span class="material-symbols-outlined" style="font-size: 15px;">apartment</span>
+          <span>VERIFIED ENTERPRISE DIRECTORIES</span>
         </div>
-        <h2 class="hero-heading" style="font-size: 2.2rem;">
-          Welcome to <span class="highlight">StartSmart</span>
-        </h2>
-        <p class="hero-subtitle">
-          Select your organisation to continue. The system will automatically configure your workspace and detect your
-          role.
+        <h1 class="companies-hero-heading">
+          Welcome to <span style="color: #2563eb;">StartSmart</span>
+        </h1>
+        <p class="companies-hero-sub">
+          Select your organisation to continue. The system will automatically configure<br>your workspace and detect your role.
         </p>
       </div>
 
-      <!-- Searchable Executive Directory Toolbar -->
-      <div class="directory-toolbar-container">
-        <div class="directory-search-bar">
-          <span class="material-symbols-outlined search-icon">search</span>
-          <input type="text" id="company-filter-input" class="directory-search-input"
+      <!-- Searchable Executive Directory Toolbar (Clean centered bar without filter pills) -->
+      <div class="companies-search-wrap">
+        <div class="companies-search-box">
+          <span class="material-symbols-outlined companies-search-icon">search</span>
+          <input type="text" id="company-filter-input" class="companies-search-input"
             placeholder="Search enterprise directory (e.g. Microsoft, Google, AWS, FinTech)..."
             oninput="filterCompanyCards(this.value)" autocomplete="off">
-          <button type="button" id="clear-search-btn" class="clear-search-btn" onclick="clearCompanyFilter()"
-            style="display: none;" title="Clear search">
-            <span class="material-symbols-outlined">close</span>
-          </button>
-          <span id="result-counter-text" class="directory-counter-pill">10 available</span>
-        </div>
-
-        <!-- Quick Category Filter Pills -->
-        <div class="directory-category-bar">
-          <button type="button" class="filter-pill active" onclick="filterByCategory('all', this)">All (10)</button>
-          <button type="button" class="filter-pill" onclick="filterByCategory('Cloud', this)">Cloud &amp; AI</button>
-          <button type="button" class="filter-pill" onclick="filterByCategory('Hardware', this)">Hardware &amp;
-            OS</button>
-          <button type="button" class="filter-pill" onclick="filterByCategory('FinTech', this)">FinTech &amp;
-            Banking</button>
-          <button type="button" class="filter-pill" onclick="filterByCategory('Enterprise', this)">ERP &amp;
-            CRM</button>
-          <button type="button" class="filter-pill" onclick="filterByCategory('Health', this)">Healthcare AI</button>
-        </div>
-
-        <div class="directory-helper-subtext">
-          <span class="material-symbols-outlined" style="font-size: 14px; color: var(--stitch-primary);">info</span>
-          <span>Can't find your organisation? Contact your workspace administrator or HR onboarding lead.</span>
         </div>
       </div>
 
-      <!-- Companies Grid (Microsoft Featured First + 9 other enterprise companies) -->
-      <div class="companies-grid" id="companies-grid"
-        style="grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));">
+      <!-- Companies Grid (4 columns, clean card styling) -->
+      <div class="companies-grid" id="companies-grid">
 
         <!-- Microsoft (Featured) -->
         <div class="company-card featured-card" data-company-key="microsoft" data-category="Cloud"
@@ -1267,8 +1305,7 @@
           </div>
           <div class="company-card-footer">
             <div class="company-signin-btn">
-              <span>Sign In</span>
-              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+              <span>Sign In →</span>
             </div>
           </div>
         </div>
@@ -1296,8 +1333,7 @@
           </div>
           <div class="company-card-footer">
             <div class="company-signin-btn">
-              <span>Sign In</span>
-              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+              <span>Sign In →</span>
             </div>
           </div>
         </div>
@@ -1326,8 +1362,7 @@
           </div>
           <div class="company-card-footer">
             <div class="company-signin-btn">
-              <span>Sign In</span>
-              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+              <span>Sign In →</span>
             </div>
           </div>
         </div>
@@ -1349,8 +1384,7 @@
           </div>
           <div class="company-card-footer">
             <div class="company-signin-btn">
-              <span>Sign In</span>
-              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+              <span>Sign In →</span>
             </div>
           </div>
         </div>
@@ -1373,8 +1407,7 @@
           </div>
           <div class="company-card-footer">
             <div class="company-signin-btn">
-              <span>Sign In</span>
-              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+              <span>Sign In →</span>
             </div>
           </div>
         </div>
@@ -1398,8 +1431,7 @@
           </div>
           <div class="company-card-footer">
             <div class="company-signin-btn">
-              <span>Sign In</span>
-              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+              <span>Sign In →</span>
             </div>
           </div>
         </div>
@@ -1423,8 +1455,7 @@
           </div>
           <div class="company-card-footer">
             <div class="company-signin-btn">
-              <span>Sign In</span>
-              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+              <span>Sign In →</span>
             </div>
           </div>
         </div>
@@ -1449,8 +1480,7 @@
           </div>
           <div class="company-card-footer">
             <div class="company-signin-btn">
-              <span>Sign In</span>
-              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+              <span>Sign In →</span>
             </div>
           </div>
         </div>
@@ -1474,8 +1504,7 @@
           </div>
           <div class="company-card-footer">
             <div class="company-signin-btn">
-              <span>Sign In</span>
-              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+              <span>Sign In →</span>
             </div>
           </div>
         </div>
@@ -1499,23 +1528,19 @@
           </div>
           <div class="company-card-footer">
             <div class="company-signin-btn">
-              <span>Sign In</span>
-              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+              <span>Sign In →</span>
             </div>
           </div>
         </div>
 
       </div>
 
-      <!-- Secondary SSO Protocol Clarification & Trust Indicators -->
-      <div class="directory-trust-footer">
-        <div class="sso-protocol-badge">
-          <span class="material-symbols-outlined"
-            style="font-size: 15px; color: var(--stitch-secondary);">verified_user</span>
-          <span>SAML 2.0 / Okta / Azure AD ready</span>
-        </div>
-        <div>
-          <span>StartSmart Identity Router v2.4.9 · SOC 2 Type II Certified</span>
+      <!-- Trust Footer Matching the image -->
+      <div class="companies-trust-footer">
+        <div>© 2025 StartSmart Inc. All rights reserved.</div>
+        <div class="trust-shield-badge">
+          <span class="material-symbols-outlined" style="font-size: 16px; color: #10b981; vertical-align: middle;">security</span>
+          <span>SAML 2.0 / Okta / Azure AD ready · SOC 2 Type II Certified</span>
         </div>
       </div>
     </section>
@@ -1527,172 +1552,132 @@
     <!-- ==============================================================
          STEP 2A: 18 AUTHORITATIVE DEPARTMENTS SELECTION
          ============================================================== -->
-    <section id="step-departments" class="step-view" style="display: none; max-width: 1200px; margin: 24px auto; padding-top: 12px; width: 100%;">
-      <div class="org-wizard-breadcrumb">
-        <button onclick="goToStep('step-gateway')"><span class="material-symbols-outlined" style="font-size: 16px;">home</span> Gateway</button>
-        <span class="crumb-sep">/</span>
-        <button onclick="goToStep('step-companies')">Companies</button>
-        <span class="crumb-sep">/</span>
-        <span id="breadcrumb-dept-company" class="crumb-current">Microsoft Corporation</span>
-        <span class="crumb-sep">/</span>
-        <span class="crumb-current">18 Departments</span>
-      </div>
+    <!-- ==============================================================
+         STEP 2A: 18 AUTHORITATIVE DEPARTMENTS & AUTHENTICATION
+         ============================================================== -->
+    <section id="step-departments" class="step-view" style="display: none; max-width: 1200px; margin: 0 auto; padding: 24px 20px 60px 20px; width: 100%;">
 
-      <div class="gateway-hero" style="margin-bottom: 24px;">
-        <div class="hero-pill" style="margin-bottom: 12px;">
-          <span class="material-symbols-outlined" style="font-size: 15px; color: var(--stitch-primary);">account_tree</span>
-          Authoritative Organizational Taxonomy
-        </div>
-        <h2 class="hero-heading" style="font-size: 2.2rem;">
-          Select Department — <span id="dept-company-title" class="highlight">Microsoft Corporation</span>
-        </h2>
-        <p class="hero-subtitle">
-          Choose from the 18 official organizational departments extracted directly from the authoritative company structure document.
-        </p>
-      </div>
-
-      
-      <!-- ==============================================================
-           DIRECT CORPORATE SIGN-IN CARD (ABOVE 18 DEPARTMENTS SEARCH BAR)
-           ============================================================== -->
-      <div class="dept-direct-signin-container" style="max-width: 960px; margin: 0 auto 30px; width: 100%;">
-        <div class="signin-card" style="padding: 28px 32px; border-radius: 20px; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(24px) saturate(190%); border: 1px solid rgba(226, 232, 240, 0.9); box-shadow: 0 16px 40px -10px rgba(0, 55, 176, 0.12), 0 0 0 1px rgba(0, 55, 176, 0.05);">
+      <!-- Primary Centered Authentication Card (Matches Reference UI) -->
+      <div class="dept-auth-card-wrapper" style="max-width: 620px; margin: 10px auto 44px auto; width: 100%;">
+        <div class="dept-auth-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 36px 40px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);">
           
-          <!-- Card Header Row -->
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
-            <div>
-              <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 9999px; background: rgba(0, 55, 176, 0.08); color: var(--stitch-primary, #0037b0); font-weight: 700; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">
-                <span class="material-symbols-outlined" style="font-size: 15px;">vpn_key</span>
-                Direct Corporate Authentication
+          <!-- Card Header Row (Company Logo & Name on Left, Verification Badge on Right) -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div id="dept-card-company-logo" style="display: flex; align-items: center; justify-content: center; width: 26px; height: 26px;">
+                <svg width="22" height="22" viewBox="0 0 21 21" fill="none">
+                  <rect x="1" y="1" width="9" height="9" fill="#F25022" />
+                  <rect x="11" y="1" width="9" height="9" fill="#7FBA00" />
+                  <rect x="1" y="11" width="9" height="9" fill="#00A4EF" />
+                  <rect x="11" y="11" width="9" height="9" fill="#FFB900" />
+                </svg>
               </div>
-              <h3 style="font-size: 1.45rem; font-weight: 800; color: #0f172a; margin: 0 0 4px 0; letter-spacing: -0.02em;">
-                Sign in with Corporate Credentials
-              </h3>
-              <p style="font-size: 0.86rem; color: #64748b; margin: 0; line-height: 1.45;">
-                Already have your corporate email and password? Sign in directly below to launch your personalized workspace and AI Copilot — or browse the 18 departments and branches below to explore step-by-step.
-              </p>
+              <span id="dept-card-company-name" style="font-size: 1.25rem; font-weight: 700; color: #0f172a; letter-spacing: -0.01em;">Microsoft</span>
             </div>
             
-            <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 9999px; font-size: 0.78rem; font-weight: 600; color: #166534;">
-              <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);"></span>
-              <span>Entra ID Active</span>
+            <div id="dept-card-verified-badge" style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; background: #f0fdf4; border: 1px solid #dcfce7; border-radius: 9999px; font-size: 0.74rem; font-weight: 600; color: #166534;">
+              <span style="width: 7px; height: 7px; border-radius: 50%; background: #22c55e; display: inline-block;"></span>
+              <span>Entra ID Verified</span>
             </div>
           </div>
 
-          <!-- 1-Click Quick Credentials (Demo Shortcuts) -->
-          <div style="background: rgba(248, 250, 252, 0.85); border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 16px; margin-bottom: 18px;">
-            <div style="font-size: 0.75rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-              <span class="material-symbols-outlined" style="font-size: 15px; color: var(--stitch-primary, #0037b0);">bolt</span>
-              1-Click Demo Credentials:
-            </div>
-            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-              <button type="button" class="persona-pill-btn" style="border: 1.5px solid #2563eb; background: #eff6ff; color: #1e40af; font-weight: 700; font-size: 0.76rem; padding: 5px 12px; border-radius: 9999px; cursor: pointer; transition: all 0.2s;"
-                onclick="applyDeptDirectPersona('aarav.executive.assistant@microsoft.in', 'demo1234', 'POS-0001')">
-                🟢 Aarav Sharma (Software Engineer / Assoc · POS-0001)
-              </button>
-              <button type="button" class="persona-pill-btn" style="border: 1.5px solid #9333ea; background: #faf5ff; color: #6b21a8; font-weight: 700; font-size: 0.76rem; padding: 5px 12px; border-radius: 9999px; cursor: pointer; transition: all 0.2s;"
-                onclick="applyDeptDirectPersona('priya.senior.executive.assistant@microsoft.in', 'demo1234', 'POS-0002')">
-                🟣 Priya Nair (Lead · POS-0002)
-              </button>
-              <button type="button" class="persona-pill-btn" style="border: 1.5px solid #0284c7; background: #f0f9ff; color: #0369a1; font-weight: 700; font-size: 0.76rem; padding: 5px 12px; border-radius: 9999px; cursor: pointer; transition: all 0.2s;"
-                onclick="applyDeptDirectPersona('rahul.executive.business.partner@microsoft.in', 'demo1234', 'POS-0003')">
-                🔵 Rahul Kapoor (Manager · POS-0003)
-              </button>
-              <button type="button" class="persona-pill-btn" style="border: 1.5px solid #059669; background: #ecfdf5; color: #047857; font-weight: 700; font-size: 0.76rem; padding: 5px 12px; border-radius: 9999px; cursor: pointer; transition: all 0.2s;"
-                onclick="applyDeptDirectPersona('hr@microsoft.in', 'demo1234', null, 'hr')">
-                👤 Priya Sharma (HR Partner)
-              </button>
-              <button type="button" class="persona-pill-btn" style="border: 1.5px solid #d97706; background: #fffbeb; color: #b45309; font-weight: 700; font-size: 0.76rem; padding: 5px 12px; border-radius: 9999px; cursor: pointer; transition: all 0.2s;"
-                onclick="applyDeptDirectPersona('buddy@microsoft.in', 'demo1234', null, 'buddy')">
-                🤝 Rahul Pandey (Mentor Buddy)
-              </button>
-            </div>
-          </div>
+          <!-- Sign In Title -->
+          <h2 style="font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 0 0 6px 0; letter-spacing: -0.02em;">
+            Sign in
+          </h2>
+          <p style="font-size: 0.92rem; color: #475569; margin: 0 0 24px 0;">
+            to continue to <strong style="color: #0f172a; font-weight: 700;">StartSmart Enterprise Workspace</strong>
+          </p>
 
-          <!-- Direct Sign-In Form Fields -->
+          <!-- Sign-In Form Fields -->
           <form id="dept-direct-signin-form" onsubmit="event.preventDefault(); handleDeptDirectSignIn();" style="margin: 0;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) 180px; gap: 14px; align-items: end;">
+            
+            <!-- Email Field -->
+            <div style="margin-bottom: 6px;">
+              <label for="dept-direct-email" style="display: block; font-size: 0.84rem; font-weight: 500; color: #334155; margin-bottom: 6px;">
+                Email, phone, or Skype
+              </label>
+              <input type="email" id="dept-direct-email" value="aarav.executive.assistant@microsoft.in" required oninput="handleDeptDirectEmailInput(this.value)"
+                style="width: 100%; height: 42px; padding: 8px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.92rem; color: #0f172a; box-sizing: border-box; outline: none; transition: border-color 0.15s ease;">
+            </div>
+            
+            <div id="dept-tenant-domain-caption" style="font-size: 0.75rem; color: #64748b; margin-bottom: 18px;">
+              Federated via Entra ID tenant domain microsoft.in
+            </div>
+
+            <!-- Password Field -->
+            <div style="margin-bottom: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label for="dept-direct-password" style="font-size: 0.84rem; font-weight: 500; color: #334155;">
+                  Password
+                </label>
+                <a href="javascript:void(0)" onclick="showNotification('Password reset instructions sent to registered corporate address.')"
+                  style="font-size: 0.82rem; color: #0067b8; text-decoration: none; font-weight: 500;">
+                  Forgot password?
+                </a>
+              </div>
               
-              <!-- Work Email Field -->
-              <div class="form-group" style="margin: 0;">
-                <label class="input-label" for="dept-direct-email" style="font-size: 0.78rem; font-weight: 700; margin-bottom: 6px; display: block; color: #334155;">
-                  Corporate Work Email
-                </label>
-                <div class="input-with-icon" style="position: relative;">
-                  <span class="material-symbols-outlined input-prefix-icon" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 19px; color: #64748b; pointer-events: none;">mail</span>
-                  <input type="email" id="dept-direct-email" class="styled-input-icon" placeholder="name@microsoft.in"
-                    value="aarav.executive.assistant@microsoft.in" required oninput="handleDeptDirectEmailInput(this.value)"
-                    style="width: 100%; height: 46px; padding-left: 40px; padding-right: 12px; border-radius: 10px; border: 1.5px solid #cbd5e1; background: #ffffff; font-size: 0.88rem; box-sizing: border-box; transition: all 0.2s;">
-                </div>
+              <div style="position: relative; width: 100%;">
+                <input type="password" id="dept-direct-password" value="demo1234" required
+                  style="width: 100%; height: 42px; padding: 8px 40px 8px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.92rem; color: #0f172a; box-sizing: border-box; outline: none; transition: border-color 0.15s ease;">
+                <button type="button" id="dept-direct-toggle-password" onclick="toggleDeptPasswordVisibility()"
+                  style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #64748b; display: flex; align-items: center; justify-content: center; padding: 4px;">
+                  <span class="material-symbols-outlined" id="dept-direct-eye-icon" style="font-size: 19px;">visibility</span>
+                </button>
               </div>
+            </div>
 
-              <!-- Password Field -->
-              <div class="form-group" style="margin: 0;">
-                <label class="input-label" for="dept-direct-password" style="font-size: 0.78rem; font-weight: 700; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; color: #334155;">
-                  <span>Password</span>
-                  <a href="javascript:void(0)" onclick="showNotification('Password reset instructions sent to registered address.')" style="font-size: 0.72rem; color: var(--stitch-primary, #0037b0); text-decoration: none; font-weight: 600;">Forgot?</a>
-                </label>
-                <div class="input-with-icon" style="position: relative;">
-                  <span class="material-symbols-outlined input-prefix-icon" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 19px; color: #64748b; pointer-events: none;">key</span>
-                  <input type="password" id="dept-direct-password" class="styled-input-icon" value="demo1234" required
-                    style="width: 100%; height: 46px; padding-left: 40px; padding-right: 42px; border-radius: 10px; border: 1.5px solid #cbd5e1; background: #ffffff; font-size: 0.88rem; box-sizing: border-box; transition: all 0.2s;">
-                  <button type="button" id="dept-direct-toggle-password" class="password-eye-btn" aria-label="Toggle password"
-                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #64748b; display: flex; align-items: center; justify-content: center; padding: 4px;">
-                    <span class="material-symbols-outlined" id="dept-direct-eye-icon" style="font-size: 18px;">visibility</span>
-                  </button>
-                </div>
-              </div>
+            <!-- Actions Row: Checkbox & Submit Button -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px;">
+              <label style="display: inline-flex; align-items: center; gap: 8px; font-size: 0.86rem; color: #334155; cursor: pointer; user-select: none;">
+                <input type="checkbox" checked style="accent-color: #0067b8; width: 16px; height: 16px; cursor: pointer;">
+                <span>Keep me signed in</span>
+              </label>
 
-              <!-- Submit Button -->
-              <button type="submit" id="dept-direct-submit-btn" class="signin-primary-btn"
-                style="height: 46px; margin: 0; width: 100%; border-radius: 10px; background: linear-gradient(135deg, #0037b0 0%, #1e40af 100%); color: #ffffff; border: none; font-weight: 700; font-size: 0.88rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; box-shadow: 0 4px 14px rgba(0, 55, 176, 0.3); transition: all 0.2s;">
-                <span id="dept-direct-btn-text">Sign In</span>
-                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+              <button type="submit" id="dept-direct-submit-btn"
+                style="background: #0067b8; color: #ffffff; border: none; border-radius: 6px; padding: 9px 28px; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: all 0.15s ease; box-shadow: 0 2px 6px rgba(0, 103, 184, 0.25);">
+                Sign in
               </button>
             </div>
 
-            <!-- Real-Time Role Detection Banner -->
-            <div id="dept-direct-role-badge" style="margin-top: 14px; background: rgba(240, 253, 244, 0.95); border: 1px solid #86efac; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 10px;">
-              <span class="material-symbols-outlined" style="color: #059669; font-size: 20px; flex-shrink: 0;">verified_user</span>
-              <div style="flex: 1; min-width: 0;">
-                <div id="dept-direct-role-title" style="font-size: 0.84rem; font-weight: 700; color: #15803d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                  Detected Role: Aarav Sharma (Associate - Executive Assistant · POS-0001)
-                </div>
-                <div id="dept-direct-role-desc" style="font-size: 0.74rem; color: #166534; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                  Administration · Direct Onboarding Workspace &amp; 30 Authoritative Tasks with AI Copilot
-                </div>
+            <!-- Bottom Card Verification Status Footer -->
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid #f1f5f9; font-size: 0.78rem; flex-wrap: wrap; gap: 8px;">
+              <div style="display: inline-flex; align-items: center; gap: 6px; color: #1e293b;">
+                <span style="color: #22c55e; font-size: 15px; font-weight: 700; line-height: 1;">✓</span>
+                <span><strong>Verified Account:</strong> <span id="dept-verified-account-label">Aarav Sharma (POS-0001) · Executive Office</span></span>
               </div>
+              <div style="display: inline-flex; align-items: center; gap: 4px; color: #0067b8; font-weight: 500;">
+                <span class="material-symbols-outlined" style="font-size: 14px;">lock</span>
+                <span>Conditional Access</span>
+              </div>
+            </div>
+
+            <!-- Hidden real-time role fields for backend compatibility -->
+            <div id="dept-direct-role-badge" style="display: none;">
+              <div id="dept-direct-role-title"></div>
+              <div id="dept-direct-role-desc"></div>
             </div>
           </form>
-        </div>
 
-        <!-- Section Transition Divider -->
-        <div class="dept-step-or-divider" style="display: flex; align-items: center; gap: 16px; margin: 24px 0 16px; width: 100%;">
-          <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(203, 213, 225, 0.9), transparent);"></div>
-          <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 18px; border-radius: 9999px; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(226, 232, 240, 0.9); font-size: 0.78rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.06em; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
-            <span class="material-symbols-outlined" style="font-size: 16px; color: var(--stitch-primary, #0037b0);">account_tree</span>
-            Or Select from 18 Departments &amp; Branches Below
-          </div>
-          <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(203, 213, 225, 0.9), transparent);"></div>
         </div>
       </div>
 
-      <!-- Department Directory Toolbar -->
-      <div class="directory-toolbar-container" style="margin-bottom: 20px;">
-        <div class="directory-search-bar">
-          <span class="material-symbols-outlined search-icon">search</span>
-          <input type="text" id="dept-filter-input" class="directory-search-input"
+      <!-- Section Divider to 18 Organizational Departments -->
+      <div style="display: flex; align-items: center; justify-content: center; margin: 30px auto 20px auto; max-width: 960px;">
+        <div style="height: 1px; flex: 1; background: #e2e8f0;"></div>
+        <div style="padding: 0 16px; font-size: 0.8rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em;">
+          Or Select from 18 Departments &amp; Branches
+        </div>
+        <div style="height: 1px; flex: 1; background: #e2e8f0;"></div>
+      </div>
+
+      <!-- Department Directory Search Toolbar -->
+      <div class="companies-search-wrap" style="max-width: 640px; margin: 0 auto 28px auto;">
+        <div class="companies-search-box">
+          <span class="material-symbols-outlined companies-search-icon">search</span>
+          <input type="text" id="dept-filter-input" class="companies-search-input"
             placeholder="Search 18 departments (e.g. Engineering, Security, Analytics, Marketing, HR)..."
             oninput="filterDepartmentCards(this.value)" autocomplete="off">
-          <span id="dept-result-counter" class="directory-counter-pill">18 divisions available</span>
-        </div>
-
-        <div class="directory-category-bar">
-          <button type="button" class="filter-pill active" onclick="filterDeptCategory('all', this)">All (18)</button>
-          <button type="button" class="filter-pill" onclick="filterDeptCategory('Tech', this)">Engineering & Tech (6)</button>
-          <button type="button" class="filter-pill" onclick="filterDeptCategory('Corporate', this)">Corporate & Shared (6)</button>
-          <button type="button" class="filter-pill" onclick="filterDeptCategory('Business', this)">Business & Strategy (4)</button>
-          <button type="button" class="filter-pill" onclick="filterDeptCategory('Operations', this)">Operations & Support (2)</button>
         </div>
       </div>
 
@@ -1700,12 +1685,28 @@
       <div class="departments-grid" id="departments-grid">
         <!-- Rendered dynamically by renderDepartmentsList() -->
       </div>
+
+      <!-- Trust Footer Matching Pages 1 & 2 -->
+      <div class="companies-trust-footer" style="margin-top: 48px;">
+        <div>© 2025 StartSmart Inc. All rights reserved.</div>
+        <div class="trust-shield-badge">
+          <span class="material-symbols-outlined" style="font-size: 16px; color: #10b981; vertical-align: middle;">security</span>
+          <span>SAML 2.0 / Okta / Azure AD ready · SOC 2 Type II Certified</span>
+        </div>
+      </div>
+
     </section>
 
     <!-- ==============================================================
          STEP 2B: SUB-DEPARTMENTS, BRANCHES & TEAMS SELECTION
          ============================================================== -->
     <section id="step-subdepartments" class="step-view" style="display: none; max-width: 1200px; margin: 24px auto; padding-top: 12px; width: 100%;">
+      <div class="section-top-back-bar">
+        <button type="button" class="btn-top-corner-back" onclick="goBackStep()" title="Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+          <span>Back</span>
+        </button>
+      </div>
       <div class="org-wizard-breadcrumb">
         <button onclick="goToStep('step-gateway')">Gateway</button>
         <span class="crumb-sep">/</span>
@@ -1750,6 +1751,12 @@
          STEP 2C: ROLE LEVEL & POSITION SELECTION (Associate, Lead, Manager, CEO)
          ============================================================== -->
     <section id="step-roles" class="step-view" style="display: none; max-width: 1200px; margin: 24px auto; padding-top: 12px; width: 100%;">
+      <div class="section-top-back-bar">
+        <button type="button" class="btn-top-corner-back" onclick="goBackStep()" title="Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+          <span>Back</span>
+        </button>
+      </div>
       <div class="org-wizard-breadcrumb">
         <button onclick="goToStep('step-gateway')">Gateway</button>
         <span class="crumb-sep">/</span>
@@ -1799,6 +1806,12 @@
 
     <section id="step-signin" class="step-view"
       style="display: none; max-width: 540px; margin: 32px auto; width: 100%;">
+      <div class="section-top-back-bar">
+        <button type="button" class="btn-top-corner-back" onclick="goBackStep()" title="Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+          <span>Back</span>
+        </button>
+      </div>
       <!-- Top Step / Back Link Context -->
       <div class="signin-nav-bar">
         <a href="javascript:void(0)" onclick="goToStep('step-roles')" class="signin-back-link">
@@ -1978,7 +1991,13 @@
          STEP 4A: NEW JOINER INTERACTIVE WORKSPACE (70% MANUAL DASHBOARD + 30% AI COPILOT)
          ============================================================== -->
     <section id="step-joiner-chatbot" class="step-view"
-      style="display: none; width: 100%; max-width: 1600px; margin: 0 auto;">
+      style="display: none; width: 100%; max-width: 100%; margin: 0 auto;">
+      <div class="section-top-back-bar">
+        <button type="button" class="btn-top-corner-back" onclick="goBackStep()" title="Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+          <span>Back</span>
+        </button>
+      </div>
       <div class="breadcrumbs-bar" style="margin-bottom: 16px;">
         <button onclick="goToStep('step-gateway')">Gateway</button>
         <span class="breadcrumbs-separator">/</span>
@@ -2311,9 +2330,6 @@
               </div>
               <div>
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                  <span class="copilot-title-text" style="font-weight: 800; font-size: 1.05rem; color: #ffffff;">
-                    First-Week Maze Onboarding Copilot
-                  </span>
                   <span class="copilot-live-pill"
                     style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 9999px; display: inline-flex; align-items: center; gap: 4px;">
                     <span style="width: 6px; height: 6px; border-radius: 50%; background: #34d399; display: inline-block;"></span>
@@ -2342,14 +2358,9 @@
             <!-- Dynamic AI messages stream -->
           </div>
 
-          <!-- Suggested FAQ Questions Bar (Direct Shortcuts into Chatbot) -->
-          <div class="copilot-quick-prompts">
-            <div style="font-size: 0.72rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-              <span>💬</span> Suggested Questions:
-            </div>
-            <div class="copilot-chips-scroll" id="copilot-chips-container" style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <!-- Populated dynamically by renderSuggestedFaqQuestions() based on role -->
-            </div>
+                    <!-- Suggested FAQ Questions Bar (Hidden per user requirement) -->
+          <div class="copilot-quick-prompts" style="display: none !important;">
+            <div class="copilot-chips-scroll" id="copilot-chips-container" style="display: none !important;"></div>
           </div>
 
           <!-- Chatbot Sticky Input Box -->
@@ -2384,6 +2395,12 @@
          ============================================================== -->
     <!-- STEP 4C: HIERARCHICAL TASK MANAGEMENT & SUBORDINATE CONTROL -->
 <section id="step-task-management" class="step-view" style="display: none; width: 100%; max-width: 1600px; margin: 0 auto;">
+  <div class="section-top-back-bar">
+    <button type="button" class="btn-top-corner-back" onclick="goBackStep()" title="Back">
+      <span class="material-symbols-outlined">arrow_back</span>
+      <span>Back</span>
+    </button>
+  </div>
   <div class="breadcrumbs-bar" style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
     <div style="display: flex; align-items: center; gap: 6px;">
       <button onclick="goToStep('step-gateway')">Gateway</button>
@@ -2723,6 +2740,12 @@
 
     <section id="step-hr-portal" class="step-view"
       style="display: none; max-width: 1300px; margin: 0 auto; width: 100%;">
+      <div class="section-top-back-bar">
+        <button type="button" class="btn-top-corner-back" onclick="goBackStep()" title="Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+          <span>Back</span>
+        </button>
+      </div>
       <div class="breadcrumbs-bar">
         <button onclick="goToStep('step-gateway')">Gateway</button>
         <span class="breadcrumbs-separator">/</span>
@@ -3123,6 +3146,12 @@
          ============================================================== -->
     <section id="step-buddy-portal" class="step-view"
       style="display: none; max-width: 900px; margin: 0 auto; width: 100%;">
+      <div class="section-top-back-bar">
+        <button type="button" class="btn-top-corner-back" onclick="goBackStep()" title="Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+          <span>Back</span>
+        </button>
+      </div>
       <div class="breadcrumbs-bar">
         <button onclick="goToStep('step-gateway')">Gateway</button>
         <span class="breadcrumbs-separator">/</span>
@@ -3239,6 +3268,12 @@
          ============================================================== -->
     <section id="step-admin-portal" class="step-view"
       style="display: none; max-width: 900px; margin: 0 auto; width: 100%;">
+      <div class="section-top-back-bar">
+        <button type="button" class="btn-top-corner-back" onclick="goBackStep()" title="Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+          <span>Back</span>
+        </button>
+      </div>
       <div class="breadcrumbs-bar">
         <button onclick="goToStep('step-gateway')">Gateway</button>
         <span class="breadcrumbs-separator">/</span>
@@ -3290,6 +3325,12 @@
          STEP: REGISTER A COMPANY (Embedded Quick Setup)
          ============================================================== -->
     <section id="step-register" class="step-view" style="display: none; max-width: 720px; margin: 0 auto; width: 100%;">
+      <div class="section-top-back-bar">
+        <button type="button" class="btn-top-corner-back" onclick="goBackStep()" title="Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+          <span>Back</span>
+        </button>
+      </div>
       <div class="breadcrumbs-bar">
         <button onclick="goToStep('step-gateway')">← Gateway</button>
         <span class="breadcrumbs-separator">/</span>
@@ -4519,8 +4560,16 @@
       select.innerHTML = optionsHtml;
     }
 
-    // Navigation Step Transition Manager
-    function goToStep(stepId) {
+    // Navigation Step Transition Manager with History Stack
+    let currentStepId = 'step-gateway';
+    const stepHistory = [];
+
+    function goToStep(stepId, pushHistory = true) {
+      if (pushHistory && currentStepId && currentStepId !== stepId) {
+        stepHistory.push(currentStepId);
+      }
+      currentStepId = stepId;
+
       const allSteps = document.querySelectorAll('.step-view');
       allSteps.forEach(s => s.style.display = 'none');
 
@@ -4528,6 +4577,12 @@
       if (target) {
         target.style.display = 'block';
         window.scrollTo(0, 0);
+      }
+
+      // Update visibility of the global header back button
+      const headerBackBtn = document.getElementById('global-header-back-btn');
+      if (headerBackBtn) {
+        headerBackBtn.style.display = (stepId === 'step-gateway') ? 'none' : 'inline-flex';
       }
 
       if (stepId === 'step-departments') {
@@ -4540,6 +4595,28 @@
 
       if (stepId === 'step-hr-portal') {
         renderLiveHRPortal();
+      }
+    }
+
+    function goBackStep() {
+      if (stepHistory.length > 0) {
+        const prev = stepHistory.pop();
+        goToStep(prev, false);
+      } else {
+        // Safe intelligent fallback based on current step
+        if (currentStepId === 'step-departments' || currentStepId === 'step-register') {
+          goToStep('step-companies', false);
+        } else if (currentStepId === 'step-subdepartments') {
+          goToStep('step-departments', false);
+        } else if (currentStepId === 'step-roles') {
+          goToStep('step-subdepartments', false);
+        } else if (currentStepId === 'step-signin') {
+          goToStep('step-departments', false);
+        } else if (currentStepId === 'step-joiner-chatbot') {
+          goToStep('step-signin', false);
+        } else {
+          goToStep('step-gateway', false);
+        }
       }
     }
 
@@ -4706,22 +4783,112 @@
       return { departments: [] };
     }
 
-    // Step 2 Action: Select Company -> Routes to Step 2A (18 Departments)
+    // Step 2 Action: Select Company -> Routes to Step 2A (18 Departments & Authentication)
     function selectCompany(companyKey) {
       currentSelectedCompany = companyKey;
       const comp = companiesDatabase[companyKey] || companiesDatabase.microsoft;
+      const domainClean = (comp.domain || '@microsoft.in').replace('@', '');
 
-      // Update Department Page Titles
-      const deptCompanyTitle = document.getElementById('dept-company-title');
-      if (deptCompanyTitle) deptCompanyTitle.textContent = comp.fullName || comp.name;
-      const breadcrumbCompany = document.getElementById('breadcrumb-dept-company');
-      if (breadcrumbCompany) breadcrumbCompany.textContent = comp.name;
+      // Dynamic Company Logo in Sign In Card
+      const cardLogoEl = document.getElementById('dept-card-company-logo');
+      if (cardLogoEl && companyLogosSvg[companyKey]) {
+        cardLogoEl.innerHTML = companyLogosSvg[companyKey];
+      }
+
+      // Dynamic Company Name in Sign In Card
+      const cardTitleEl = document.getElementById('dept-card-company-name');
+      if (cardTitleEl) {
+        cardTitleEl.textContent = comp.name || 'Microsoft';
+      }
+
+      // Dynamic Verification Badge
+      const cardVerifiedBadge = document.getElementById('dept-card-verified-badge');
+      if (cardVerifiedBadge) {
+        let provider = 'Entra ID Verified';
+        if (companyKey === 'google') provider = 'Google Workspace Verified';
+        else if (companyKey === 'amazon') provider = 'AWS IAM Verified';
+        else if (companyKey === 'apple') provider = 'Apple Enterprise Verified';
+        else if (companyKey === 'nvidia') provider = 'NVIDIA Cloud Verified';
+        else if (companyKey === 'stripe') provider = 'Okta SSO Verified';
+        else if (companyKey === 'salesforce') provider = 'Salesforce ID Verified';
+        else if (companyKey === 'technova') provider = 'Azure AD Verified';
+        else if (companyKey === 'finwise') provider = 'Ping Identity Verified';
+        else if (companyKey === 'medcore') provider = 'HIPAA SSO Verified';
+        cardVerifiedBadge.innerHTML = `<span style="width: 7px; height: 7px; border-radius: 50%; background: #22c55e; display: inline-block;"></span> <span>${provider}</span>`;
+      }
+
+      // Tenant domain caption
+      const tenantCaption = document.getElementById('dept-tenant-domain-caption');
+      if (tenantCaption) {
+        let providerName = (companyKey === 'google') ? 'Google Workspace' : (companyKey === 'amazon' ? 'AWS IAM' : 'Entra ID');
+        tenantCaption.textContent = `Federated via ${providerName} tenant domain ${domainClean}`;
+      }
+
+      // Set placeholder / initial domain for company
+      const defaultEmail = `aarav.executive.assistant@${domainClean}`;
+      const emailInp = document.getElementById('dept-direct-email');
+      if (emailInp) {
+        emailInp.placeholder = `name@${domainClean}`;
+        if (!emailInp.value || emailInp.value.includes('@')) {
+          emailInp.value = defaultEmail;
+        }
+      }
+      const passInp = document.getElementById('dept-direct-password');
+      if (passInp && !passInp.value) passInp.value = 'demo1234';
+
+      const labelEl = document.getElementById('dept-verified-account-label');
+      if (labelEl) labelEl.textContent = `Corporate Account (${domainClean})`;
+
+      handleDeptDirectEmailInput(emailInp ? emailInp.value : defaultEmail);
 
       // Render 18 Departments Grid
       renderDepartmentsList();
 
-      showNotification(`Selected ${comp.fullName}. Choose from the 18 departments.`);
+      showNotification(`Selected ${comp.fullName}. Workspace ready.`);
       goToStep('step-departments');
+    }
+
+    function selectFastDemoAccount(btn, personaKey, posId, label) {
+      document.querySelectorAll('#fast-demo-accounts-pills .fast-demo-pill').forEach(p => p.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      const comp = companiesDatabase[currentSelectedCompany] || companiesDatabase.microsoft;
+      const domainClean = (comp.domain || '@microsoft.in').replace('@', '');
+
+      let email = `aarav.executive.assistant@${domainClean}`;
+      let roleType = 'joiner';
+
+      if (personaKey === 'aarav') {
+        email = `aarav.executive.assistant@${domainClean}`;
+      } else if (personaKey === 'priya') {
+        email = `priya.senior.executive.assistant@${domainClean}`;
+      } else if (personaKey === 'rahul') {
+        email = `rahul.executive.business.partner@${domainClean}`;
+      } else if (personaKey === 'hr') {
+        email = `hr@${domainClean}`;
+        roleType = 'hr';
+      } else if (personaKey === 'buddy') {
+        email = `buddy@${domainClean}`;
+        roleType = 'buddy';
+      }
+
+      applyDeptDirectPersona(email, 'demo1234', posId, roleType);
+
+      const labelEl = document.getElementById('dept-verified-account-label');
+      if (labelEl) labelEl.textContent = label;
+    }
+
+    function toggleDeptPasswordVisibility() {
+      const passInp = document.getElementById('dept-direct-password');
+      const eyeIcon = document.getElementById('dept-direct-eye-icon');
+      if (!passInp || !eyeIcon) return;
+      if (passInp.type === 'password') {
+        passInp.type = 'text';
+        eyeIcon.textContent = 'visibility_off';
+      } else {
+        passInp.type = 'password';
+        eyeIcon.textContent = 'visibility';
+      }
     }
 
     // Filter and Render 18 Departments List
@@ -7936,6 +8103,91 @@
     }
 
 
+    // ==============================================================
+    // Out-of-Scope Onboarding Guardrail & Query Scope Classifier
+    // ==============================================================
+    function classifyOnboardingQueryScope(query) {
+      const q = (query || '').trim();
+      const lower = q.toLowerCase();
+
+      if (q.length < 2) {
+        return {
+          classification: 'AMBIGUOUS',
+          response: 'Could you please clarify your question? I can assist with your onboarding tasks, checklist progress, team contacts (HR, Buddy, IT, Manager), and company resources.'
+        };
+      }
+
+      // Greetings and capabilities
+      const isGreeting = /^(hi|hello|hey|good\s+(morning|afternoon|evening)|greetings|howdy)[,\s!.]*$/i.test(q) ||
+        /(what\s+can\s+you\s+do|how\s+(can|do)\s+you\s+help|who\s+are\s+you|what\s+is\s+your\s+purpose|help\s+me\s+with\s+onboarding)/i.test(q);
+      if (isGreeting) {
+        return { classification: 'IN_SCOPE', response: '' };
+      }
+
+      // Explicit Out-of-Scope Patterns
+      // 1. Coding / programming generation requests
+      const isCoding = (
+        /(write|create|generate|give\s+me|code)\s+(a|an|some|the)?\s*(python|javascript|typescript|c\+\+|java|rust|go|php|ruby|html|css|sql|bash|shell)?\s*(program|code|script|function|class|algorithm|regex|app|component)/i.test(lower) ||
+        /^(how\s+to\s+code|debug\s+this|fix\s+my\s+code|invert\s+a\s+binary\s+tree|write\s+(python|c\+\+|java|javascript))/i.test(lower)
+      ) && !/(handbook|guideline|portal|onboarding|task|github\s+access|repo\s+access)/i.test(lower);
+
+      // 2. Trivia, geography, history, world facts
+      const isTrivia = (
+        /(capital\s+of|population\s+of|president\s+of|prime\s+minister\s+of|currency\s+of|tallest\s+building|highest\s+mountain|distance\s+to|speed\s+of\s+light|history\s+of\s+(rome|france|world|america|india|china|war)|when\s+was\s+.+\s+(born|founded|built)|who\s+won\s+the|olympics|world\s+cup|super\s+bowl|nobel\s+prize)/i.test(lower) ||
+        /(what\s+is\s+the\s+capital|what's\s+the\s+capital|where\s+is\s+(paris|france|tokyo|london|germany|canada|australia|africa|antarctica|new\s+york|berlin))/i.test(lower)
+      );
+
+      // 3. Weather, climate, astronomy
+      const isWeather = /(weather|temperature|forecast|is\s+it\s+raining|will\s+it\s+rain|humidity|degrees\s+outside|climate\s+change|distance\s+between\s+earth\s+and\s+moon|solar\s+system|black\s+hole|planets\s+in\s+space)/i.test(lower);
+
+      // 4. Jokes, entertainment, creative writing
+      const isEntertainment = /(tell\s+me\s+a\s+joke|make\s+me\s+laugh|say\s+something\s+funny|tell\s+me\s+a\s+riddle|write\s+a\s+(poem|story|song|rap)|sing\s+a\s+song|recommend\s+a\s+(movie|song|film|show|series|anime|book|game))/i.test(lower);
+
+      // 5. Celebrities, public figures
+      const isCelebrity = /(who\s+is|tell\s+me\s+about)\s+(elon\s+musk|bill\s+gates|steve\s+jobs|mark\s+zuckerberg|jeff\s+bezos|taylor\s+swift|cristiano\s+ronaldo|messi|barack\s+obama|donald\s+trump|einstein|newton|shakespeare)/i.test(lower);
+
+      // 6. Science, physics, math
+      const isScience = /(explain\s+(quantum\s+physics|theory\s+of\s+relativity|string\s+theory|photosynthesis|dna|evolution|thermodynamics|schrodinger|gravity|black\s+hole)|calculate\s+\d+|what\s+is\s+\d+\s*[\+\-\*\/x]\s*\d+|solve\s+(this\s+math|equation|integral|derivative))/i.test(lower);
+
+      // 7. Lifestyle, food, dining
+      const isLifestyle = /(what\s+should\s+i\s+eat|what\s+to\s+eat|dinner|lunch|breakfast|recipe\s+for|how\s+to\s+cook|diet\s+plan|workout\s+routine|symptoms\s+of|medical\s+advice|diagnose\s+my|cure\s+for)/i.test(lower) && !/(cafeteria|office\s+lunch|meal\s+voucher|food\s+card|campus\s+canteen)/i.test(lower);
+
+      // 8. Philosophy / general chatbot
+      const isPhilosophy = /(meaning\s+of\s+life|are\s+you\s+(sentient|conscious|human|alive)|do\s+you\s+have\s+feelings|what\s+is\s+love|who\s+created\s+the\s+universe|should\s+i\s+buy\s+(bitcoin|crypto|stocks?|shares?))/i.test(lower);
+
+      if (isCoding || isTrivia || isWeather || isEntertainment || isCelebrity || isScience || isLifestyle || isPhilosophy) {
+        return {
+          classification: 'OUT_OF_SCOPE',
+          response: 'Sorry, I can only help with onboarding-related questions.'
+        };
+      }
+
+      // Positive In-Scope Indicators
+      const hasTask = /(task|checklist|roadmap|todo|to-do|complete|completed|pending|cleared|assign|priority|critical|urgent|day\s*[1-5]|today|tomorrow|this\s+week|first\s+week|first-week|milestone|module|training|compliance|security|handbook|sso|mfa|laptop|equipment|vpn|docker|github|ide|workspace|unstick|blocker|blocked|stuck)/i.test(lower);
+      const hasPeople = /(manager|reporting|lead|mentor|buddy|hr|people\s+partner|helpdesk|it\s+support|it\s+help|escalat|contact|phone|email|call|directory|who\s+(is\s+my|to\s+contact|to\s+reach|to\s+call)|role|designation|title|position|associate|employee|department|team|squad|division|campus|office|location|bengaluru|hyderabad|redmond|emp\s*id|id\s*card|badge)/i.test(lower);
+      const hasProgress = /(progress|percentage|percent|%|how\s+much\s+done|how\s+many\s+tasks|completion|stats|metrics|status\s+of\s+(my\s+)?(onboarding|tasks?|checklist)|where\s+do\s+i\s+stand)/i.test(lower);
+      const hasResource = /(resource|guide|doc|documentation|wiki|handbook|repo|repository|link|tools?|access|setup|configuration|install|sandbox|credentials?|password)/i.test(lower);
+      const hasCompany = /(microsoft|google|amazon|stripe|salesforce|technova|finwise|medcore|startsmart|start\s*smart|aarav|rohan|priya|dhruv|rahul|diya|ananya|meera|vikram)/i.test(lower);
+
+      if (hasTask || hasPeople || hasProgress || hasResource || hasCompany) {
+        return { classification: 'IN_SCOPE', response: '' };
+      }
+
+      // Ambiguity check
+      const words = q.split(/\s+/).filter(Boolean);
+      if (words.length <= 4 || /^(what|how|why|where|when|can\s+you|explain|details|more|status|help|info|tell\s+me)[?!.]*$/i.test(q)) {
+        return {
+          classification: 'AMBIGUOUS',
+          response: 'Could you please clarify your question? I can assist with your onboarding tasks, checklist progress, team contacts (HR, Buddy, IT, Manager), and company resources.'
+        };
+      }
+
+      return {
+        classification: 'OUT_OF_SCOPE',
+        response: 'Sorry, I can only help with onboarding-related questions.'
+      };
+    }
+
     async function sendChatMessage() {
       const input = document.getElementById('chatbot-input');
       const query = input.value.trim();
@@ -7943,6 +8195,42 @@
 
       input.value = '';
       const lower = query.toLowerCase();
+
+      // Guardrail: Evaluate Scope before execution
+      const scopeEval = classifyOnboardingQueryScope(query);
+      if (scopeEval.classification === 'OUT_OF_SCOPE') {
+        return runCopilotResponseWithThinking(query, () => `
+          <div>
+            <div style="font-size: 0.88rem; color: #f8fafc; line-height: 1.6; margin-bottom: 10px;">
+              ${escapeHtml(scopeEval.response)}
+            </div>
+            <div style="font-size: 0.74rem; color: #94a3b8; margin-bottom: 8px;">
+              💡 <em>I can help you with your first-week checklist, team contacts, and department resources.</em>
+            </div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+              <button class="chat-action-chip" onclick="askCopilotDirect('What\'s my task for today?')">📋 Today's Tasks</button>
+              <button class="chat-action-chip" onclick="askCopilotDirect('Who should I contact for IT help?')">🛠️ IT Help</button>
+              <button class="chat-action-chip" onclick="askCopilotDirect('Who is my reporting manager?')">👔 Manager</button>
+              <button class="chat-action-chip" onclick="askCopilotDirect('What is my onboarding progress?')">📊 Progress</button>
+            </div>
+          </div>
+        `);
+      }
+
+      if (scopeEval.classification === 'AMBIGUOUS') {
+        return runCopilotResponseWithThinking(query, () => `
+          <div>
+            <div style="font-size: 0.88rem; color: #f8fafc; line-height: 1.6; margin-bottom: 10px;">
+              ${escapeHtml(scopeEval.response)}
+            </div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+              <button class="chat-action-chip" onclick="askCopilotDirect('What do I need to complete today?')">📋 Today's Checklist</button>
+              <button class="chat-action-chip" onclick="askCopilotDirect('Where can I find my department resources?')">📚 Resources</button>
+              <button class="chat-action-chip" onclick="handleChatOption('contacts')">📞 Contacts</button>
+            </div>
+          </div>
+        `);
+      }
 
       // Comprehensive role-aware natural language query routing
       if (lower.includes('salary') || lower.includes('compensation') || lower.includes('peer review') || lower.includes('confidential performance')) {
@@ -8802,7 +9090,7 @@
       }, 3000);
     }
 
-    // ==============================================================
+        // ==============================================================
     // Corporate Background Slideshow Carousel Controller
     // ==============================================================
     let currentCorporateSlide = 0;
@@ -8841,6 +9129,7 @@
         setCorporateSlide(currentCorporateSlide + 1);
       }, 5500);
     }
+
 
     // Initialize on load: set Step 1 Gateway active & attach interactive listeners
     // ==============================================================
