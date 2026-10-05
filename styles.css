@@ -28,6 +28,9 @@
   --status-success: #3F7D58;
   --status-warning: #C8892B;
   --status-error: #B4432F;
+  --copper-gradient-light: linear-gradient(135deg, #EACBB0 0%, #DCA982 50%, #C98A5C 100%); /* copper-200 → 400, for text over dark photos */
+  --warm-placeholder: #8A7E75;
+  --warm-scrim: radial-gradient(ellipse at center, rgba(20, 14, 10, 0.45) 0%, rgba(20, 14, 10, 0) 70%);
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
@@ -6308,48 +6311,58 @@ button {
 }
 
 /* ==========================================================================
-   COPPER THEME: Landing page ("Welcome to the Enterprise Onboarding Portal")
-   Colours, borders and shadows only. Scoped to #step-gateway; the shared header
-   is scoped with :has() so it only changes while the landing page is showing.
+   COPPER THEME — shared component rules, scoped per page.
+   Colours, borders and shadows only. Each rule lists the matching element on every
+   converted page, so the pages share one set of declarations:
+     #step-gateway   = landing page ("Welcome to the Enterprise Onboarding Portal")
+     #step-companies = company directory ("Welcome to StartSmart")
+   The shared header is restyled only while one of these pages is showing (:has()).
    ========================================================================== */
 
-/* Pill above the heading */
-#step-gateway .portal-security-badge {
+/* ---- Pill above the heading ---- */
+#step-gateway .portal-security-badge,
+#step-companies .hero-pill-verified {
   background: rgba(251, 244, 238, 0.85);
   border-color: var(--copper-300);
   color: var(--copper-700);
   box-shadow: 0 2px 10px rgba(63, 36, 19, 0.12);
 }
-#step-gateway .portal-security-badge svg { color: var(--copper-700); }
+#step-companies .hero-pill-verified { background: rgba(251, 244, 238, 0.9); }
+#step-gateway .portal-security-badge svg,
+#step-companies .hero-pill-verified .material-symbols-outlined { color: var(--copper-700); }
 
-/* Cards and panels */
+/* ---- Cards and panels ---- */
 #step-gateway .portal-card-primary,
 #step-gateway .portal-card-secondary,
-#step-gateway .portal-features-bar {
-  border-color: var(--copper-border-soft);
-  box-shadow: var(--copper-shadow-soft);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+#step-gateway .portal-features-bar,
+#step-companies .companies-grid .company-card {
+  border-color: var(--copper-border-soft) !important;
+  box-shadow: var(--copper-shadow-soft) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease !important;
 }
 #step-gateway .portal-card-primary:hover,
-#step-gateway .portal-card-secondary:hover {
-  border-color: var(--copper-border-strong);
-  box-shadow: var(--copper-shadow-hover);
+#step-gateway .portal-card-secondary:hover,
+#step-companies .companies-grid .company-card:hover {
+  border-color: var(--copper-border-strong) !important;
+  box-shadow: var(--copper-shadow-hover) !important;
 }
 #step-gateway .portal-card-primary::before { background: var(--copper-gradient); }
 
-/* Text inside the cards (warm neutrals; AA on white) */
+/* ---- Text inside cards (warm neutrals; AA on white) ---- */
 #step-gateway .portal-primary-heading,
 #step-gateway .portal-sec-title,
 #step-gateway .portal-feature-text h4,
-#step-gateway .portal-check-item { color: var(--warm-text); }
+#step-gateway .portal-check-item,
+#step-companies .company-name { color: var(--warm-text); }
 #step-gateway .portal-primary-desc,
 #step-gateway .portal-sec-desc,
 #step-gateway .portal-sec-checks,
 #step-gateway .portal-sso-caption,
 #step-gateway .portal-federated-caption,
-#step-gateway .portal-feature-text p { color: var(--warm-muted); }
+#step-gateway .portal-feature-text p,
+#step-companies .company-meta { color: var(--warm-muted); }
 
-/* Icons and their tiles */
+/* ---- Icons and their tiles ---- */
 #step-gateway .portal-icon-box-blue,
 #step-gateway .portal-icon-box-gray,
 #step-gateway .portal-feature-icon {
@@ -6360,13 +6373,25 @@ button {
 #step-gateway .portal-icon-box-blue svg,
 #step-gateway .portal-icon-box-gray svg,
 #step-gateway .portal-feature-icon svg { stroke: var(--copper-500); }
+/* Company logo tiles: one consistent white tile with a thin copper border (logos untouched) */
+#step-companies .company-monogram-box {
+  background: var(--warm-surface) !important;
+  border: 1px solid var(--copper-200) !important;
+}
 
-/* Labels and badges */
+/* ---- Labels and badges ---- */
 #step-gateway .badge-enrolled-org,
-#step-gateway .badge-new-org {
+#step-gateway .badge-new-org,
+#step-companies .company-category-chip {
   background: var(--copper-50);
   color: var(--copper-700);
   border-color: var(--copper-200);
+}
+/* Featured tag: the stronger copper variant (copper-100 / copper-800) */
+#step-companies .company-category-chip.featured-chip {
+  background: var(--copper-100);
+  color: var(--copper-800);
+  border-color: var(--copper-300);
 }
 #step-gateway .badge-ready-signin {
   background: rgba(63, 125, 88, 0.08);
@@ -6375,7 +6400,7 @@ button {
 }
 #step-gateway .ready-pulse-dot { background: var(--status-success); }
 
-/* Checkmarks */
+/* ---- Checkmarks ---- */
 #step-gateway .portal-check-badge {
   background: var(--copper-50);
   border-color: var(--copper-200);
@@ -6383,10 +6408,13 @@ button {
 }
 #step-gateway .portal-sec-check-item svg { color: var(--copper-500); stroke: var(--copper-500); }
 
-/* Primary button: copper gradient (deep stops keep white text at AA) */
-#step-gateway .btn-select-company-dark {
+/* ---- Primary button (copper gradient; deep stops keep white text at AA) ---- */
+#step-gateway .btn-select-company-dark,
+#step-companies .company-card:hover .company-signin-btn,
+#step-companies .company-card.featured-card:hover .company-signin-btn {
   background: var(--copper-gradient-strong);
   color: #FFFFFF;
+  border-color: transparent;
   box-shadow: 0 4px 14px rgba(125, 71, 32, 0.22);
 }
 #step-gateway .btn-select-company-dark:hover {
@@ -6395,7 +6423,16 @@ button {
 }
 #step-gateway .btn-select-company-dark:active { background: var(--copper-700); }
 
-/* Secondary button */
+/* ---- Soft copper button (company "Sign In →" at rest, same on every card) ---- */
+#step-companies .company-signin-btn,
+#step-companies .company-card.featured-card .company-signin-btn {
+  background: var(--copper-50);
+  color: var(--copper-700);
+  border: 1px solid var(--copper-200);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* ---- Secondary button ---- */
 #step-gateway .btn-register-workspace-white {
   background: #FFFFFF;
   color: var(--copper-700);
@@ -6407,57 +6444,101 @@ button {
 }
 #step-gateway .btn-register-workspace-white:active { background: var(--copper-100); }
 
-/* Visible copper focus states (no blue outlines) */
+/* ---- Visible copper focus states (no blue outlines) ---- */
 #step-gateway .btn-select-company-dark:focus-visible,
 #step-gateway .btn-register-workspace-white:focus-visible,
-#step-gateway .portal-clean-footer a:focus-visible {
+#step-gateway .portal-clean-footer a:focus-visible,
+#step-companies .company-card:focus-visible {
   outline: 2px solid var(--copper-500);
   outline-offset: 2px;
   box-shadow: var(--copper-focus-ring);
 }
 
-/* Footer links */
-#step-gateway .portal-clean-footer,
-#step-gateway .portal-clean-footer a { color: var(--warm-muted); }
-#step-gateway .portal-clean-footer a:hover { color: var(--copper-700); }
+/* ---- Inputs ---- */
+#step-companies .companies-search-input {
+  border-color: var(--copper-border-soft);
+  box-shadow: var(--copper-shadow-soft);
+  color: var(--warm-text);
+}
+#step-companies .companies-search-input::placeholder { color: var(--warm-placeholder); }
+#step-companies .companies-search-input:focus {
+  border-color: var(--copper-500);
+  box-shadow: var(--copper-focus-ring);
+  outline: none;
+}
+#step-companies .companies-search-icon { color: var(--copper-500); }
 
-/* Shared header — only while the landing page is showing */
-html:has(#step-gateway:not([style*="display: none"])) .app-header {
+/* ---- Heading area over the photo ---- */
+#step-companies .companies-hero-wrap { background: var(--warm-scrim); }
+#step-companies .companies-hero-heading {
+  color: #FFFFFF;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+#step-companies .companies-hero-heading span {
+  background: var(--copper-gradient-light);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent !important;
+  text-shadow: none;
+  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.35));
+}
+#step-companies .companies-hero-sub {
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* ---- Footers ---- */
+#step-gateway .portal-clean-footer,
+#step-gateway .portal-clean-footer a,
+#step-companies .companies-trust-footer { color: var(--warm-muted); }
+#step-gateway .portal-clean-footer a:hover { color: var(--copper-700); }
+#step-companies .companies-trust-footer { border-top-color: var(--copper-border-soft); }
+#step-companies .trust-shield-badge .material-symbols-outlined { color: var(--copper-500) !important; }
+
+/* ---- Shared header — only while a converted page is showing ---- */
+html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .app-header {
   border-bottom-color: rgba(184, 115, 51, 0.18) !important;
   box-shadow: 0 1px 4px rgba(125, 71, 32, 0.05) !important;
 }
-html:has(#step-gateway:not([style*="display: none"])) .app-header .brand-icon {
+html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .app-header .brand-icon {
   border-color: rgba(184, 115, 51, 0.28) !important;
   box-shadow: 0 2px 8px rgba(125, 71, 32, 0.10) !important;
 }
-html:has(#step-gateway:not([style*="display: none"])) .app-header .brand-title > span:first-child {
+html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .app-header .brand-title > span:first-child {
   color: var(--warm-text) !important;
 }
-html:has(#step-gateway:not([style*="display: none"])) .app-header .brand-title > span:first-child > span {
+html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .app-header .brand-title > span:first-child > span {
   color: var(--copper-600) !important;
 }
-html:has(#step-gateway:not([style*="display: none"])) .app-header .brand-badge {
+html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .app-header .brand-badge {
   background: var(--copper-50) !important;
   color: var(--copper-700) !important;
   box-shadow: inset 0 0 0 1px var(--copper-200);
 }
-html:has(#step-gateway:not([style*="display: none"])) .app-header .brand-tagline {
+html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .app-header .brand-tagline {
   color: var(--warm-muted) !important;
 }
-html:has(#step-gateway:not([style*="display: none"])) .nav-link-home-only {
+html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .nav-link-home-only {
   color: var(--warm-text);
   border-color: var(--copper-200);
   box-shadow: 0 1px 2px rgba(125, 71, 32, 0.05);
 }
-html:has(#step-gateway:not([style*="display: none"])) .nav-link-home-only:hover {
+html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .nav-link-home-only:hover {
   color: var(--copper-700);
   background: var(--copper-50);
   border-color: var(--copper-300);
   box-shadow: 0 2px 5px rgba(125, 71, 32, 0.08);
 }
-html:has(#step-gateway:not([style*="display: none"])) .nav-link-home-only:active { background: var(--copper-100); }
-html:has(#step-gateway:not([style*="display: none"])) .nav-link-home-only:focus-visible {
+html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .nav-link-home-only:active { background: var(--copper-100); }
+html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .nav-link-home-only:focus-visible,
+html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .header-back-btn:focus-visible {
   outline: 2px solid var(--copper-500);
   outline-offset: 2px;
   box-shadow: var(--copper-focus-ring);
+}
+html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .header-back-btn:hover {
+  border-color: var(--copper-300);
+  color: var(--copper-700);
+  background: var(--copper-50);
 }
