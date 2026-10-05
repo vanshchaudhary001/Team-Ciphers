@@ -2,17 +2,6 @@
 <html lang="en">
 
 <head>
-  <script>
-    // Show the 3D intro (/intro.html) once per browser session.
-    (function () {
-      try {
-        if (/[?&](from=intro|nointro)(&|=|$)/.test(window.location.search)) return;
-        if (sessionStorage.getItem('startsmart_intro_seen')) return;
-        sessionStorage.setItem('startsmart_intro_seen', '1');
-        window.location.replace('/intro.html');
-      } catch (e) { }
-    })();
-  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>StartSmart — Enterprise Onboarding Portal</title>
