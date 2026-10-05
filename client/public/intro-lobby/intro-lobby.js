@@ -8,7 +8,7 @@
  * Tweak points:
  *   INTRO_TIMINGS    – every duration of the intro, in one place (seconds)
  *   SIGN_TEXT        – the sign text (also used for the reduced-motion version)
- *   lobby-scene.js   – CONFIG at the top: colours, camera path
+ *   lobby-scene.js   – CONFIG at the top: colours, camera path, CONFIG.sign = sign lighting
  *
  * The whole sequence is ONE paused GSAP master timeline (built in run() once the scene is ready);
  * the scene renders on gsap.ticker, so there is a single clock and no setTimeout chain.
@@ -16,20 +16,23 @@
 
 // All times in seconds from the first visible frame. The master timeline ends at handoff[1] = total.
 export const INTRO_TIMINGS = {
-  total: 4.5,
-  fadeIn: [0.0, 0.4],        // fade in from black, already outside the glass doors
-  camera: [0.0, 2.6],        // one continuous spline move: through the doors, across the lobby, stop at the sign wall
+  total: 5.5,
+  fadeIn: [0.0, 0.5],        // fade in from black, already outside the glass doors
+  camera: [0.0, 3.2],        // one continuous spline move: through the doors, across the lobby, stop at the sign wall
   cameraEase: 'power2.inOut',
-  doors: [0.4, 1.4],         // glass doors slide open as the camera passes through
-  displays: [1.5, 1.85],     // the two wall displays flicker on (during the glide)
+  doors: [0.5, 1.7],         // glass doors slide open as the camera passes through
+  displays: [1.85, 2.3],     // the two wall displays flicker on (during the glide)
   displayRamp: 0.45,         // flicker-on length of each display
-  sign: 2.4,                 // first letter lights (~0.2s before the camera stops, so it feels continuous)
-  signLetterGap: 0.06,       // delay between letters
-  signLetterRamp: 0.22,      // flicker-on length of each letter
-  sweep: [2.85, 3.4],        // light sweep across the sign; the sign is fully lit by 3.4
-  hold: [3.4, 3.8],          // hold on the glowing sign (nothing animates)
-  prepare: 2.8,              // let the site underneath paint ahead of the cross-fade
-  handoff: [3.8, 4.5],       // cross-fade into the website + slight camera push toward the sign
+  sign: 3.0,                 // first letter warms up (~0.2s before the camera stops, so it feels continuous)
+  signLetterGap: 0.08,       // delay between letters
+  signLetterRamp: 0.36,      // dim copper -> full amber, per letter
+  signLetterEase: 'power2.out',
+  sweep: [3.45, 4.0],        // soft light sweep across the sign; the sign is fully lit by 4.0
+  hold: [4.0, 4.7],          // hold on the glowing sign (with the slow drift below)
+  push: [4.0, 5.5],          // slow drift toward the sign through the hold, continuing as a slight push in the fade
+  pushEase: 'power2.in',     // starts from rest, so there is no jump after the camera stops
+  prepare: 3.7,              // let the site underneath paint ahead of the cross-fade
+  handoff: [4.7, 5.5],       // cross-fade into the website
   skipButton: 0.6,           // Skip button appears
   skipFade: 0.45,            // faster fade when skipped
   reducedMotion: { signIn: 0.5, hold: 0.3, fade: 0.7 }, // static sign fade, then the site (1.5s)
@@ -87,8 +90,8 @@ const CSS = `
   .fw-intro-static {
     position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
     font: 500 clamp(26px, 5.5vw, 60px)/1 Inter, -apple-system, 'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif;
-    letter-spacing: 0.32em; text-indent: 0.32em; color: #EAF2FF;
-    text-shadow: 0 0 28px rgba(168, 200, 255, 0.45);
+    letter-spacing: 0.32em; text-indent: 0.32em; color: #FFD9A8;
+    text-shadow: 0 0 2px #E8A465, 0 0 10px rgba(232, 164, 101, 0.75), 0 0 32px rgba(184, 115, 51, 0.55);
     opacity: 0; transition: opacity ${T.reducedMotion.signIn * 1000}ms ease;
   }
   .fw-intro-static.fw-intro-show { opacity: 1; }

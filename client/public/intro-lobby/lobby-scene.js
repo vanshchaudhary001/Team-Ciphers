@@ -4,7 +4,7 @@
  *
  * Timing lives in INTRO_TIMINGS in intro-lobby.js: this file only adds its tweens to the caller's
  * single GSAP master timeline (addToTimeline) and renders on gsap.ticker, so there is one clock.
- * Look (colours, camera path) is in CONFIG below.
+ * Look (colours, camera path, sign lighting) is in CONFIG below.
  */
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.169.0/+esm';
 import { gsap } from 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/+esm';
@@ -24,10 +24,8 @@ export const CONFIG = {
     wall: 0xd8d4cd,
     featureWall: 0x29251f,
     ceiling: 0x0e1014,
-    ceilingLight: 0xeef3ff,
+    ceilingLight: 0xfff4e8, // very slightly warm so the strips don't clash with the copper sign
     warm: 0xffbe86,
-    sign: 0xeaf2ff,
-    signOff: 0x2a2e35,
     metal: 0xc6c9ce,
     desk: 0x2b2420,
     deskTop: 0xe8e4dd,
@@ -47,7 +45,21 @@ export const CONFIG = {
     { pos: [0.4, 1.8, -2.2], look: [0.4, 2.3, -10.0] },
     { pos: [0.15, 2.0, -5.6], look: [0.0, 2.6, -12.0] },
   ],
-  pushDistance: 0.6, // metres the camera eases toward the sign during the cross-fade
+  pushDistance: 0.6, // metres the camera drifts toward the sign during the hold + cross-fade
+  // "FIRST WEEK" sign lighting (warm copper / amber; matches the site's Navy + Copper theme)
+  sign: {
+    face: 0xe8a465,        // letter face: warm amber-copper
+    core: 0xffd9a8,        // hot core along the centre of each stroke (soft warm white-amber)
+    offLevel: 0.2,         // unlit: the same colours at 20% = dim copper
+    onLevel: 2.6,          // lit: HDR level (ACES tone mapping rolls it off without clipping)
+    spill: 0xc27c3d,       // light spill on the wall behind and the floor reflection
+    spillIntensity: 5,     // low (the old white spill was 9)
+    bloomTint: 0xb87333,   // copper tint of the glow halo
+    bloomTintMix: 0.55,    // how far the halo tint moves from white to copper once the sign is lit
+    bloomStrength: [0.55, 0.49], // [lobby before the sign, sign fully lit] (lit was 0.70: ~30% lower)
+    bloomRadius: [0.5, 0.7],     // wider, softer halo once lit
+    flickerLetters: [2, 6],      // letters (index, spaces skipped) that flicker once while warming up
+  },
 };
 
 export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
@@ -298,10 +310,9 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
     ? Promise.race([document.fonts.load('500 200px Inter'), new Promise((r) => setTimeout(r, 700))]).catch(() => {})
     : Promise.resolve();
   await fontReady;
-  const signOff = new THREE.Color(C.signOff);
-  const signOn = new THREE.Color(C.sign).multiplyScalar(2.6);
+  const S = CONFIG.sign;
   const letters = buildSign(text);
-  const signLight = new THREE.PointLight(C.sign, 0, 9, 2);
+  const signLight = new THREE.PointLight(S.spill, 0, 9, 2);
   signLight.position.set(0, 2.9, -11.2);
   scene.add(signLight);
 
@@ -322,16 +333,24 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
         c.width = Math.max(32, Math.ceil(g.w / H * 256));
         c.height = 256;
         const gc = c.getContext('2d');
-        gc.fillStyle = '#ffffff';
         gc.font = font;
         gc.textAlign = 'center';
         gc.textBaseline = 'middle';
+        // Hot core: fill the glyph with the core colour, then paint the face colour over its edges only
+        // (source-atop keeps the glyph shape), softened so the core blends into the face.
+        gc.fillStyle = hex(S.core);
         gc.fillText(g.ch, c.width / 2, 138);
+        gc.globalCompositeOperation = 'source-atop';
+        gc.filter = 'blur(3px)';
+        gc.strokeStyle = hex(S.face);
+        gc.lineWidth = 13;
+        gc.lineJoin = 'round';
+        gc.strokeText(g.ch, c.width / 2, 138);
         const tex = new THREE.CanvasTexture(c);
         tex.colorSpace = THREE.SRGBColorSpace;
         tex.anisotropy = 4;
         extraTextures.push(tex);
-        const mat = new THREE.MeshBasicMaterial({ map: tex, color: signOff.clone(), transparent: true, depthWrite: false, fog: false });
+        const mat = new THREE.MeshBasicMaterial({ map: tex, color: new THREE.Color().setScalar(S.offLevel), transparent: true, depthWrite: false, fog: false });
         const m = new THREE.Mesh(new THREE.PlaneGeometry(g.w, H), mat);
         m.position.x = x + g.w / 2;
         m.renderOrder = 3;
@@ -364,6 +383,7 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
 
   // ---------- Post-processing (created once, never rebuilt; only values change) ----------
   let composer = null, bloom = null;
+  const bloomCopper = new THREE.Vector3(1, 1, 1);
   if (!isMobile) {
     composer = new EffectComposer(renderer);
     composer.setPixelRatio(dpr);
@@ -373,6 +393,9 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
     bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth / 2, window.innerHeight / 2), 0.55, 0.5, 0.82);
     bloom.highPassUniforms.smoothWidth.value = 0.45;
     composer.addPass(bloom);
+    // Copper halo tint, normalised to its brightest channel (blended in as the sign lights).
+    const t = new THREE.Color(S.bloomTint);
+    bloomCopper.set(t.r, t.g, t.b).divideScalar(Math.max(t.r, t.g, t.b));
     composer.addPass(new OutputPass());
   }
   const render = () => (composer ? composer.render() : renderer.render(scene, camera));
@@ -396,7 +419,7 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
   window.addEventListener('resize', fit);
 
   // ---------- Animated state: written only by tweens on the caller's master timeline ----------
-  // Ramps (displays, letters) are linear 0..1 over their duration; the flicker is a function of that.
+  // Display ramps are linear 0..1 (their flicker is a function of that); letter ramps carry their own ease.
   const state = {
     cam: 0,   // 0..1 along the camera spline (arc length)
     door: 0,  // 0 closed .. 1 open
@@ -406,7 +429,8 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
     letters: letters.map(() => ({ p: 0 })),
   };
   let timeline = null;
-  let displayRamp = 0.45, letterRamp = 0.22;
+  let displayRamp = 0.45;
+  const flickerLetters = new Set(S.flickerLetters);
 
   function apply() {
     const u = state.cam;
@@ -429,36 +453,41 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
       d.mat.uniforms.uPower.value = p <= 0 ? 0 : p < 1 ? flicker(p * displayRamp) * smoothstep01(p) : 1;
     });
 
-    // Sign: letters light in sequence, then a light sweep passes across them.
+    // Sign: each letter warms up from dim copper to full amber (eased by its tween), two letters dip once
+    // on the way up, then a soft light sweep passes across them.
     const sweepX = THREE.MathUtils.lerp(-3.2, 3.2, state.sweep);
     const sweeping = state.sweep > 0 && state.sweep < 1;
     let lit = 0;
     letters.forEach((l, i) => {
       const p = state.letters[i].p;
-      const on = p <= 0 ? 0 : p < 1 ? flicker(p * letterRamp * 1.6) * p : 1;
+      const on = flickerLetters.has(i) && p > 0.42 && p < 0.52 ? p * 0.55 : p; // one subtle dip, no strobing
       const sweep = sweeping ? Math.exp(-Math.pow((l.x - sweepX) / 0.45, 2)) * 0.6 : 0;
-      l.mat.color.copy(signOff).lerp(signOn, on).multiplyScalar(1 + sweep);
+      l.mat.color.setScalar(THREE.MathUtils.lerp(S.offLevel, S.onLevel, on) * (1 + sweep));
       lit += on;
     });
     const litK = lit / letters.length;
-    signLight.intensity = 9 * litK;
-    if (bloom) bloom.strength = 0.55 + 0.15 * litK;
+    signLight.intensity = S.spillIntensity * litK;
+    if (bloom) {
+      bloom.strength = THREE.MathUtils.lerp(S.bloomStrength[0], S.bloomStrength[1], litK);
+      bloom.radius = THREE.MathUtils.lerp(S.bloomRadius[0], S.bloomRadius[1], litK);
+      const k = S.bloomTintMix * litK;
+      for (const v of bloom.bloomTintColors) v.set(1, 1, 1).lerp(bloomCopper, k);
+    }
   }
 
   // Adds every scene tween to the master timeline. T = INTRO_TIMINGS (seconds).
   function addToTimeline(tl, T) {
     timeline = tl;
     displayRamp = T.displayRamp;
-    letterRamp = T.signLetterRamp;
     const len = ([a, b]) => b - a;
     tl.to(state, { cam: 1, duration: len(T.camera), ease: T.cameraEase }, T.camera[0]);
     tl.to(state, { door: 1, duration: len(T.doors), ease: 'power3.inOut' }, T.doors[0]);
     T.displays.forEach((start, i) => {
       if (state.displays[i]) tl.to(state.displays[i], { p: 1, duration: T.displayRamp, ease: 'none' }, start);
     });
-    state.letters.forEach((l, i) => tl.to(l, { p: 1, duration: T.signLetterRamp, ease: 'none' }, T.sign + i * T.signLetterGap));
+    state.letters.forEach((l, i) => tl.to(l, { p: 1, duration: T.signLetterRamp, ease: T.signLetterEase }, T.sign + i * T.signLetterGap));
     tl.to(state, { sweep: 1, duration: len(T.sweep), ease: 'power3.inOut' }, T.sweep[0]);
-    tl.to(state, { push: 1, duration: len(T.handoff), ease: 'power2.inOut' }, T.handoff[0]);
+    tl.to(state, { push: 1, duration: len(T.push), ease: T.pushEase }, T.push[0]);
   }
 
   // ---------- Render loop on gsap.ticker (same tick that advances the timeline, after it) ----------
@@ -590,6 +619,7 @@ function poolTexture(centerY = 70) {
 // ---------- Helpers ----------
 function clamp01(x) { return Math.min(1, Math.max(0, x)); }
 function smoothstep01(x) { const k = clamp01(x); return k * k * (3 - 2 * k); }
+function hex(c) { return '#' + c.toString(16).padStart(6, '0'); }
 function flicker(k) { return Math.sin(k * 61.0) * Math.sin(k * 23.0 + 1.3) > -0.15 ? 1 : 0.25; }
 
 function mulberry32(a) {
