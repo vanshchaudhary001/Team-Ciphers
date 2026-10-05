@@ -510,13 +510,12 @@ label { color: var(--ink-700); }
 }
 .ii-glow-copy {
   position: absolute;
-  top: -95px;
-  left: -145px;
-  right: -55px;
-  bottom: -55px;
-  border-radius: 48px;
-  background: radial-gradient(ellipse 92% 88% at 44% 38%, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.90) 45%, rgba(255, 255, 255, 0.60) 70%, rgba(255, 255, 255, 0) 90%);
-  filter: blur(14px);
+  top: -115px;
+  left: -160px;
+  width: 780px;
+  height: 540px;
+  border-radius: 50% !important;
+  background: radial-gradient(ellipse 92% 88% at 48% 44%, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.86) 38%, rgba(255, 255, 255, 0.48) 64%, rgba(255, 255, 255, 0) 82%);
   z-index: -1;
   pointer-events: none;
 }
