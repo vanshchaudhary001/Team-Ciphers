@@ -515,7 +515,7 @@ label { color: var(--ink-700); }
   width: 780px;
   height: 540px;
   border-radius: 50% !important;
-  background: radial-gradient(ellipse 92% 88% at 48% 44%, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.86) 38%, rgba(255, 255, 255, 0.48) 64%, rgba(255, 255, 255, 0) 82%);
+  background: radial-gradient(ellipse 92% 88% at 48% 44%, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.72) 38%, rgba(255, 255, 255, 0.38) 64%, rgba(255, 255, 255, 0) 82%);
   z-index: -1;
   pointer-events: none;
 }
