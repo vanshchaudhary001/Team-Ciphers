@@ -238,15 +238,46 @@
       color: #94a3b8;
       margin-top: 2px;
     }
-    .org-hierarchy-banner .banner-badge {
-      background: rgba(56, 189, 248, 0.15);
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      color: #38bdf8;
-      font-size: 0.75rem;
+
+    /* Department header banner on "Select Sub-Department & Team" (shared by all departments) */
+    .org-hierarchy-banner.dept-banner-warm {
+      background: #F3E7D7;
+      color: #2B211A;
+      border: 1px solid #E5D5BE;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(60, 45, 20, 0.06);
+    }
+    .dept-banner-warm .banner-icon {
+      background: #C2773A;
+      color: #FFFAF3;
+      border-radius: 8px;
+    }
+    .dept-banner-warm .banner-title {
+      color: #2B211A;
       font-weight: 700;
-      padding: 4px 10px;
+    }
+    .dept-banner-warm .banner-subtitle {
+      color: #6B5A4A;
+    }
+    #step-subdepartments .org-wizard-breadcrumb {
+      display: inline-flex;
+      padding: 6px 12px;
       border-radius: 999px;
-      white-space: nowrap;
+      background: rgba(250, 247, 242, 0.92);
+      border: 1px solid #E5D5BE;
+      color: #6B5A4A;
+    }
+    #step-subdepartments .org-wizard-breadcrumb button {
+      color: #0F766E;
+    }
+    #step-subdepartments .org-wizard-breadcrumb button:hover {
+      color: #C2773A;
+    }
+    #step-subdepartments .org-wizard-breadcrumb .crumb-sep {
+      color: #D9C7AE;
+    }
+    #step-subdepartments .org-wizard-breadcrumb .crumb-current {
+      color: #2B211A;
     }
 
     /* Department Cards Grid */
@@ -816,6 +847,95 @@
       padding: 28px 34px !important;
       min-width: 260px !important;
       border-radius: 20px !important;
+    }
+
+    /* New Joiner hero: warm cream card with a copper accent strip */
+    .dashboard-hero-card.joiner-hero-warm {
+      background: #FFFDF8;
+      border: 1px solid #E8E2D6;
+      border-radius: 12px !important;
+      box-shadow: 0 2px 8px rgba(60, 45, 20, 0.06);
+      color: #1F2A24;
+    }
+    .joiner-hero-warm::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 4px;
+      background: #C2773A;
+    }
+    .joiner-hero-warm::after {
+      display: none;
+    }
+    .joiner-hero-warm .hero-day-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #0F766E;
+      margin-bottom: 10px;
+    }
+    .joiner-hero-warm .hero-welcome-title {
+      color: #1F2A24;
+      font-weight: 700;
+    }
+    .joiner-hero-warm .hero-welcome-subtitle {
+      color: #5A5048;
+      font-weight: 400;
+    }
+    .joiner-hero-warm .hero-welcome-subtitle strong {
+      color: #1F2A24;
+      font-weight: 600;
+    }
+    .joiner-hero-warm .hero-joined-date {
+      white-space: nowrap;
+    }
+    .joiner-hero-warm .hero-meta-chip {
+      background: #F3EDE3;
+      border: 1px solid #E8E2D6;
+      border-radius: 8px !important;
+      color: #1F2A24;
+    }
+    .joiner-hero-warm .hero-card-progress {
+      background: #1A1A1A;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: 1px solid #2A2A2A;
+      border-radius: 12px !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .joiner-hero-warm .progress-pct-number {
+      color: #FAF7F2;
+      font-weight: 700;
+      font-size: 1.45rem;
+    }
+    .joiner-hero-warm .progress-pct-label {
+      color: #A39E96;
+      text-transform: none;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .joiner-hero-warm .progress-stat-sub span {
+      color: #EDEAE4;
+      font-weight: 500;
+    }
+    .joiner-hero-warm .progress-linear-track {
+      height: 6px;
+      background: #333333;
+      border-radius: 999px;
+    }
+    .joiner-hero-warm .progress-linear-fill {
+      background: #C2773A;
+      border-radius: 999px;
+    }
+    .joiner-hero-warm .hero-meta-chip .hero-chip-label {
+      color: #7A6E64;
+      font-weight: 400;
+    }
+    .joiner-hero-warm .hero-meta-chip strong,
+    .joiner-hero-warm .hero-meta-chip .hero-chip-value {
+      color: #1F2A24;
+      font-weight: 600;
     }
     #section-contacts-directory.dashboard-section-card,
     #section-tasks-checklist.dashboard-section-card {
@@ -1736,17 +1856,16 @@
         <span class="crumb-current">Select Sub-Department & Team</span>
       </div>
 
-      <div class="org-hierarchy-banner">
+      <div class="org-hierarchy-banner dept-banner-warm">
         <div class="banner-left">
           <div class="banner-icon" id="subdept-header-icon">
             <span class="material-symbols-outlined" style="font-size: 26px;">layers</span>
           </div>
           <div>
-            <div class="banner-title" id="subdept-header-title">ENGINEERING, DEVELOPMENT AND SERVICES</div>
+            <div class="banner-title" id="subdept-header-title">Engineering, development and services</div>
             <div class="banner-subtitle" id="subdept-header-subtitle">Select your specific Branch, Sub-Branch, and Team to explore role positions</div>
           </div>
         </div>
-        <div class="banner-badge" id="subdept-header-badge">DEP_06 · 5 Branches</div>
       </div>
 
       <!-- Search Bar for Subdepartments -->
@@ -2057,24 +2176,21 @@
         <div class="joiner-main-dashboard">
 
           <!-- Welcome Hero Card with Progress Telemetry -->
-          <div class="dashboard-hero-card">
+          <div class="dashboard-hero-card joiner-hero-warm">
             <div class="hero-card-left">
-              <div class="hero-badge-pill">
-                <span class="pulse-dot-emerald"></span>
-                <span>Day 1 Onboarding · Live Session</span>
-              </div>
+              <div class="hero-day-label">Day 1 of onboarding</div>
               <h1 class="hero-welcome-title">
-                Welcome to Microsoft, <span id="manual-user-name">Rohan Sharma</span>! 👋
+                Welcome to Microsoft, <span id="manual-user-name">Rohan Sharma</span>!
               </h1>
               <p class="hero-welcome-subtitle">
                 <strong id="manual-user-role">Software Engineer 1</strong> · Azure Core & Cloud Infrastructure · <span
                   id="manual-user-campus">Microsoft IDC Bangalore & Hyderabad</span>
               </p>
               <div class="hero-meta-tags">
-                <span class="hero-meta-chip">📧 <span id="manual-user-email">rohan.sharma2026@microsoft.in</span></span>
-                <span class="hero-meta-chip">🆔 Emp ID: <strong>MSFT-2026-8841</strong></span>
-                <span class="hero-meta-chip">🤝 Buddy Mentor: <strong>Rahul Pandey</strong></span>
-                <span class="hero-meta-chip">💼 HR Partner: <strong>Priya Sharma</strong></span>
+                <span class="hero-meta-chip">📧 <span id="manual-user-email" class="hero-chip-value">rohan.sharma2026@microsoft.in</span></span>
+                <span class="hero-meta-chip">🆔 <span class="hero-chip-label">Emp ID:</span> <strong>MSFT-2026-8841</strong></span>
+                <span class="hero-meta-chip">🤝 <span class="hero-chip-label">Buddy Mentor:</span> <strong>Rahul Pandey</strong></span>
+                <span class="hero-meta-chip">💼 <span class="hero-chip-label">HR Partner:</span> <strong>Priya Sharma</strong></span>
               </div>
             </div>
 
@@ -2083,17 +2199,11 @@
               <div class="progress-ring-box">
                 <div class="progress-circle-wrap">
                   <svg class="progress-ring-svg" width="90" height="90">
-                    <circle stroke="rgba(255,255,255,0.12)" stroke-width="8" fill="transparent" r="38" cx="45"
+                    <circle stroke="#333333" stroke-width="9" fill="transparent" r="38" cx="45"
                       cy="45" />
-                    <circle id="manual-progress-circle" class="progress-ring-bar" stroke="url(#progressGradient)"
-                      stroke-width="8" stroke-linecap="round" fill="transparent" r="38" cx="45" cy="45"
+                    <circle id="manual-progress-circle" class="progress-ring-bar" stroke="#C2773A"
+                      stroke-width="9" stroke-linecap="round" fill="transparent" r="38" cx="45" cy="45"
                       stroke-dasharray="238.76" stroke-dashoffset="143.25" />
-                    <defs>
-                      <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#34d399" />
-                        <stop offset="100%" stop-color="#38bdf8" />
-                      </linearGradient>
-                    </defs>
                   </svg>
                   <div class="progress-ring-text">
                     <span id="manual-progress-pct" class="progress-pct-number">40%</span>
@@ -2102,7 +2212,7 @@
                 </div>
               </div>
               <div class="progress-stat-sub">
-                <span id="manual-tasks-stat">2 of 5 Tasks Cleared</span>
+                <span id="manual-tasks-stat">2 of 5 tasks done</span>
                 <div class="progress-linear-track">
                   <div id="manual-linear-bar" class="progress-linear-fill" style="width: 40%;"></div>
                 </div>
@@ -4795,6 +4905,21 @@
       'SECURITY ENGINEERING': 'Tech'
     };
 
+    // Display only: "ENGINEERING, DEVELOPMENT AND SERVICES" -> "Engineering, development and services"
+    function toSentenceCase(text) {
+      const lower = String(text || '').toLowerCase();
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    }
+
+    // Display only: "2026-10-04" -> "4 Oct 2026" (falls back to the raw value if it isn't YYYY-MM-DD)
+    function formatJoinDate(value) {
+      const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(value || ''));
+      if (!m) return value || '';
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const month = months[Number(m[2]) - 1];
+      return month ? `${Number(m[3])} ${month} ${m[1]}` : value;
+    }
+
     function getAuthoritativeOrgData() {
       if (window.AUTHORITATIVE_ORG_STRUCTURE && window.AUTHORITATIVE_ORG_STRUCTURE.departments) {
         return window.AUTHORITATIVE_ORG_STRUCTURE;
@@ -5156,9 +5281,7 @@
       const breadcrumbDept = document.getElementById('subdept-breadcrumb-dept-name');
       if (breadcrumbDept) breadcrumbDept.textContent = dept.name;
       const headerTitle = document.getElementById('subdept-header-title');
-      if (headerTitle) headerTitle.textContent = dept.name;
-      const headerBadge = document.getElementById('subdept-header-badge');
-      if (headerBadge) headerBadge.textContent = `${dept.code} · ${dept.branches.length} Branches`;
+      if (headerTitle) headerTitle.textContent = toSentenceCase(dept.name);
       const headerIcon = document.getElementById('subdept-header-icon');
       if (headerIcon) headerIcon.innerHTML = `<span class="material-symbols-outlined" style="font-size: 26px;">${iconName}</span>`;
 
@@ -6092,7 +6215,7 @@
       const pct = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
       document.getElementById('manual-progress-pct').textContent = `${pct}%`;
-      document.getElementById('manual-tasks-stat').textContent = `${completedCount} of ${totalCount} Tasks Cleared (${pct}%)`;
+      document.getElementById('manual-tasks-stat').textContent = `${completedCount} of ${totalCount} tasks done`;
       document.getElementById('manual-linear-bar').style.width = `${pct}%`;
 
       const circumference = 238.76;
@@ -6196,7 +6319,13 @@
       if (nameEl) nameEl.textContent = emp.name;
       if (roleEl) roleEl.textContent = `${emp.role} (${emp.employeeId})`;
       if (emailEl) emailEl.textContent = emp.email;
-      if (campusEl) campusEl.textContent = `${emp.department} Department · ${emp.location} Office · Joined: ${emp.joiningDate}`;
+      if (campusEl) {
+        const joinedEl = document.createElement('span');
+        joinedEl.className = 'hero-joined-date';
+        joinedEl.textContent = `Joined ${formatJoinDate(emp.joiningDate)}`;
+        campusEl.textContent = `${emp.department} Department · ${emp.location} Office · `;
+        campusEl.appendChild(joinedEl);
+      }
       if (copilotUserEl) copilotUserEl.textContent = emp.name;
 
       // Update assigned contact cards if available
@@ -6230,7 +6359,7 @@
       const circleEl = document.getElementById('manual-progress-circle');
 
       if (pctEl) pctEl.textContent = `${pct}%`;
-      if (statEl) statEl.textContent = `${metrics.completedTasks} of ${metrics.totalTasks} Tasks Cleared (${pct}%)`;
+      if (statEl) statEl.textContent = `${metrics.completedTasks} of ${metrics.totalTasks} tasks done`;
       if (barEl) barEl.style.width = `${pct}%`;
 
       const circumference = 238.76;
