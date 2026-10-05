@@ -20,25 +20,25 @@
       '<svg class="fwb-avatar' + (header ? ' fwb-header' : '') + '" viewBox="0 0 64 64" ' + a11y + ' focusable="false">' +
       '<defs>' +
       '<radialGradient id="' + p + 'bg" cx="30%" cy="24%" r="85%">' +
-      '<stop offset="0" stop-color="#FF9A3D"/><stop offset=".55" stop-color="#FF7A1A"/><stop offset="1" stop-color="#E05A00"/>' +
+      '<stop offset="0" stop-color="#C98A5C"/><stop offset=".55" stop-color="#B87333"/><stop offset="1" stop-color="#9C5B26"/>' +
       '</radialGradient>' +
       '<linearGradient id="' + p + 'head" x1="0" y1="0" x2="0" y2="1">' +
-      '<stop offset="0" stop-color="#FF9440"/><stop offset="1" stop-color="#F06A0C"/>' +
+      '<stop offset="0" stop-color="#C98A5C"/><stop offset="1" stop-color="#9C5B26"/>' +
       '</linearGradient>' +
       '<radialGradient id="' + p + 'eye" cx="42%" cy="40%" r="60%">' +
-      '<stop offset="0" stop-color="#FFD27A"/><stop offset=".7" stop-color="#FF8A1F"/><stop offset="1" stop-color="#FF7A1A"/>' +
+      '<stop offset="0" stop-color="#FFF6EA"/><stop offset=".7" stop-color="#FFD9A8"/><stop offset="1" stop-color="#E8A465"/>' +
       '</radialGradient>' +
       '<radialGradient id="' + p + 'glow" cx="50%" cy="50%" r="50%">' +
-      '<stop offset="0" stop-color="#FFB347" stop-opacity=".75"/><stop offset="1" stop-color="#FF8A1F" stop-opacity="0"/>' +
+      '<stop offset="0" stop-color="#FFD9A8" stop-opacity=".55"/><stop offset="1" stop-color="#E8A465" stop-opacity="0"/>' +
       '</radialGradient>' +
       '</defs>' +
       '<circle cx="32" cy="32" r="32" fill="url(#' + p + 'bg)"/>' +
-      '<ellipse cx="32" cy="50" rx="17" ry="4" fill="#7A2E00" opacity=".28"/>' +                       // soft shadow under the head
-      '<rect x="7.5" y="27" width="6.5" height="12" rx="3.2" fill="#E05A00" stroke="#B84A00" stroke-width=".9"/>' +
-      '<rect x="50" y="27" width="6.5" height="12" rx="3.2" fill="#E05A00" stroke="#B84A00" stroke-width=".9"/>' +
-      '<circle cx="27" cy="13.5" r="1.7" fill="#3A3D43"/><circle cx="37" cy="13.5" r="1.7" fill="#3A3D43"/>' +
-      '<rect x="12" y="15.5" width="40" height="33" rx="11" fill="url(#' + p + 'head)" stroke="#D85500" stroke-width=".8"/>' +
-      '<rect x="16" y="22.5" width="32" height="20" rx="7" fill="#0F0F12"/>' +
+      '<ellipse cx="32" cy="50" rx="17" ry="4" fill="#3F2413" opacity=".28"/>' +                       // soft shadow under the head
+      '<rect x="7.5" y="27" width="6.5" height="12" rx="3.2" fill="#9C5B26" stroke="#7D4720" stroke-width=".9"/>' +
+      '<rect x="50" y="27" width="6.5" height="12" rx="3.2" fill="#9C5B26" stroke="#7D4720" stroke-width=".9"/>' +
+      '<circle cx="27" cy="13.5" r="1.7" fill="#16294A"/><circle cx="37" cy="13.5" r="1.7" fill="#16294A"/>' +
+      '<rect x="12" y="15.5" width="40" height="33" rx="11" fill="url(#' + p + 'head)" stroke="#9C5B26" stroke-width=".8"/>' +
+      '<rect x="16" y="22.5" width="32" height="20" rx="7" fill="#0A1424"/>' +
       '<path d="M22 22.5h6l-8 20h-4z" fill="#FFFFFF" opacity=".10"/>' +                                 // visor reflection streak
       '<g class="fwb-eyes" style="animation-duration:' + blink + ';animation-delay:' + delay + '">' +
       '<circle class="fwb-glow" cx="26" cy="32.5" r="6.4" fill="url(#' + p + 'glow)"/>' +

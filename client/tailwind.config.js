@@ -12,7 +12,7 @@ export default {
         border: "hsl(var(--border, 214 32% 91%))",
         input: "hsl(var(--input, 214 32% 91%))",
         ring: "hsl(var(--ring, 222 84% 5%))",
-        background: "#f8f9ff",
+        background: "#F5F6F8",
         foreground: "hsl(var(--foreground, 222 47% 11%))",
         card: {
           DEFAULT: "hsl(var(--card, 0 0% 100%))",
@@ -31,14 +31,22 @@ export default {
           foreground: "hsl(var(--destructive-foreground, 210 40% 98%))",
         },
 
-        // Stitch "Executive Precision" Core Palette
+        // Navy + Copper theme (same values as the CSS variables in styles.css :root)
+        navy: { 50: "#F2F5FA", 100: "#E6ECF5", 600: "#2C4A7A", 700: "#1F3760", 800: "#16294A", 900: "#0F1E33", 950: "#0A1424" },
+        copper: { 50: "#FBF4EE", 100: "#F5E6D8", 200: "#EACBB0", 500: "#B87333", 600: "#9C5B26", 700: "#7D4720" },
+        neutral: {
+          page: "#F5F6F8", surface: "#FFFFFF", subtle: "#FAFBFC", muted: "#F2F4F7",
+          border: "#E4E7EC", "border-strong": "#CBD2DC",
+          text: "#1E2633", secondary: "#4A5565", "text-muted": "#636E7E", placeholder: "#98A2B3",
+        },
+        // Accent = copper (primary buttons, active states, focus, progress only)
         primary: {
-          DEFAULT: "#4f46e5",
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          500: '#4f46e5',
-          600: '#4338ca',
-          700: '#3730a3',
+          DEFAULT: "#B87333",
+          50: '#FBF4EE',
+          100: '#F5E6D8',
+          500: '#B87333',
+          600: '#9C5B26',
+          700: '#7D4720',
         },
         "primary-container": "#4f46e5",
         "on-primary": "#ffffff",
@@ -50,7 +58,7 @@ export default {
         "inverse-primary": "#c3c0ff",
 
         secondary: {
-          DEFAULT: "#7c3aed",
+          DEFAULT: "#1F3760",
           foreground: "hsl(var(--secondary-foreground, 222 47% 11.2%))",
         },
         "secondary-container": "#8a4cfc",
@@ -71,16 +79,16 @@ export default {
         "on-tertiary-fixed-variant": "#005236",
 
         // Semantic states
-        success: "#10b981",
-        warning: "#f59e0b",
+        success: "#2F6B4F",
+        warning: "#94600F",
         blocker: "#f43f5e",
-        error: "#ba1a1a",
+        error: "#A23B2C",
         "error-container": "#ffdad6",
         "on-error": "#ffffff",
         "on-error-container": "#93000a",
 
         // Stitch Executive Precision Surfaces
-        surface: "#f8f9ff",
+        surface: "#FFFFFF",
         "surface-dim": "#cbdbf5",
         "surface-bright": "#f8f9ff",
         "surface-container-lowest": "#ffffff",
@@ -90,12 +98,12 @@ export default {
         "surface-container-highest": "#d3e4fe",
         "surface-variant": "#d3e4fe",
         "surface-tint": "#4d44e3",
-        "on-surface": "#0b1c30",
+        "on-surface": "#1E2633",
         "on-surface-variant": "#464555",
-        "on-background": "#0b1c30",
+        "on-background": "#1E2633",
         outline: "#777587",
         "outline-variant": "#c7c4d8",
-        "inverse-surface": "#213145",
+        "inverse-surface": "#0F1E33",
         "inverse-on-surface": "#eaf1ff",
       },
 
@@ -150,9 +158,9 @@ export default {
       },
 
       boxShadow: {
-        "stitch-card": "0px 1px 3px rgba(15, 23, 42, 0.04), 0px 4px 12px rgba(15, 23, 42, 0.02)",
-        "stitch-hover": "0px 4px 6px -1px rgba(15, 23, 42, 0.06), 0px 10px 24px -3px rgba(79, 70, 229, 0.05)",
-        "stitch-drawer": "0px 20px 35px -5px rgba(15, 23, 42, 0.12), 0px 10px 10px -5px rgba(15, 23, 42, 0.04)",
+        "stitch-card": "0 1px 2px rgba(16, 24, 40, 0.05)",
+        "stitch-hover": "0 4px 12px rgba(16, 24, 40, 0.05)",
+        "stitch-drawer": "0 8px 24px rgba(16, 24, 40, 0.10)",
       },
 
       keyframes: {

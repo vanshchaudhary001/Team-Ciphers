@@ -9,12 +9,12 @@ import { RoomEnvironment } from 'https://cdn.jsdelivr.net/npm/three@0.169.0/exam
 import { RoundedBoxGeometry } from 'https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/geometries/RoundedBoxGeometry.js/+esm';
 
 export const COLORS = {
-  body: 0xff7a1a,       // glossy orange
-  joint: 0xe85d00,      // darker orange for joints, rings, soles
-  screen: 0x0b0b0d,     // glossy black face screen
-  limb: 0x3a3d43,       // dark grey limbs and neck
-  eye: '#ffb347',       // warm orange-amber eye glow (canvas colour)
-  eyeCore: '#fff3d6',   // bright eye core
+  body: 0xb87333,       // muted copper (copper-500)
+  joint: 0x7d4720,      // copper-700 for joints, rings, soles
+  screen: 0x0a1424,     // glossy navy-950 face screen
+  limb: 0x16294a,       // navy-800 limbs and neck
+  eye: '#ffd9a8',       // warm white-amber eye glow (canvas colour)
+  eyeCore: '#fff6ea',   // bright eye core
 };
 export const BPM = 120;
 const BEAT = 60 / BPM;
@@ -140,7 +140,7 @@ export async function createRobot({ canvas, reducedMotion = false }) {
   camera.lookAt(0, 1.3, 0);
 
   // ---------- Materials ----------
-  const plastic = (color) => new THREE.MeshPhysicalMaterial({ color, roughness: 0.28, clearcoat: 1.0, clearcoatRoughness: 0.08 });
+  const plastic = (color) => new THREE.MeshPhysicalMaterial({ color, roughness: 0.28, clearcoat: 0.8, clearcoatRoughness: 0.1 });
   const M = {
     body: plastic(COLORS.body),
     joint: plastic(COLORS.joint),
@@ -262,8 +262,8 @@ export async function createRobot({ canvas, reducedMotion = false }) {
   const eyes = { expr: 'normal', until: 0, blink: 0, lookX: 0, lookY: 0, spin: 0, dirty: true };
   function glowDisc(x, y, r, sy = 1) {
     const g = eyeCtx.createRadialGradient(x, y, 0, x, y, r * 1.9);
-    g.addColorStop(0, 'rgba(255,190,90,0.55)');
-    g.addColorStop(1, 'rgba(255,140,40,0)');
+    g.addColorStop(0, 'rgba(255,217,168,0.4)');
+    g.addColorStop(1, 'rgba(232,164,101,0)');
     eyeCtx.fillStyle = g;
     eyeCtx.fillRect(x - r * 2, y - r * 2, r * 4, r * 4);
     eyeCtx.save();
@@ -278,14 +278,14 @@ export async function createRobot({ canvas, reducedMotion = false }) {
   function strokeEye(path) {
     eyeCtx.save();
     eyeCtx.lineCap = 'round'; eyeCtx.lineJoin = 'round';
-    eyeCtx.shadowColor = 'rgba(255,160,60,0.9)'; eyeCtx.shadowBlur = 14;
+    eyeCtx.shadowColor = 'rgba(255,217,168,0.7)'; eyeCtx.shadowBlur = 10;
     eyeCtx.strokeStyle = COLORS.eye; eyeCtx.lineWidth = 9;
     path(); eyeCtx.stroke();
     eyeCtx.restore();
   }
   function fillShape(path, color = COLORS.eye) {
     eyeCtx.save();
-    eyeCtx.shadowColor = 'rgba(255,160,60,0.9)'; eyeCtx.shadowBlur = 16;
+    eyeCtx.shadowColor = 'rgba(255,217,168,0.7)'; eyeCtx.shadowBlur = 12;
     eyeCtx.fillStyle = color;
     path(); eyeCtx.fill();
     eyeCtx.restore();

@@ -60,11 +60,11 @@ function init() {
       .robot { all: unset; display: block; position: relative; width: 100%; height: 100%; cursor: grab; pointer-events: auto;
                touch-action: none; -webkit-tap-highlight-color: transparent; border-radius: 24px; }
       .robot.dragging { cursor: grabbing; }
-      .robot:focus-visible { outline: 2px solid #ff7a1a; outline-offset: 2px; }
+      .robot:focus-visible { outline: 2px solid #b87333; outline-offset: 2px; }
       canvas { display: block; width: 100%; height: 100%; pointer-events: none; }
       .bubble { position: absolute; left: 4%; top: 2%; padding: 5px 10px; border-radius: 12px 12px 12px 4px;
-                background: #ff7a1a; color: #fff; font: 600 12px/1.2 Inter, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-                box-shadow: 0 4px 12px rgba(0,0,0,.18); white-space: nowrap; opacity: 0; transform: translateY(6px) scale(.9);
+                background: #0f1e33; color: #fff; font: 600 12px/1.2 Inter, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+                box-shadow: 0 8px 24px rgba(16,24,40,.10); white-space: nowrap; opacity: 0; transform: translateY(6px) scale(.9);
                 transition: opacity .25s ease, transform .25s ease; pointer-events: none; }
       .bubble.show { opacity: 1; transform: none; }
       .dots { display: inline-flex; gap: 3px; }
@@ -79,7 +79,7 @@ function init() {
         55%  { opacity: 1; transform: translate(var(--x1), -40px) scale(1) rotate(var(--r2)); }
         100% { opacity: 0; transform: translate(var(--x2), -78px) scale(.9) rotate(var(--r1)); }
       }
-      .ghost { position: absolute; left: 0; top: 0; background: #161616; border: 1px solid #262626; border-radius: 12px;
+      .ghost { position: absolute; left: 0; top: 0; background: #ffffff; border: 1px solid #e4e7ec; border-radius: 12px;
                opacity: 0; pointer-events: none; transform-origin: 0 0; will-change: transform, opacity; }
       @media (prefers-reduced-motion: reduce) { .stage { transition: opacity .2s ease; } .stage.out { transform: none; } }
     </style>
