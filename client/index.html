@@ -1077,6 +1077,219 @@
       transform: translateY(-1px);
     }
 
+    /* ==============================================================
+       ONBOARDING ASSISTANT PANEL: minimal matte black
+       ============================================================== */
+    #copilot-persistent-panel {
+      background: #161616 !important;
+      border: 1px solid #262626 !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28) !important;
+      color: #EDEAE4;
+    }
+    #copilot-persistent-panel.copilot-state-medium {
+      border-radius: 12px !important;
+    }
+    #copilot-persistent-panel.copilot-state-fullscreen {
+      border: none !important;
+      box-shadow: none !important;
+    }
+    #copilot-persistent-panel .copilot-sidebar-header {
+      background: #1C1C1C !important;
+      border-bottom: 1px solid #262626 !important;
+    }
+    #copilot-persistent-panel .copilot-mark {
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      border-radius: 50%;
+      background: #C2773A;
+      color: #FFFFFF;
+      font: 700 14px/1 var(--font-sans);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #copilot-persistent-panel .copilot-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #copilot-persistent-panel .copilot-title-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #EDEAE4;
+    }
+    #copilot-persistent-panel .copilot-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #8A857E;
+    }
+    #copilot-persistent-panel .copilot-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #C2773A;
+    }
+    #copilot-persistent-panel .copilot-subtitle-text {
+      font-size: 12px;
+      color: #8A857E;
+      margin-top: 2px;
+    }
+    #copilot-persistent-panel .copilot-ctrl-btn {
+      background: transparent;
+      border: none;
+      color: #8A857E;
+    }
+    #copilot-persistent-panel .copilot-ctrl-btn:hover {
+      background: transparent;
+      color: #EDEAE4;
+      transform: none;
+    }
+    #copilot-persistent-panel .copilot-ctrl-btn:focus-visible {
+      outline: 2px solid #C2773A;
+      outline-offset: 2px;
+    }
+    #copilot-persistent-panel .copilot-messages-feed {
+      background: #161616 !important;
+    }
+    #copilot-persistent-panel .copilot-messages-feed::-webkit-scrollbar-thumb {
+      background: #2E2E2E;
+    }
+    #copilot-persistent-panel .copilot-messages-feed a {
+      color: #D9A273;
+    }
+    /* Bot messages: plain text, no bubble */
+    #copilot-persistent-panel .chat-bubble.assistant .chat-bubble-body {
+      background: none;
+      border: none;
+      box-shadow: none;
+      backdrop-filter: none;
+      padding: 2px 0 0;
+      max-width: 100%;
+      color: #EDEAE4;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    #copilot-persistent-panel .chat-bubble.assistant .chat-bubble-body strong,
+    #copilot-persistent-panel .chat-bubble.assistant .chat-bubble-body b {
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+    #copilot-persistent-panel .chat-avatar.ai {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      border-radius: 50%;
+      background: #C2773A !important;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      animation: none;
+      color: #FFFFFF;
+      font: 700 12px/1 var(--font-sans);
+    }
+    /* Avatar only on the first message of a run of bot messages */
+    #copilot-persistent-panel .chat-bubble.assistant + .chat-bubble.assistant .chat-avatar.ai {
+      visibility: hidden;
+    }
+    #copilot-persistent-panel .copilot-hint {
+      font-size: 12px;
+      color: #8A857E;
+    }
+    /* User messages: right-aligned bubble */
+    #copilot-persistent-panel .chat-avatar.user {
+      display: none;
+    }
+    #copilot-persistent-panel .chat-bubble.user .chat-bubble-body {
+      background: #262626;
+      color: #EDEAE4;
+      border: none;
+      border-radius: 12px;
+      box-shadow: none;
+      max-width: 80%;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    /* Suggested questions + action chips: outline */
+    #copilot-persistent-panel .copilot-chip,
+    #copilot-persistent-panel .chat-action-chip {
+      background: transparent;
+      border: 1px solid #2E2E2E;
+      color: #CFCAC2;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 999px;
+      box-shadow: none;
+      white-space: normal;
+      text-align: left;
+    }
+    #copilot-persistent-panel .copilot-chip:hover,
+    #copilot-persistent-panel .chat-action-chip:hover {
+      background: transparent;
+      border-color: #C2773A;
+      color: #EDEAE4;
+      box-shadow: none;
+      transform: none;
+    }
+    /* Typing indicator */
+    #copilot-persistent-panel .spinner-dot {
+      width: 6px;
+      height: 6px;
+      background: #8A857E;
+      box-shadow: none;
+      animation-name: assistantTypingDots;
+    }
+    @keyframes assistantTypingDots {
+      0%, 80%, 100% { opacity: 0.3; transform: scale(0.85); }
+      40% { opacity: 1; transform: scale(1); }
+    }
+    /* Composer */
+    #copilot-persistent-panel .copilot-composer {
+      background: #161616 !important;
+      border-top: 1px solid #262626 !important;
+    }
+    #copilot-persistent-panel .composer-inner {
+      background: #1E1E1E;
+      border: 1px solid #2E2E2E;
+      border-radius: 10px;
+      box-shadow: none;
+    }
+    #copilot-persistent-panel .composer-inner:focus-within {
+      border-color: #C2773A;
+      box-shadow: none;
+    }
+    #copilot-persistent-panel .copilot-textarea {
+      color: #EDEAE4;
+    }
+    #copilot-persistent-panel .copilot-textarea::placeholder {
+      color: #8F8A83;
+    }
+    #copilot-persistent-panel .copilot-send-button {
+      background: #C2773A;
+      color: #FFFFFF;
+      border-radius: 8px;
+      box-shadow: none;
+    }
+    #copilot-persistent-panel .copilot-send-button:hover {
+      background: #A9652F;
+      transform: none;
+      box-shadow: none;
+    }
+    #copilot-persistent-panel .copilot-send-button:disabled,
+    #copilot-persistent-panel .composer-inner:has(.copilot-textarea:placeholder-shown) .copilot-send-button {
+      background: #2E2E2E;
+      color: #8A857E;
+      cursor: default;
+      pointer-events: none;
+    }
+    #copilot-persistent-panel .composer-footnote {
+      color: #8A857E;
+      font-family: var(--font-sans);
+    }
+
     /* Full-Screen Loading Overlay after Login */
     #copilot-login-loading-overlay {
       position: fixed;
@@ -2452,21 +2665,14 @@
           <!-- Chatbot Header -->
           <div class="copilot-sidebar-header">
             <div class="copilot-header-brand">
-              <div class="copilot-avatar-wrapper"
-                style="width: 38px; height: 38px; min-width: 38px; border-radius: 10px; background: #ffffff; border: 1px solid rgba(148, 163, 184, 0.4); display: flex; align-items: center; justify-content: center; padding: 3px; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35); flex-shrink: 0;">
-                <img src="copilot-icon.png" onerror="this.src='/copilot-icon.png'" alt="AI Copilot Logo"
-                  style="width: 100%; height: 100%; object-fit: contain; display: block;">
-              </div>
+              <span class="copilot-mark" aria-hidden="true">S</span>
               <div>
-                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                  <span class="copilot-live-pill"
-                    style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 9999px; display: inline-flex; align-items: center; gap: 4px;">
-                    <span style="width: 6px; height: 6px; border-radius: 50%; background: #34d399; display: inline-block;"></span>
-                    LIVE SESSION
-                  </span>
+                <div class="copilot-title-row">
+                  <span class="copilot-title-text">Onboarding assistant</span>
+                  <span class="copilot-status"><span class="copilot-status-dot"></span>Online</span>
                 </div>
                 <div class="copilot-subtitle-text" id="copilot-context-subtitle">
-                  Context: <strong id="copilot-context-user">Aarav Sharma</strong> · Day 1 Guide
+                  <span id="copilot-context-user">Aarav Sharma</span>
                 </div>
               </div>
             </div>
@@ -2496,7 +2702,7 @@
           <div class="copilot-composer">
             <div class="composer-inner">
               <textarea id="chatbot-input" class="copilot-textarea"
-                placeholder="Ask your onboarding copilot anything about tasks, role, or company..." rows="1"
+                placeholder="Ask about your tasks, team or company…" rows="1"
                 onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); sendChatMessage(); }"></textarea>
               <button id="chatbot-send-btn" class="copilot-send-button" onclick="sendChatMessage()"
                 title="Send prompt to AI Copilot" aria-label="Send message to Copilot">
@@ -2507,7 +2713,7 @@
               </button>
             </div>
             <div class="composer-footnote">
-              <span>⚡ Live Context Aware · Enterprise Grounded · Role-Governed Access</span>
+              <span>Live context aware · Enterprise grounded · Role-governed access</span>
             </div>
           </div>
 
@@ -7041,7 +7247,7 @@
       // Highlight copilot panel
       const panel = document.querySelector('.joiner-chat-panel');
       if (panel) {
-        panel.style.boxShadow = '0 0 35px rgba(99, 102, 241, 0.6)';
+        panel.style.boxShadow = '0 0 35px rgba(194, 119, 58, 0.6)';
         setTimeout(() => {
           panel.style.boxShadow = '';
         }, 1200);
@@ -7054,16 +7260,16 @@
       if (!container) return;
 
       let chipsHtml = `
-        <button class="copilot-chip" onclick="handleChatOption('contacts')">📞 Contacts</button>
-        <button class="copilot-chip" onclick="handleChatOption('checklist')">📋 Day 1 Tasks</button>
+        <button class="copilot-chip" onclick="handleChatOption('contacts')">Contacts</button>
+        <button class="copilot-chip" onclick="handleChatOption('checklist')">Day 1 Tasks</button>
       `;
 
       dailyTasksState.slice(0, 6).forEach((task, idx) => {
         const shortTitle = task.title.split(' ').slice(0, 3).join(' ');
-        chipsHtml += `<button class="copilot-chip" onclick="explainTaskById(${task.id})">💡 T${task.id}: ${shortTitle}</button>`;
+        chipsHtml += `<button class="copilot-chip" onclick="explainTaskById(${task.id})">T${task.id}: ${shortTitle}</button>`;
       });
 
-      chipsHtml += `<button class="copilot-chip" onclick="handleChatOption('stuck')">🚨 I'm Stuck</button>`;
+      chipsHtml += `<button class="copilot-chip" onclick="handleChatOption('stuck')">I'm Stuck</button>`;
       container.innerHTML = chipsHtml;
     }
 
@@ -7081,7 +7287,7 @@
       if (role === 'assistant') {
         bubble.innerHTML = `
           <div class="chat-avatar ai" title="AI Onboarding Copilot">
-            <img src="copilot-icon.png" onerror="this.src='/copilot-icon.png'" alt="Copilot" />
+            <span>S</span>
           </div>
           <div class="chat-bubble-body">
             ${contentHtml}
@@ -7123,21 +7329,14 @@
       thinkingBubble.className = 'chat-bubble assistant thinking';
       thinkingBubble.id = 'copilot-thinking-bubble';
       thinkingBubble.innerHTML = `
-        <div class="chat-avatar ai" style="animation: copilotPulse 1.8s infinite ease-in-out;">
-          <img src="copilot-icon.png" onerror="this.src='/copilot-icon.png'" alt="Copilot" />
-        </div>
-        <div class="chat-bubble-body" style="background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(99, 102, 241, 0.4); border-radius: 12px; padding: 14px 18px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);">
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
-            <div class="thinking-spinner">
-              <span class="spinner-dot dot-1"></span>
-              <span class="spinner-dot dot-2"></span>
-              <span class="spinner-dot dot-3"></span>
-            </div>
-            <span style="font-weight: 800; font-size: 0.88rem; color: #a5b4fc; letter-spacing: 0.02em;">
-              AI Copilot is analyzing...
-            </span>
+        <div class="chat-avatar ai"><span>S</span></div>
+        <div class="chat-bubble-body">
+          <div class="thinking-spinner" aria-label="Assistant is typing" style="margin: 6px 0 6px;">
+            <span class="spinner-dot dot-1"></span>
+            <span class="spinner-dot dot-2"></span>
+            <span class="spinner-dot dot-3"></span>
           </div>
-          <div id="copilot-thinking-caption" style="font-size: 0.78rem; color: #94a3b8; font-style: italic; transition: opacity 0.3s ease;">
+          <div id="copilot-thinking-caption" style="font-size: 12px; color: #8A857E; transition: opacity 0.3s ease;">
             Reading enterprise workspace & directory graph...
           </div>
         </div>
@@ -7174,7 +7373,7 @@
       try {
         answerHtml = await responseGeneratorFn();
       } catch (err) {
-        answerHtml = `<div style="color: #cbd5e1;">I am here to guide your onboarding journey. Please reach out to your HR Partner or Buddy anytime!</div>`;
+        answerHtml = `<div style="color: #CFCAC2;">I am here to guide your onboarding journey. Please reach out to your HR Partner or Buddy anytime!</div>`;
       }
 
       // Remove thinking bubble
@@ -7208,7 +7407,7 @@
 
       const ctxSubEl = document.getElementById('copilot-context-subtitle');
       if (ctxSubEl) {
-        ctxSubEl.innerHTML = `Context: <strong>${escapeHtml(user?.name || 'New Joiner')}</strong> (${escapeHtml(roleLevel)}) · ${escapeHtml(deptName)} > ${escapeHtml(subDeptName)}`;
+        ctxSubEl.innerHTML = `<span id="copilot-context-user">${escapeHtml(user?.name || 'New Joiner')}</span> · ${escapeHtml(subDeptName)}`;
       }
 
       const miniNameEl = document.getElementById('copilot-mini-name');
@@ -7216,22 +7415,13 @@
 
       feed.innerHTML = `
         <div class="chat-bubble assistant">
-          <div class="chat-avatar ai" title="First-Week Maze Copilot">
-            <img src="copilot-icon.png" onerror="this.src='/copilot-icon.png'" alt="Copilot" />
-          </div>
+          <div class="chat-avatar ai" title="Onboarding assistant"><span>S</span></div>
           <div class="chat-bubble-body">
-            <div style="font-size: 1.15rem; font-weight: 800; color: #f8fafc; margin-bottom: 4px;">
-              Hi ${escapeHtml(firstName)} 👋
-            </div>
-            <div style="font-size: 1rem; font-weight: 700; color: #e2e8f0; margin-bottom: 12px;">
-              Welcome to your First-Week Maze at ${escapeHtml(compName)}.
-            </div>
-            <p style="color: #cbd5e1; margin-bottom: 14px; font-size: 0.9rem; line-height: 1.6;">
-              I'm your onboarding copilot for <strong>${escapeHtml(fullTitle)}</strong> in <strong>${escapeHtml(deptName)}</strong>. I can help you understand your tasks, find company resources, answer questions, and guide you through your first week.
+            <p style="margin-bottom: 10px;">Hi ${escapeHtml(firstName)}, welcome to your first week at ${escapeHtml(compName)}.</p>
+            <p style="margin-bottom: 12px;">
+              I'm your onboarding assistant for <strong>${escapeHtml(fullTitle)}</strong> in <strong>${escapeHtml(deptName)}</strong>. I can help you understand your tasks, find company resources, answer questions, and guide you through your first week.
             </p>
-            <div style="font-size: 0.78rem; font-weight: 700; color: #818cf8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em;">
-              Select a suggested question below or type anything in the chat:
-            </div>
+            <div class="copilot-hint">Select a suggested question below or type anything in the chat</div>
           </div>
         </div>
       `;
@@ -7260,76 +7450,76 @@
       return `
         <div>
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
-            <div style="font-weight: 800; font-size: 0.95rem; color: #f8fafc; display: flex; align-items: center; gap: 8px;">
-              <span>📞</span> Verified Enterprise Contact Directory
+            <div style="font-weight: 800; font-size: 0.95rem; color: #FAF7F2; display: flex; align-items: center; gap: 8px;">
+              <span></span> Verified Enterprise Contact Directory
             </div>
-            <span style="font-size: 0.7rem; font-weight: 700; color: #34d399; background: rgba(16, 185, 129, 0.15); padding: 2px 8px; border-radius: 9999px;">
+            <span style="font-size: 0.7rem; font-weight: 700; color: #9DBF9E; background: rgba(157, 191, 158, 0.15); padding: 2px 8px; border-radius: 9999px;">
               Live Grounded
             </span>
           </div>
 
-          <div style="font-size: 0.8rem; color: #cbd5e1; margin-bottom: 12px; line-height: 1.45;">
+          <div style="font-size: 0.8rem; color: #CFCAC2; margin-bottom: 12px; line-height: 1.45;">
             Direct access to assigned mentors, HR leads, and emergency IT operations for <strong>${escapeHtml(emp.name)}</strong> at <strong>${escapeHtml(comp.name)}</strong>:
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 10px;">
             <!-- Card 1: Onboarding Buddy -->
-            <div style="background: rgba(147, 51, 234, 0.12); border: 1px solid rgba(147, 51, 234, 0.35); border-radius: 10px; padding: 12px 14px;">
+            <div style="background: rgba(194, 119, 58, 0.12); border: 1px solid rgba(194, 119, 58, 0.35); border-radius: 10px; padding: 12px 14px;">
               <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                 <div>
-                  <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #c084fc; letter-spacing: 0.04em;">Assigned Onboarding Buddy</div>
+                  <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #D9A273; letter-spacing: 0.04em;">Assigned Onboarding Buddy</div>
                   <div style="font-size: 0.98rem; font-weight: 800; color: #ffffff; margin-top: 1px;">${escapeHtml(buddy.name)}</div>
-                  <div style="font-size: 0.76rem; color: #cbd5e1;">${escapeHtml(buddy.role || 'Senior Team Buddy')}</div>
+                  <div style="font-size: 0.76rem; color: #CFCAC2;">${escapeHtml(buddy.role || 'Senior Team Buddy')}</div>
                 </div>
-                <a href="tel:${escapeHtml(buddy.phone)}" style="display: inline-flex; align-items: center; gap: 4px; background: #9333ea; color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 6px; text-decoration: none;">
-                  📞 Call
+                <a href="tel:${escapeHtml(buddy.phone)}" style="display: inline-flex; align-items: center; gap: 4px; background: #A9652F; color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 6px; text-decoration: none;">
+                  Call
                 </a>
               </div>
-              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(147, 51, 234, 0.2); font-size: 0.78rem; color: #e2e8f0; line-height: 1.5;">
-                <div>📱 <strong>Direct Phone:</strong> <a href="tel:${escapeHtml(buddy.phone)}" style="color: #c084fc; font-weight: 700;">${escapeHtml(buddy.phone)}</a></div>
-                <div>📧 <strong>Email:</strong> <a href="mailto:${escapeHtml(buddy.email)}" style="color: #e2e8f0;">${escapeHtml(buddy.email)}</a></div>
-                <div>⏱️ <strong>Availability:</strong> ${escapeHtml(buddy.availability || 'Daily 10:00 AM - 6:00 PM')}</div>
-                <div style="color: #94a3b8; font-size: 0.72rem; margin-top: 3px;">🎯 Purpose: 1:1 sync, codebase orientation, daily questions</div>
+              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(194, 119, 58, 0.2); font-size: 0.78rem; color: #EDEAE4; line-height: 1.5;">
+                <div><strong>Direct Phone:</strong> <a href="tel:${escapeHtml(buddy.phone)}" style="color: #D9A273; font-weight: 700;">${escapeHtml(buddy.phone)}</a></div>
+                <div><strong>Email:</strong> <a href="mailto:${escapeHtml(buddy.email)}" style="color: #EDEAE4;">${escapeHtml(buddy.email)}</a></div>
+                <div><strong>Availability:</strong> ${escapeHtml(buddy.availability || 'Daily 10:00 AM - 6:00 PM')}</div>
+                <div style="color: #8A857E; font-size: 0.72rem; margin-top: 3px;">Purpose: 1:1 sync, codebase orientation, daily questions</div>
               </div>
             </div>
 
             <!-- Card 2: HR Partner -->
-            <div style="background: rgba(37, 99, 235, 0.12); border: 1px solid rgba(37, 99, 235, 0.35); border-radius: 10px; padding: 12px 14px;">
+            <div style="background: rgba(194, 119, 58, 0.12); border: 1px solid rgba(194, 119, 58, 0.35); border-radius: 10px; padding: 12px 14px;">
               <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                 <div>
-                  <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #60a5fa; letter-spacing: 0.04em;">People Operations & HR Partner</div>
+                  <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #D9A273; letter-spacing: 0.04em;">People Operations & HR Partner</div>
                   <div style="font-size: 0.98rem; font-weight: 800; color: #ffffff; margin-top: 1px;">${escapeHtml(hr.name)}</div>
-                  <div style="font-size: 0.76rem; color: #cbd5e1;">${escapeHtml(hr.role || 'HR Business Partner')}</div>
+                  <div style="font-size: 0.76rem; color: #CFCAC2;">${escapeHtml(hr.role || 'HR Business Partner')}</div>
                 </div>
-                <a href="tel:${escapeHtml(hr.phone)}" style="display: inline-flex; align-items: center; gap: 4px; background: #2563eb; color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 6px; text-decoration: none;">
-                  📞 Call
+                <a href="tel:${escapeHtml(hr.phone)}" style="display: inline-flex; align-items: center; gap: 4px; background: #A9652F; color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 6px; text-decoration: none;">
+                  Call
                 </a>
               </div>
-              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(37, 99, 235, 0.2); font-size: 0.78rem; color: #e2e8f0; line-height: 1.5;">
-                <div>📱 <strong>Direct Phone:</strong> <a href="tel:${escapeHtml(hr.phone)}" style="color: #60a5fa; font-weight: 700;">${escapeHtml(hr.phone)}</a></div>
-                <div>📧 <strong>Email:</strong> <a href="mailto:${escapeHtml(hr.email)}" style="color: #e2e8f0;">${escapeHtml(hr.email)}</a></div>
-                <div>⏱️ <strong>Hours:</strong> Mon - Fri, 9:00 AM - 5:30 PM</div>
-                <div style="color: #94a3b8; font-size: 0.72rem; margin-top: 3px;">🎯 Purpose: Benefits, documentation, agreements, payroll setup</div>
+              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(194, 119, 58, 0.2); font-size: 0.78rem; color: #EDEAE4; line-height: 1.5;">
+                <div><strong>Direct Phone:</strong> <a href="tel:${escapeHtml(hr.phone)}" style="color: #D9A273; font-weight: 700;">${escapeHtml(hr.phone)}</a></div>
+                <div><strong>Email:</strong> <a href="mailto:${escapeHtml(hr.email)}" style="color: #EDEAE4;">${escapeHtml(hr.email)}</a></div>
+                <div><strong>Hours:</strong> Mon - Fri, 9:00 AM - 5:30 PM</div>
+                <div style="color: #8A857E; font-size: 0.72rem; margin-top: 3px;">Purpose: Benefits, documentation, agreements, payroll setup</div>
               </div>
             </div>
 
             <!-- Card 3: IT Helpdesk Hotline -->
-            <div style="background: rgba(5, 150, 105, 0.12); border: 1px solid rgba(5, 150, 105, 0.35); border-radius: 10px; padding: 12px 14px;">
+            <div style="background: rgba(157, 191, 158, 0.12); border: 1px solid rgba(157, 191, 158, 0.35); border-radius: 10px; padding: 12px 14px;">
               <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                 <div>
-                  <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #34d399; letter-spacing: 0.04em;">IT Infrastructure & Hardware Hotline</div>
+                  <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #9DBF9E; letter-spacing: 0.04em;">IT Infrastructure & Hardware Hotline</div>
                   <div style="font-size: 0.98rem; font-weight: 800; color: #ffffff; margin-top: 1px;">Rahul Mehta</div>
-                  <div style="font-size: 0.76rem; color: #cbd5e1;">Lead IT Systems Engineer · Code: C001</div>
+                  <div style="font-size: 0.76rem; color: #CFCAC2;">Lead IT Systems Engineer · Code: C001</div>
                 </div>
-                <a href="tel:+9180678989910" style="display: inline-flex; align-items: center; gap: 4px; background: #059669; color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 6px; text-decoration: none;">
-                  📞 Call
+                <a href="tel:+9180678989910" style="display: inline-flex; align-items: center; gap: 4px; background: #9DBF9E; color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 6px; text-decoration: none;">
+                  Call
                 </a>
               </div>
-              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(5, 150, 105, 0.2); font-size: 0.78rem; color: #e2e8f0; line-height: 1.5;">
-                <div>📱 <strong>Emergency Line:</strong> <a href="tel:+9180678989910" style="color: #34d399; font-weight: 700;">+91 80 6789 89910</a></div>
-                <div>📧 <strong>Email:</strong> <a href="mailto:it@demo-company.com" style="color: #e2e8f0;">it@demo-company.com</a></div>
-                <div>🚨 <strong>Escalation Line:</strong> Vikram Shah (Director of IT Operations)</div>
-                <div style="color: #94a3b8; font-size: 0.72rem; margin-top: 3px;">🎯 Purpose: Laptop provisioning, MFA resets, VPN approvals, tokens</div>
+              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(157, 191, 158, 0.2); font-size: 0.78rem; color: #EDEAE4; line-height: 1.5;">
+                <div><strong>Emergency Line:</strong> <a href="tel:+9180678989910" style="color: #9DBF9E; font-weight: 700;">+91 80 6789 89910</a></div>
+                <div><strong>Email:</strong> <a href="mailto:it@demo-company.com" style="color: #EDEAE4;">it@demo-company.com</a></div>
+                <div><strong>Escalation Line:</strong> Vikram Shah (Director of IT Operations)</div>
+                <div style="color: #8A857E; font-size: 0.72rem; margin-top: 3px;">Purpose: Laptop provisioning, MFA resets, VPN approvals, tokens</div>
               </div>
             </div>
           </div>
@@ -7354,44 +7544,44 @@
         <div style="font-family: inherit; line-height: 1.5;">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 10px;">
             <div>
-              <div style="font-weight: 800; font-size: 0.98rem; color: #f8fafc; display: flex; align-items: center; gap: 8px;">
-                <span>🎯</span> Your Day-1 Execution Blueprint
+              <div style="font-weight: 800; font-size: 0.98rem; color: #FAF7F2; display: flex; align-items: center; gap: 8px;">
+                <span></span> Your Day-1 Execution Blueprint
               </div>
-              <div style="font-size: 0.76rem; color: #94a3b8; margin-top: 2px;">
+              <div style="font-size: 0.76rem; color: #8A857E; margin-top: 2px;">
                 Role: <strong>${escapeHtml(emp.fullTitle || emp.role)}</strong> · ${escapeHtml(emp.department)}
               </div>
             </div>
-            <span style="font-size: 0.72rem; font-weight: 800; color: #34d399; background: rgba(16, 185, 129, 0.18); padding: 3px 9px; border-radius: 9999px;">
+            <span style="font-size: 0.72rem; font-weight: 800; color: #9DBF9E; background: rgba(157, 191, 158, 0.18); padding: 3px 9px; border-radius: 9999px;">
               ${completedTasks}/${totalTasks} Tasks Done
             </span>
           </div>
 
-          <div style="background: rgba(99, 102, 241, 0.12); border-left: 3px solid #818cf8; padding: 10px 12px; border-radius: 6px; margin-bottom: 14px; font-size: 0.82rem; color: #e2e8f0;">
-            <div style="font-weight: 700; color: #a5b4fc; margin-bottom: 3px;">👋 What you need to do right now:</div>
+          <div style="background: rgba(194, 119, 58, 0.12); border-left: 3px solid #D9A273; padding: 10px 12px; border-radius: 6px; margin-bottom: 14px; font-size: 0.82rem; color: #EDEAE4;">
+            <div style="font-weight: 700; color: #D9A273; margin-bottom: 3px;">What you need to do right now:</div>
             Your onboarding plan contains <strong>30 authoritative tasks</strong> designed specifically for your post in <strong>${escapeHtml(emp.subBranch || emp.team || emp.department)}</strong>. For Day 1, focus on completing your first 6 foundational setup, charter, and workflow tasks.
           </div>
 
           ${nextPending ? `
-            <div style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px;">
-              <div style="font-size: 0.72rem; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;">
-                <span>👉</span> Immediate Next Action Item
+            <div style="background: rgba(224, 179, 106, 0.12); border: 1px solid rgba(224, 179, 106, 0.3); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px;">
+              <div style="font-size: 0.72rem; font-weight: 800; color: #E0B36A; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;">
+                <span></span> Immediate Next Action Item
               </div>
               <div style="font-weight: 800; font-size: 0.92rem; color: #ffffff; margin-top: 4px;">
                 #Task ${nextPending.num || nextPending.taskId}: ${escapeHtml(nextPending.taskName || nextPending.title)}
               </div>
-              <div style="font-size: 0.8rem; color: #cbd5e1; margin-top: 4px; line-height: 1.45;">
+              <div style="font-size: 0.8rem; color: #CFCAC2; margin-top: 4px; line-height: 1.45;">
                 ${escapeHtml(nextPending.desc || nextPending.description || nextPending.objective)}
               </div>
               <div style="margin-top: 8px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-                <button class="chat-action-chip" onclick="explainTaskById('${nextPending.taskId || nextPending.id}')" style="background: #4f46e5; color: #ffffff; border-color: #6366f1; padding: 4px 10px; font-weight: 700;">
-                  💡 Open Step-by-Step Playbook
+                <button class="chat-action-chip" onclick="explainTaskById('${nextPending.taskId || nextPending.id}')" style="background: #A9652F; color: #ffffff; border-color: #A9652F; padding: 4px 10px; font-weight: 700;">
+                  Open Step-by-Step Playbook
                 </button>
-                <span style="font-size: 0.72rem; color: #94a3b8;">⏱️ Duration: ${nextPending.duration || '60 mins'}</span>
+                <span style="font-size: 0.72rem; color: #8A857E;">Duration: ${nextPending.duration || '60 mins'}</span>
               </div>
             </div>
           ` : ''}
 
-          <div style="font-size: 0.8rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: #8A857E; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px;">
             Day-1 Task Priority Briefs:
           </div>
           <div style="display: flex; flex-direction: column; gap: 8px; max-height: 240px; overflow-y: auto; padding-right: 4px;">
@@ -7402,15 +7592,15 @@
         html += `
           <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 8px 10px; font-size: 0.8rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-              <div style="font-weight: 700; color: #f8fafc; display: flex; align-items: center; gap: 6px;">
-                <span>${isDone ? '✅' : '⏳'}</span>
+              <div style="font-weight: 700; color: #FAF7F2; display: flex; align-items: center; gap: 6px;">
+                <span>${isDone ? '' : ''}</span>
                 <span>#Task ${t.num || (i + 1)}: ${escapeHtml(t.taskName || t.title)}</span>
               </div>
               <button class="chat-action-chip" onclick="explainTaskById('${t.taskId || t.id}')" style="padding: 2px 7px; font-size: 0.7rem;">
-                💡 Playbook
+                Playbook
               </button>
             </div>
-            <div style="font-size: 0.76rem; color: #94a3b8; line-height: 1.4;">
+            <div style="font-size: 0.76rem; color: #8A857E; line-height: 1.4;">
               ${escapeHtml(t.desc || t.description)}
             </div>
           </div>
@@ -7421,10 +7611,10 @@
           </div>
 
           <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; gap: 6px; flex-wrap: wrap;">
-            <button class="chat-action-chip" onclick="explainTaskById(1)">💡 Explain Task 1</button>
-            <button class="chat-action-chip" onclick="explainTaskById(2)">💡 Explain Task 2</button>
-            <button class="chat-action-chip" onclick="filterByDay('all')">📋 View All 30 Tasks</button>
-            <button class="chat-action-chip" onclick="handleChatOption('contacts')">📞 Contact Buddy</button>
+            <button class="chat-action-chip" onclick="explainTaskById(1)">Explain Task 1</button>
+            <button class="chat-action-chip" onclick="explainTaskById(2)">Explain Task 2</button>
+            <button class="chat-action-chip" onclick="filterByDay('all')">View All 30 Tasks</button>
+            <button class="chat-action-chip" onclick="handleChatOption('contacts')">Contact Buddy</button>
           </div>
         </div>
       `;
@@ -7439,41 +7629,41 @@
       return `
         <div style="font-family: inherit; line-height: 1.5;">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 8px;">
-            <div style="font-weight: 800; font-size: 0.95rem; color: #f8fafc; display: flex; align-items: center; gap: 8px;">
-              <span>💡</span> Role Clarity & Confusion Resolution
+            <div style="font-weight: 800; font-size: 0.95rem; color: #FAF7F2; display: flex; align-items: center; gap: 8px;">
+              <span></span> Role Clarity & Confusion Resolution
             </div>
-            <span style="font-size: 0.72rem; font-weight: 800; color: #38bdf8; background: rgba(56, 189, 248, 0.18); padding: 3px 9px; border-radius: 9999px;">
+            <span style="font-size: 0.72rem; font-weight: 800; color: #D9A273; background: rgba(194, 119, 58, 0.18); padding: 3px 9px; border-radius: 9999px;">
               AI Guidance
             </span>
           </div>
 
-          <p style="font-size: 0.82rem; color: #cbd5e1; margin-bottom: 12px; line-height: 1.55;">
+          <p style="font-size: 0.82rem; color: #CFCAC2; margin-bottom: 12px; line-height: 1.55;">
             It is completely normal to feel confused or overwhelmed during your first week! Here is how to navigate your onboarding cleanly as <strong>${escapeHtml(emp.fullTitle || emp.role)}</strong> in <strong>${escapeHtml(emp.department)}</strong>:
           </p>
 
           <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; font-size: 0.8rem;">
-            <div style="font-weight: 700; color: #a5b4fc; margin-bottom: 4px;">1. Focus on one day at a time:</div>
-            <div style="color: #cbd5e1;">Your 30 onboarding tasks are staggered across 5 days. For today, only focus on <strong>Day 1 (Tasks 1 to 6)</strong>. Click the Day 1 pill above your checklist to isolate today's deliverables.</div>
+            <div style="font-weight: 700; color: #D9A273; margin-bottom: 4px;">1. Focus on one day at a time:</div>
+            <div style="color: #CFCAC2;">Your 30 onboarding tasks are staggered across 5 days. For today, only focus on <strong>Day 1 (Tasks 1 to 6)</strong>. Click the Day 1 pill above your checklist to isolate today's deliverables.</div>
           </div>
 
           <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; font-size: 0.8rem;">
-            <div style="font-weight: 700; color: #a5b4fc; margin-bottom: 4px;">2. Ask Copilot to break down any task:</div>
-            <div style="color: #cbd5e1;">Whenever you are unsure of how to execute a requirement, click <strong>"💡 Explain in Copilot"</strong> on any task card, or ask me <em>"Explain task 2"</em> to receive the exact step-by-step instructions.</div>
+            <div style="font-weight: 700; color: #D9A273; margin-bottom: 4px;">2. Ask Copilot to break down any task:</div>
+            <div style="color: #CFCAC2;">Whenever you are unsure of how to execute a requirement, click <strong>"Explain in Copilot"</strong> on any task card, or ask me <em>"Explain task 2"</em> to receive the exact step-by-step instructions.</div>
           </div>
 
           <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; font-size: 0.8rem;">
-            <div style="font-weight: 700; color: #a5b4fc; margin-bottom: 4px;">3. Direct Human Support:</div>
-            <div style="color: #cbd5e1; display: flex; flex-direction: column; gap: 4px; margin-top: 4px;">
-              <div>🤝 <strong>Assigned Buddy:</strong> ${escapeHtml(buddy.name)} (${escapeHtml(buddy.role)}) · <a href="mailto:${buddy.email}" style="color: #38bdf8;">${buddy.email}</a> · ${buddy.phone}</div>
-              <div>💼 <strong>HR Partner:</strong> ${escapeHtml(hr.name)} (${escapeHtml(hr.role)}) · <a href="mailto:${hr.email}" style="color: #38bdf8;">${hr.email}</a> · ${hr.phone}</div>
+            <div style="font-weight: 700; color: #D9A273; margin-bottom: 4px;">3. Direct Human Support:</div>
+            <div style="color: #CFCAC2; display: flex; flex-direction: column; gap: 4px; margin-top: 4px;">
+              <div><strong>Assigned Buddy:</strong> ${escapeHtml(buddy.name)} (${escapeHtml(buddy.role)}) · <a href="mailto:${buddy.email}" style="color: #D9A273;">${buddy.email}</a> · ${buddy.phone}</div>
+              <div><strong>HR Partner:</strong> ${escapeHtml(hr.name)} (${escapeHtml(hr.role)}) · <a href="mailto:${hr.email}" style="color: #D9A273;">${hr.email}</a> · ${hr.phone}</div>
             </div>
           </div>
 
           <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-            <button class="chat-action-chip" onclick="handleChatOption('what_to_do')">❓ What I Have To Do</button>
-            <button class="chat-action-chip" onclick="explainTaskById(1)">💡 Explain Task 1</button>
-            <button class="chat-action-chip" onclick="explainTaskById(2)">💡 Explain Task 2</button>
-            <button class="chat-action-chip" onclick="handleChatOption('contacts')">📞 Call Support</button>
+            <button class="chat-action-chip" onclick="handleChatOption('what_to_do')">What I Have To Do</button>
+            <button class="chat-action-chip" onclick="explainTaskById(1)">Explain Task 1</button>
+            <button class="chat-action-chip" onclick="explainTaskById(2)">Explain Task 2</button>
+            <button class="chat-action-chip" onclick="handleChatOption('contacts')">Call Support</button>
           </div>
         </div>
       `;
@@ -7493,16 +7683,16 @@
       let listHtml = `
         <div>
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
-            <div style="font-weight: 800; font-size: 0.95rem; color: #f8fafc; display: flex; align-items: gap: 8px;">
-              <span>📋</span> Today's Onboarding Checklist
+            <div style="font-weight: 800; font-size: 0.95rem; color: #FAF7F2; display: flex; align-items: gap: 8px;">
+              <span></span> Today's Onboarding Checklist
             </div>
-            <span style="font-size: 0.72rem; font-weight: 800; color: ${pct === 100 ? '#34d399' : '#818cf8'}; background: rgba(99, 102, 241, 0.15); padding: 2px 8px; border-radius: 9999px;">
+            <span style="font-size: 0.72rem; font-weight: 800; color: ${pct === 100 ? '#9DBF9E' : '#D9A273'}; background: rgba(194, 119, 58, 0.15); padding: 2px 8px; border-radius: 9999px;">
               ${doneCount}/${totalCount} Completed (${pct}%)
             </span>
           </div>
 
           <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.1); border-radius: 9999px; overflow: hidden; margin-bottom: 12px;">
-            <div style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, #6366f1, #38bdf8); transition: width 0.4s ease;"></div>
+            <div style="width: ${pct}%; height: 100%; background: #C2773A; transition: width 0.4s ease;"></div>
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.82rem;">
@@ -7512,26 +7702,26 @@
         const isDone = t.status === 'Completed';
         const tId = t.taskId || t.id || (idx + 1);
         const tName = t.taskName || t.title;
-        const priorityColor = t.priority === 'High' ? '#f87171' : (t.priority === 'Medium' ? '#fbbf24' : '#38bdf8');
+        const priorityColor = t.priority === 'High' ? '#E08A7A' : (t.priority === 'Medium' ? '#E0B36A' : '#D9A273');
 
         listHtml += `
           <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); padding: 9px 12px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
             <div style="display: flex; align-items: center; gap: 8px; overflow: hidden;">
-              <span style="font-size: 1rem;">${isDone ? '✅' : '⬜'}</span>
+              <span style="font-size: 1rem;">${isDone ? '' : '⬜'}</span>
               <div style="display: flex; flex-direction: column; overflow: hidden;">
-                <span style="color: ${isDone ? '#94a3b8' : '#f8fafc'}; text-decoration: ${isDone ? 'line-through' : 'none'}; font-weight: 600; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+                <span style="color: ${isDone ? '#8A857E' : '#FAF7F2'}; text-decoration: ${isDone ? 'line-through' : 'none'}; font-weight: 600; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
                   ${escapeHtml(tName)}
                 </span>
-                <span style="font-size: 0.7rem; color: #94a3b8;">
+                <span style="font-size: 0.7rem; color: #8A857E;">
                   Task ${tId} · <span style="color: ${priorityColor}; font-weight: 700;">${t.priority || 'High'} Priority</span>
                 </span>
               </div>
             </div>
             <div style="display: flex; gap: 6px; shrink: 0;">
-              <button class="copilot-chip" style="padding: 3px 8px; font-size: 0.7rem; background: rgba(99, 102, 241, 0.2);" onclick="explainTaskById('${tId}')">
-                💡 Explain
+              <button class="copilot-chip" style="padding: 3px 8px; font-size: 0.7rem; background: rgba(194, 119, 58, 0.2);" onclick="explainTaskById('${tId}')">
+                Explain
               </button>
-              <button class="copilot-chip" style="padding: 3px 8px; font-size: 0.7rem; background: ${isDone ? 'rgba(255,255,255,0.1)' : '#4f46e5'}; color: #fff;" onclick="toggleLiveTask('${t.progressId || ('P_' + tId)}', '${t.status || 'Pending'}', '${tId}')">
+              <button class="copilot-chip" style="padding: 3px 8px; font-size: 0.7rem; background: ${isDone ? 'rgba(255,255,255,0.1)' : '#A9652F'}; color: #fff;" onclick="toggleLiveTask('${t.progressId || ('P_' + tId)}', '${t.status || 'Pending'}', '${tId}')">
                 ${isDone ? 'Reopen' : '✓ Done'}
               </button>
             </div>
@@ -7541,8 +7731,8 @@
 
       listHtml += `
           </div>
-          <div style="margin-top: 10px; font-size: 0.74rem; color: #94a3b8; text-align: center;">
-            💡 Click <strong>Explain</strong> on any task for step-by-step guidance & owner contacts.
+          <div style="margin-top: 10px; font-size: 0.74rem; color: #8A857E; text-align: center;">
+            Click <strong>Explain</strong> on any task for step-by-step guidance & owner contacts.
           </div>
         </div>
       `;
@@ -7550,7 +7740,7 @@
       return listHtml;
     }
 
-    const DEEP_TASK_DETAILS = { "T001": { "objective": "Activating your corporate account establishes your cryptographic digital identity within Microsoft Entra ID (Azure Active Directory) and Okta Federated SSO. This credentials provision is the prerequisite master key for your corporate inbox, Microsoft Teams, GitHub Enterprise, HashiCorp Vault, and cloud environments. Failure to activate within 24 hours of Day 1 triggers automated IT security quarantine.", "steps": ["Access the Enterprise Identity Self-Service Portal at <code>https://identity.microsoft.internal/activate</code>.", "Enter your temporary corporate username (sent to your personal email) and the one-time temporary activation token.", "Establish a compliant enterprise password: Minimum 14 characters, combining uppercase letters, numbers, and non-alphanumeric symbols. Dictionary words or common sequences are strictly rejected by policy.", "Federate your corporate email address (e.g. <code>aarav.sharma2026@microsoft.in</code>) and register your statutory backup verification mobile number.", "Review the Enterprise Acceptable Use Policy and submit digital acceptance."], "verification": "Navigate to <code>https://portal.office.com</code> and verify successful federated sign-in with your new corporate password without encountering access challenge errors.", "troubleshooting": ["<strong>Invalid or Expired Activation Token:</strong> Tokens expire 48 hours post-issuance. Contact Rahul Mehta at +91 80 6789 89910 or ping #it-helpdesk on Slack to trigger an instant token re-issuance.", "<strong>Password Policy Violation:</strong> Avoid using your name, employee ID, or common words like 'Password@123'. Use an alphanumeric passphrase such as 'Cloud#Apex2026!Azure'."] }, "T002": { "objective": "Multi-Factor Authentication (MFA) enforces Zero-Trust boundary compliance (SOC-2 Type II & ISO 27001). It requires cryptographic proof of possession (smartphone authenticator app or hardware FIDO2 YubiKey) in addition to your master password before granting token access to sensitive developer repositories, VPNs, and production clusters.", "steps": ["Download and install <strong>Microsoft Authenticator</strong> or <strong>Google Authenticator</strong> from the Apple App Store or Google Play Store on your corporate-registered mobile device.", "On your workstation, navigate to the MFA Registration Dashboard at <code>https://mysignins.microsoft.com/security-info</code>.", "Click <strong>'Add sign-in method'</strong>, select <strong>'Authenticator app'</strong>, and click <strong>'Set up'</strong> to display your unique encrypted enterprise QR code.", "In your mobile app, tap <strong>'+' -> 'Work or school account' -> 'Scan QR code'</strong> and align your camera with the screen.", "Approve the test notification prompt on your phone by entering the two-digit challenge number displayed on your laptop monitor.", "CRITICAL: Generate your 10 one-time emergency bypass recovery codes. Copy and store them in an encrypted password vault (Bitwarden / 1Password)."], "verification": "Open an Incognito / Private browser tab, browse to <code>https://myworkplace.internal</code>, log in, and verify that your phone receives an instant push verification prompt.", "troubleshooting": ["<strong>Push Notification Timeout:</strong> Ensure mobile notifications are enabled for the Authenticator app. If push fails, select 'I can't use my Authenticator app right now' to enter the 6-digit rolling TOTP code manually.", "<strong>Device Clock Drift:</strong> TOTP codes require clock synchronization. In your phone's Authenticator app settings, select 'Sync Time' to align with NTP servers."] }, "T003": { "objective": "Completing your statutory employee profile in Workday HRMS synchronizes your legal payroll records, benefits eligibility, PF/Provident Fund / 401(k) allocations, group health insurance coverage, and official emergency escalation tree.", "steps": ["Log into the Workday Employee Portal using your newly activated corporate SSO credentials.", "Navigate to <strong>Personal Information -> Complete Profile</strong>.", "Upload high-resolution scans of your government photo identification (Passport / PAN / National ID) and proof of permanent address.", "Input your primary commercial bank account number and IFSC/routing code for direct monthly payroll deposits.", "Designate at least two emergency contacts with verified mobile phone numbers and family relationship tags.", "Submit the digital onboarding verification questionnaire and download your submission receipt."], "verification": "Your Workday profile banner changes from 'Pending Employee Actions' to a green verified badge 'Onboarding Profile 100% Completed'.", "troubleshooting": ["<strong>Bank Account Name Mismatch:</strong> The name on your salary account must match your legal hiring offer name. If there is a variation, contact Priya Nair (HR Operations) to attach an affidavit verification."] }, "T004": { "objective": "The Global Employee Handbook outlines the corporate code of business conduct, ethical integrity policies, open-source software contribution rules, intellectual property assignment, and non-disclosure standards.", "steps": ["Download the PDF package of the Global Code of Business Conduct & Employee Handbook from the HR Resources directory.", "Carefully review Section 4 (Confidentiality & Insider Information) and Section 7 (Workplace Harassment & Whistleblower Protections).", "Pay specific attention to the Open-Source Contribution Policy: Employees must receive formal Open-Source Review Board (OSRB) clearance before publishing internal code to public repositories.", "Sign the electronic acknowledgement form on DocuSign / Adobe Sign confirming your comprehension and compliance."], "verification": "Confirm that your DocuSign audit certificate is linked to your Workday compliance profile.", "troubleshooting": ["<strong>DocuSign Session Timeout:</strong> If the signing page expires, clear browser cookies or reopen the unique signing link delivered to your corporate inbox."] }, "T005": { "objective": "Mandatory Cyber Security Awareness training educates new joiners on social engineering vectors, spear-phishing campaigns, clean desk & screen lock protocols, confidential data classification, and zero-day threat reporting procedures.", "steps": ["Launch the Enterprise Security Learning Management System (LMS) at <code>https://learn.security.internal</code>.", "Complete Module 1: Phishing & Spear-Phishing Detection (real-world simulation scenarios).", "Complete Module 2: Data Classification & Safe Handling (Public vs Internal vs Confidential vs Restricted).", "Complete Module 3: Physical Device Security (enforcing Win+L screen locks, BitLocker disk encryption, no unauthorized USB drives).", "Score 90% or higher on the comprehensive 10-question evaluation quiz."], "verification": "The Security LMS issues a digital certificate of completion and automatically checks off your SOC-2 compliance ticket in Jira.", "troubleshooting": ["<strong>Failed Quiz Attempt:</strong> If you score below 90%, review the missed modules and immediately retake the quiz. There is no penalty or cooling-off period."] }, "T006": { "objective": "Your Onboarding Buddy is a designated senior peer mentor tasked with integrating you into the squad, teaching team sprint cadence, explaining unwritten team norms, and unblocking local development challenges.", "steps": ["Check your Outlook / Google Calendar for the scheduled 45-minute 'Buddy Intro & Sprint Pairing' calendar invite.", "Review your buddy's bio and tech stack background (Dhruv Agarwal · Senior Full-Stack Engineer · 4+ years on team).", "Prepare 3 concrete questions regarding the team's repository conventions, branching model, and deployment schedule.", "Join the Microsoft Teams / Zoom video call and discuss your 30-day onboarding milestones.", "Ask your buddy to add you to the squad Slack/Teams channel and introduce you to your sprint squad."], "verification": "Your buddy submits an onboarding buddy sync confirmation to People Operations via the portal.", "troubleshooting": ["<strong>Buddy Reschedule / Conflict:</strong> If your buddy is engaged in a production incident, ping them on Slack or call directly at +91 80 6789 89928 to propose an alternate time on Day 1."] }, "T007": { "objective": "The Day 1 Company Orientation provides a comprehensive briefing from leadership on organizational mission, annual revenue goals, executive team structure, and strategic product roadmaps.", "steps": ["Join the live virtual Townhall or auditorium broadcast session at 11:00 AM.", "Listen to executive keynote presentations from the VP of Engineering and Head of People Operations.", "Participate in the live interactive Q&A session using Slido / Teams Live.", "Connect with fellow cohort freshers and bookmark the cohort Slack channel."], "verification": "Orientation attendance is automatically registered via your Teams / Zoom single sign-on login.", "troubleshooting": ["<strong>Live Stream Audio/Video Glitch:</strong> Use your enterprise VPN connection and ensure you are connected to the corporate high-bandwidth Wi-Fi network."] }, "T008": { "objective": "Configuring your corporate email synchronizes your calendar, team mail distribution lists, IT announcements, automated Jira/GitHub notifications, and client communications.", "steps": ["Launch Microsoft Outlook or Outlook Web App at <code>https://outlook.office.com</code>.", "Authenticate using your corporate email and approve the MFA challenge on your mobile device.", "Configure your standardized corporate email signature using the corporate template (Name, Role, Department, Pronouns, Office Location).", "Subscribe to squad distribution lists: <code>eng-all@company.com</code>, <code>freshers-2026@company.com</code>, and <code>team-updates@company.com</code>.", "Set your calendar working hours (e.g. 9:30 AM - 6:30 PM IST) and primary working location."], "verification": "Send a test ping email to your buddy (<code>buddy@demo-company.com</code>) and verify delivery without bounce-backs.", "troubleshooting": ["<strong>Mailbox Provisioning Delay:</strong> New mailboxes may take up to 30 minutes to propagate across Exchange Online. If access fails after 30 mins, ping IT Support."] }, "T009": { "objective": "Understanding corporate leave and attendance policies ensures transparent time management, statutory compliance, and predictable sprint delivery across globally distributed teams.", "steps": ["Open the HR Time & Attendance portal in Workday.", "Review the Leave Policy Guide: Accrual rates for Paid Time Off (PTO), sick leaves, casual leaves, and bereavement leaves.", "Note the 14-day advance notice requirement for planned PTO vacations longer than 3 business days.", "Familiarize yourself with the core working hours (10:00 AM - 4:00 PM) where overlap is expected for team standups and code reviews.", "Review the public holiday calendar for your office location (Bangalore / Hyderabad / Redmond)."], "verification": "Submit a mock 0-day training leave inquiry in the portal to verify your routing manager is correctly assigned.", "troubleshooting": ["<strong>Incorrect Manager Assigned:</strong> If Workday routes leave requests to an unknown manager, contact Priya Nair (HR) with your department code."] }, "T010": { "objective": "Familiarizing yourself with corporate benefits allows you to enroll dependents in health insurance, opt into retirement savings matching, and claim learning and wellness allowances.", "steps": ["Navigate to <strong>Workday -> Benefits & Wellbeing</strong>.", "Review Group Medical Insurance policy details (coverage for self, spouse, children, and dependent parents up to ₹10,00,000 / $50,000).", "Enroll your eligible dependents within the mandatory 30-day initial enrollment window.", "Review the Annual Wellness Allowance (gym memberships, fitness trackers, ergonomics equipment).", "Explore the Continuous Learning Stipend ($1,500/year for books, cloud certifications, and tech conferences)."], "verification": "Your benefits election confirmation statement is generated with policy group numbers.", "troubleshooting": ["<strong>Dependent Document Requirements:</strong> Dependent enrollment requires government birth / marriage certificates. Upload high-res copies under 'Beneficiary Documents'."] }, "T011": { "objective": "Workplace safety training covers emergency evacuation procedures, fire warden locations, first-aid station locations, and workstation ergonomics to ensure physical wellbeing in the office.", "steps": ["Complete the 20-minute Workplace Health & Safety module on the LMS.", "Review the floor plan showing emergency fire exits, automated external defibrillators (AEDs), and assembly points.", "Adjust your ergonomic desk setup: Monitor at eye level, chair lumbar support aligned, elbows at 90 degrees.", "Save the Corporate Emergency SOS hotline (+91 80 6789 9111) in your mobile contacts."], "verification": "Receive an automated confirmation of safety compliance on your HR dashboard.", "troubleshooting": ["<strong>Ergonomic Equipment Request:</strong> If you require an ergonomic keyboard, mouse, or footrest, submit an IT Facilities ticket on the internal portal."] }, "T012": { "objective": "The 1-on-1 meeting with your Reporting Manager aligns your onboarding focus with squad delivery targets, clarifies 30-60-90 day performance expectations, and establishes direct trust.", "steps": ["Review your manager's welcome agenda and background (Vikram Shah · Director of Engineering).", "Prepare a summary of your technical background, preferred programming stacks, and learning interests.", "Discuss your 30-Day Milestone: Completing onboarding, submitting first PR, and mastering team deployment pipeline.", "Discuss your 60-Day Milestone: Owning an independent feature end-to-end with unit test coverage.", "Discuss your 90-Day Milestone: Participating in on-call rotation shadow and contributing to architecture RFCs.", "Agree on a recurring weekly 30-minute 1-on-1 sync cadence."], "verification": "Your manager approves your onboarding roadmap in the engineering talent tracking tool.", "troubleshooting": ["<strong>Meeting Scheduling Conflict:</strong> If your manager is pulled into leadership reviews, message their executive assistant to lock in the next available open slot."] }, "T013": { "objective": "Joining official departmental Slack / Microsoft Teams channels integrates you into real-time squad discussions, incident response alerts, and technical design forums.", "steps": ["Open your corporate Slack / Teams client.", "Join mandatory team channels: <code>#eng-general</code>, <code>#eng-announcements</code>, <code>#cloud-platform</code>, <code>#fresher-cohort-2026</code>.", "Join your squad-specific channel: <code>#squad-core-services</code> or <code>#squad-frontend-architecture</code>.", "Post a short, friendly introduction: Name, university/previous experience, team role, hobbies, and a picture or favorite GIF.", "Configure your notification preferences to prevent alert fatigue during deep work hours."], "verification": "Receive welcome reactions from your teammates and buddy in your squad channel.", "troubleshooting": ["<strong>Private Channel Invitation Needed:</strong> Some squad channels are private. Ping your buddy Dhruv Agarwal to add you to restricted engineering channels."] }, "T014": { "objective": "GitHub Enterprise access is the fundamental software development workspace. Setting up SSH keys and commit signing ensures cryptographic provenance (SOC-2 requirement) for every line of code you contribute, preventing commit spoofing and unauthorized repo access.", "steps": ["Open your corporate inbox and accept the invitation to the <strong>Enterprise GitHub Organization</strong> (<code>github.com/enterprises/corporate-org</code>).", "Link your personal GitHub account with your corporate Single Sign-On (SSO) SAML identity.", "Generate a modern ed25519 cryptographic SSH key in your terminal:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#a5f3fc;'>ssh-keygen -t ed25519 -C \"aarav.sharma2026@microsoft.in\"</pre>", "Copy your public key to clipboard:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#a5f3fc;'>cat ~/.ssh/id_ed25519.pub | clip</pre>", "Navigate to <strong>GitHub -> Settings -> SSH and GPG keys -> New SSH Key</strong>, paste the key, and click <strong>'Configure SSO'</strong> to authorize with your corporate credentials.", "Configure global Git identity settings in your terminal:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#a5f3fc;'>git config --global user.name \"Aarav Sharma\"\ngit config --global user.email \"aarav.sharma2026@microsoft.in\"</pre>"], "verification": "Execute in terminal: <pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#a5f3fc;'>ssh -T git@github.com</pre> Expected output: <em>'Hi username! You've successfully authenticated, but GitHub does not provide shell access.'</em>", "troubleshooting": ["<strong>Permission Denied (publickey):</strong> Ensure your SSH agent is running (<code>eval $(ssh-agent -s)</code>) and your key is loaded (<code>ssh-add ~/.ssh/id_ed25519</code>).", "<strong>SSO Authorization Missing:</strong> You must click the 'Authorize' button next to the enterprise org in your GitHub SSH keys settings."] }, "T015": { "objective": "Setting up a standardized, reproducible local development environment ensures zero discrepancy between local testing and remote CI/CD containers. It installs compilers, runtimes, package managers, and container daemons.", "steps": ["Install Homebrew (macOS) or WSL2 with Ubuntu 22.04 LTS (Windows).", "Install Node.js LTS via <code>nvm</code> (Node Version Manager):<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#a5f3fc;'>nvm install 20 && nvm use 20</pre>", "Install <strong>Docker Desktop</strong> (Enterprise License) and enable the WSL2 integration or Docker daemon.", "Install <strong>Visual Studio Code</strong> or <strong>JetBrains IntelliJ IDEA Ultimate</strong>.", "Install required team extensions: ESLint, Prettier, GitLens, Docker, SonarQube, and GitHub Copilot Enterprise.", "Clone the local dev bootstrap repository:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#a5f3fc;'>git clone git@github.com:corporate-org/dev-bootstrap.git && cd dev-bootstrap && ./setup.sh</pre>"], "verification": "Run <code>docker --version && node -v && npm -v</code> and verify all runtimes return supported enterprise LTS versions.", "troubleshooting": ["<strong>Docker Engine Daemon Not Starting:</strong> Ensure virtualization (VT-x / AMD-V) is enabled in BIOS and Hyper-V is running on Windows.", "<strong>Corporate Proxy SSL Interception:</strong> If npm fails with self-signed certificate errors, install the corporate root CA bundle (<code>export NODE_EXTRA_CA_CERTS=/etc/ssl/certs/corporate-ca.pem</code>)."] }, "T016": { "objective": "Engineering Coding Guidelines ensure maintainability, testability, and security across millions of lines of code. Following linting rules, naming conventions, and pull request etiquette guarantees fast, frictionless code reviews.", "steps": ["Review the Engineering Handbook repository section on <strong>TypeScript & Go Design Patterns</strong>.", "Learn the Git Branching Standard: <code>feature/JIRA-1234-short-desc</code>, <code>fix/JIRA-5678-bug-fix</code>, or <code>chore/upgrade-deps</code>.", "Understand the Commit Message Convention: Follow Conventional Commits (e.g. <code>feat(auth): implement oauth token refresh flow</code>).", "Review Pull Request requirements: Minimum 80% automated unit test coverage, zero critical SonarQube security smells, and approval from 2 senior squad engineers.", "Install the pre-commit Git hook that runs local linting and secrets detection before every commit."], "verification": "Create a test branch, stage a small commit, and observe the pre-commit hook automatically lint and format your code.", "troubleshooting": ["<strong>Pre-commit Hook Failure:</strong> Run <code>npm run lint -- --fix</code> or <code>npx prettier --write .</code> to automatically correct syntax formatting."] }, "T017": { "objective": "Reviewing the software architecture allows engineers to understand how microservices communicate, how data flows through event streams (Kafka), how caching layers operate (Redis), and how Kubernetes deploys workloads across multi-region cloud clusters.", "steps": ["Open the Software Architecture Portal on Confluence / Miro.", "Examine the High-Level System Architecture Diagram (Edge CloudFront -> API Gateway -> Service Mesh -> Microservices -> PostgreSQL / Aurora / DynamoDB).", "Review the asynchronous messaging topology: Kafka event buses for order processing, telemetry, and background notifications.", "Inspect the OpenAPI / Swagger specifications at <code>https://api-docs.internal.demo</code>.", "Schedule a 30-minute architecture walkthrough pairing session with your Tech Lead or Buddy."], "verification": "Summarize the flow of an authenticated user request from Edge to Database to your buddy during your afternoon pairing session.", "troubleshooting": ["<strong>Miro / Confluence Access Missing:</strong> Request 'Architecture Reader' group access via the Identity Self-Service portal."] }, "T018": { "objective": "Joining the engineering repository connects you to the live monorepo containing your squad's active microservices. Running local integration tests verifies end-to-end build health.", "steps": ["Clone your squad's primary repository:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#a5f3fc;'>git clone git@github.com:corporate-org/core-platform-services.git</pre>", "Install repository dependencies using npm / pnpm / yarn:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#a5f3fc;'>cd core-platform-services && npm install</pre>", "Copy the example environment configuration:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#a5f3fc;'>cp .env.example .env.local</pre>", "Launch local mock services using Docker Compose:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#a5f3fc;'>docker compose -f docker-compose.dev.yml up -d</pre>", "Execute the automated test suite:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#a5f3fc;'>npm run test:unit</pre>"], "verification": "Verify terminal outputs <code>PASS: 142 tests completed successfully</code> with 0 errors.", "troubleshooting": ["<strong>Port Conflict (EADDRINUSE):</strong> If port 5432 or 6379 is occupied, check for running local databases (<code>lsof -i :5432</code>) or stop conflicting containers."] }, "T019": { "objective": "Code security training covers secure software development lifecycle (SSDLC), OWASP Top 10 vulnerabilities (SQLi, XSS, SSRF, broken access control), secrets management via Vault, and container vulnerability scanning.", "steps": ["Complete the 45-minute Interactive Secure Coding Lab on SecureCodeWarrior / HackEDU.", "Learn secrets management policy: NEVER commit API keys, private keys, passwords, or tokens to Git. Use environment variables sourced from HashiCorp Vault or AWS Secrets Manager.", "Configure <code>git-secrets</code> on your workstation to automatically prevent accidental credential commits.", "Learn how to review Dependabot / Snyk dependency vulnerability alerts."], "verification": "Complete the practical SQL injection & XSS remediation lab with 100% score.", "troubleshooting": ["<strong>False Positive Secret Detection:</strong> If a mock test key triggers a commit block, use approved test placeholder formats (e.g. <code>EXAMPLE_API_KEY_000000000000</code>)."] }, "T020": { "objective": "Meeting the engineering team establishes direct human connection with your squad peers, QA automation engineers, Product Manager (PM), and Engineering Director. It integrates you into daily agile ceremonies.", "steps": ["Attend the daily 15-minute Squad Standup at 10:00 AM.", "Introduce yourself: Briefly share your role, your squad focus, and what you're completing on Day 1.", "Pair with a mid-level or senior engineer during their afternoon sprint task for 1 hour to observe active pull request reviews.", "Join the bi-weekly Sprint Retrospective and Sprint Demo calendar series.", "Ask your PM to assign you a 'Good First Issue' bug or minor feature ticket in Jira for Day 3."], "verification": "Your Product Manager assigns you an initial onboarding ticket in Jira Sprint Backlog.", "troubleshooting": ["<strong>Standup Link Missing:</strong> Check your squad Slack channel topic banner for the recurring meeting link."] } };
+    const DEEP_TASK_DETAILS = { "T001": { "objective": "Activating your corporate account establishes your cryptographic digital identity within Microsoft Entra ID (Azure Active Directory) and Okta Federated SSO. This credentials provision is the prerequisite master key for your corporate inbox, Microsoft Teams, GitHub Enterprise, HashiCorp Vault, and cloud environments. Failure to activate within 24 hours of Day 1 triggers automated IT security quarantine.", "steps": ["Access the Enterprise Identity Self-Service Portal at <code>https://identity.microsoft.internal/activate</code>.", "Enter your temporary corporate username (sent to your personal email) and the one-time temporary activation token.", "Establish a compliant enterprise password: Minimum 14 characters, combining uppercase letters, numbers, and non-alphanumeric symbols. Dictionary words or common sequences are strictly rejected by policy.", "Federate your corporate email address (e.g. <code>aarav.sharma2026@microsoft.in</code>) and register your statutory backup verification mobile number.", "Review the Enterprise Acceptable Use Policy and submit digital acceptance."], "verification": "Navigate to <code>https://portal.office.com</code> and verify successful federated sign-in with your new corporate password without encountering access challenge errors.", "troubleshooting": ["<strong>Invalid or Expired Activation Token:</strong> Tokens expire 48 hours post-issuance. Contact Rahul Mehta at +91 80 6789 89910 or ping #it-helpdesk on Slack to trigger an instant token re-issuance.", "<strong>Password Policy Violation:</strong> Avoid using your name, employee ID, or common words like 'Password@123'. Use an alphanumeric passphrase such as 'Cloud#Apex2026!Azure'."] }, "T002": { "objective": "Multi-Factor Authentication (MFA) enforces Zero-Trust boundary compliance (SOC-2 Type II & ISO 27001). It requires cryptographic proof of possession (smartphone authenticator app or hardware FIDO2 YubiKey) in addition to your master password before granting token access to sensitive developer repositories, VPNs, and production clusters.", "steps": ["Download and install <strong>Microsoft Authenticator</strong> or <strong>Google Authenticator</strong> from the Apple App Store or Google Play Store on your corporate-registered mobile device.", "On your workstation, navigate to the MFA Registration Dashboard at <code>https://mysignins.microsoft.com/security-info</code>.", "Click <strong>'Add sign-in method'</strong>, select <strong>'Authenticator app'</strong>, and click <strong>'Set up'</strong> to display your unique encrypted enterprise QR code.", "In your mobile app, tap <strong>'+' -> 'Work or school account' -> 'Scan QR code'</strong> and align your camera with the screen.", "Approve the test notification prompt on your phone by entering the two-digit challenge number displayed on your laptop monitor.", "CRITICAL: Generate your 10 one-time emergency bypass recovery codes. Copy and store them in an encrypted password vault (Bitwarden / 1Password)."], "verification": "Open an Incognito / Private browser tab, browse to <code>https://myworkplace.internal</code>, log in, and verify that your phone receives an instant push verification prompt.", "troubleshooting": ["<strong>Push Notification Timeout:</strong> Ensure mobile notifications are enabled for the Authenticator app. If push fails, select 'I can't use my Authenticator app right now' to enter the 6-digit rolling TOTP code manually.", "<strong>Device Clock Drift:</strong> TOTP codes require clock synchronization. In your phone's Authenticator app settings, select 'Sync Time' to align with NTP servers."] }, "T003": { "objective": "Completing your statutory employee profile in Workday HRMS synchronizes your legal payroll records, benefits eligibility, PF/Provident Fund / 401(k) allocations, group health insurance coverage, and official emergency escalation tree.", "steps": ["Log into the Workday Employee Portal using your newly activated corporate SSO credentials.", "Navigate to <strong>Personal Information -> Complete Profile</strong>.", "Upload high-resolution scans of your government photo identification (Passport / PAN / National ID) and proof of permanent address.", "Input your primary commercial bank account number and IFSC/routing code for direct monthly payroll deposits.", "Designate at least two emergency contacts with verified mobile phone numbers and family relationship tags.", "Submit the digital onboarding verification questionnaire and download your submission receipt."], "verification": "Your Workday profile banner changes from 'Pending Employee Actions' to a green verified badge 'Onboarding Profile 100% Completed'.", "troubleshooting": ["<strong>Bank Account Name Mismatch:</strong> The name on your salary account must match your legal hiring offer name. If there is a variation, contact Priya Nair (HR Operations) to attach an affidavit verification."] }, "T004": { "objective": "The Global Employee Handbook outlines the corporate code of business conduct, ethical integrity policies, open-source software contribution rules, intellectual property assignment, and non-disclosure standards.", "steps": ["Download the PDF package of the Global Code of Business Conduct & Employee Handbook from the HR Resources directory.", "Carefully review Section 4 (Confidentiality & Insider Information) and Section 7 (Workplace Harassment & Whistleblower Protections).", "Pay specific attention to the Open-Source Contribution Policy: Employees must receive formal Open-Source Review Board (OSRB) clearance before publishing internal code to public repositories.", "Sign the electronic acknowledgement form on DocuSign / Adobe Sign confirming your comprehension and compliance."], "verification": "Confirm that your DocuSign audit certificate is linked to your Workday compliance profile.", "troubleshooting": ["<strong>DocuSign Session Timeout:</strong> If the signing page expires, clear browser cookies or reopen the unique signing link delivered to your corporate inbox."] }, "T005": { "objective": "Mandatory Cyber Security Awareness training educates new joiners on social engineering vectors, spear-phishing campaigns, clean desk & screen lock protocols, confidential data classification, and zero-day threat reporting procedures.", "steps": ["Launch the Enterprise Security Learning Management System (LMS) at <code>https://learn.security.internal</code>.", "Complete Module 1: Phishing & Spear-Phishing Detection (real-world simulation scenarios).", "Complete Module 2: Data Classification & Safe Handling (Public vs Internal vs Confidential vs Restricted).", "Complete Module 3: Physical Device Security (enforcing Win+L screen locks, BitLocker disk encryption, no unauthorized USB drives).", "Score 90% or higher on the comprehensive 10-question evaluation quiz."], "verification": "The Security LMS issues a digital certificate of completion and automatically checks off your SOC-2 compliance ticket in Jira.", "troubleshooting": ["<strong>Failed Quiz Attempt:</strong> If you score below 90%, review the missed modules and immediately retake the quiz. There is no penalty or cooling-off period."] }, "T006": { "objective": "Your Onboarding Buddy is a designated senior peer mentor tasked with integrating you into the squad, teaching team sprint cadence, explaining unwritten team norms, and unblocking local development challenges.", "steps": ["Check your Outlook / Google Calendar for the scheduled 45-minute 'Buddy Intro & Sprint Pairing' calendar invite.", "Review your buddy's bio and tech stack background (Dhruv Agarwal · Senior Full-Stack Engineer · 4+ years on team).", "Prepare 3 concrete questions regarding the team's repository conventions, branching model, and deployment schedule.", "Join the Microsoft Teams / Zoom video call and discuss your 30-day onboarding milestones.", "Ask your buddy to add you to the squad Slack/Teams channel and introduce you to your sprint squad."], "verification": "Your buddy submits an onboarding buddy sync confirmation to People Operations via the portal.", "troubleshooting": ["<strong>Buddy Reschedule / Conflict:</strong> If your buddy is engaged in a production incident, ping them on Slack or call directly at +91 80 6789 89928 to propose an alternate time on Day 1."] }, "T007": { "objective": "The Day 1 Company Orientation provides a comprehensive briefing from leadership on organizational mission, annual revenue goals, executive team structure, and strategic product roadmaps.", "steps": ["Join the live virtual Townhall or auditorium broadcast session at 11:00 AM.", "Listen to executive keynote presentations from the VP of Engineering and Head of People Operations.", "Participate in the live interactive Q&A session using Slido / Teams Live.", "Connect with fellow cohort freshers and bookmark the cohort Slack channel."], "verification": "Orientation attendance is automatically registered via your Teams / Zoom single sign-on login.", "troubleshooting": ["<strong>Live Stream Audio/Video Glitch:</strong> Use your enterprise VPN connection and ensure you are connected to the corporate high-bandwidth Wi-Fi network."] }, "T008": { "objective": "Configuring your corporate email synchronizes your calendar, team mail distribution lists, IT announcements, automated Jira/GitHub notifications, and client communications.", "steps": ["Launch Microsoft Outlook or Outlook Web App at <code>https://outlook.office.com</code>.", "Authenticate using your corporate email and approve the MFA challenge on your mobile device.", "Configure your standardized corporate email signature using the corporate template (Name, Role, Department, Pronouns, Office Location).", "Subscribe to squad distribution lists: <code>eng-all@company.com</code>, <code>freshers-2026@company.com</code>, and <code>team-updates@company.com</code>.", "Set your calendar working hours (e.g. 9:30 AM - 6:30 PM IST) and primary working location."], "verification": "Send a test ping email to your buddy (<code>buddy@demo-company.com</code>) and verify delivery without bounce-backs.", "troubleshooting": ["<strong>Mailbox Provisioning Delay:</strong> New mailboxes may take up to 30 minutes to propagate across Exchange Online. If access fails after 30 mins, ping IT Support."] }, "T009": { "objective": "Understanding corporate leave and attendance policies ensures transparent time management, statutory compliance, and predictable sprint delivery across globally distributed teams.", "steps": ["Open the HR Time & Attendance portal in Workday.", "Review the Leave Policy Guide: Accrual rates for Paid Time Off (PTO), sick leaves, casual leaves, and bereavement leaves.", "Note the 14-day advance notice requirement for planned PTO vacations longer than 3 business days.", "Familiarize yourself with the core working hours (10:00 AM - 4:00 PM) where overlap is expected for team standups and code reviews.", "Review the public holiday calendar for your office location (Bangalore / Hyderabad / Redmond)."], "verification": "Submit a mock 0-day training leave inquiry in the portal to verify your routing manager is correctly assigned.", "troubleshooting": ["<strong>Incorrect Manager Assigned:</strong> If Workday routes leave requests to an unknown manager, contact Priya Nair (HR) with your department code."] }, "T010": { "objective": "Familiarizing yourself with corporate benefits allows you to enroll dependents in health insurance, opt into retirement savings matching, and claim learning and wellness allowances.", "steps": ["Navigate to <strong>Workday -> Benefits & Wellbeing</strong>.", "Review Group Medical Insurance policy details (coverage for self, spouse, children, and dependent parents up to ₹10,00,000 / $50,000).", "Enroll your eligible dependents within the mandatory 30-day initial enrollment window.", "Review the Annual Wellness Allowance (gym memberships, fitness trackers, ergonomics equipment).", "Explore the Continuous Learning Stipend ($1,500/year for books, cloud certifications, and tech conferences)."], "verification": "Your benefits election confirmation statement is generated with policy group numbers.", "troubleshooting": ["<strong>Dependent Document Requirements:</strong> Dependent enrollment requires government birth / marriage certificates. Upload high-res copies under 'Beneficiary Documents'."] }, "T011": { "objective": "Workplace safety training covers emergency evacuation procedures, fire warden locations, first-aid station locations, and workstation ergonomics to ensure physical wellbeing in the office.", "steps": ["Complete the 20-minute Workplace Health & Safety module on the LMS.", "Review the floor plan showing emergency fire exits, automated external defibrillators (AEDs), and assembly points.", "Adjust your ergonomic desk setup: Monitor at eye level, chair lumbar support aligned, elbows at 90 degrees.", "Save the Corporate Emergency SOS hotline (+91 80 6789 9111) in your mobile contacts."], "verification": "Receive an automated confirmation of safety compliance on your HR dashboard.", "troubleshooting": ["<strong>Ergonomic Equipment Request:</strong> If you require an ergonomic keyboard, mouse, or footrest, submit an IT Facilities ticket on the internal portal."] }, "T012": { "objective": "The 1-on-1 meeting with your Reporting Manager aligns your onboarding focus with squad delivery targets, clarifies 30-60-90 day performance expectations, and establishes direct trust.", "steps": ["Review your manager's welcome agenda and background (Vikram Shah · Director of Engineering).", "Prepare a summary of your technical background, preferred programming stacks, and learning interests.", "Discuss your 30-Day Milestone: Completing onboarding, submitting first PR, and mastering team deployment pipeline.", "Discuss your 60-Day Milestone: Owning an independent feature end-to-end with unit test coverage.", "Discuss your 90-Day Milestone: Participating in on-call rotation shadow and contributing to architecture RFCs.", "Agree on a recurring weekly 30-minute 1-on-1 sync cadence."], "verification": "Your manager approves your onboarding roadmap in the engineering talent tracking tool.", "troubleshooting": ["<strong>Meeting Scheduling Conflict:</strong> If your manager is pulled into leadership reviews, message their executive assistant to lock in the next available open slot."] }, "T013": { "objective": "Joining official departmental Slack / Microsoft Teams channels integrates you into real-time squad discussions, incident response alerts, and technical design forums.", "steps": ["Open your corporate Slack / Teams client.", "Join mandatory team channels: <code>#eng-general</code>, <code>#eng-announcements</code>, <code>#cloud-platform</code>, <code>#fresher-cohort-2026</code>.", "Join your squad-specific channel: <code>#squad-core-services</code> or <code>#squad-frontend-architecture</code>.", "Post a short, friendly introduction: Name, university/previous experience, team role, hobbies, and a picture or favorite GIF.", "Configure your notification preferences to prevent alert fatigue during deep work hours."], "verification": "Receive welcome reactions from your teammates and buddy in your squad channel.", "troubleshooting": ["<strong>Private Channel Invitation Needed:</strong> Some squad channels are private. Ping your buddy Dhruv Agarwal to add you to restricted engineering channels."] }, "T014": { "objective": "GitHub Enterprise access is the fundamental software development workspace. Setting up SSH keys and commit signing ensures cryptographic provenance (SOC-2 requirement) for every line of code you contribute, preventing commit spoofing and unauthorized repo access.", "steps": ["Open your corporate inbox and accept the invitation to the <strong>Enterprise GitHub Organization</strong> (<code>github.com/enterprises/corporate-org</code>).", "Link your personal GitHub account with your corporate Single Sign-On (SSO) SAML identity.", "Generate a modern ed25519 cryptographic SSH key in your terminal:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#D9A273;'>ssh-keygen -t ed25519 -C \"aarav.sharma2026@microsoft.in\"</pre>", "Copy your public key to clipboard:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#D9A273;'>cat ~/.ssh/id_ed25519.pub | clip</pre>", "Navigate to <strong>GitHub -> Settings -> SSH and GPG keys -> New SSH Key</strong>, paste the key, and click <strong>'Configure SSO'</strong> to authorize with your corporate credentials.", "Configure global Git identity settings in your terminal:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#D9A273;'>git config --global user.name \"Aarav Sharma\"\ngit config --global user.email \"aarav.sharma2026@microsoft.in\"</pre>"], "verification": "Execute in terminal: <pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#D9A273;'>ssh -T git@github.com</pre> Expected output: <em>'Hi username! You've successfully authenticated, but GitHub does not provide shell access.'</em>", "troubleshooting": ["<strong>Permission Denied (publickey):</strong> Ensure your SSH agent is running (<code>eval $(ssh-agent -s)</code>) and your key is loaded (<code>ssh-add ~/.ssh/id_ed25519</code>).", "<strong>SSO Authorization Missing:</strong> You must click the 'Authorize' button next to the enterprise org in your GitHub SSH keys settings."] }, "T015": { "objective": "Setting up a standardized, reproducible local development environment ensures zero discrepancy between local testing and remote CI/CD containers. It installs compilers, runtimes, package managers, and container daemons.", "steps": ["Install Homebrew (macOS) or WSL2 with Ubuntu 22.04 LTS (Windows).", "Install Node.js LTS via <code>nvm</code> (Node Version Manager):<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#D9A273;'>nvm install 20 && nvm use 20</pre>", "Install <strong>Docker Desktop</strong> (Enterprise License) and enable the WSL2 integration or Docker daemon.", "Install <strong>Visual Studio Code</strong> or <strong>JetBrains IntelliJ IDEA Ultimate</strong>.", "Install required team extensions: ESLint, Prettier, GitLens, Docker, SonarQube, and GitHub Copilot Enterprise.", "Clone the local dev bootstrap repository:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#D9A273;'>git clone git@github.com:corporate-org/dev-bootstrap.git && cd dev-bootstrap && ./setup.sh</pre>"], "verification": "Run <code>docker --version && node -v && npm -v</code> and verify all runtimes return supported enterprise LTS versions.", "troubleshooting": ["<strong>Docker Engine Daemon Not Starting:</strong> Ensure virtualization (VT-x / AMD-V) is enabled in BIOS and Hyper-V is running on Windows.", "<strong>Corporate Proxy SSL Interception:</strong> If npm fails with self-signed certificate errors, install the corporate root CA bundle (<code>export NODE_EXTRA_CA_CERTS=/etc/ssl/certs/corporate-ca.pem</code>)."] }, "T016": { "objective": "Engineering Coding Guidelines ensure maintainability, testability, and security across millions of lines of code. Following linting rules, naming conventions, and pull request etiquette guarantees fast, frictionless code reviews.", "steps": ["Review the Engineering Handbook repository section on <strong>TypeScript & Go Design Patterns</strong>.", "Learn the Git Branching Standard: <code>feature/JIRA-1234-short-desc</code>, <code>fix/JIRA-5678-bug-fix</code>, or <code>chore/upgrade-deps</code>.", "Understand the Commit Message Convention: Follow Conventional Commits (e.g. <code>feat(auth): implement oauth token refresh flow</code>).", "Review Pull Request requirements: Minimum 80% automated unit test coverage, zero critical SonarQube security smells, and approval from 2 senior squad engineers.", "Install the pre-commit Git hook that runs local linting and secrets detection before every commit."], "verification": "Create a test branch, stage a small commit, and observe the pre-commit hook automatically lint and format your code.", "troubleshooting": ["<strong>Pre-commit Hook Failure:</strong> Run <code>npm run lint -- --fix</code> or <code>npx prettier --write .</code> to automatically correct syntax formatting."] }, "T017": { "objective": "Reviewing the software architecture allows engineers to understand how microservices communicate, how data flows through event streams (Kafka), how caching layers operate (Redis), and how Kubernetes deploys workloads across multi-region cloud clusters.", "steps": ["Open the Software Architecture Portal on Confluence / Miro.", "Examine the High-Level System Architecture Diagram (Edge CloudFront -> API Gateway -> Service Mesh -> Microservices -> PostgreSQL / Aurora / DynamoDB).", "Review the asynchronous messaging topology: Kafka event buses for order processing, telemetry, and background notifications.", "Inspect the OpenAPI / Swagger specifications at <code>https://api-docs.internal.demo</code>.", "Schedule a 30-minute architecture walkthrough pairing session with your Tech Lead or Buddy."], "verification": "Summarize the flow of an authenticated user request from Edge to Database to your buddy during your afternoon pairing session.", "troubleshooting": ["<strong>Miro / Confluence Access Missing:</strong> Request 'Architecture Reader' group access via the Identity Self-Service portal."] }, "T018": { "objective": "Joining the engineering repository connects you to the live monorepo containing your squad's active microservices. Running local integration tests verifies end-to-end build health.", "steps": ["Clone your squad's primary repository:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#D9A273;'>git clone git@github.com:corporate-org/core-platform-services.git</pre>", "Install repository dependencies using npm / pnpm / yarn:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#D9A273;'>cd core-platform-services && npm install</pre>", "Copy the example environment configuration:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#D9A273;'>cp .env.example .env.local</pre>", "Launch local mock services using Docker Compose:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#D9A273;'>docker compose -f docker-compose.dev.yml up -d</pre>", "Execute the automated test suite:<br><pre style='background:rgba(0,0,0,0.4);padding:8px;border-radius:6px;color:#D9A273;'>npm run test:unit</pre>"], "verification": "Verify terminal outputs <code>PASS: 142 tests completed successfully</code> with 0 errors.", "troubleshooting": ["<strong>Port Conflict (EADDRINUSE):</strong> If port 5432 or 6379 is occupied, check for running local databases (<code>lsof -i :5432</code>) or stop conflicting containers."] }, "T019": { "objective": "Code security training covers secure software development lifecycle (SSDLC), OWASP Top 10 vulnerabilities (SQLi, XSS, SSRF, broken access control), secrets management via Vault, and container vulnerability scanning.", "steps": ["Complete the 45-minute Interactive Secure Coding Lab on SecureCodeWarrior / HackEDU.", "Learn secrets management policy: NEVER commit API keys, private keys, passwords, or tokens to Git. Use environment variables sourced from HashiCorp Vault or AWS Secrets Manager.", "Configure <code>git-secrets</code> on your workstation to automatically prevent accidental credential commits.", "Learn how to review Dependabot / Snyk dependency vulnerability alerts."], "verification": "Complete the practical SQL injection & XSS remediation lab with 100% score.", "troubleshooting": ["<strong>False Positive Secret Detection:</strong> If a mock test key triggers a commit block, use approved test placeholder formats (e.g. <code>EXAMPLE_API_KEY_000000000000</code>)."] }, "T020": { "objective": "Meeting the engineering team establishes direct human connection with your squad peers, QA automation engineers, Product Manager (PM), and Engineering Director. It integrates you into daily agile ceremonies.", "steps": ["Attend the daily 15-minute Squad Standup at 10:00 AM.", "Introduce yourself: Briefly share your role, your squad focus, and what you're completing on Day 1.", "Pair with a mid-level or senior engineer during their afternoon sprint task for 1 hour to observe active pull request reviews.", "Join the bi-weekly Sprint Retrospective and Sprint Demo calendar series.", "Ask your PM to assign you a 'Good First Issue' bug or minor feature ticket in Jira for Day 3."], "verification": "Your Product Manager assigns you an initial onboarding ticket in Jira Sprint Backlog.", "troubleshooting": ["<strong>Standup Link Missing:</strong> Check your squad Slack channel topic banner for the recurring meeting link."] } };
 
     function generateGenericDeepElaboration(task) {
       const dept = task.department || 'Enterprise';
@@ -7586,54 +7776,54 @@
       const hr = emp.hr || { name: 'Priya Sharma', role: 'Lead HR People Partner', phone: '+91 80 6789 89912' };
 
       return `
-        <div style="font-family: var(--font-sans); color: #f8fafc;">
+        <div style="font-family: var(--font-sans); color: #FAF7F2;">
           <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; margin-bottom: 12px;">
-            <div style="font-weight: 800; font-size: 1rem; color: #f8fafc; display: flex; align-items: center; gap: 8px;">
-              <span>👤</span> Role Charter & Position Overview
+            <div style="font-weight: 800; font-size: 1rem; color: #FAF7F2; display: flex; align-items: center; gap: 8px;">
+              <span></span> Role Charter & Position Overview
             </div>
-            <span style="font-size: 0.72rem; font-weight: 700; color: #818cf8; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); padding: 3px 10px; border-radius: 9999px;">
+            <span style="font-size: 0.72rem; font-weight: 700; color: #D9A273; background: rgba(194, 119, 58, 0.15); border: 1px solid rgba(194, 119, 58, 0.3); padding: 3px 10px; border-radius: 9999px;">
               ${escapeHtml(emp.roleLevel || 'Role Level')}
             </span>
           </div>
 
           <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px;">
-            <div style="font-size: 0.95rem; font-weight: 800; color: #f8fafc; margin-bottom: 4px;">
+            <div style="font-size: 0.95rem; font-weight: 800; color: #FAF7F2; margin-bottom: 4px;">
               ${escapeHtml(emp.fullTitle || emp.role)}
             </div>
-            <div style="font-size: 0.8rem; color: #94a3b8; display: flex; flex-direction: column; gap: 4px; margin-top: 6px;">
-              <div>🏢 <strong>Department:</strong> ${escapeHtml(emp.department)}</div>
-              <div>📂 <strong>Sub-department / Team:</strong> ${escapeHtml(emp.subDepartment || emp.team || emp.branch || 'Specialized Workstream')}</div>
-              <div>📍 <strong>Location / Campus:</strong> ${escapeHtml(emp.location || 'Bengaluru / Redmond IDC')}</div>
+            <div style="font-size: 0.8rem; color: #8A857E; display: flex; flex-direction: column; gap: 4px; margin-top: 6px;">
+              <div><strong>Department:</strong> ${escapeHtml(emp.department)}</div>
+              <div><strong>Sub-department / Team:</strong> ${escapeHtml(emp.subDepartment || emp.team || emp.branch || 'Specialized Workstream')}</div>
+              <div><strong>Location / Campus:</strong> ${escapeHtml(emp.location || 'Bengaluru / Redmond IDC')}</div>
             </div>
           </div>
 
-          <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.25); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px;">
-            <div style="font-size: 0.78rem; font-weight: 800; color: #c7d2fe; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">
-              🎯 5-Day Onboarding Mandate & Progress:
+          <div style="background: rgba(194, 119, 58, 0.1); border: 1px solid rgba(194, 119, 58, 0.25); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px;">
+            <div style="font-size: 0.78rem; font-weight: 800; color: #E8D2BC; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">
+              5-Day Onboarding Mandate & Progress:
             </div>
-            <div style="font-size: 0.82rem; color: #e0e7ff; line-height: 1.55;">
+            <div style="font-size: 0.82rem; color: #F1E6D8; line-height: 1.55;">
               You have <strong>${metrics.totalTasks} authoritative onboarding tasks</strong> assigned across Day 1 to Day 5, tailored specifically to your role and functional domain.
               Currently, <strong>${metrics.completedTasks} of ${metrics.totalTasks} tasks</strong> are cleared (<strong>${metrics.percentage}%</strong> progress).
             </div>
           </div>
 
           <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px;">
-            <div style="font-size: 0.76rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px;">Assigned Mentors:</div>
-            <div style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;">
-              👥 <strong>Peer Buddy:</strong> ${escapeHtml(buddy.name)} (${escapeHtml(buddy.role)})<br>
-              💼 <strong>People Partner:</strong> ${escapeHtml(hr.name)} (${escapeHtml(hr.role)})
+            <div style="font-size: 0.76rem; font-weight: 700; color: #8A857E; text-transform: uppercase; margin-bottom: 6px;">Assigned Mentors:</div>
+            <div style="font-size: 0.8rem; color: #CFCAC2; line-height: 1.5;">
+              <strong>Peer Buddy:</strong> ${escapeHtml(buddy.name)} (${escapeHtml(buddy.role)})<br>
+              <strong>People Partner:</strong> ${escapeHtml(hr.name)} (${escapeHtml(hr.role)})
             </div>
           </div>
 
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <button class="copilot-chip" onclick="handleChatOption('checklist')" style="background: #4f46e5; color: #fff; padding: 6px 14px; font-size: 0.76rem; border-radius: 6px; cursor: pointer; border: none; font-weight: 700;">
-              📋 View Day 1 Checklist
+            <button class="copilot-chip" onclick="handleChatOption('checklist')" style="background: #A9652F; color: #fff; padding: 6px 14px; font-size: 0.76rem; border-radius: 6px; cursor: pointer; border: none; font-weight: 700;">
+              View Day 1 Checklist
             </button>
-            <button class="copilot-chip" onclick="explainTaskById(1)" style="background: rgba(255,255,255,0.1); color: #cbd5e1; padding: 6px 12px; font-size: 0.76rem; border-radius: 6px; cursor: pointer; border: none;">
-              💡 Explain Task 1
+            <button class="copilot-chip" onclick="explainTaskById(1)" style="background: rgba(255,255,255,0.1); color: #CFCAC2; padding: 6px 12px; font-size: 0.76rem; border-radius: 6px; cursor: pointer; border: none;">
+              Explain Task 1
             </button>
-            <button class="copilot-chip" onclick="handleChatOption('contacts')" style="background: rgba(255,255,255,0.1); color: #cbd5e1; padding: 6px 12px; font-size: 0.76rem; border-radius: 6px; cursor: pointer; border: none;">
-              📞 Contact Directory
+            <button class="copilot-chip" onclick="handleChatOption('contacts')" style="background: rgba(255,255,255,0.1); color: #CFCAC2; padding: 6px 12px; font-size: 0.76rem; border-radius: 6px; cursor: pointer; border: none;">
+              Contact Directory
             </button>
           </div>
         </div>
@@ -7701,8 +7891,8 @@
       (detail.steps || []).forEach((step, idx) => {
         stepsHtml += `
           <div style="display: flex; gap: 10px; margin-bottom: 8px; align-items: flex-start;">
-            <span style="background: rgba(99, 102, 241, 0.3); color: #c7d2fe; font-weight: 800; font-size: 0.72rem; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">${idx + 1}</span>
-            <div style="font-size: 0.82rem; color: #cbd5e1; line-height: 1.55;">${step}</div>
+            <span style="background: rgba(194, 119, 58, 0.3); color: #E8D2BC; font-weight: 800; font-size: 0.72rem; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">${idx + 1}</span>
+            <div style="font-size: 0.82rem; color: #CFCAC2; line-height: 1.55;">${step}</div>
           </div>
         `;
       });
@@ -7710,8 +7900,8 @@
       let prereqHtml = '';
       if (detail.prerequisites) {
         prereqHtml = `
-          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; font-size: 0.78rem; color: #cbd5e1;">
-            <strong style="color: #fbbf24;">🔐 Prerequisites:</strong> ${escapeHtml(detail.prerequisites)}
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; font-size: 0.78rem; color: #CFCAC2;">
+            <strong style="color: #E0B36A;">Prerequisites:</strong> ${escapeHtml(detail.prerequisites)}
           </div>
         `;
       }
@@ -7719,11 +7909,11 @@
       let supervisorHtml = '';
       if (detail.supervisor) {
         supervisorHtml = `
-          <div style="background: rgba(147, 51, 234, 0.1); border: 1px solid rgba(147, 51, 234, 0.25); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px;">
-            <div style="font-size: 0.78rem; font-weight: 800; color: #c084fc; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-              <span>👥</span> Supervisor Check-In & Feedback Standard:
+          <div style="background: rgba(194, 119, 58, 0.1); border: 1px solid rgba(194, 119, 58, 0.25); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px;">
+            <div style="font-size: 0.78rem; font-weight: 800; color: #D9A273; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+              <span></span> Supervisor Check-In & Feedback Standard:
             </div>
-            <div style="font-size: 0.78rem; color: #e2e8f0; line-height: 1.5;">
+            <div style="font-size: 0.78rem; color: #EDEAE4; line-height: 1.5;">
               ${escapeHtml(detail.supervisor)}
             </div>
           </div>
@@ -7731,40 +7921,40 @@
       }
 
       return `
-        <div style="font-family: var(--font-sans); color: #f8fafc;">
+        <div style="font-family: var(--font-sans); color: #FAF7F2;">
 
           <!-- Header -->
           <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; margin-bottom: 12px;">
             <div>
-              <div style="font-size: 0.7rem; font-weight: 800; color: #818cf8; text-transform: uppercase; letter-spacing: 0.06em;">
+              <div style="font-size: 0.7rem; font-weight: 800; color: #D9A273; text-transform: uppercase; letter-spacing: 0.06em;">
                 ${tId} · ${task.day || 'Day 1'} · ${task.duration || '45 mins'}
               </div>
               <div style="font-weight: 800; font-size: 0.98rem; color: #ffffff; margin-top: 2px;">
                 ${escapeHtml(tTitle)}
               </div>
             </div>
-            <span style="font-size: 0.7rem; font-weight: 700; color: ${isDone ? '#34d399' : '#fbbf24'}; background: ${isDone ? 'rgba(16, 185, 129, 0.15)' : 'rgba(245, 158, 11, 0.15)'}; border: 1px solid ${isDone ? 'rgba(16, 185, 129, 0.3)' : 'rgba(245, 158, 11, 0.3)'}; padding: 3px 8px; border-radius: 9999px;">
+            <span style="font-size: 0.7rem; font-weight: 700; color: ${isDone ? '#9DBF9E' : '#E0B36A'}; background: ${isDone ? 'rgba(157, 191, 158, 0.15)' : 'rgba(224, 179, 106, 0.15)'}; border: 1px solid ${isDone ? 'rgba(157, 191, 158, 0.3)' : 'rgba(224, 179, 106, 0.3)'}; padding: 3px 8px; border-radius: 9999px;">
               ${isDone ? '✓ Completed' : '● Action Required'}
             </span>
           </div>
 
           <!-- Grounding Badge -->
-          <div style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 6px; padding: 6px 10px; margin-bottom: 12px; font-size: 0.74rem; color: #c7d2fe; display: flex; align-items: center; gap: 6px;">
-            <span>⚡</span>
+          <div style="background: rgba(194, 119, 58, 0.15); border: 1px solid rgba(194, 119, 58, 0.3); border-radius: 6px; padding: 6px 10px; margin-bottom: 12px; font-size: 0.74rem; color: #E8D2BC; display: flex; align-items: center; gap: 6px;">
+            <span></span>
             <span><strong>Role Grounding:</strong> ${escapeHtml(task.department || 'Enterprise')} > ${escapeHtml(task.category || 'Specialized Workstream')} (${escapeHtml(currentLiveDashboard?.employee?.fullTitle || 'Onboarding Position')})</span>
           </div>
 
           <!-- Description -->
-          <div style="font-size: 0.82rem; color: #e2e8f0; line-height: 1.55; margin-bottom: 12px; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 6px; border-left: 3px solid #6366f1;">
+          <div style="font-size: 0.82rem; color: #EDEAE4; line-height: 1.55; margin-bottom: 12px; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 6px; border-left: 3px solid #A9652F;">
             ${escapeHtml(task.description || task.desc || '')}
           </div>
 
           <!-- SECTION 1: Strategic Objective -->
-          <div style="background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px;">
-            <div style="font-size: 0.8rem; font-weight: 800; color: #a5b4fc; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
-              <span>🎯</span> Strategic Objective & System Impact:
+          <div style="background: rgba(194, 119, 58, 0.08); border: 1px solid rgba(194, 119, 58, 0.2); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: #D9A273; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+              <span></span> Strategic Objective & System Impact:
             </div>
-            <p style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.55; margin: 0;">
+            <p style="font-size: 0.8rem; color: #CFCAC2; line-height: 1.55; margin: 0;">
               ${detail.objective}
             </p>
           </div>
@@ -7773,8 +7963,8 @@
 
           <!-- SECTION 2: Step-by-Step Implementation Guide -->
           <div style="margin-bottom: 12px;">
-            <div style="font-size: 0.8rem; font-weight: 800; color: #93c5fd; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-              <span>📝</span> In-Depth Execution Playbook:
+            <div style="font-size: 0.8rem; font-weight: 800; color: #D9A273; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+              <span></span> In-Depth Execution Playbook:
             </div>
             <div>
               ${stepsHtml}
@@ -7782,11 +7972,11 @@
           </div>
 
           <!-- SECTION 3: Definition of Done & Verification -->
-          <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px;">
-            <div style="font-size: 0.78rem; font-weight: 800; color: #34d399; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-              <span>🔍</span> Verification & Definition of Done:
+          <div style="background: rgba(157, 191, 158, 0.1); border: 1px solid rgba(157, 191, 158, 0.25); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px;">
+            <div style="font-size: 0.78rem; font-weight: 800; color: #9DBF9E; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+              <span></span> Verification & Definition of Done:
             </div>
-            <div style="font-size: 0.78rem; color: #e2e8f0; line-height: 1.5;">
+            <div style="font-size: 0.78rem; color: #EDEAE4; line-height: 1.5;">
               ${detail.verification}
             </div>
           </div>
@@ -7794,21 +7984,21 @@
           ${supervisorHtml}
 
           <!-- Support Contacts -->
-          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; font-size: 0.78rem; color: #cbd5e1; line-height: 1.5;">
-            👥 <strong>Designated Buddy:</strong> ${escapeHtml(buddy.name)} (${escapeHtml(buddy.role)} · 📞 ${escapeHtml(buddy.phone)})<br>
-            💼 <strong>People Partner:</strong> ${escapeHtml(hr.name)} (📞 ${escapeHtml(hr.phone)})
+          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; font-size: 0.78rem; color: #CFCAC2; line-height: 1.5;">
+            <strong>Designated Buddy:</strong> ${escapeHtml(buddy.name)} (${escapeHtml(buddy.role)} · ${escapeHtml(buddy.phone)})<br>
+            <strong>People Partner:</strong> ${escapeHtml(hr.name)} (${escapeHtml(hr.phone)})
           </div>
 
           <!-- Action Footer -->
           <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-            <button class="copilot-chip" style="background: ${isDone ? 'rgba(255,255,255,0.12)' : '#4f46e5'}; color: #fff; padding: 7px 16px; font-size: 0.78rem; font-weight: 700; border-radius: 6px; cursor: pointer; border: none;" onclick="toggleLiveTask('${task.progressId || ('P_' + tId)}', '${task.status}', '${tId}')">
+            <button class="copilot-chip" style="background: ${isDone ? 'rgba(255,255,255,0.12)' : '#A9652F'}; color: #fff; padding: 7px 16px; font-size: 0.78rem; font-weight: 700; border-radius: 6px; cursor: pointer; border: none;" onclick="toggleLiveTask('${task.progressId || ('P_' + tId)}', '${task.status}', '${tId}')">
               ${isDone ? '✓ Mark as Pending' : '✓ Mark Task as Completed'}
             </button>
-            <button class="copilot-chip" style="background: rgba(255,255,255,0.08); color: #cbd5e1; padding: 7px 14px; font-size: 0.78rem; border-radius: 6px; cursor: pointer; border: none;" onclick="handleChatOption('checklist')">
-              📋 Today's Checklist
+            <button class="copilot-chip" style="background: rgba(255,255,255,0.08); color: #CFCAC2; padding: 7px 14px; font-size: 0.78rem; border-radius: 6px; cursor: pointer; border: none;" onclick="handleChatOption('checklist')">
+              Today's Checklist
             </button>
-            <button class="copilot-chip" style="background: rgba(255,255,255,0.08); color: #cbd5e1; padding: 7px 14px; font-size: 0.78rem; border-radius: 6px; cursor: pointer; border: none;" onclick="handleChatOption('contacts')">
-              📞 All Contacts
+            <button class="copilot-chip" style="background: rgba(255,255,255,0.08); color: #CFCAC2; padding: 7px 14px; font-size: 0.78rem; border-radius: 6px; cursor: pointer; border: none;" onclick="handleChatOption('contacts')">
+              All Contacts
             </button>
           </div>
 
@@ -7819,28 +8009,28 @@
     function getStuckTroubleshootingResponseHtml() {
       return `
         <div>
-          <div style="font-weight: 800; font-size: 0.95rem; color: #f87171; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-            <span>🚨</span> Onboarding Dependency & Blocker Recovery
+          <div style="font-weight: 800; font-size: 0.95rem; color: #E08A7A; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+            <span></span> Onboarding Dependency & Blocker Recovery
           </div>
-          <p style="font-size: 0.82rem; color: #cbd5e1; margin-bottom: 10px; line-height: 1.5;">
+          <p style="font-size: 0.82rem; color: #CFCAC2; margin-bottom: 10px; line-height: 1.5;">
             If you are blocked on <strong>VPN tokens, SSO access, hardware, or permissions</strong>:
           </p>
 
           <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.8rem; margin-bottom: 12px;">
-            <div style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); padding: 8px 12px; border-radius: 8px;">
+            <div style="background: rgba(224, 138, 122, 0.12); border: 1px solid rgba(224, 138, 122, 0.35); padding: 8px 12px; border-radius: 8px;">
               <strong>1. IT Operations Lead: Rahul Mehta</strong><br>
-              📞 Hotline: <a href="tel:+9180678989910" style="color: #f87171; font-weight: 700;">+91 80 6789 89910</a><br>
-              📧 it@demo-company.com (Escalation: Vikram Shah, IT Director)
+              Hotline: <a href="tel:+9180678989910" style="color: #E08A7A; font-weight: 700;">+91 80 6789 89910</a><br>
+              it@demo-company.com (Escalation: Vikram Shah, IT Director)
             </div>
-            <div style="background: rgba(147, 51, 234, 0.12); border: 1px solid rgba(147, 51, 234, 0.35); padding: 8px 12px; border-radius: 8px;">
+            <div style="background: rgba(194, 119, 58, 0.12); border: 1px solid rgba(194, 119, 58, 0.35); padding: 8px 12px; border-radius: 8px;">
               <strong>2. Assigned Onboarding Buddy: Dhruv Agarwal</strong><br>
-              📞 Mobile: <a href="tel:+9180678989928" style="color: #c084fc; font-weight: 700;">+91 80 6789 89928</a><br>
+              Mobile: <a href="tel:+9180678989928" style="color: #D9A273; font-weight: 700;">+91 80 6789 89928</a><br>
               Can verify your profile and approve internal group access.
             </div>
           </div>
 
-          <div style="background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; line-height: 1.5;">
-            ✨ <strong>Zero-Wait SideQuests Available:</strong><br>
+          <div style="background: rgba(194, 119, 58, 0.12); border: 1px solid rgba(194, 119, 58, 0.35); padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; line-height: 1.5;">
+            <strong>Zero-Wait SideQuests Available:</strong><br>
             While your blocker is being resolved, you can complete independent tasks:
             <ul style="padding-left: 16px; margin: 4px 0 0 0;">
               <li>Review the Employee Handbook (/resources/employee-handbook)</li>
@@ -7857,7 +8047,7 @@
       explainTaskById(taskId);
       const panel = document.querySelector('.joiner-chat-panel');
       if (panel) {
-        panel.style.boxShadow = '0 0 35px rgba(99, 102, 241, 0.6)';
+        panel.style.boxShadow = '0 0 35px rgba(194, 119, 58, 0.6)';
         setTimeout(() => { panel.style.boxShadow = ''; }, 1200);
       }
     }
@@ -8037,18 +8227,18 @@
       const managerName = emp?.reportingManager || (emp?.roleLevel === 'Manager' ? 'Senior VP of Operations' : (emp?.roleLevel === 'Lead' ? 'Engineering Manager (Vikram Shah)' : 'Rohan Verma (Engineering Manager)'));
       const managerEmail = emp?.managerEmail || 'rohan.manager@meridian.internal';
       return `
-        <div style="color: #f8fafc;">
-          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">👔 Reporting Manager Information</div>
-          <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.55; margin-bottom: 12px;">
+        <div style="color: #FAF7F2;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">Reporting Manager Information</div>
+          <p style="font-size: 0.85rem; color: #CFCAC2; line-height: 1.55; margin-bottom: 12px;">
             Your designated reporting manager is <strong>${escapeHtml(managerName)}</strong>. They oversee department progression, milestone evaluations, and final first-week sign-off.
           </p>
           <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 10px 14px; font-size: 0.8rem; margin-bottom: 10px;">
-            <div>📧 Email: <strong>${escapeHtml(managerEmail)}</strong></div>
-            <div>📞 Direct Phone: <strong>+91 (80) 6789-89944</strong></div>
-            <div>🗓️ Scheduled 1:1 Check-In: <strong>Day 1 at 4:30 PM & Day 5 Milestone Review</strong></div>
+            <div>Email: <strong>${escapeHtml(managerEmail)}</strong></div>
+            <div>Direct Phone: <strong>+91 (80) 6789-89944</strong></div>
+            <div>Scheduled 1:1 Check-In: <strong>Day 1 at 4:30 PM & Day 5 Milestone Review</strong></div>
           </div>
-          <div style="font-size: 0.8rem; color: #94a3b8;">
-            💡 <em>Your manager receives automatic updates as you complete Day 1 requirements.</em>
+          <div style="font-size: 0.8rem; color: #8A857E;">
+            <em>Your manager receives automatic updates as you complete Day 1 requirements.</em>
           </div>
         </div>
       `;
@@ -8059,9 +8249,9 @@
       const isLeadOrManager = emp?.roleLevel === 'Lead' || emp?.roleLevel === 'Manager';
       if (isLeadOrManager) {
         return `
-          <div style="color: #f8fafc;">
-            <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">👥 Lead & Supervisory Structure</div>
-            <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.55;">
+          <div style="color: #FAF7F2;">
+            <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">Lead & Supervisory Structure</div>
+            <p style="font-size: 0.85rem; color: #CFCAC2; line-height: 1.55;">
               You are authenticated as <strong>${escapeHtml(emp.fullTitle || emp.role)}</strong> (${escapeHtml(emp.roleLevel)}). You report directly to Department Management and oversee your assigned Associates.
             </p>
           </div>
@@ -8069,15 +8259,15 @@
       }
       const leadName = emp?.leadName || 'Priya Sharma (Staff Technical Lead)';
       return `
-        <div style="color: #f8fafc;">
-          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">🤝 Assigned Technical Lead</div>
-          <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.55; margin-bottom: 12px;">
+        <div style="color: #FAF7F2;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">Assigned Technical Lead</div>
+          <p style="font-size: 0.85rem; color: #CFCAC2; line-height: 1.55; margin-bottom: 12px;">
             Your direct reporting lead is <strong>${escapeHtml(leadName)}</strong>. Your Lead provides technical pair programming, code reviews, and daily unblocking support.
           </p>
           <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 10px 14px; font-size: 0.8rem;">
-            <div>📧 Email: <strong>priya.lead@meridian.internal</strong></div>
-            <div>💬 Team Channel: <strong>#eng-dev-team</strong></div>
-            <div>⚡ Next Action: <strong>Day 1 Task 3 (Buddy & Lead Pairing Sync)</strong></div>
+            <div>Email: <strong>priya.lead@meridian.internal</strong></div>
+            <div>Team Channel: <strong>#eng-dev-team</strong></div>
+            <div>Next Action: <strong>Day 1 Task 3 (Buddy & Lead Pairing Sync)</strong></div>
           </div>
         </div>
       `;
@@ -8087,27 +8277,27 @@
       const metrics = currentLiveDashboard?.metrics || { totalTasks: 30, completedTasks: 1, pendingTasks: 29, percentage: 3 };
       const emp = currentLiveDashboard?.employee || {};
       return `
-        <div style="color: #f8fafc;">
-          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 8px;">📊 Real-Time Onboarding Telemetry</div>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 12px;">
+        <div style="color: #FAF7F2;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 8px;">Real-Time Onboarding Telemetry</div>
+          <p style="font-size: 0.84rem; color: #CFCAC2; margin-bottom: 12px;">
             Here is your current first-week progress for <strong>${escapeHtml(emp.fullTitle || 'Your Role')}</strong>:
           </p>
           <div style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 12px; padding: 14px 18px; margin-bottom: 12px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-              <span style="font-size: 0.85rem; font-weight: 700; color: #e2e8f0;">Completion Rate</span>
-              <span style="font-size: 1.1rem; font-weight: 900; color: #34d399;">${metrics.percentage}%</span>
+              <span style="font-size: 0.85rem; font-weight: 700; color: #EDEAE4;">Completion Rate</span>
+              <span style="font-size: 1.1rem; font-weight: 900; color: #9DBF9E;">${metrics.percentage}%</span>
             </div>
             <div style="width: 100%; height: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 9999px; overflow: hidden; margin-bottom: 10px;">
-              <div style="width: ${metrics.percentage}%; height: 100%; background: linear-gradient(90deg, #10b981, #06b6d4); border-radius: 9999px;"></div>
+              <div style="width: ${metrics.percentage}%; height: 100%; background: #C2773A; border-radius: 9999px;"></div>
             </div>
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; text-align: center; font-size: 0.76rem;">
-              <div><strong style="color: #f8fafc; font-size: 0.9rem;">${metrics.completedTasks}</strong><br><span style="color: #94a3b8;">Completed</span></div>
-              <div><strong style="color: #f8fafc; font-size: 0.9rem;">${metrics.pendingTasks}</strong><br><span style="color: #94a3b8;">Pending</span></div>
-              <div><strong style="color: #f8fafc; font-size: 0.9rem;">${metrics.totalTasks}</strong><br><span style="color: #94a3b8;">Total Tasks</span></div>
+              <div><strong style="color: #FAF7F2; font-size: 0.9rem;">${metrics.completedTasks}</strong><br><span style="color: #8A857E;">Completed</span></div>
+              <div><strong style="color: #FAF7F2; font-size: 0.9rem;">${metrics.pendingTasks}</strong><br><span style="color: #8A857E;">Pending</span></div>
+              <div><strong style="color: #FAF7F2; font-size: 0.9rem;">${metrics.totalTasks}</strong><br><span style="color: #8A857E;">Total Tasks</span></div>
             </div>
           </div>
-          <div style="font-size: 0.8rem; color: #94a3b8;">
-            Cohort Status: <strong style="color: #34d399;">FLOWING</strong> · All systems operational.
+          <div style="font-size: 0.8rem; color: #8A857E;">
+            Cohort Status: <strong style="color: #9DBF9E;">FLOWING</strong> · All systems operational.
           </div>
         </div>
       `;
@@ -8123,24 +8313,24 @@
       });
 
       return `
-        <div style="color: #f8fafc;">
-          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">📅 First-Week Task Roadmap (5-Day Plan)</div>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 12px;">
+        <div style="color: #FAF7F2;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">First-Week Task Roadmap (5-Day Plan)</div>
+          <p style="font-size: 0.84rem; color: #CFCAC2; margin-bottom: 12px;">
             Your first week is structured into 30 authoritative milestones across 5 dedicated days:
           </p>
           <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">
             ${daySummaries.map(s => `
               <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
                 <div>
-                  <strong style="color: #f8fafc; font-size: 0.84rem;">${s.day}</strong>
-                  <span style="font-size: 0.74rem; color: #94a3b8; margin-left: 8px;">${s.count} Milestones (${s.done} completed)</span>
+                  <strong style="color: #FAF7F2; font-size: 0.84rem;">${s.day}</strong>
+                  <span style="font-size: 0.74rem; color: #8A857E; margin-left: 8px;">${s.count} Milestones (${s.done} completed)</span>
                 </div>
                 <button class="copilot-chip" style="padding: 3px 9px; font-size: 0.72rem;" onclick="filterByDay('${s.day}'); setCopilotState('medium');">View ${s.day}</button>
               </div>
             `).join('')}
           </div>
-          <div style="font-size: 0.8rem; color: #94a3b8;">
-            💡 <em>Complete your Day 1 mandatory items first to unlock downstream technical milestones.</em>
+          <div style="font-size: 0.8rem; color: #8A857E;">
+            <em>Complete your Day 1 mandatory items first to unlock downstream technical milestones.</em>
           </div>
         </div>
       `;
@@ -8149,20 +8339,20 @@
     function getDepartmentResourcesResponseHtml() {
       const emp = currentLiveDashboard?.employee || {};
       return `
-        <div style="color: #f8fafc;">
-          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">📚 Departmental Resources & Access Portals</div>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 12px;">
+        <div style="color: #FAF7F2;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">Departmental Resources & Access Portals</div>
+          <p style="font-size: 0.84rem; color: #CFCAC2; margin-bottom: 12px;">
             Verified internal links for <strong>${escapeHtml(emp.department || 'Your Department')}</strong>:
           </p>
           <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.82rem;">
             <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px;">
-              🔗 <strong>Architecture & Standards Wiki:</strong> <a href="#" style="color: #38bdf8; text-decoration: underline;">wiki.internal/${escapeHtml((emp.department || 'eng').toLowerCase())}/standards</a>
+              <strong>Architecture & Standards Wiki:</strong> <a href="#" style="color: #D9A273; text-decoration: underline;">wiki.internal/${escapeHtml((emp.department || 'eng').toLowerCase())}/standards</a>
             </div>
             <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px;">
-              🐙 <strong>Enterprise GitHub Org:</strong> <a href="#" style="color: #38bdf8; text-decoration: underline;">github.internal/enterprise-org</a>
+              <strong>Enterprise GitHub Org:</strong> <a href="#" style="color: #D9A273; text-decoration: underline;">github.internal/enterprise-org</a>
             </div>
             <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px;">
-              🛡️ <strong>IT Service Desk & Provisioning:</strong> <a href="#" style="color: #38bdf8; text-decoration: underline;">servicedesk.internal/access-requests</a>
+              <strong>IT Service Desk & Provisioning:</strong> <a href="#" style="color: #D9A273; text-decoration: underline;">servicedesk.internal/access-requests</a>
             </div>
           </div>
         </div>
@@ -8174,48 +8364,48 @@
       const pending = tasks.filter(t => !t.done && t.status !== 'Completed');
       const critical = pending.find(t => t.priority === 'Critical') || pending.find(t => t.priority === 'High') || pending[0];
       if (!critical) {
-        return `<div style="color: #34d399; font-weight: 700;">🎉 All high-priority onboarding tasks are completed!</div>`;
+        return `<div style="color: #9DBF9E; font-weight: 700;">All high-priority onboarding tasks are completed!</div>`;
       }
       return `
-        <div style="color: #f8fafc;">
-          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">⚡ Highest Priority Pending Task</div>
-          <div style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px;">
+        <div style="color: #FAF7F2;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">Highest Priority Pending Task</div>
+          <div style="background: rgba(224, 179, 106, 0.12); border: 1px solid rgba(224, 179, 106, 0.35); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-              <span style="font-size: 0.74rem; font-weight: 800; padding: 2px 7px; border-radius: 6px; background: #f59e0b; color: #000;">${critical.priority} PRIORITY</span>
-              <span style="font-size: 0.74rem; color: #fbbf24;">${critical.day} · ${critical.duration}</span>
+              <span style="font-size: 0.74rem; font-weight: 800; padding: 2px 7px; border-radius: 6px; background: #E0B36A; color: #000;">${critical.priority} PRIORITY</span>
+              <span style="font-size: 0.74rem; color: #E0B36A;">${critical.day} · ${critical.duration}</span>
             </div>
             <div style="font-size: 0.92rem; font-weight: 800; color: #ffffff; margin-bottom: 4px;">${escapeHtml(critical.title || critical.taskName)}</div>
-            <div style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.45;">${escapeHtml(critical.description || critical.desc)}</div>
+            <div style="font-size: 0.8rem; color: #CFCAC2; line-height: 1.45;">${escapeHtml(critical.description || critical.desc)}</div>
           </div>
-          <button class="copilot-chip" onclick="explainTaskById('${critical.taskId || 1}')">💡 View Step-by-Step Playbook</button>
+          <button class="copilot-chip" onclick="explainTaskById('${critical.taskId || 1}')">View Step-by-Step Playbook</button>
         </div>
       `;
     }
 
     function getLeadAssociateProgressResponseHtml() {
       return `
-        <div style="color: #f8fafc;">
-          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">👥 Assigned Associate Progression Overview</div>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 10px;">
+        <div style="color: #FAF7F2;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">Assigned Associate Progression Overview</div>
+          <p style="font-size: 0.84rem; color: #CFCAC2; margin-bottom: 10px;">
             Here is the status of Associates assigned under your technical guidance:
           </p>
           <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px 16px; font-size: 0.8rem; margin-bottom: 10px;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
               <strong>Aarav Sharma (Associate - Engineer)</strong>
-              <span style="color: #34d399; font-weight: 700;">Day 1 · Flowing</span>
+              <span style="color: #9DBF9E; font-weight: 700;">Day 1 · Flowing</span>
             </div>
-            <div style="color: #94a3b8; font-size: 0.76rem;">Completed: 2/30 (7%) · Pending: Task 3 (Buddy Pairing)</div>
+            <div style="color: #8A857E; font-size: 0.76rem;">Completed: 2/30 (7%) · Pending: Task 3 (Buddy Pairing)</div>
           </div>
-          <button class="copilot-chip" onclick="goToStep('step-task-management'); setCopilotState('medium');">⚡ Open Subordinate Task Management</button>
+          <button class="copilot-chip" onclick="goToStep('step-task-management'); setCopilotState('medium');">Open Subordinate Task Management</button>
         </div>
       `;
     }
 
     function getManagerTeamProgressResponseHtml() {
       return `
-        <div style="color: #f8fafc;">
-          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">👔 Departmental Joiner Progression Overview</div>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 10px;">
+        <div style="color: #FAF7F2;">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 6px;">Departmental Joiner Progression Overview</div>
+          <p style="font-size: 0.84rem; color: #CFCAC2; margin-bottom: 10px;">
             Department onboarding velocity and SLA compliance summary:
           </p>
           <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px 16px; font-size: 0.8rem; margin-bottom: 10px;">
@@ -8225,25 +8415,25 @@
             </div>
             <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
               <span>Cohort Velocity:</span>
-              <strong style="color: #34d399;">12 Flowing · 2 Detouring</strong>
+              <strong style="color: #9DBF9E;">12 Flowing · 2 Detouring</strong>
             </div>
             <div style="display: flex; justify-content: space-between;">
               <span>Average Completion Rate:</span>
-              <strong style="color: #38bdf8;">68% Overall</strong>
+              <strong style="color: #D9A273;">68% Overall</strong>
             </div>
           </div>
-          <button class="copilot-chip" onclick="goToStep('step-task-management'); setCopilotState('medium');">⚡ Open Management Control Center</button>
+          <button class="copilot-chip" onclick="goToStep('step-task-management'); setCopilotState('medium');">Open Management Control Center</button>
         </div>
       `;
     }
 
     function getRbacRestrictedResponseHtml() {
       return `
-        <div style="color: #f8fafc;">
-          <div style="font-size: 0.95rem; font-weight: 800; color: #f87171; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
-            <span>🔒</span> Role-Based Authorization Policy
+        <div style="color: #FAF7F2;">
+          <div style="font-size: 0.95rem; font-weight: 800; color: #E08A7A; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+            <span></span> Role-Based Authorization Policy
           </div>
-          <p style="font-size: 0.84rem; color: #cbd5e1; line-height: 1.55;">
+          <p style="font-size: 0.84rem; color: #CFCAC2; line-height: 1.55;">
             This information is restricted to Management level according to enterprise role governance. As an Associate, you have authorized access to your assigned onboarding roadmap, team directory, and technical documentation.
           </p>
         </div>
@@ -8349,17 +8539,17 @@
       if (scopeEval.classification === 'OUT_OF_SCOPE') {
         return runCopilotResponseWithThinking(query, () => `
           <div>
-            <div style="font-size: 0.88rem; color: #f8fafc; line-height: 1.6; margin-bottom: 10px;">
+            <div style="font-size: 0.88rem; color: #FAF7F2; line-height: 1.6; margin-bottom: 10px;">
               ${escapeHtml(scopeEval.response)}
             </div>
-            <div style="font-size: 0.74rem; color: #94a3b8; margin-bottom: 8px;">
-              💡 <em>I can help you with your first-week checklist, team contacts, and department resources.</em>
+            <div style="font-size: 0.74rem; color: #8A857E; margin-bottom: 8px;">
+              <em>I can help you with your first-week checklist, team contacts, and department resources.</em>
             </div>
             <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-              <button class="chat-action-chip" onclick="askCopilotDirect('What\'s my task for today?')">📋 Today's Tasks</button>
-              <button class="chat-action-chip" onclick="askCopilotDirect('Who should I contact for IT help?')">🛠️ IT Help</button>
-              <button class="chat-action-chip" onclick="askCopilotDirect('Who is my reporting manager?')">👔 Manager</button>
-              <button class="chat-action-chip" onclick="askCopilotDirect('What is my onboarding progress?')">📊 Progress</button>
+              <button class="chat-action-chip" onclick="askCopilotDirect('What\'s my task for today?')">Today's Tasks</button>
+              <button class="chat-action-chip" onclick="askCopilotDirect('Who should I contact for IT help?')">IT Help</button>
+              <button class="chat-action-chip" onclick="askCopilotDirect('Who is my reporting manager?')">Manager</button>
+              <button class="chat-action-chip" onclick="askCopilotDirect('What is my onboarding progress?')">Progress</button>
             </div>
           </div>
         `);
@@ -8368,13 +8558,13 @@
       if (scopeEval.classification === 'AMBIGUOUS') {
         return runCopilotResponseWithThinking(query, () => `
           <div>
-            <div style="font-size: 0.88rem; color: #f8fafc; line-height: 1.6; margin-bottom: 10px;">
+            <div style="font-size: 0.88rem; color: #FAF7F2; line-height: 1.6; margin-bottom: 10px;">
               ${escapeHtml(scopeEval.response)}
             </div>
             <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-              <button class="chat-action-chip" onclick="askCopilotDirect('What do I need to complete today?')">📋 Today's Checklist</button>
-              <button class="chat-action-chip" onclick="askCopilotDirect('Where can I find my department resources?')">📚 Resources</button>
-              <button class="chat-action-chip" onclick="handleChatOption('contacts')">📞 Contacts</button>
+              <button class="chat-action-chip" onclick="askCopilotDirect('What do I need to complete today?')">Today's Checklist</button>
+              <button class="chat-action-chip" onclick="askCopilotDirect('Where can I find my department resources?')">Resources</button>
+              <button class="chat-action-chip" onclick="handleChatOption('contacts')">Contacts</button>
             </div>
           </div>
         `);
@@ -8497,10 +8687,10 @@
             if (ans) {
               return `
                 <div>
-                  <div style="font-size: 0.84rem; color: #f8fafc; line-height: 1.6; white-space: pre-wrap;">${escapeHtml(ans)}</div>
-                  <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.72rem; color: #94a3b8; display: flex; align-items: center; justify-content: space-between;">
-                    <span>⚡ AI Onboarding Intelligence</span>
-                    <button class="copilot-chip" style="font-size: 0.68rem; padding: 2px 7px;" onclick="handleChatOption('contacts')">📞 Contacts</button>
+                  <div style="font-size: 0.84rem; color: #FAF7F2; line-height: 1.6; white-space: pre-wrap;">${escapeHtml(ans)}</div>
+                  <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.72rem; color: #8A857E; display: flex; align-items: center; justify-content: space-between;">
+                    <span>AI Onboarding Intelligence</span>
+                    <button class="copilot-chip" style="font-size: 0.68rem; padding: 2px 7px;" onclick="handleChatOption('contacts')">Contacts</button>
                   </div>
                 </div>
               `;
@@ -8513,13 +8703,13 @@
         // High quality grounded fallback if backend offline
         return `
           <div>
-            <div style="font-size: 0.84rem; color: #f8fafc; line-height: 1.6;">
+            <div style="font-size: 0.84rem; color: #FAF7F2; line-height: 1.6;">
               As a <strong>${escapeHtml(currentEmp.role)}</strong> at <strong>${escapeHtml(comp.name)}</strong>, you are currently in your Day 1 onboarding phase. You can check your pending roadmap tasks, connect with your buddy <strong>${escapeHtml(currentEmp.buddy?.name || 'Dhruv Agarwal')}</strong>, or contact HR partner <strong>Priya Nair (+91 80 6789 89912)</strong> for any assistance!
             </div>
             <div style="margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;">
-              <button class="chat-action-chip" onclick="handleChatOption('contacts')">📞 Contacts</button>
-              <button class="chat-action-chip" onclick="handleChatOption('checklist')">📋 Checklist</button>
-              <button class="chat-action-chip" onclick="explainTaskById(1)">💡 Task 1</button>
+              <button class="chat-action-chip" onclick="handleChatOption('contacts')">Contacts</button>
+              <button class="chat-action-chip" onclick="handleChatOption('checklist')">Checklist</button>
+              <button class="chat-action-chip" onclick="explainTaskById(1)">Task 1</button>
             </div>
           </div>
         `;
