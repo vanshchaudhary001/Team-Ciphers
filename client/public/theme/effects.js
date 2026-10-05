@@ -88,8 +88,8 @@
     let i = 0;
     blocks.forEach((el) => {
       if (el.closest('#copilot-persistent-panel') || el.matches('.enterprise-modal-overlay, .hr-modal-overlay, .inapp-modal-overlay')) return;
+      if (el.classList.contains('is-in')) return; // Never hide elements that are already revealed
       if (!el.hasAttribute('data-reveal')) el.setAttribute('data-reveal', '');
-      el.classList.remove('is-in');
       el.style.setProperty('--reveal-delay', `${Math.min(i, 8) * 70}ms`);
       i++;
       if (!io || !motionOK()) { el.classList.add('is-in'); return; }
@@ -102,10 +102,13 @@
 
   // ---------- active screen: nav state, reveals, scroll reset ----------
   let lenis = null;
+  let lastActiveStepId = null;
   function currentStep() { return [...document.querySelectorAll('.step-view')].find((s) => s.style.display !== 'none' && getComputedStyle(s).display !== 'none'); }
   function onStepChange() {
     const step = currentStep();
     if (!step) return;
+    if (step.id === lastActiveStepId) return;
+    lastActiveStepId = step.id;
     document.querySelectorAll('.nav-link[data-nav-step]').forEach((a) => {
       if (a.dataset.navStep === step.id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
