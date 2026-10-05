@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StartSmart — Your First 5 Days</title>
-  <meta name="description" content="StartSmart intro: your first five days of onboarding, one step at a time.">
+  <title>StartSmart — Welcome</title>
+  <meta name="description" content="StartSmart intro: step through the door into your new workplace.">
+  <meta name="theme-color" content="#0F1B2D">
   <link rel="icon" type="image/png" href="start-smart-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700&display=swap" rel="stylesheet">
 
   <script>
     // Return to the page that triggered the intro, telling it not to redirect again.
@@ -24,27 +25,44 @@
       window.location.replace(to);
     }
 
-    // Reduced motion: skip the intro entirely.
+    window.__intro = {
+      skipped: false,
+      playing: false,
+      exited: false,
+      cleanup: null,
+      exit: function () {
+        if (this.exited) return;
+        this.exited = true;
+        try { if (this.cleanup) this.cleanup(); } catch (e) { }
+        goHome();
+      }
+    };
+
+    // Gate: reduced motion skips; otherwise play only on the first visit unless forced with ?intro=1.
     (function () {
+      var intro = window.__intro;
       try {
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          goHome();
+          intro.skipped = true;
+        } else {
+          var force = /[?&]intro=1(&|#|$)/.test(window.location.search) ||
+            /[?&]intro=1(&|#|$)/.test(sessionStorage.getItem('startsmart_intro_return') || '');
+          var seen = false;
+          try { seen = localStorage.getItem('startsmart_intro_seen') === '1'; } catch (e) { }
+          if (seen && !force) intro.skipped = true;
         }
       } catch (e) { }
+      if (intro.skipped) {
+        intro.exited = true;
+        goHome();
+      }
     })();
   </script>
 
   <style>
-    /* Brand tokens mirrored from client/styles.css */
     :root {
-      --primary: #0037b0;
-      --primary-container: #1d4ed8;
-      --accent: #3b82f6;
-      --surface: #f8f9ff;
-      --surface-low: #eff4ff;
-      --ink: #0b1c30;
-      --ink-variant: #434655;
-      --outline-subtle: rgba(196, 197, 215, 0.45);
+      --ink: #0F1B2D;
+      --ivory: #FAF7F2;
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
@@ -54,9 +72,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: linear-gradient(180deg, #dbe6ff 0%, var(--surface) 100%);
-      font-family: var(--font-sans);
-      color: var(--ink);
+      background: var(--ink);
     }
 
     #scene {
@@ -67,206 +83,68 @@
       height: 100%;
     }
 
-    .brand {
+    /* Opening fade (near-black ink) and closing fill (warm cream). */
+    .veil {
       position: fixed;
-      top: 20px;
-      left: 24px;
-      z-index: 5;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      font-size: 1.05rem;
-      letter-spacing: -0.01em;
-      color: var(--ink);
+      inset: 0;
+      pointer-events: none;
     }
 
-    .brand img { width: 34px; height: 34px; object-fit: contain; }
+    #fadeIn {
+      z-index: 3;
+      background: #0A1322;
+      opacity: 1;
+      transition: opacity 0.6s ease-out;
+    }
+
+    #fadeIn.gone { opacity: 0; }
+
+    #cream {
+      z-index: 4;
+      background: var(--ivory);
+      opacity: 0;
+    }
+
+    #homeFrame {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      opacity: 0;
+      pointer-events: none;
+      background: var(--ivory);
+      transition: opacity 0.6s ease-in-out;
+    }
+
+    #homeFrame.show { opacity: 1; }
 
     .skip-btn {
       position: fixed;
-      top: 18px;
       right: 20px;
+      bottom: 20px;
       z-index: 10;
-      padding: 9px 16px;
+      padding: 8px 14px;
       border-radius: 999px;
-      border: 1px solid var(--outline-subtle);
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      color: var(--ink-variant);
-      font: 600 0.85rem var(--font-sans);
+      border: 1px solid rgba(250, 247, 242, 0.28);
+      background: rgba(250, 247, 242, 0.08);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: var(--ivory);
+      font: 600 0.8rem var(--font-sans);
+      letter-spacing: 0.02em;
       cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-
-    .skip-btn:hover { background: #fff; color: var(--primary); }
-    .skip-btn:focus-visible, .cta-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
-
-    .progress {
-      position: fixed;
-      left: 50%;
-      bottom: 28px;
-      transform: translateX(-50%);
-      z-index: 5;
-      display: flex;
-      gap: 8px;
-      transition: opacity 0.6s;
-    }
-
-    .progress span {
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.6);
-      border: 1px solid var(--outline-subtle);
-      color: var(--ink-variant);
-      font: 600 0.72rem var(--font-sans);
-      letter-spacing: 0.06em;
-      white-space: nowrap;
-      transition: background 0.35s, color 0.35s, border-color 0.35s, transform 0.35s;
-    }
-
-    .progress span.on {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: #fff;
-      transform: translateY(-2px);
-    }
-
-    .finale {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 12vh;
-      z-index: 6;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-      padding: 0 16px;
-      text-align: center;
       opacity: 0;
-      transform: translateY(14px);
-      pointer-events: none;
-      transition: opacity 0.9s ease, transform 0.9s ease;
+      transition: opacity 0.4s ease, background 0.2s ease, border-color 0.2s ease;
     }
 
-    .finale.show { opacity: 1; transform: none; pointer-events: auto; }
-
-    .finale h1 {
-      font-size: clamp(1.8rem, 4.6vw, 3.2rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.08;
-      color: var(--ink);
-      text-shadow: 0 2px 24px rgba(248, 249, 255, 0.9);
-    }
-
-    .finale h1 em { font-style: normal; color: var(--primary); }
-
-    .finale p {
-      font-size: clamp(0.95rem, 1.6vw, 1.1rem);
-      color: var(--ink-variant);
-      text-shadow: 0 1px 12px rgba(248, 249, 255, 0.9);
-    }
-
-    .cta-btn {
-      margin-top: 6px;
-      padding: 14px 30px;
-      border: 0;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-container));
-      color: #fff;
-      font: 700 1rem var(--font-sans);
-      cursor: pointer;
-      box-shadow: 0 10px 30px rgba(0, 55, 176, 0.28);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(0, 55, 176, 0.34); }
-
-    .loader {
-      position: fixed;
-      inset: 0;
-      z-index: 8;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      background: linear-gradient(180deg, #dbe6ff 0%, var(--surface) 100%);
-      transition: opacity 0.6s ease;
-    }
-
-    .loader.hide { opacity: 0; pointer-events: none; }
-    .loader-label { font: 600 0.85rem var(--font-sans); color: var(--ink-variant); letter-spacing: 0.04em; }
-
-    .loader-bar {
-      width: min(220px, 60vw);
-      height: 4px;
-      border-radius: 4px;
-      background: rgba(0, 55, 176, 0.12);
-      overflow: hidden;
-    }
-
-    .loader-bar i {
-      display: block;
-      width: 8%;
-      height: 100%;
-      background: var(--primary);
-      transition: width 0.25s ease;
-    }
-
-    /* 2D fallback when WebGL or the model is unavailable */
-    .fallback {
-      position: fixed;
-      inset: 0;
-      z-index: 7;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 28px;
-      padding: 16px;
-    }
-
-    .fallback.show { display: flex; }
-
-    .fb-stairs { display: flex; align-items: flex-end; gap: 4px; }
-
-    .fb-stairs div {
-      width: clamp(52px, 13vw, 96px);
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding-top: 10px;
-      border-radius: 6px 6px 0 0;
-      background: linear-gradient(180deg, #ffffff, #dfe6f5);
-      box-shadow: 0 6px 18px rgba(11, 28, 48, 0.1);
-      color: var(--ink);
-      font: 800 clamp(0.65rem, 2vw, 0.85rem) var(--font-sans);
-      letter-spacing: 0.04em;
-      opacity: 0;
-      animation: fb-rise 0.5s ease forwards;
-    }
-
-    .fb-stairs div:nth-child(1) { height: 50px; animation-delay: 0.1s; }
-    .fb-stairs div:nth-child(2) { height: 90px; animation-delay: 0.35s; }
-    .fb-stairs div:nth-child(3) { height: 130px; animation-delay: 0.6s; }
-    .fb-stairs div:nth-child(4) { height: 170px; animation-delay: 0.85s; }
-    .fb-stairs div:nth-child(5) { height: 210px; animation-delay: 1.1s; border-top: 3px solid var(--accent); }
-
-    @keyframes fb-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-
-    .fallback .finale { position: static; opacity: 1; transform: none; pointer-events: auto; }
+    .skip-btn.show { opacity: 0.9; }
+    .skip-btn:hover { background: rgba(250, 247, 242, 0.16); border-color: rgba(250, 247, 242, 0.5); }
+    .skip-btn:focus-visible { outline: 2px solid #C2773A; outline-offset: 3px; }
 
     @media (max-width: 600px) {
-      .brand { top: 16px; left: 16px; font-size: 0.95rem; }
-      .brand img { width: 28px; height: 28px; }
-      .skip-btn { top: 14px; right: 16px; }
-      .progress { bottom: 18px; gap: 5px; }
-      .progress span { padding: 5px 8px; font-size: 0.65rem; }
-      .finale { bottom: 10vh; }
+      .skip-btn { right: 16px; bottom: 16px; }
     }
   </style>
 
@@ -282,636 +160,659 @@
 
 <body>
   <canvas id="scene" aria-hidden="true"></canvas>
-
-  <div class="brand">
-    <img src="start-smart-logo-transparent.png" alt="">
-    <span>StartSmart</span>
-  </div>
-
-  <button class="skip-btn" id="skipBtn" type="button">Skip intro →</button>
-
-  <div class="progress" id="progress" aria-hidden="true">
-    <span>DAY 1</span><span>DAY 2</span><span>DAY 3</span><span>DAY 4</span><span>DAY 5</span>
-  </div>
-
-  <div class="finale" id="finale" role="region" aria-live="polite">
-    <h1>Your first <em>5 days</em>, mapped.</h1>
-    <p>Every step of onboarding, one day at a time.</p>
-    <button class="cta-btn" id="ctaBtn" type="button">Get Started</button>
-  </div>
-
-  <div class="loader" id="loader" role="status">
-    <div class="loader-label">Preparing your first week…</div>
-    <div class="loader-bar"><i id="loaderBar"></i></div>
-  </div>
-
-  <div class="fallback" id="fallback">
-    <div class="fb-stairs">
-      <div>DAY 1</div><div>DAY 2</div><div>DAY 3</div><div>DAY 4</div><div>DAY 5</div>
-    </div>
-    <div class="finale">
-      <h1>Your first <em>5 days</em>, mapped.</h1>
-      <p>Every step of onboarding, one day at a time.</p>
-      <button class="cta-btn" id="fbCtaBtn" type="button">Get Started</button>
-    </div>
-  </div>
+  <div class="veil" id="fadeIn"></div>
+  <div class="veil" id="cream"></div>
+  <button class="skip-btn" id="skipBtn" type="button">Skip intro</button>
 
   <script>
-    // Shared exit + fallback helpers (classic script so they work even if the module/CDN fails).
-    window.__intro = {
-      exited: false,
-      started: false,
-      cleanup: null,
-      exit: function () {
-        if (this.exited) return;
-        this.exited = true;
-        try { if (this.cleanup) this.cleanup(); } catch (e) { }
-        goHome();
-      },
-      fallback: function () {
-        if (this.exited || this.fellBack) return;
-        this.fellBack = true;
-        try { if (this.cleanup) this.cleanup(); } catch (e) { }
-        document.getElementById('loader').classList.add('hide');
-        document.getElementById('progress').style.display = 'none';
-        document.getElementById('finale').style.display = 'none';
-        document.getElementById('scene').style.display = 'none';
-        document.getElementById('fallback').classList.add('show');
-        var self = this;
-        setTimeout(function () { self.exit(); }, 5000);
-      }
-    };
     document.getElementById('skipBtn').addEventListener('click', function () { window.__intro.exit(); });
-    document.getElementById('ctaBtn').addEventListener('click', function () { window.__intro.exit(); });
-    document.getElementById('fbCtaBtn').addEventListener('click', function () { window.__intro.exit(); });
-    // If the 3D scene errors or never starts playing (CDN blocked, old browser), fall back.
-    window.addEventListener('error', function () { if (!window.__intro.playing) window.__intro.fallback(); });
-    setTimeout(function () { if (!window.__intro.playing) window.__intro.fallback(); }, 15000);
+    // If the 3D scene errors or hasn't started within 2.5s (slow CDN, no WebGL), go straight home.
+    window.addEventListener('error', function () { if (!window.__intro.playing) window.__intro.exit(); });
+    setTimeout(function () { if (!window.__intro.playing) window.__intro.exit(); }, 2500);
   </script>
 
   <script type="module">
     import * as THREE from 'three';
     import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+    import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+    import { Reflector } from 'three/addons/objects/Reflector.js';
 
     const intro = window.__intro;
-    const labelCanvases = [];
+    if (!intro.exited) main();
 
-    // ---------- Scene constants ----------
-    const STEP_COUNT = 5;
-    const STEP_RUN = 1.1;     // tread depth along X (metres)
-    const STEP_RISE = 0.45;   // riser height (about knee height)
-    const STEP_WIDTH = 2.4;   // stair width along Z
-    const START_X = -2.8;
-    const COLORS = {
-      ink: 0x1b2a46,
-      accent: 0x3b82f6,
-      primary: 0x0037b0,
-      fog: 0xeaf0ff,
-      ground: 0xe9eef9,
-    };
+    function main() {
+      // ---------- Constants ----------
+      const INK = 0x0F1B2D;
+      const WARM = new THREE.Color(0xFFE8CC);
+      const IVORY = 0xFAF7F2;
+      const TEAL = 0x0F766E;
+      const COPPER = 0xC2773A;
 
-    // ---------- WebGL check ----------
-    let renderer;
-    try {
-      renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('scene'), antialias: true, alpha: true, powerPreference: 'high-performance' });
-    } catch (e) {
-      intro.fallback();
-      throw e;
-    }
-    intro.started = true;
+      const OPEN_W = 1.04;     // door opening (inside the frame)
+      const OPEN_H = 2.36;     // ≈ 1.3 × the figure's height
+      const DOOR_W = 1.0;      // panel leaves ~2cm side gaps for the light leaks
+      const DOOR_H = 2.33;
+      const DOOR_Z = -4.2;
+      const HINGE_X = -OPEN_W / 2 + 0.02;
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.05;
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      const START_X = 0.22, START_Z = 0;     // right shoulder lines up with the handle
+      const STOP_Z = -3.76;                  // arm's reach from the handle
+      const END_X = 0.08, END_Z = -6.0;      // through the doorway into the light
+      const STRIDE = 0.62;                   // metres per step; gait phase follows distance, so feet don't slide
 
-    const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(COLORS.fog, 12, 26);
+      const T = { walkStart: 0.6, walkEnd: 2.4, openStart: 2.9, openEnd: 3.9, throughEnd: 4.9, homeEnd: 5.5 };
 
-    const pmrem = new THREE.PMREMGenerator(renderer);
-    const envRT = pmrem.fromScene(new RoomEnvironment(), 0.04);
-    scene.environment = envRT.texture;
-    scene.environmentIntensity = 0.55;
+      const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+      const isMobile = isTouch || Math.min(window.innerWidth, window.innerHeight) < 700;
 
-    const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 100);
+      // ---------- Renderer ----------
+      let renderer;
+      try {
+        renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('scene'), antialias: true, powerPreference: 'high-performance' });
+      } catch (e) {
+        intro.exit();
+        return;
+      }
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      renderer.setPixelRatio(dpr);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.0;
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-    // ---------- Lighting ----------
-    const hemi = new THREE.HemisphereLight(0xf2f6ff, 0xc9d2e6, 0.55);
-    scene.add(hemi);
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(INK);
+      scene.fog = new THREE.FogExp2(INK, 0.075);
 
-    const sun = new THREE.DirectionalLight(0xfff4e6, 2.6);
-    sun.position.set(-4, 9, 6);
-    sun.target.position.set(2, 0, 0);
-    sun.castShadow = true;
-    sun.shadow.mapSize.set(2048, 2048);
-    sun.shadow.camera.left = -7;
-    sun.shadow.camera.right = 7;
-    sun.shadow.camera.top = 7;
-    sun.shadow.camera.bottom = -7;
-    sun.shadow.camera.near = 1;
-    sun.shadow.camera.far = 30;
-    sun.shadow.bias = -0.0004;
-    sun.shadow.normalBias = 0.02;
-    scene.add(sun, sun.target);
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      const envRT = pmrem.fromScene(new RoomEnvironment(), 0.04);
+      scene.environment = envRT.texture;
+      scene.environmentIntensity = 0.22;
 
-    const rim = new THREE.DirectionalLight(0xbcd2ff, 0.9);
-    rim.position.set(6, 5, -6);
-    scene.add(rim);
+      const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.05, 80);
+      camera.layers.enable(1); // layer 1 = door light (kept out of the floor reflection)
 
-    // ---------- Ground ----------
-    const ground = new THREE.Mesh(
-      new THREE.PlaneGeometry(36, 36),
-      // Ground fades out radially into the page background, so there is no hard horizon.
-      new THREE.MeshStandardMaterial({ color: COLORS.ground, roughness: 0.92, metalness: 0, transparent: true, alphaMap: makeGroundFadeTexture(), depthWrite: false })
-    );
-    ground.position.x = 1.5;
-    ground.rotation.x = -Math.PI / 2;
-    ground.receiveShadow = true;
-    scene.add(ground);
+      // ---------- Lighting ----------
+      scene.add(new THREE.HemisphereLight(0x9fb4d8, 0x0b1422, 0.35));
 
-    // Soft contact darkening at the base of the stairs (cheap ambient-occlusion feel).
-    const aoTex = makeRadialTexture();
-    const stairAO = new THREE.Mesh(
-      new THREE.PlaneGeometry(STEP_RUN * STEP_COUNT + 1.6, STEP_WIDTH + 1.4),
-      new THREE.MeshBasicMaterial({ map: aoTex, transparent: true, opacity: 0.35, depthWrite: false })
-    );
-    stairAO.rotation.x = -Math.PI / 2;
-    stairAO.position.set((STEP_RUN * STEP_COUNT) / 2, 0.002, 0);
-    scene.add(stairAO);
+      const key = new THREE.DirectionalLight(0xdfe8ff, 1.3);
+      key.position.set(-3.5, 5, 4.5);
+      key.target.position.set(0, 0.8, -2);
+      key.castShadow = true;
+      key.shadow.mapSize.set(isMobile ? 1024 : 2048, isMobile ? 1024 : 2048);
+      Object.assign(key.shadow.camera, { left: -5, right: 5, top: 5, bottom: -5, near: 1, far: 25 });
+      key.shadow.bias = -0.0004;
+      key.shadow.normalBias = 0.02;
+      scene.add(key, key.target);
 
-    // ---------- Staircase ----------
-    const concrete = makeConcreteTextures();
-    const stepMat = new THREE.MeshPhysicalMaterial({
-      color: 0xf3f5fa,
-      map: concrete.color,
-      roughnessMap: concrete.rough,
-      roughness: 0.62,
-      metalness: 0,
-      clearcoat: 0.35,
-      clearcoatRoughness: 0.45,
-    });
+      // Teal rim from behind: a narrow spot that travels with the figure, so it outlines him
+      // without throwing a big specular glare off the glossy floor.
+      const rim = new THREE.SpotLight(0x5eead4, 14, 4.4, 0.3, 0.7, 1.4);
+      const RIM_OFFSET = new THREE.Vector3(-0.7, 3.0, -2.4);
+      scene.add(rim, rim.target);
 
-    const steps = [];
-    for (let i = 0; i < STEP_COUNT; i++) {
-      const h = (i + 1) * STEP_RISE;
-      const block = new THREE.Mesh(new RoundedBoxGeometry(STEP_RUN, h, STEP_WIDTH, 4, 0.035), stepMat);
-      block.position.set(i * STEP_RUN + STEP_RUN / 2, h / 2, 0);
-      block.castShadow = true;
-      block.receiveShadow = true;
-      scene.add(block);
+      // Warm light behind the door: blocked by the closed panel, floods through as it opens.
+      const doorLight = new THREE.SpotLight(WARM, 0, 18, 0.62, 0.9, 1.6);
+      doorLight.position.set(0, 2.25, DOOR_Z - 2.0);
+      doorLight.target.position.set(0, 0, 1.0);
+      doorLight.castShadow = true;
+      doorLight.shadow.mapSize.set(1024, 1024);
+      doorLight.shadow.bias = -0.0005;
+      doorLight.shadow.normalBias = 0.02;
+      scene.add(doorLight, doorLight.target);
 
-      // Glowing nosing strip along the front edge of each tread.
-      const stripMat = new THREE.MeshStandardMaterial({ color: 0xdfe6f3, emissive: COLORS.accent, emissiveIntensity: 0, roughness: 0.3 });
-      const strip = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.012, STEP_WIDTH * 0.9), stripMat);
-      strip.position.set(i * STEP_RUN + 0.07, h + 0.004, 0);
-      scene.add(strip);
+      // ---------- Floor: dark glossy navy with a faint reflection ----------
+      let reflector = null;
+      if (!isMobile) {
+        reflector = new Reflector(new THREE.PlaneGeometry(60, 60), {
+          clipBias: 0.003,
+          textureWidth: Math.round(window.innerWidth * dpr * 0.5),
+          textureHeight: Math.round(window.innerHeight * dpr * 0.5),
+          color: 0x8a94a6,
+        });
+        reflector.rotation.x = -Math.PI / 2;
+        scene.add(reflector);
+      }
+      const floor = new THREE.Mesh(
+        new THREE.PlaneGeometry(60, 60),
+        new THREE.MeshPhysicalMaterial({
+          color: 0x101c30, roughness: 0.32, metalness: 0.1, clearcoat: 0.6, clearcoatRoughness: 0.25,
+          transparent: !!reflector, opacity: reflector ? 0.86 : 1,
+        })
+      );
+      floor.rotation.x = -Math.PI / 2;
+      floor.position.y = 0.002;
+      floor.receiveShadow = true;
+      scene.add(floor);
 
-      // "DAY n" label on the camera-facing side of the block.
-      const labelTex = makeLabelTexture(`DAY ${i + 1}`);
-      const labelMat = new THREE.MeshStandardMaterial({
-        map: labelTex,
-        color: COLORS.ink,
-        emissive: COLORS.accent,
-        emissiveMap: labelTex,
-        emissiveIntensity: 0,
-        transparent: true,
-        roughness: 0.55,
-        polygonOffset: true,
-        polygonOffsetFactor: -2,
-      });
-      const label = new THREE.Mesh(new THREE.PlaneGeometry(STEP_RUN * 0.86, 0.3), labelMat);
-      label.position.set(i * STEP_RUN + STEP_RUN / 2, h - 0.2, STEP_WIDTH / 2 + 0.003);
-      scene.add(label);
+      // Soft contact shadow that follows the figure.
+      const contact = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.95, 0.95),
+        new THREE.MeshBasicMaterial({ map: radialTexture('rgba(3,7,14,0.85)', 'rgba(3,7,14,0)'), transparent: true, depthWrite: false })
+      );
+      contact.rotation.x = -Math.PI / 2;
+      contact.position.y = 0.004;
+      scene.add(contact);
 
-      steps.push({ stripMat, labelMat, glow: 0, lit: false });
-    }
+      // Warm spill on the floor in front of the door (a thin leak at first, a wash once open).
+      const spill = new THREE.Mesh(
+        new THREE.PlaneGeometry(1.5, 1),
+        new THREE.MeshBasicMaterial({ map: spillTexture(), color: WARM, transparent: true, opacity: 0.2, blending: THREE.AdditiveBlending, depthWrite: false })
+      );
+      spill.rotation.x = -Math.PI / 2;
+      spill.position.set(0, 0.006, DOOR_Z + 0.5);
+      scene.add(spill);
 
-    // ---------- Path & timeline ----------
-    const stepCenter = (i) => new THREE.Vector2(i * STEP_RUN + STEP_RUN / 2, (i + 1) * STEP_RISE);
-    const segments = [];
-    // Approach walk on the ground, then climb onto step 1.
-    segments.push({ from: new THREE.Vector2(START_X, 0), to: new THREE.Vector2(-STEP_RUN / 2, 0), dur: 1.25, ease: 'in', climb: false, land: -1 });
-    segments.push({ from: new THREE.Vector2(-STEP_RUN / 2, 0), to: stepCenter(0), dur: 0.8, ease: 'out', climb: true, land: 0 });
-    for (let i = 1; i < STEP_COUNT; i++) {
-      segments.push({ from: stepCenter(i - 1), to: stepCenter(i), dur: 0.85, ease: 'inout', climb: true, land: i });
-    }
+      // ---------- Door ----------
+      const doorRoot = new THREE.Group();
+      doorRoot.position.z = DOOR_Z;
+      scene.add(doorRoot);
 
-    const INTRO_HOLD = 0.5;   // idle beat before walking
-    const STEP_PAUSE = 0.42;  // pause on each step as its label lights up
-    let cursor = INTRO_HOLD;
-    for (const s of segments) {
-      s.start = cursor;
-      cursor += s.dur;
-      s.end = cursor;
-      if (s.land >= 0) cursor += STEP_PAUSE;
-    }
-    const CLIMB_END = segments[segments.length - 1].end;
-    const FINALE_DUR = 1.8;
-    const EXIT_AFTER = CLIMB_END + FINALE_DUR + 2.0;
+      const ivoryMat = new THREE.MeshPhysicalMaterial({ color: IVORY, roughness: 0.45, clearcoat: 0.3, clearcoatRoughness: 0.4 });
+      const tealMat = new THREE.MeshPhysicalMaterial({ color: TEAL, roughness: 0.4, clearcoat: 0.5, clearcoatRoughness: 0.3 });
+      const tealDeepMat = new THREE.MeshPhysicalMaterial({ color: 0x0b625b, roughness: 0.42, clearcoat: 0.5, clearcoatRoughness: 0.3 });
+      const copperMat = new THREE.MeshStandardMaterial({ color: COPPER, metalness: 0.9, roughness: 0.25 });
 
-    // ---------- Character: stylised businessman (navy suit, teal tie, copper accents) ----------
-    const HIP_Y = 0.94;
-    const loaderEl = document.getElementById('loader');
-    const loaderBar = document.getElementById('loaderBar');
-    const rig = buildBusinessman();
-    const character = rig.root;
-    // The figure is built facing +Z; turn it to walk along +X.
-    const modelYaw = Math.PI / 2;
-    character.rotation.y = modelYaw;
-    character.position.set(START_X, 0, 0.15);
-    scene.add(character);
-
-    const fontReady = document.fonts && document.fonts.load ? document.fonts.load('800 100px Inter').catch(() => { }) : Promise.resolve();
-    fontReady.then(() => {
-      refreshLabelTextures();
-      loaderBar.style.width = '100%';
-      setTimeout(start, 150);
-    });
-
-    function buildBusinessman() {
-      const mats = {
-        suit: new THREE.MeshPhysicalMaterial({ color: 0x1b2847, roughness: 0.74, sheen: 0.7, sheenRoughness: 0.75, sheenColor: 0x5d73a3 }),
-        shirt: new THREE.MeshStandardMaterial({ color: 0xf3f5f9, roughness: 0.6 }),
-        tie: new THREE.MeshPhysicalMaterial({ color: 0x0f766e, roughness: 0.4, sheen: 0.5, sheenColor: 0x5eead4 }),
-        copper: new THREE.MeshStandardMaterial({ color: 0xb87333, metalness: 0.85, roughness: 0.32 }),
-        skin: new THREE.MeshPhysicalMaterial({ color: 0xd8a888, roughness: 0.52, sheen: 0.25, sheenColor: 0xffd9c4 }),
-        hair: new THREE.MeshPhysicalMaterial({ color: 0x2b1d14, roughness: 0.62, sheen: 0.7, sheenRoughness: 0.45, sheenColor: 0x7a5538, side: THREE.DoubleSide }),
-        shoe: new THREE.MeshPhysicalMaterial({ color: 0x0e0f13, roughness: 0.28, clearcoat: 1, clearcoatRoughness: 0.15 }),
-      };
-      const add = (parent, geo, mat, x = 0, y = 0, z = 0) => {
-        const m = new THREE.Mesh(geo, mat);
+      const box = (parent, w, h, d, r, mat, x, y, z) => {
+        const m = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 3, r), mat);
         m.position.set(x, y, z);
         m.castShadow = true;
         m.receiveShadow = true;
         parent.add(m);
         return m;
       };
-      const limb = (parent, len, r, mat) => add(parent, new THREE.CapsuleGeometry(r, Math.max(0.01, len - r), 6, 16), mat, 0, -len / 2, 0);
 
-      const root = new THREE.Group();
-      const pelvis = new THREE.Group();
-      pelvis.position.y = HIP_Y;
-      root.add(pelvis);
-      add(pelvis, new THREE.SphereGeometry(1, 24, 16), mats.suit).scale.set(0.175, 0.11, 0.115);
+      // Slim ivory frame
+      const FW = 0.07, FD = 0.2;
+      box(doorRoot, FW, OPEN_H + FW, FD, 0.02, ivoryMat, -(OPEN_W / 2 + FW / 2), (OPEN_H + FW) / 2, 0);
+      box(doorRoot, FW, OPEN_H + FW, FD, 0.02, ivoryMat, OPEN_W / 2 + FW / 2, (OPEN_H + FW) / 2, 0);
+      box(doorRoot, OPEN_W + FW * 2, FW, FD, 0.02, ivoryMat, 0, OPEN_H + FW / 2, 0);
 
-      // Legs: hip -> knee -> ankle
-      const hips = [], knees = [];
-      for (const side of [1, -1]) {
-        const hip = new THREE.Group();
-        hip.position.set(0.092 * side, -0.02, 0);
-        pelvis.add(hip);
-        limb(hip, 0.45, 0.074, mats.suit);
-        const knee = new THREE.Group();
-        knee.position.y = -0.45;
-        hip.add(knee);
-        limb(knee, 0.43, 0.062, mats.suit);
-        const ankle = new THREE.Group();
-        ankle.position.y = -0.43;
-        knee.add(ankle);
-        add(ankle, new RoundedBoxGeometry(0.1, 0.07, 0.27, 3, 0.03), mats.shoe, 0, -0.03, 0.055);
-        hips.push(hip);
-        knees.push(knee);
-      }
+      // Teal panel on a hinge (left edge); stiles + rails around two recessed panels
+      const hinge = new THREE.Group();
+      hinge.position.set(HINGE_X, 0.018, 0);
+      doorRoot.add(hinge);
+      const ST = 0.14, PT = 0.05, LOCK_Y = 0.98;
+      const innerW = DOOR_W - ST * 2;
+      box(hinge, ST, DOOR_H, PT, 0.006, tealMat, ST / 2, DOOR_H / 2, 0);
+      box(hinge, ST, DOOR_H, PT, 0.006, tealMat, DOOR_W - ST / 2, DOOR_H / 2, 0);
+      box(hinge, innerW + 0.01, 0.16, PT, 0.006, tealMat, DOOR_W / 2, DOOR_H - 0.08, 0);
+      box(hinge, innerW + 0.01, 0.14, PT, 0.006, tealMat, DOOR_W / 2, LOCK_Y, 0);
+      box(hinge, innerW + 0.01, 0.24, PT, 0.006, tealMat, DOOR_W / 2, 0.12, 0);
+      const upperH = (DOOR_H - 0.16) - (LOCK_Y + 0.07);
+      const lowerH = (LOCK_Y - 0.07) - 0.24;
+      box(hinge, innerW + 0.01, upperH, 0.026, 0.008, tealDeepMat, DOOR_W / 2, LOCK_Y + 0.07 + upperH / 2, -0.006);
+      box(hinge, innerW + 0.01, lowerH, 0.026, 0.008, tealDeepMat, DOOR_W / 2, 0.24 + lowerH / 2, -0.006);
 
-      // Torso: tailored jacket (lathe profile, flattened front-to-back)
-      const torso = new THREE.Group();
-      torso.position.y = 0.02;
-      pelvis.add(torso);
-      const profile = [[0.001, -0.15], [0.168, -0.15], [0.172, -0.06], [0.158, 0.1], [0.175, 0.3], [0.198, 0.42], [0.175, 0.5], [0.09, 0.545], [0.001, 0.55]]
-        .map(([r, y]) => new THREE.Vector2(r, y));
-      add(torso, new THREE.LatheGeometry(profile, 40), mats.suit).scale.z = 0.62;
+      // Copper lever handle at hand height, on the free edge
+      const HX = DOOR_W - 0.085;
+      const rose = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.012, 28), copperMat);
+      rose.rotation.x = Math.PI / 2;
+      rose.position.set(HX, LOCK_Y, PT / 2 + 0.006);
+      rose.castShadow = true;
+      hinge.add(rose);
+      const lever = new THREE.Group();
+      lever.position.set(HX, LOCK_Y, PT / 2 + 0.045);
+      hinge.add(lever);
+      const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, 0.04, 16), copperMat);
+      neck.rotation.x = Math.PI / 2;
+      neck.position.z = -0.02;
+      lever.add(neck);
+      box(lever, 0.15, 0.022, 0.022, 0.009, copperMat, -0.065, 0, 0);
 
-      // Shirt V, tie, buttons, pocket square
-      const front = (y) => 0.62 * (y > 0.3 ? 0.175 + (y - 0.3) * 0.19 : 0.158 + Math.max(0, y - 0.1) * 0.085) + 0.004;
-      const vShape = new THREE.Shape([new THREE.Vector2(-0.062, 0), new THREE.Vector2(0.062, 0), new THREE.Vector2(0, -0.2)]);
-      const shirtV = add(torso, new THREE.ShapeGeometry(vShape), mats.shirt, 0, 0.53, front(0.45));
-      shirtV.rotation.x = -0.12;
-      const tieShape = new THREE.Shape([new THREE.Vector2(-0.016, 0), new THREE.Vector2(0.016, 0), new THREE.Vector2(0.026, -0.17), new THREE.Vector2(0, -0.2), new THREE.Vector2(-0.026, -0.17)]);
-      const tie = add(torso, new THREE.ShapeGeometry(tieShape), mats.tie, 0, 0.515, front(0.45) + 0.004);
-      tie.rotation.x = -0.12;
-      add(torso, new THREE.SphereGeometry(0.009, 10, 8), mats.copper, 0, 0.2, front(0.2) - 0.001);
-      add(torso, new THREE.SphereGeometry(0.009, 10, 8), mats.copper, 0, 0.11, front(0.11) - 0.002);
-      const pocket = add(torso, new THREE.BoxGeometry(0.05, 0.016, 0.01), mats.copper, 0.095, 0.37, front(0.37) - 0.012);
-      pocket.rotation.x = -0.1;
+      // Copper "StartSmart" plate on the upper panel
+      const plate = box(hinge, 0.3, 0.075, 0.008, 0.003, copperMat, DOOR_W / 2, 1.66, 0.017);
+      const plateText = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.27, 0.06),
+        new THREE.MeshStandardMaterial({ map: plateTexture(), transparent: true, metalness: 0.6, roughness: 0.5, polygonOffset: true, polygonOffsetFactor: -2 })
+      );
+      plateText.position.set(DOOR_W / 2, 1.66, 0.0215);
+      hinge.add(plateText);
 
-      // Collar + neck + head
-      const collar = add(torso, new THREE.TorusGeometry(0.052, 0.016, 10, 24), mats.shirt, 0, 0.545, 0);
-      collar.rotation.x = Math.PI / 2;
-      add(torso, new THREE.CylinderGeometry(0.046, 0.05, 0.11, 16), mats.skin, 0, 0.59, 0);
-      const head = new THREE.Group();
-      head.position.y = 0.64;
-      torso.add(head);
-      add(head, new THREE.SphereGeometry(0.1, 32, 24), mats.skin, 0, 0.115, 0.005).scale.set(0.9, 1.17, 1.0);
-      // Hair: short tapered sides, fuller top with a side part, swept-up front quiff.
-      // A tilted cap around the skull puts the hairline high at the front and low at the nape.
-      const hairSides = add(head, new THREE.SphereGeometry(1, 40, 20, 0, Math.PI * 2, 0, Math.PI * 0.47), mats.hair, 0, 0.115, 0.005);
-      hairSides.scale.set(0.1, 0.127, 0.122);
-      hairSides.rotation.x = -0.55;
-      const hairTop = add(head, new THREE.SphereGeometry(1, 32, 20), mats.hair, 0.008, 0.205, 0.004);
-      hairTop.scale.set(0.072, 0.05, 0.1);
-      hairTop.rotation.set(-0.15, 0, 0.1);
-      const quiff = add(head, new THREE.SphereGeometry(1, 28, 16), mats.hair, 0.012, 0.212, 0.058);
-      quiff.scale.set(0.06, 0.038, 0.044);
-      quiff.rotation.set(-0.6, 0, 0.14);
+      // Thin lines of warm light leaking through the gaps around the closed door.
+      const leakMat = new THREE.MeshBasicMaterial({ color: WARM.clone().multiplyScalar(3), transparent: true, fog: false, depthWrite: false });
+      const leaks = new THREE.Group();
+      leaks.position.z = DOOR_Z + 0.004;
+      doorRoot.parent.add(leaks);
+      const leakStrip = (w, h, x, y) => {
+        const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), leakMat);
+        m.position.set(x, y, 0);
+        leaks.add(m);
+      };
+      const GAP = 0.012;
+      leakStrip(GAP, OPEN_H, -OPEN_W / 2 + 0.01, OPEN_H / 2);
+      leakStrip(GAP, OPEN_H, OPEN_W / 2 - 0.01, OPEN_H / 2);
+      leakStrip(OPEN_W, GAP * 0.7, 0, OPEN_H - 0.006);
+      leakStrip(OPEN_W, GAP, 0, 0.011);
 
-      // Arms: shoulder -> elbow, white cuffs, hands
-      const shoulders = [], elbows = [];
-      for (const side of [1, -1]) {
-        const shoulder = new THREE.Group();
-        shoulder.position.set(0.212 * side, 0.465, 0);
-        shoulder.rotation.z = 0.07 * side;
-        torso.add(shoulder);
-        add(shoulder, new THREE.SphereGeometry(0.066, 16, 12), mats.suit);
-        limb(shoulder, 0.3, 0.056, mats.suit);
-        const elbow = new THREE.Group();
-        elbow.position.y = -0.3;
-        shoulder.add(elbow);
-        limb(elbow, 0.26, 0.048, mats.suit);
-        add(elbow, new THREE.CylinderGeometry(0.041, 0.041, 0.024, 16), mats.shirt, 0, -0.262, 0);
-        add(elbow, new THREE.SphereGeometry(0.044, 16, 12), mats.skin, 0, -0.31, 0.004).scale.set(0.78, 1.3, 0.55);
-        shoulders.push(shoulder);
-        elbows.push(elbow);
-      }
+      // ---------- The warm room beyond (stencil-masked to the doorway, layer 1) ----------
+      const mask = new THREE.Mesh(
+        new THREE.PlaneGeometry(OPEN_W, OPEN_H),
+        new THREE.MeshBasicMaterial({
+          colorWrite: false, depthWrite: false, side: THREE.DoubleSide,
+          stencilWrite: true, stencilRef: 1, stencilFunc: THREE.AlwaysStencilFunc, stencilZPass: THREE.ReplaceStencilOp,
+        })
+      );
+      mask.position.set(0, OPEN_H / 2, DOOR_Z + FD / 2);
+      mask.renderOrder = -1;
+      mask.layers.set(1);
+      scene.add(mask);
 
-      return { root, pelvis, torso, head, hips, knees, shoulders, elbows, gait: 0, walkAmt: 0, climbAmt: 0, lastX: START_X };
-    }
-
-    // Procedural gait: phase advances with distance travelled, so feet don't slide.
-    function poseBusinessman(dt, t, moving, climbing) {
-      const dx = Math.abs(character.position.x - rig.lastX);
-      rig.lastX = character.position.x;
-      rig.gait += (dx / 0.55) * Math.PI;
-      rig.walkAmt += ((moving ? 1 : 0) - rig.walkAmt) * Math.min(1, dt * 8);
-      rig.climbAmt += ((climbing ? 1 : 0) - rig.climbAmt) * Math.min(1, dt * 6);
-      const w = rig.walkAmt, c = rig.climbAmt;
-      for (let i = 0; i < 2; i++) {
-        const ph = rig.gait + i * Math.PI;
-        const s = Math.sin(ph), swing = Math.max(0, Math.cos(ph));
-        rig.hips[i].rotation.x = -0.42 * s * w - 0.5 * c * w * Math.max(0, s);
-        rig.knees[i].rotation.x = w * (0.06 + 0.72 * swing * (1 + 0.7 * c)) + 0.3 * c * w * Math.max(0, s);
-        rig.shoulders[i].rotation.x = 0.34 * s * w;
-        rig.elbows[i].rotation.x = -(0.14 + 0.25 * w * Math.max(0, -s)) - 0.04 * (1 - w) * Math.sin(t * 1.3);
-      }
-      rig.pelvis.position.y = HIP_Y + w * (0.016 * Math.cos(2 * rig.gait) - 0.012);
-      rig.pelvis.rotation.y = 0.07 * Math.sin(rig.gait) * w;
-      rig.torso.rotation.y = -0.1 * Math.sin(rig.gait) * w;
-      rig.torso.rotation.x = 0.04 * w + 0.1 * c * w;
-      rig.torso.scale.y = 1 + 0.006 * Math.sin(t * 2.2) * (1 - w); // idle breathing
-      rig.head.rotation.x = -0.06 * c * w;
-    }
-
-    // ---------- Camera framing ----------
-    const camDir = new THREE.Vector3(-0.42, 0.58, 1).normalize();
-    const baseTarget = new THREE.Vector3(1.4, 1.35, 0);
-    let baseDist = 10;
-
-    function fitCamera() {
-      const aspect = window.innerWidth / window.innerHeight;
-      camera.fov = aspect < 0.8 ? 48 : aspect < 1.2 ? 42 : 35;
-      camera.aspect = aspect;
-      const vHalf = THREE.MathUtils.degToRad(camera.fov / 2);
-      const hHalf = Math.atan(Math.tan(vHalf) * aspect);
-      // Wide screens frame the full walk (x ≈ -3 … 6); portrait frames the stairs only.
-      const portrait = aspect < 0.8;
-      baseTarget.x = portrait ? 2.5 : 1.4;
-      const needH = (portrait ? 3.3 : 4.9) / Math.tan(hHalf);
-      const needV = 2.6 / Math.tan(vHalf);
-      baseDist = Math.max(needH, needV, 8.5);
-      scene.fog.near = baseDist * 1.2;
-      scene.fog.far = baseDist * 3.2;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-    fitCamera();
-    window.addEventListener('resize', fitCamera);
-
-    // ---------- Animation loop ----------
-    const clock = new THREE.Clock(false);
-    const progressSpans = document.querySelectorAll('#progress span');
-    const finaleEl = document.getElementById('finale');
-    let finaleShown = false;
-    let rafId = 0;
-    const tmpTarget = new THREE.Vector3();
-    const tmpPos = new THREE.Vector3();
-    const finalTarget = new THREE.Vector3();
-    const finalPos = new THREE.Vector3();
-
-    function start() {
-      if (intro.fellBack) return;
-      intro.playing = true;
-      loaderEl.classList.add('hide');
-      clock.start();
-      rafId = requestAnimationFrame(tick);
-    }
-
-    function ease(t, kind) {
-      if (kind === 'in') return t * t * (1.6 - 0.6 * t);
-      if (kind === 'out') return 1 - (1 - t) * (1 - t) * (1.6 - 0.6 * (1 - t));
-      return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-    }
-
-    function smooth(a, b, x) {
-      const t = THREE.MathUtils.clamp((x - a) / (b - a), 0, 1);
-      return t * t * (3 - 2 * t);
-    }
-
-    function lightStep(i) {
-      const st = steps[i];
-      if (st.lit) return;
-      st.lit = true;
-      progressSpans[i].classList.add('on');
-    }
-
-    function tick() {
-      rafId = requestAnimationFrame(tick);
-      const dt = Math.min(clock.getDelta(), 0.05);
-      const t = clock.elapsedTime;
-
-      // Character position along the timeline.
-      let walking = false;
-      let climbing = false;
-      let pos = segments[0].from;
-      let y = 0;
-      for (const s of segments) {
-        if (t < s.start) break;
-        if (t <= s.end) {
-          const k = (t - s.start) / s.dur;
-          const e = ease(k, s.ease);
-          const x = THREE.MathUtils.lerp(s.from.x, s.to.x, e);
-          // Rise mostly while crossing the riser, with a small lift arc.
-          y = s.climb
-            ? s.from.y + (s.to.y - s.from.y) * smooth(0.28, 0.72, e) + 0.035 * Math.sin(Math.PI * e)
-            : 0;
-          pos = new THREE.Vector2(x, y);
-          walking = true;
-          climbing = s.climb;
-          break;
-        }
-        pos = s.to;
-        y = s.to.y;
-        if (s.land >= 0) lightStep(s.land);
-      }
-      character.position.x = pos.x;
-      character.position.y = walking ? y : pos.y;
-
-      poseBusinessman(dt, t, walking, climbing);
-
-      // Step glow easing.
-      for (const st of steps) {
-        const goal = st.lit ? 1 : 0;
-        st.glow += (goal - st.glow) * Math.min(1, dt * 5);
-        st.stripMat.emissiveIntensity = st.glow * 2.4;
-        st.labelMat.emissiveIntensity = st.glow * 1.1;
-      }
-
-      // Camera: slow cinematic drift following the climber, then a push-in for the finale.
-      const drift = Math.sin(t * 0.18) * 0.12;
-      const dir = tmpPos.copy(camDir).applyAxisAngle(THREE.Object3D.DEFAULT_UP, drift - t * 0.012);
-      tmpTarget.copy(baseTarget);
-      tmpTarget.x = THREE.MathUtils.lerp(baseTarget.x, character.position.x, 0.22);
-      tmpTarget.y = baseTarget.y + character.position.y * 0.2;
-      const camPos = dir.multiplyScalar(baseDist).add(tmpTarget);
-
-      if (t > CLIMB_END) {
-        const f = smooth(0, FINALE_DUR, t - CLIMB_END);
-        finalTarget.set(character.position.x - 0.6, character.position.y + 0.55, 0);
-        finalPos.copy(camDir).applyAxisAngle(THREE.Object3D.DEFAULT_UP, 0.18).multiplyScalar(baseDist * 0.72).add(finalTarget);
-        camPos.lerp(finalPos, f);
-        tmpTarget.lerp(finalTarget, f);
-        // Turn the character to face the camera.
-        character.rotation.y = modelYaw - f * 1.35;
-        if (!finaleShown && t - CLIMB_END > 0.5) {
-          finaleShown = true;
-          finaleEl.classList.add('show');
-          document.getElementById('progress').style.opacity = '0';
-        }
-      }
-      camera.position.copy(camPos);
-      camera.lookAt(tmpTarget);
-
-      renderer.render(scene, camera);
-
-      if (t > EXIT_AFTER) intro.exit();
-    }
-
-    intro.cleanup = () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener('resize', fitCamera);
-      scene.traverse((o) => {
-        if (o.geometry) o.geometry.dispose();
-        if (o.material) {
-          const mats = Array.isArray(o.material) ? o.material : [o.material];
-          for (const m of mats) {
-            for (const key of ['map', 'roughnessMap', 'emissiveMap', 'normalMap']) if (m[key]) m[key].dispose();
-            m.dispose();
-          }
-        }
+      const glowMat = new THREE.MeshBasicMaterial({
+        color: WARM.clone().multiplyScalar(2.4), fog: false,
+        stencilWrite: true, stencilRef: 1, stencilFunc: THREE.EqualStencilFunc,
       });
-      envRT.dispose();
-      pmrem.dispose();
-      renderer.dispose();
-    };
+      const glowWall = new THREE.Mesh(new THREE.PlaneGeometry(16, 10), glowMat);
+      glowWall.position.set(0, 4, DOOR_Z - 3.0);
+      glowWall.renderOrder = 1;
+      glowWall.layers.set(1);
+      scene.add(glowWall);
 
-    // ---------- Procedural textures ----------
-    function makeGroundFadeTexture() {
-      const c = document.createElement('canvas');
-      c.width = c.height = 256;
-      const g = c.getContext('2d');
-      const grad = g.createRadialGradient(128, 128, 20, 128, 128, 128);
-      grad.addColorStop(0, '#ffffff');
-      grad.addColorStop(0.45, '#ffffff');
-      grad.addColorStop(1, '#000000');
-      g.fillStyle = grad;
-      g.fillRect(0, 0, 256, 256);
-      return new THREE.CanvasTexture(c);
-    }
+      // Warm floor inside the room, so the doorway reads as a lit space rather than a flat card.
+      const roomFloor = new THREE.Mesh(
+        new THREE.PlaneGeometry(16, 3.0),
+        new THREE.MeshBasicMaterial({
+          color: WARM.clone().multiplyScalar(0.25), fog: false,
+          stencilWrite: true, stencilRef: 1, stencilFunc: THREE.EqualStencilFunc,
+        })
+      );
+      roomFloor.rotation.x = -Math.PI / 2;
+      roomFloor.position.set(0, 0.004, DOOR_Z - 1.5);
+      roomFloor.renderOrder = 1;
+      roomFloor.layers.set(1);
+      scene.add(roomFloor);
 
-    function makeRadialTexture() {
-      const c = document.createElement('canvas');
-      c.width = c.height = 256;
-      const g = c.getContext('2d');
-      const grad = g.createRadialGradient(128, 128, 30, 128, 128, 128);
-      grad.addColorStop(0, 'rgba(20,32,64,0.55)');
-      grad.addColorStop(1, 'rgba(20,32,64,0)');
-      g.fillStyle = grad;
-      g.fillRect(0, 0, 256, 256);
-      return new THREE.CanvasTexture(c);
-    }
+      // ---------- Character (procedural; no model file) ----------
+      const HIP_Y = 0.94;
+      const rig = buildBusinessman();
+      const character = rig.root;
+      character.rotation.y = Math.PI; // built facing +Z; walk toward the door (-Z)
+      character.position.set(START_X, 0, START_Z);
+      scene.add(character);
+      const RIGHT = 1; // arm index 1 is the figure's right arm once turned to face -Z
 
-    function makeConcreteTextures() {
-      const size = 512;
-      const col = document.createElement('canvas');
-      const rough = document.createElement('canvas');
-      col.width = col.height = rough.width = rough.height = size;
-      const gc = col.getContext('2d');
-      const gr = rough.getContext('2d');
-      gc.fillStyle = '#eef1f7';
-      gc.fillRect(0, 0, size, size);
-      gr.fillStyle = '#9a9a9a';
-      gr.fillRect(0, 0, size, size);
-      // Soft blotches
-      for (let i = 0; i < 70; i++) {
-        const x = Math.random() * size, y = Math.random() * size, r = 20 + Math.random() * 70;
-        const a = 0.025 + Math.random() * 0.04;
-        const grad = gc.createRadialGradient(x, y, 0, x, y, r);
-        const shade = Math.random() < 0.5 ? '120,130,150' : '255,255,255';
-        grad.addColorStop(0, `rgba(${shade},${a})`);
-        grad.addColorStop(1, `rgba(${shade},0)`);
-        gc.fillStyle = grad;
-        gc.fillRect(x - r, y - r, r * 2, r * 2);
-        const gg = gr.createRadialGradient(x, y, 0, x, y, r);
-        const v = Math.random() < 0.5 ? 70 : 200;
-        gg.addColorStop(0, `rgba(${v},${v},${v},0.25)`);
-        gg.addColorStop(1, `rgba(${v},${v},${v},0)`);
-        gr.fillStyle = gg;
-        gr.fillRect(x - r, y - r, r * 2, r * 2);
+      function buildBusinessman() {
+        const mats = {
+          suit: new THREE.MeshPhysicalMaterial({ color: 0x1b2847, roughness: 0.74, sheen: 0.7, sheenRoughness: 0.75, sheenColor: 0x5d73a3 }),
+          shirt: new THREE.MeshStandardMaterial({ color: 0xf3f5f9, roughness: 0.6 }),
+          tie: new THREE.MeshPhysicalMaterial({ color: 0x0f766e, roughness: 0.4, sheen: 0.5, sheenColor: 0x5eead4 }),
+          copper: new THREE.MeshStandardMaterial({ color: 0xb87333, metalness: 0.85, roughness: 0.32 }),
+          skin: new THREE.MeshPhysicalMaterial({ color: 0xd8a888, roughness: 0.52, sheen: 0.25, sheenColor: 0xffd9c4 }),
+          hair: new THREE.MeshPhysicalMaterial({ color: 0x2b1d14, roughness: 0.62, sheen: 0.7, sheenRoughness: 0.45, sheenColor: 0x7a5538, side: THREE.DoubleSide }),
+          shoe: new THREE.MeshPhysicalMaterial({ color: 0x0e0f13, roughness: 0.28, clearcoat: 1, clearcoatRoughness: 0.15 }),
+        };
+        const add = (parent, geo, mat, x = 0, y = 0, z = 0) => {
+          const m = new THREE.Mesh(geo, mat);
+          m.position.set(x, y, z);
+          m.castShadow = true;
+          m.receiveShadow = true;
+          parent.add(m);
+          return m;
+        };
+        const limb = (parent, len, r, mat) => add(parent, new THREE.CapsuleGeometry(r, Math.max(0.01, len - r), 6, 16), mat, 0, -len / 2, 0);
+
+        const root = new THREE.Group();
+        const pelvis = new THREE.Group();
+        pelvis.position.y = HIP_Y;
+        root.add(pelvis);
+        add(pelvis, new THREE.SphereGeometry(1, 24, 16), mats.suit).scale.set(0.175, 0.11, 0.115);
+
+        // Legs: hip -> knee -> ankle
+        const hips = [], knees = [];
+        for (const side of [1, -1]) {
+          const hip = new THREE.Group();
+          hip.position.set(0.092 * side, -0.02, 0);
+          pelvis.add(hip);
+          limb(hip, 0.45, 0.074, mats.suit);
+          const knee = new THREE.Group();
+          knee.position.y = -0.45;
+          hip.add(knee);
+          limb(knee, 0.43, 0.062, mats.suit);
+          const ankle = new THREE.Group();
+          ankle.position.y = -0.43;
+          knee.add(ankle);
+          add(ankle, new RoundedBoxGeometry(0.1, 0.07, 0.27, 3, 0.03), mats.shoe, 0, -0.03, 0.055);
+          hips.push(hip);
+          knees.push(knee);
+        }
+
+        // Torso: tailored jacket (lathe profile, flattened front-to-back)
+        const torso = new THREE.Group();
+        torso.position.y = 0.02;
+        pelvis.add(torso);
+        const profile = [[0.001, -0.15], [0.168, -0.15], [0.172, -0.06], [0.158, 0.1], [0.175, 0.3], [0.198, 0.42], [0.175, 0.5], [0.09, 0.545], [0.001, 0.55]]
+          .map(([r, y]) => new THREE.Vector2(r, y));
+        add(torso, new THREE.LatheGeometry(profile, 40), mats.suit).scale.z = 0.62;
+
+        // Shirt V, tie, buttons, pocket square
+        const front = (y) => 0.62 * (y > 0.3 ? 0.175 + (y - 0.3) * 0.19 : 0.158 + Math.max(0, y - 0.1) * 0.085) + 0.004;
+        const vShape = new THREE.Shape([new THREE.Vector2(-0.062, 0), new THREE.Vector2(0.062, 0), new THREE.Vector2(0, -0.2)]);
+        const shirtV = add(torso, new THREE.ShapeGeometry(vShape), mats.shirt, 0, 0.53, front(0.45));
+        shirtV.rotation.x = -0.12;
+        const tieShape = new THREE.Shape([new THREE.Vector2(-0.016, 0), new THREE.Vector2(0.016, 0), new THREE.Vector2(0.026, -0.17), new THREE.Vector2(0, -0.2), new THREE.Vector2(-0.026, -0.17)]);
+        const tie = add(torso, new THREE.ShapeGeometry(tieShape), mats.tie, 0, 0.515, front(0.45) + 0.004);
+        tie.rotation.x = -0.12;
+        add(torso, new THREE.SphereGeometry(0.009, 10, 8), mats.copper, 0, 0.2, front(0.2) - 0.001);
+        add(torso, new THREE.SphereGeometry(0.009, 10, 8), mats.copper, 0, 0.11, front(0.11) - 0.002);
+        const pocket = add(torso, new THREE.BoxGeometry(0.05, 0.016, 0.01), mats.copper, 0.095, 0.37, front(0.37) - 0.012);
+        pocket.rotation.x = -0.1;
+
+        // Collar + neck + head
+        const collar = add(torso, new THREE.TorusGeometry(0.052, 0.016, 10, 24), mats.shirt, 0, 0.545, 0);
+        collar.rotation.x = Math.PI / 2;
+        add(torso, new THREE.CylinderGeometry(0.046, 0.05, 0.11, 16), mats.skin, 0, 0.59, 0);
+        const head = new THREE.Group();
+        head.position.y = 0.64;
+        torso.add(head);
+        add(head, new THREE.SphereGeometry(0.1, 32, 24), mats.skin, 0, 0.115, 0.005).scale.set(0.9, 1.17, 1.0);
+        // Hair: short tapered sides, fuller top with a side part, swept-up front quiff.
+        // A tilted cap around the skull puts the hairline high at the front and low at the nape.
+        const hairSides = add(head, new THREE.SphereGeometry(1, 40, 20, 0, Math.PI * 2, 0, Math.PI * 0.47), mats.hair, 0, 0.115, 0.005);
+        hairSides.scale.set(0.1, 0.127, 0.122);
+        hairSides.rotation.x = -0.55;
+        const hairTop = add(head, new THREE.SphereGeometry(1, 32, 20), mats.hair, 0.008, 0.205, 0.004);
+        hairTop.scale.set(0.072, 0.05, 0.1);
+        hairTop.rotation.set(-0.15, 0, 0.1);
+        const quiff = add(head, new THREE.SphereGeometry(1, 28, 16), mats.hair, 0.012, 0.212, 0.058);
+        quiff.scale.set(0.06, 0.038, 0.044);
+        quiff.rotation.set(-0.6, 0, 0.14);
+
+        // Arms: shoulder -> elbow, white cuffs, hands
+        const shoulders = [], elbows = [];
+        for (const side of [1, -1]) {
+          const shoulder = new THREE.Group();
+          shoulder.position.set(0.212 * side, 0.465, 0);
+          shoulder.rotation.z = 0.07 * side;
+          torso.add(shoulder);
+          add(shoulder, new THREE.SphereGeometry(0.066, 16, 12), mats.suit);
+          limb(shoulder, 0.3, 0.056, mats.suit);
+          const elbow = new THREE.Group();
+          elbow.position.y = -0.3;
+          shoulder.add(elbow);
+          limb(elbow, 0.26, 0.048, mats.suit);
+          add(elbow, new THREE.CylinderGeometry(0.041, 0.041, 0.024, 16), mats.shirt, 0, -0.262, 0);
+          add(elbow, new THREE.SphereGeometry(0.044, 16, 12), mats.skin, 0, -0.31, 0.004).scale.set(0.78, 1.3, 0.55);
+          shoulders.push(shoulder);
+          elbows.push(elbow);
+        }
+
+        return { root, pelvis, torso, head, hips, knees, shoulders, elbows, gait: 0, walkAmt: 0, pushDown: 0, lastX: START_X, lastZ: START_Z };
       }
-      // Fine aggregate speckle
-      for (let i = 0; i < 9000; i++) {
-        const x = Math.random() * size, y = Math.random() * size;
-        const v = Math.random() < 0.5 ? 0 : 255;
-        gc.fillStyle = `rgba(${v ? '255,255,255' : '90,100,120'},${0.05 + Math.random() * 0.08})`;
-        gc.fillRect(x, y, 1 + Math.random() * 1.5, 1 + Math.random() * 1.5);
-        gr.fillStyle = `rgba(${v},${v},${v},0.15)`;
-        gr.fillRect(x, y, 1.5, 1.5);
+
+      // Procedural gait + handle press. Gait phase follows distance travelled.
+      function poseBusinessman(dt, t, moving, press) {
+        const dx = character.position.x - rig.lastX, dz = character.position.z - rig.lastZ;
+        rig.lastX = character.position.x;
+        rig.lastZ = character.position.z;
+        rig.gait += (Math.hypot(dx, dz) / STRIDE) * Math.PI;
+        rig.walkAmt += ((moving ? 1 : 0) - rig.walkAmt) * Math.min(1, dt / 0.3 * 2.3); // ≈0.3s blend
+        const w = rig.walkAmt;
+        for (let i = 0; i < 2; i++) {
+          const ph = rig.gait + i * Math.PI;
+          const s = Math.sin(ph), swing = Math.max(0, Math.cos(ph));
+          rig.hips[i].rotation.x = -0.42 * s * w;
+          rig.knees[i].rotation.x = w * (0.06 + 0.72 * swing);
+          rig.shoulders[i].rotation.x = 0.34 * s * w;
+          rig.elbows[i].rotation.x = -(0.14 + 0.25 * w * Math.max(0, -s)) - 0.04 * (1 - w) * Math.sin(t * 1.3);
+        }
+        // Right hand reaches forward-down to the lever (two-bone pose solved for this reach).
+        if (press > 0) {
+          const sh = rig.shoulders[RIGHT], el = rig.elbows[RIGHT];
+          sh.rotation.x = THREE.MathUtils.lerp(sh.rotation.x, -0.36 + 0.05 * rig.pushDown, press);
+          el.rotation.x = THREE.MathUtils.lerp(el.rotation.x, -0.73, press);
+        }
+        rig.pelvis.position.y = HIP_Y + w * (0.016 * Math.cos(2 * rig.gait) - 0.012);
+        rig.pelvis.rotation.y = 0.07 * Math.sin(rig.gait) * w;
+        rig.torso.rotation.y = -0.1 * Math.sin(rig.gait) * w;
+        rig.torso.rotation.x = 0.04 * w + 0.05 * press;
+        rig.torso.scale.y = 1 + 0.006 * Math.sin(t * 2.2) * (1 - w); // idle breathing
       }
-      const color = new THREE.CanvasTexture(col);
-      color.colorSpace = THREE.SRGBColorSpace;
-      color.anisotropy = 4;
-      const roughT = new THREE.CanvasTexture(rough);
-      return { color, rough: roughT };
-    }
 
-    function makeLabelTexture(text) {
-      const c = document.createElement('canvas');
-      c.width = 512; c.height = 160;
-      const tex = new THREE.CanvasTexture(c);
-      tex.colorSpace = THREE.SRGBColorSpace;
-      tex.anisotropy = 8;
-      labelCanvases.push({ c, tex, text });
-      drawLabel(c, text);
-      return tex;
-    }
+      // ---------- Post-processing: subtle bloom on the door light only (HDR threshold) ----------
+      const rt = new THREE.WebGLRenderTarget(window.innerWidth * dpr, window.innerHeight * dpr, { type: THREE.HalfFloatType, stencilBuffer: true });
+      const composer = new EffectComposer(renderer, rt);
+      composer.setPixelRatio(dpr);
+      composer.setSize(window.innerWidth, window.innerHeight);
+      composer.addPass(new RenderPass(scene, camera));
+      const BLOOM = isMobile ? 0.2 : 0.4;
+      const bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth / 2, window.innerHeight / 2), BLOOM, 0.55, 0.95);
+      composer.addPass(bloom);
+      composer.addPass(new OutputPass());
 
-    function drawLabel(c, text) {
-      const g = c.getContext('2d');
-      g.clearRect(0, 0, c.width, c.height);
-      g.fillStyle = '#ffffff';
-      g.textAlign = 'center';
-      g.textBaseline = 'middle';
-      g.font = "800 104px Inter, 'Segoe UI', Arial, sans-serif";
-      if ('letterSpacing' in g) g.letterSpacing = '6px';
-      g.fillText(text, c.width / 2, c.height / 2 + 4);
-    }
+      // ---------- Camera ----------
+      let portrait = false;
+      const CAM = { a: new THREE.Vector3(), b: new THREE.Vector3(), c: new THREE.Vector3() };
+      function fit() {
+        const aspect = window.innerWidth / window.innerHeight;
+        portrait = aspect < 0.8;
+        camera.aspect = aspect;
+        camera.fov = portrait ? 52 : 40;
+        camera.updateProjectionMatrix();
+        // Offsets from the figure: behind (+Z), slightly right and above, easing in as he walks.
+        if (portrait) {
+          CAM.a.set(0.9, 2.7, 4.6); CAM.b.set(0.7, 2.5, 3.8); CAM.c.set(0.15, 1.8, 1.5);
+        } else {
+          CAM.a.set(1.35, 2.25, 4.3); CAM.b.set(1.0, 2.05, 3.5); CAM.c.set(0.2, 1.65, 1.5);
+        }
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        composer.setSize(window.innerWidth, window.innerHeight);
+      }
+      fit();
+      window.addEventListener('resize', fit);
 
-    function refreshLabelTextures() {
-      for (const l of labelCanvases) {
-        drawLabel(l.c, l.text);
-        l.tex.needsUpdate = true;
+      // Mouse parallax (1–2°) before he starts walking; off on touch devices.
+      const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
+      function onMouse(e) {
+        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = (e.clientY / window.innerHeight) * 2 - 1;
+      }
+      if (!isTouch) window.addEventListener('mousemove', onMouse);
+
+      // ---------- Timeline ----------
+      const clamp01 = (x) => Math.min(1, Math.max(0, x));
+      const smooth = (a, b, x) => { const k = clamp01((x - a) / (b - a)); return k * k * (3 - 2 * k); };
+      const inOutSine = (k) => -(Math.cos(Math.PI * k) - 1) / 2;
+      const inOutCubic = (k) => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
+      const inSine = (k) => 1 - Math.cos((k * Math.PI) / 2);
+
+      const fadeEl = document.getElementById('fadeIn');
+      const creamEl = document.getElementById('cream');
+      const skipEl = document.getElementById('skipBtn');
+      const clock = new THREE.Clock(false);
+      const camPos = new THREE.Vector3(), camOff = new THREE.Vector3(), look = new THREE.Vector3();
+      let rafId = 0, frame = null, frameReady = false, frameShown = false;
+
+      function start() {
+        if (intro.exited) return;
+        intro.playing = true;
+        try { localStorage.setItem('startsmart_intro_seen', '1'); } catch (e) { }
+        fadeEl.classList.add('gone');
+        skipEl.classList.add('show');
+        clock.start();
+        rafId = requestAnimationFrame(tick);
+      }
+
+      function preloadHome() {
+        let to = '/';
+        try {
+          const saved = sessionStorage.getItem('startsmart_intro_return');
+          if (saved && saved[0] === '/' && saved[1] !== '/') to = saved;
+        } catch (e) { }
+        const hashAt = to.indexOf('#');
+        const base = hashAt >= 0 ? to.slice(0, hashAt) : to;
+        const hash = hashAt >= 0 ? to.slice(hashAt) : '';
+        frame = document.createElement('iframe');
+        frame.id = 'homeFrame';
+        frame.setAttribute('aria-hidden', 'true');
+        frame.tabIndex = -1;
+        frame.onload = () => { frameReady = true; };
+        frame.src = base + (base.includes('?') ? '&' : '?') + 'nointro' + hash;
+        document.body.appendChild(frame);
+      }
+
+      function tick() {
+        rafId = requestAnimationFrame(tick);
+        const dt = Math.min(clock.getDelta(), 0.05);
+        const t = clock.elapsedTime;
+
+        // Position along the path
+        let x = START_X, z = START_Z, moving = false;
+        if (t >= T.walkStart && t < T.walkEnd) {
+          const e = inOutSine((t - T.walkStart) / (T.walkEnd - T.walkStart));
+          z = THREE.MathUtils.lerp(START_Z, STOP_Z, e);
+          moving = true;
+        } else if (t >= T.walkEnd && t < T.openEnd) {
+          z = STOP_Z;
+        } else if (t >= T.openEnd) {
+          const e = inSine(clamp01((t - T.openEnd) / (T.throughEnd - T.openEnd)));
+          x = THREE.MathUtils.lerp(START_X, END_X, e);
+          z = THREE.MathUtils.lerp(STOP_Z, END_Z, e);
+          moving = t < T.throughEnd + 0.3;
+        }
+        character.position.set(x, 0, z);
+        contact.position.set(x, 0.004, z + 0.02);
+        rim.position.set(x, 0, z).add(RIM_OFFSET);
+        rim.target.position.set(x, 1.55, z);
+        rim.intensity = 14 * (1 - smooth(T.openStart, T.openEnd, t) * 0.6);
+
+        // Handle press, then the door swings inward on its hinge
+        const press = smooth(2.45, 2.75, t) * (1 - smooth(3.05, 3.45, t));
+        rig.pushDown = smooth(2.6, 2.85, t);
+        lever.rotation.z = 0.52 * smooth(2.6, 2.85, t) * (1 - smooth(3.3, 3.6, t)); // ≈30° down
+        const open = inOutCubic(clamp01((t - T.openStart) / (T.openEnd - T.openStart)));
+        hinge.rotation.y = THREE.MathUtils.degToRad(100) * open;
+        poseBusinessman(dt, t, moving, press);
+
+        // Light: one gentle leak pulse at the start, then the flood as the door opens
+        const pulse = t < 0.6 ? Math.sin((Math.PI * t) / 0.6) : 0;
+        const light = smooth(T.openStart, T.openEnd, t);
+        glowMat.color.copy(WARM).multiplyScalar(2.4 + 1.4 * pulse + 1.6 * light);
+        roomFloor.material.color.copy(WARM).multiplyScalar(0.25 + 0.3 * pulse + 1.1 * light);
+        doorLight.intensity = 95 * light;
+        spill.material.opacity = 0.2 + 0.12 * pulse + 0.55 * light;
+        leakMat.color.copy(WARM).multiplyScalar(2.6 + 2.2 * pulse);
+        leakMat.opacity = 1 - smooth(T.openStart, T.openStart + 0.35, t);
+        spill.scale.set(1 + 0.6 * light, 1 + 3.2 * light, 1);
+        spill.position.z = DOOR_Z + 0.5 + 1.6 * light;
+        bloom.strength = BLOOM * (1 + 0.6 * light);
+        contact.material.opacity = 0.75 - 0.25 * light;
+
+        // Camera: behind and slightly above, easing in; follows him through the door
+        const a = smooth(T.walkStart, T.walkEnd, t);
+        const c = smooth(T.openEnd, T.throughEnd, t);
+        camOff.copy(CAM.a).lerp(CAM.b, a).lerp(CAM.c, c);
+        const par = isTouch ? 0 : 1 - smooth(T.walkStart, T.walkStart + 0.5, t);
+        mouse.sx += (mouse.x - mouse.sx) * Math.min(1, dt * 4);
+        mouse.sy += (mouse.y - mouse.sy) * Math.min(1, dt * 4);
+        camOff.applyAxisAngle(THREE.Object3D.DEFAULT_UP, -mouse.sx * THREE.MathUtils.degToRad(1.5) * par);
+        camOff.y += -mouse.sy * 0.05 * par;
+        camPos.set(x, 0, z).add(camOff);
+        camera.position.copy(camPos);
+        look.set(x * 0.5, 1.1 + 0.1 * c, z - 1.8);
+        camera.lookAt(look);
+
+        // Fill to cream as he steps through, then cross-fade into the real home page
+        creamEl.style.opacity = String(Math.pow(smooth(T.openEnd + 0.2, T.throughEnd, t), 1.4));
+        if (!frame && t > 2.0) preloadHome();
+        if (!frameShown && t >= T.throughEnd) {
+          frameShown = true;
+          if (frameReady) frame.classList.add('show');
+        }
+
+        if (reflector) reflector.visible = c < 0.95;
+        composer.render();
+
+        if (t >= T.homeEnd) intro.exit();
+      }
+
+      intro.cleanup = () => {
+        cancelAnimationFrame(rafId);
+        window.removeEventListener('resize', fit);
+        window.removeEventListener('mousemove', onMouse);
+        scene.traverse((o) => {
+          if (o.geometry) o.geometry.dispose();
+          if (o.material) {
+            for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
+              for (const k of ['map', 'roughnessMap', 'emissiveMap', 'normalMap', 'alphaMap']) if (m[k]) m[k].dispose();
+              m.dispose();
+            }
+          }
+        });
+        if (reflector) reflector.dispose();
+        bloom.dispose();
+        rt.dispose();
+        composer.renderTarget2.dispose();
+        envRT.dispose();
+        pmrem.dispose();
+        renderer.dispose();
+      };
+
+      // Wait briefly for Inter (door plate text), then go.
+      const fontsReady = document.fonts && document.fonts.load
+        ? Promise.race([document.fonts.load('700 64px Inter'), new Promise((r) => setTimeout(r, 600))]).catch(() => { })
+        : Promise.resolve();
+      fontsReady.then(() => {
+        plateText.material.map.dispose();
+        plateText.material.map = plateTexture();
+        plateText.material.needsUpdate = true;
+        renderer.compile(scene, camera);
+        start();
+      });
+
+      // ---------- Procedural textures ----------
+      function radialTexture(inner, outer) {
+        const c = document.createElement('canvas');
+        c.width = c.height = 128;
+        const g = c.getContext('2d');
+        const grad = g.createRadialGradient(64, 64, 4, 64, 64, 64);
+        grad.addColorStop(0, inner);
+        grad.addColorStop(1, outer);
+        g.fillStyle = grad;
+        g.fillRect(0, 0, 128, 128);
+        return new THREE.CanvasTexture(c);
+      }
+
+      function spillTexture() {
+        // Bright at the door edge (top of the texture), fanning out and fading toward the camera.
+        const c = document.createElement('canvas');
+        c.width = 128; c.height = 256;
+        const g = c.getContext('2d');
+        for (let y = 0; y < 256; y++) {
+          const k = y / 255;
+          const halfW = 64 * (0.55 + 0.45 * k);
+          const a = Math.pow(1 - k, 1.6);
+          const grad = g.createLinearGradient(64 - halfW, 0, 64 + halfW, 0);
+          grad.addColorStop(0, 'rgba(255,255,255,0)');
+          grad.addColorStop(0.5, `rgba(255,255,255,${a})`);
+          grad.addColorStop(1, 'rgba(255,255,255,0)');
+          g.fillStyle = grad;
+          g.fillRect(64 - halfW, y, halfW * 2, 1);
+        }
+        const tex = new THREE.CanvasTexture(c);
+        tex.colorSpace = THREE.SRGBColorSpace;
+        return tex;
+      }
+
+      function plateTexture() {
+        const c = document.createElement('canvas');
+        c.width = 540; c.height = 120;
+        const g = c.getContext('2d');
+        g.fillStyle = 'rgba(52, 26, 10, 0.92)';
+        g.textAlign = 'center';
+        g.textBaseline = 'middle';
+        g.font = "700 64px Inter, 'Segoe UI', Arial, sans-serif";
+        if ('letterSpacing' in g) g.letterSpacing = '4px';
+        g.fillText('StartSmart', 270, 64);
+        const tex = new THREE.CanvasTexture(c);
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.anisotropy = 8;
+        return tex;
       }
     }
   </script>
