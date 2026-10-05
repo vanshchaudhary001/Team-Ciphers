@@ -460,7 +460,14 @@ label { color: var(--ink-700); }
   align-items: center;
   gap: 64px;
 }
-.ii-hero-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 28px; }
+.ii-hero-copy {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+}
 .ii-display {
   margin: 0;
   font-family: var(--font-display) !important;
@@ -469,14 +476,25 @@ label { color: var(--ink-700); }
   line-height: 1.02;
   letter-spacing: -0.02em !important;
   color: var(--ink-900);
+  text-shadow: 0 1px 18px rgba(255, 255, 255, 0.45);
+  position: relative;
+  z-index: 1;
 }
 .ii-display em { display: block; }
-.ii-lede { margin: 0; max-width: 520px; font-size: 18px; line-height: 1.55; color: var(--ink-500); }
-.ii-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; }
+.ii-lede { margin: 0; max-width: 520px; font-size: 18px; line-height: 1.55; color: var(--ink-500); position: relative; z-index: 1; }
+.ii-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; position: relative; z-index: 1; }
 .ii-hero-visual { position: relative; height: 480px; }
 .ii-glow {
   position: absolute; inset: -40px; border-radius: 50%;
   background: radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 62%);
+  pointer-events: none;
+}
+.ii-glow-copy {
+  inset: -60px -80px -60px -80px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 42% 40%, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.88) 35%, rgba(255, 255, 255, 0.40) 58%, rgba(255, 255, 255, 0) 74%);
+  z-index: -1;
+  pointer-events: none;
 }
 .ii-mock { position: absolute; display: flex; }
 .ii-mock-progress {
