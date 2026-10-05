@@ -31,6 +31,7 @@
   --copper-gradient-light: linear-gradient(135deg, #EACBB0 0%, #DCA982 50%, #C98A5C 100%); /* copper-200 → 400, for text over dark photos */
   --warm-placeholder: #8A7E75;
   --warm-scrim: radial-gradient(ellipse at center, rgba(20, 14, 10, 0.45) 0%, rgba(20, 14, 10, 0) 70%);
+  --copper-line: rgba(220, 169, 130, 0.6); /* copper-300 at 60%: divider lines over photos */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
@@ -6316,6 +6317,7 @@ button {
    converted page, so the pages share one set of declarations:
      #step-gateway   = landing page ("Welcome to the Enterprise Onboarding Portal")
      #step-companies = company directory ("Welcome to StartSmart")
+     #step-departments = company sign-in + 18 departments (shared template for every company)
    The shared header is restyled only while one of these pages is showing (:has()).
    ========================================================================== */
 
@@ -6335,10 +6337,12 @@ button {
 #step-gateway .portal-card-primary,
 #step-gateway .portal-card-secondary,
 #step-gateway .portal-features-bar,
-#step-companies .companies-grid .company-card {
+#step-companies .companies-grid .company-card,
+#step-departments .dept-auth-card,
+#step-departments .departments-grid .department-card {
   border-color: var(--copper-border-soft) !important;
   box-shadow: var(--copper-shadow-soft) !important;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, background-color 0.2s ease !important;
 }
 #step-gateway .portal-card-primary:hover,
 #step-gateway .portal-card-secondary:hover,
@@ -6353,14 +6357,16 @@ button {
 #step-gateway .portal-sec-title,
 #step-gateway .portal-feature-text h4,
 #step-gateway .portal-check-item,
-#step-companies .company-name { color: var(--warm-text); }
+#step-companies .company-name,
+#step-departments .department-name { color: var(--warm-text); }
 #step-gateway .portal-primary-desc,
 #step-gateway .portal-sec-desc,
 #step-gateway .portal-sec-checks,
 #step-gateway .portal-sso-caption,
 #step-gateway .portal-federated-caption,
 #step-gateway .portal-feature-text p,
-#step-companies .company-meta { color: var(--warm-muted); }
+#step-companies .company-meta,
+#step-departments .department-meta-row { color: var(--warm-muted); }
 
 /* ---- Icons and their tiles ---- */
 #step-gateway .portal-icon-box-blue,
@@ -6382,7 +6388,8 @@ button {
 /* ---- Labels and badges ---- */
 #step-gateway .badge-enrolled-org,
 #step-gateway .badge-new-org,
-#step-companies .company-category-chip {
+#step-companies .company-category-chip,
+#step-departments .department-code-badge {
   background: var(--copper-50);
   color: var(--copper-700);
   border-color: var(--copper-200);
@@ -6393,12 +6400,14 @@ button {
   color: var(--copper-800);
   border-color: var(--copper-300);
 }
-#step-gateway .badge-ready-signin {
-  background: rgba(63, 125, 88, 0.08);
-  color: var(--status-success);
-  border-color: rgba(63, 125, 88, 0.28);
+#step-gateway .badge-ready-signin,
+#step-departments #dept-card-verified-badge {
+  background: rgba(63, 125, 88, 0.08) !important;
+  color: var(--status-success) !important;
+  border-color: rgba(63, 125, 88, 0.28) !important;
 }
-#step-gateway .ready-pulse-dot { background: var(--status-success); }
+#step-gateway .ready-pulse-dot,
+#step-departments #dept-card-verified-badge > span:first-child { background: var(--status-success) !important; }
 
 /* ---- Checkmarks ---- */
 #step-gateway .portal-check-badge {
@@ -6411,17 +6420,22 @@ button {
 /* ---- Primary button (copper gradient; deep stops keep white text at AA) ---- */
 #step-gateway .btn-select-company-dark,
 #step-companies .company-card:hover .company-signin-btn,
-#step-companies .company-card.featured-card:hover .company-signin-btn {
-  background: var(--copper-gradient-strong);
-  color: #FFFFFF;
-  border-color: transparent;
-  box-shadow: 0 4px 14px rgba(125, 71, 32, 0.22);
+#step-companies .company-card.featured-card:hover .company-signin-btn,
+#step-departments #dept-direct-submit-btn {
+  background: var(--copper-gradient-strong) !important;
+  color: #FFFFFF !important;
+  border-color: transparent !important;
+  box-shadow: 0 4px 14px rgba(125, 71, 32, 0.22) !important;
 }
-#step-gateway .btn-select-company-dark:hover {
-  background: var(--copper-600);
-  box-shadow: 0 6px 20px rgba(125, 71, 32, 0.28);
+#step-gateway .btn-select-company-dark:hover,
+#step-departments #dept-direct-submit-btn:hover {
+  background: var(--copper-600) !important;
+  box-shadow: 0 6px 20px rgba(125, 71, 32, 0.28) !important;
 }
-#step-gateway .btn-select-company-dark:active { background: var(--copper-700); }
+#step-gateway .btn-select-company-dark:active,
+#step-departments #dept-direct-submit-btn:active { background: var(--copper-700) !important; }
+#step-departments #dept-direct-submit-btn:disabled { opacity: 0.6; cursor: default; }
+#step-departments #dept-direct-submit-btn:focus-visible { box-shadow: var(--copper-focus-ring), 0 4px 14px rgba(125, 71, 32, 0.22) !important; }
 
 /* ---- Soft copper button (company "Sign In →" at rest, same on every card) ---- */
 #step-companies .company-signin-btn,
@@ -6448,25 +6462,46 @@ button {
 #step-gateway .btn-select-company-dark:focus-visible,
 #step-gateway .btn-register-workspace-white:focus-visible,
 #step-gateway .portal-clean-footer a:focus-visible,
-#step-companies .company-card:focus-visible {
+#step-companies .company-card:focus-visible,
+#step-departments #dept-direct-submit-btn:focus-visible,
+#step-departments .dept-auth-card a:focus-visible,
+#step-departments #dept-direct-toggle-password:focus-visible {
   outline: 2px solid var(--copper-500);
   outline-offset: 2px;
   box-shadow: var(--copper-focus-ring);
 }
 
 /* ---- Inputs ---- */
-#step-companies .companies-search-input {
+#step-companies .companies-search-input,
+#step-departments .companies-search-input {
   border-color: var(--copper-border-soft);
   box-shadow: var(--copper-shadow-soft);
   color: var(--warm-text);
 }
-#step-companies .companies-search-input::placeholder { color: var(--warm-placeholder); }
-#step-companies .companies-search-input:focus {
+#step-companies .companies-search-input::placeholder,
+#step-departments .companies-search-input::placeholder { color: var(--warm-placeholder); }
+#step-companies .companies-search-input:focus,
+#step-departments .companies-search-input:focus {
   border-color: var(--copper-500);
   box-shadow: var(--copper-focus-ring);
   outline: none;
 }
-#step-companies .companies-search-icon { color: var(--copper-500); }
+#step-companies .companies-search-icon,
+#step-departments .companies-search-icon { color: var(--copper-500); }
+/* Form fields (sign-in card): same soft copper border and focus ring */
+#step-departments #dept-direct-email,
+#step-departments #dept-direct-password {
+  border-color: var(--copper-border-soft) !important;
+  color: var(--warm-text) !important;
+}
+#step-departments #dept-direct-email:focus,
+#step-departments #dept-direct-password:focus {
+  border-color: var(--copper-500) !important;
+  box-shadow: var(--copper-focus-ring);
+  outline: none;
+}
+#step-departments #dept-direct-email:invalid:not(:focus):not(:placeholder-shown),
+#step-departments #dept-direct-password:invalid:not(:focus):not(:placeholder-shown) { border-color: var(--status-error) !important; }
 
 /* ---- Heading area over the photo ---- */
 #step-companies .companies-hero-wrap { background: var(--warm-scrim); }
@@ -6496,49 +6531,131 @@ button {
 #step-companies .companies-trust-footer { border-top-color: var(--copper-border-soft); }
 #step-companies .trust-shield-badge .material-symbols-outlined { color: var(--copper-500) !important; }
 
+/* ---- Company sign-in card + departments (#step-departments; same template for every company) ---- */
+#step-departments #dept-card-company-name,
+#step-departments .dept-auth-card h2,
+#step-departments .dept-auth-card p strong,
+#step-departments .dept-auth-card label,
+#step-departments #dept-direct-signin-form > div[style*="border-top"] > div:first-child { color: var(--warm-text) !important; }
+#step-departments .dept-auth-card p,
+#step-departments #dept-tenant-domain-caption { color: var(--warm-muted) !important; }
+#step-departments #dept-direct-toggle-password { color: var(--warm-muted) !important; }
+#step-departments #dept-direct-toggle-password:hover { color: var(--copper-600) !important; }
+#step-departments .dept-auth-card form a { color: var(--copper-700) !important; }
+#step-departments .dept-auth-card form a:hover { color: var(--copper-800) !important; text-decoration: underline !important; }
+#step-departments .dept-auth-card input[type="checkbox"] { accent-color: var(--copper-500) !important; }
+#step-departments .dept-auth-card input[type="checkbox"]:focus-visible { outline: 2px solid var(--copper-500); outline-offset: 2px; box-shadow: var(--copper-focus-ring); }
+#step-departments #dept-direct-signin-form > div[style*="border-top"] { border-top-color: var(--copper-100) !important; }
+#step-departments #dept-direct-signin-form span[style*="#22c55e"] { color: var(--copper-500) !important; } /* ✓ like the welcome page checkmarks */
+#step-departments #dept-direct-signin-form div[style*="#0067b8"] { color: var(--copper-700) !important; }
+#step-departments #dept-direct-signin-form div[style*="#0067b8"]:hover { color: var(--copper-800) !important; }
+
+/* Divider: "Or select from 18 departments & branches" over the photo */
+#step-departments .dept-auth-card-wrapper + div > div:nth-child(2) {
+  color: rgba(255, 255, 255, 0.85) !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+#step-departments .dept-auth-card-wrapper + div > div:first-child { background: linear-gradient(90deg, transparent, var(--copper-line)) !important; }
+#step-departments .dept-auth-card-wrapper + div > div:last-child { background: linear-gradient(90deg, var(--copper-line), transparent) !important; }
+
+/* Department cards: hover is the "selected" look — copper bar, stronger border, copper tint */
+#step-departments .departments-grid .department-card:hover {
+  border-color: rgba(184, 115, 51, 0.6) !important;
+  background-color: var(--copper-50) !important;
+  box-shadow: var(--copper-shadow-hover) !important;
+}
+#step-departments .department-card::before { width: 3px; background: var(--copper-500); }
+#step-departments .department-icon-box {
+  background: var(--copper-50);
+  box-shadow: inset 0 0 0 1px var(--copper-200);
+  color: var(--copper-600);
+}
+#step-departments .department-meta-item .material-symbols-outlined { color: var(--copper-500) !important; }
+#step-departments .department-card-footer {
+  border-top-color: var(--copper-100);
+  color: var(--copper-700);
+}
+#step-departments .department-card:hover .department-card-footer { color: var(--copper-800); }
+#step-departments .department-card-footer .material-symbols-outlined { transition: transform 0.2s ease; }
+#step-departments .department-card:hover .department-card-footer .material-symbols-outlined { transform: translateX(2px); }
+
+/* Lower footer text over the photo */
+#step-departments .companies-trust-footer {
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45), 0 2px 10px rgba(0, 0, 0, 0.4);
+  position: relative;
+  isolation: isolate;
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(90deg, transparent, var(--copper-line), transparent) 1;
+}
+/* Feathered warm-dark wash behind the footer text (like the hero scrim) so it reads over bright parts of the photo */
+#step-departments .companies-trust-footer::before {
+  content: '';
+  position: absolute;
+  inset: -4px -48px -16px;
+  z-index: -1;
+  pointer-events: none;
+  background: rgba(20, 14, 10, 0.5);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent), linear-gradient(180deg, transparent, #000 40%, #000 70%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent), linear-gradient(180deg, transparent, #000 40%, #000 70%, transparent);
+  mask-composite: intersect;
+}
+#step-departments .trust-shield-badge .material-symbols-outlined { color: var(--status-success) !important; }
+
 /* ---- Shared header — only while a converted page is showing ---- */
-html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .app-header {
+html:has(:is(#step-gateway, #step-companies, #step-departments):not([style*="display: none"])) .app-header {
   border-bottom-color: rgba(184, 115, 51, 0.18) !important;
   box-shadow: 0 1px 4px rgba(125, 71, 32, 0.05) !important;
 }
-html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .app-header .brand-icon {
+html:has(:is(#step-gateway, #step-companies, #step-departments):not([style*="display: none"])) .app-header .brand-icon {
   border-color: rgba(184, 115, 51, 0.28) !important;
   box-shadow: 0 2px 8px rgba(125, 71, 32, 0.10) !important;
 }
-html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .app-header .brand-title > span:first-child {
+html:has(:is(#step-gateway, #step-companies, #step-departments):not([style*="display: none"])) .app-header .brand-title > span:first-child {
   color: var(--warm-text) !important;
 }
-html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .app-header .brand-title > span:first-child > span {
+html:has(:is(#step-gateway, #step-companies, #step-departments):not([style*="display: none"])) .app-header .brand-title > span:first-child > span {
   color: var(--copper-600) !important;
 }
-html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .app-header .brand-badge {
+html:has(:is(#step-gateway, #step-companies, #step-departments):not([style*="display: none"])) .app-header .brand-badge {
   background: var(--copper-50) !important;
   color: var(--copper-700) !important;
   box-shadow: inset 0 0 0 1px var(--copper-200);
 }
-html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .app-header .brand-tagline {
+html:has(:is(#step-gateway, #step-companies, #step-departments):not([style*="display: none"])) .app-header .brand-tagline {
   color: var(--warm-muted) !important;
 }
-html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .nav-link-home-only {
+html:has(:is(#step-gateway, #step-companies, #step-departments):not([style*="display: none"])) .nav-link-home-only {
   color: var(--warm-text);
   border-color: var(--copper-200);
   box-shadow: 0 1px 2px rgba(125, 71, 32, 0.05);
 }
-html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .nav-link-home-only:hover {
+html:has(:is(#step-gateway, #step-companies, #step-departments):not([style*="display: none"])) .nav-link-home-only:hover {
   color: var(--copper-700);
   background: var(--copper-50);
   border-color: var(--copper-300);
   box-shadow: 0 2px 5px rgba(125, 71, 32, 0.08);
 }
-html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .nav-link-home-only:active { background: var(--copper-100); }
-html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .nav-link-home-only:focus-visible,
-html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .header-back-btn:focus-visible {
+html:has(:is(#step-gateway, #step-companies, #step-departments):not([style*="display: none"])) .nav-link-home-only:active { background: var(--copper-100); }
+html:has(:is(#step-gateway, #step-companies, #step-departments):not([style*="display: none"])) .nav-link-home-only:focus-visible,
+html:has(:is(#step-gateway, #step-companies, #step-departments):not([style*="display: none"])) .header-back-btn:focus-visible {
   outline: 2px solid var(--copper-500);
   outline-offset: 2px;
   box-shadow: var(--copper-focus-ring);
 }
-html:has(:is(#step-gateway, #step-companies):not([style*="display: none"])) .header-back-btn:hover {
+html:has(:is(#step-gateway, #step-companies, #step-departments):not([style*="display: none"])) .header-back-btn:hover {
   border-color: var(--copper-300);
   color: var(--copper-700);
   background: var(--copper-50);
 }
+
+/* White footer bar (shared .app-footer) — only while the departments page is showing */
+html:has(#step-departments:not([style*="display: none"])) .app-footer { border-top-color: var(--copper-100); }
+html:has(#step-departments:not([style*="display: none"])) .app-footer .footer-copy { color: var(--warm-muted); }
+html:has(#step-departments:not([style*="display: none"])) .app-footer .security-badge {
+  background: var(--copper-50);
+  border-color: var(--copper-200);
+  color: var(--copper-700);
+}
+html:has(#step-departments:not([style*="display: none"])) .app-footer .security-badge svg { color: var(--copper-500); stroke: var(--copper-500); }
