@@ -3,12 +3,20 @@
 
 <head>
   <script>
-    // Show the 3D intro (/intro.html) once per browser session.
+    // Show the 3D intro (/intro.html) on every fresh visit and every refresh.
+    // Skipped when returning from the intro, on Back/Forward, when arriving from
+    // another page of this site, or with ?nointro.
     (function () {
       try {
         if (/[?&](from=intro|nointro)(&|=|$)/.test(window.location.search)) return;
-        if (sessionStorage.getItem('startsmart_intro_seen')) return;
-        sessionStorage.setItem('startsmart_intro_seen', '1');
+        if (sessionStorage.getItem('startsmart_intro_done')) {
+          sessionStorage.removeItem('startsmart_intro_done');
+          return;
+        }
+        var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0] || {}).type;
+        var internal = document.referrer && document.referrer.indexOf(window.location.origin + '/') === 0;
+        if (nav === 'back_forward' || (nav !== 'reload' && internal)) return;
+        sessionStorage.setItem('startsmart_intro_return', window.location.pathname + window.location.search + window.location.hash);
         window.location.replace('/intro.html');
       } catch (e) { }
     })();

@@ -12,11 +12,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
   <script>
+    // Return to the page that triggered the intro, telling it not to redirect again.
+    function goHome() {
+      var to = '/';
+      try {
+        var saved = sessionStorage.getItem('startsmart_intro_return');
+        if (saved && saved.charAt(0) === '/' && saved.charAt(1) !== '/') to = saved;
+        sessionStorage.removeItem('startsmart_intro_return');
+        sessionStorage.setItem('startsmart_intro_done', '1');
+      } catch (e) { }
+      window.location.replace(to);
+    }
+
     // Reduced motion: skip the intro entirely.
     (function () {
       try {
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          window.location.replace('/?from=intro');
+          goHome();
         }
       } catch (e) { }
     })();
@@ -314,7 +326,7 @@
         if (this.exited) return;
         this.exited = true;
         try { if (this.cleanup) this.cleanup(); } catch (e) { }
-        window.location.replace('/?from=intro');
+        goHome();
       },
       fallback: function () {
         if (this.exited || this.fellBack) return;
@@ -527,7 +539,7 @@
         tie: new THREE.MeshPhysicalMaterial({ color: 0x0f766e, roughness: 0.4, sheen: 0.5, sheenColor: 0x5eead4 }),
         copper: new THREE.MeshStandardMaterial({ color: 0xb87333, metalness: 0.85, roughness: 0.32 }),
         skin: new THREE.MeshPhysicalMaterial({ color: 0xd8a888, roughness: 0.52, sheen: 0.25, sheenColor: 0xffd9c4 }),
-        hair: new THREE.MeshStandardMaterial({ color: 0x33251c, roughness: 0.82 }),
+        hair: new THREE.MeshPhysicalMaterial({ color: 0x2b1d14, roughness: 0.62, sheen: 0.7, sheenRoughness: 0.45, sheenColor: 0x7a5538, side: THREE.DoubleSide }),
         shoe: new THREE.MeshPhysicalMaterial({ color: 0x0e0f13, roughness: 0.28, clearcoat: 1, clearcoatRoughness: 0.15 }),
       };
       const add = (parent, geo, mat, x = 0, y = 0, z = 0) => {
@@ -594,9 +606,17 @@
       head.position.y = 0.64;
       torso.add(head);
       add(head, new THREE.SphereGeometry(0.1, 32, 24), mats.skin, 0, 0.115, 0.005).scale.set(0.9, 1.17, 1.0);
-      const hair = add(head, new THREE.SphereGeometry(0.104, 32, 16, 0, Math.PI * 2, 0, Math.PI * 0.52), mats.hair, 0, 0.135, -0.008);
-      hair.scale.set(0.93, 1.12, 1.05);
-      hair.rotation.x = -0.32;
+      // Hair: short tapered sides, fuller top with a side part, swept-up front quiff.
+      // A tilted cap around the skull puts the hairline high at the front and low at the nape.
+      const hairSides = add(head, new THREE.SphereGeometry(1, 40, 20, 0, Math.PI * 2, 0, Math.PI * 0.47), mats.hair, 0, 0.115, 0.005);
+      hairSides.scale.set(0.1, 0.127, 0.122);
+      hairSides.rotation.x = -0.55;
+      const hairTop = add(head, new THREE.SphereGeometry(1, 32, 20), mats.hair, 0.008, 0.205, 0.004);
+      hairTop.scale.set(0.072, 0.05, 0.1);
+      hairTop.rotation.set(-0.15, 0, 0.1);
+      const quiff = add(head, new THREE.SphereGeometry(1, 28, 16), mats.hair, 0.012, 0.212, 0.058);
+      quiff.scale.set(0.06, 0.038, 0.044);
+      quiff.rotation.set(-0.6, 0, 0.14);
 
       // Arms: shoulder -> elbow, white cuffs, hands
       const shoulders = [], elbows = [];
