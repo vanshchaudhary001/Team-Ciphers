@@ -3,6 +3,31 @@
    ========================================================================== */
 
 :root {
+  /* ---- Copper theme tokens (shared palette; adding them changes nothing by itself) ---- */
+  --copper-50: #FBF4EE;   /* very light tint: backgrounds, hover */
+  --copper-100: #F5E6D8;
+  --copper-200: #EACBB0;
+  --copper-300: #DCA982;  /* soft borders */
+  --copper-400: #C98A5C;
+  --copper-500: #B87333;  /* primary copper */
+  --copper-600: #9C5B26;  /* hover / pressed */
+  --copper-700: #7D4720;  /* copper text on light backgrounds (AA) */
+  --copper-800: #5E361A;
+  --copper-900: #3F2413;  /* deep copper-brown, dark surfaces */
+  --copper-gradient: linear-gradient(135deg, #D08A4E 0%, #B87333 50%, #8E5428 100%);       /* decorative accents */
+  --copper-gradient-strong: linear-gradient(135deg, #A6642B 0%, #9C5B26 50%, #7D4720 100%); /* behind white text (AA) */
+  --copper-border-soft: rgba(184, 115, 51, 0.35);
+  --copper-border-strong: rgba(184, 115, 51, 0.55);
+  --copper-shadow-soft: 0 1px 2px rgba(125, 71, 32, 0.06), 0 4px 14px rgba(184, 115, 51, 0.08);
+  --copper-shadow-hover: 0 2px 4px rgba(125, 71, 32, 0.05), 0 8px 24px rgba(184, 115, 51, 0.10);
+  --copper-focus-ring: 0 0 0 3px rgba(184, 115, 51, 0.18);
+  --warm-text: #1F1A17;
+  --warm-muted: #6B6058;
+  --warm-surface: #FFFFFF;
+  --warm-offwhite: #FFFCF9;
+  --status-success: #3F7D58;
+  --status-warning: #C8892B;
+  --status-error: #B4432F;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
@@ -6282,5 +6307,157 @@ button {
   background: #ffffff;
 }
 
+/* ==========================================================================
+   COPPER THEME: Landing page ("Welcome to the Enterprise Onboarding Portal")
+   Colours, borders and shadows only. Scoped to #step-gateway; the shared header
+   is scoped with :has() so it only changes while the landing page is showing.
+   ========================================================================== */
 
+/* Pill above the heading */
+#step-gateway .portal-security-badge {
+  background: rgba(251, 244, 238, 0.85);
+  border-color: var(--copper-300);
+  color: var(--copper-700);
+  box-shadow: 0 2px 10px rgba(63, 36, 19, 0.12);
+}
+#step-gateway .portal-security-badge svg { color: var(--copper-700); }
 
+/* Cards and panels */
+#step-gateway .portal-card-primary,
+#step-gateway .portal-card-secondary,
+#step-gateway .portal-features-bar {
+  border-color: var(--copper-border-soft);
+  box-shadow: var(--copper-shadow-soft);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+#step-gateway .portal-card-primary:hover,
+#step-gateway .portal-card-secondary:hover {
+  border-color: var(--copper-border-strong);
+  box-shadow: var(--copper-shadow-hover);
+}
+#step-gateway .portal-card-primary::before { background: var(--copper-gradient); }
+
+/* Text inside the cards (warm neutrals; AA on white) */
+#step-gateway .portal-primary-heading,
+#step-gateway .portal-sec-title,
+#step-gateway .portal-feature-text h4,
+#step-gateway .portal-check-item { color: var(--warm-text); }
+#step-gateway .portal-primary-desc,
+#step-gateway .portal-sec-desc,
+#step-gateway .portal-sec-checks,
+#step-gateway .portal-sso-caption,
+#step-gateway .portal-federated-caption,
+#step-gateway .portal-feature-text p { color: var(--warm-muted); }
+
+/* Icons and their tiles */
+#step-gateway .portal-icon-box-blue,
+#step-gateway .portal-icon-box-gray,
+#step-gateway .portal-feature-icon {
+  background: var(--copper-50);
+  border-color: var(--copper-200);
+  color: var(--copper-500);
+}
+#step-gateway .portal-icon-box-blue svg,
+#step-gateway .portal-icon-box-gray svg,
+#step-gateway .portal-feature-icon svg { stroke: var(--copper-500); }
+
+/* Labels and badges */
+#step-gateway .badge-enrolled-org,
+#step-gateway .badge-new-org {
+  background: var(--copper-50);
+  color: var(--copper-700);
+  border-color: var(--copper-200);
+}
+#step-gateway .badge-ready-signin {
+  background: rgba(63, 125, 88, 0.08);
+  color: var(--status-success);
+  border-color: rgba(63, 125, 88, 0.28);
+}
+#step-gateway .ready-pulse-dot { background: var(--status-success); }
+
+/* Checkmarks */
+#step-gateway .portal-check-badge {
+  background: var(--copper-50);
+  border-color: var(--copper-200);
+  color: var(--copper-500);
+}
+#step-gateway .portal-sec-check-item svg { color: var(--copper-500); stroke: var(--copper-500); }
+
+/* Primary button: copper gradient (deep stops keep white text at AA) */
+#step-gateway .btn-select-company-dark {
+  background: var(--copper-gradient-strong);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(125, 71, 32, 0.22);
+}
+#step-gateway .btn-select-company-dark:hover {
+  background: var(--copper-600);
+  box-shadow: 0 6px 20px rgba(125, 71, 32, 0.28);
+}
+#step-gateway .btn-select-company-dark:active { background: var(--copper-700); }
+
+/* Secondary button */
+#step-gateway .btn-register-workspace-white {
+  background: #FFFFFF;
+  color: var(--copper-700);
+  border-color: var(--copper-500);
+}
+#step-gateway .btn-register-workspace-white:hover {
+  background: var(--copper-50);
+  border-color: var(--copper-600);
+}
+#step-gateway .btn-register-workspace-white:active { background: var(--copper-100); }
+
+/* Visible copper focus states (no blue outlines) */
+#step-gateway .btn-select-company-dark:focus-visible,
+#step-gateway .btn-register-workspace-white:focus-visible,
+#step-gateway .portal-clean-footer a:focus-visible {
+  outline: 2px solid var(--copper-500);
+  outline-offset: 2px;
+  box-shadow: var(--copper-focus-ring);
+}
+
+/* Footer links */
+#step-gateway .portal-clean-footer,
+#step-gateway .portal-clean-footer a { color: var(--warm-muted); }
+#step-gateway .portal-clean-footer a:hover { color: var(--copper-700); }
+
+/* Shared header — only while the landing page is showing */
+html:has(#step-gateway:not([style*="display: none"])) .app-header {
+  border-bottom-color: rgba(184, 115, 51, 0.18) !important;
+  box-shadow: 0 1px 4px rgba(125, 71, 32, 0.05) !important;
+}
+html:has(#step-gateway:not([style*="display: none"])) .app-header .brand-icon {
+  border-color: rgba(184, 115, 51, 0.28) !important;
+  box-shadow: 0 2px 8px rgba(125, 71, 32, 0.10) !important;
+}
+html:has(#step-gateway:not([style*="display: none"])) .app-header .brand-title > span:first-child {
+  color: var(--warm-text) !important;
+}
+html:has(#step-gateway:not([style*="display: none"])) .app-header .brand-title > span:first-child > span {
+  color: var(--copper-600) !important;
+}
+html:has(#step-gateway:not([style*="display: none"])) .app-header .brand-badge {
+  background: var(--copper-50) !important;
+  color: var(--copper-700) !important;
+  box-shadow: inset 0 0 0 1px var(--copper-200);
+}
+html:has(#step-gateway:not([style*="display: none"])) .app-header .brand-tagline {
+  color: var(--warm-muted) !important;
+}
+html:has(#step-gateway:not([style*="display: none"])) .nav-link-home-only {
+  color: var(--warm-text);
+  border-color: var(--copper-200);
+  box-shadow: 0 1px 2px rgba(125, 71, 32, 0.05);
+}
+html:has(#step-gateway:not([style*="display: none"])) .nav-link-home-only:hover {
+  color: var(--copper-700);
+  background: var(--copper-50);
+  border-color: var(--copper-300);
+  box-shadow: 0 2px 5px rgba(125, 71, 32, 0.08);
+}
+html:has(#step-gateway:not([style*="display: none"])) .nav-link-home-only:active { background: var(--copper-100); }
+html:has(#step-gateway:not([style*="display: none"])) .nav-link-home-only:focus-visible {
+  outline: 2px solid var(--copper-500);
+  outline-offset: 2px;
+  box-shadow: var(--copper-focus-ring);
+}
