@@ -6,14 +6,40 @@
  * Everything renders inside a shadow root, so no styles leak in or out.
  *
  * Tweak points:
+ *   INTRO_TIMINGS    – every duration of the intro, in one place (seconds)
  *   SIGN_TEXT        – the sign text (also used for the reduced-motion version)
- *   FADE_MS          – hand-off fade into the site
- *   lobby-scene.js   – CONFIG at the top: timing, colours, camera path
+ *   lobby-scene.js   – CONFIG at the top: colours, camera path
+ *
+ * The whole sequence is ONE paused GSAP master timeline (built in run() once the scene is ready);
+ * the scene renders on gsap.ticker, so there is a single clock and no setTimeout chain.
  */
 
+// All times in seconds from the first visible frame. The master timeline ends at handoff[1] = total.
+export const INTRO_TIMINGS = {
+  total: 4.5,
+  fadeIn: [0.0, 0.4],        // fade in from black, already outside the glass doors
+  camera: [0.0, 2.6],        // one continuous spline move: through the doors, across the lobby, stop at the sign wall
+  cameraEase: 'power2.inOut',
+  doors: [0.4, 1.4],         // glass doors slide open as the camera passes through
+  displays: [1.5, 1.85],     // the two wall displays flicker on (during the glide)
+  displayRamp: 0.45,         // flicker-on length of each display
+  sign: 2.4,                 // first letter lights (~0.2s before the camera stops, so it feels continuous)
+  signLetterGap: 0.06,       // delay between letters
+  signLetterRamp: 0.22,      // flicker-on length of each letter
+  sweep: [2.85, 3.4],        // light sweep across the sign; the sign is fully lit by 3.4
+  hold: [3.4, 3.8],          // hold on the glowing sign (nothing animates)
+  prepare: 2.8,              // let the site underneath paint ahead of the cross-fade
+  handoff: [3.8, 4.5],       // cross-fade into the website + slight camera push toward the sign
+  skipButton: 0.6,           // Skip button appears
+  skipFade: 0.45,            // faster fade when skipped
+  reducedMotion: { signIn: 0.5, hold: 0.3, fade: 0.7 }, // static sign fade, then the site (1.5s)
+};
+
 const SIGN_TEXT = 'FIRST WEEK';
-const FADE_MS = 800;          // cross-fade from the intro into the site
-const SKIP_FADE_MS = 450;     // faster fade when skipped
+const T = INTRO_TIMINGS;
+const FADE_MS = T.reducedMotion.fade * 1000; // CSS hand-off fade (reduced-motion version)
+const SKIP_FADE_MS = T.skipFade * 1000;
+const GSAP_URL = 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/+esm';
 const LOAD_TIMEOUT_MS = 12000; // give up on the 3D scene if it can't load in time
 const SESSION_KEY = 'fw_intro_seen';
 const PENDING_CLASS = 'fw-intro-pending'; // scroll lock (+ stable scrollbar gutter) while the intro runs
@@ -36,8 +62,6 @@ const CSS = `
   }
   /* While the 3D plays: fully opaque, so the site isn't composited under every frame. */
   :host(.fw-intro-playing) { opacity: 1; }
-  /* About a second before the hand-off: back to 0.999 so the (already painted) site is ready to show. */
-  :host(.fw-intro-playing.fw-intro-prepare) { opacity: 0.999; }
   :host(.fw-intro-leaving) { opacity: 0 !important; pointer-events: none; } /* wins over playing/prepare */
   :host(.fw-intro-leaving-fast) { transition-duration: ${SKIP_FADE_MS}ms; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -47,10 +71,7 @@ const CSS = `
     position: absolute; inset: 0; pointer-events: none;
     background: radial-gradient(ellipse 75% 70% at 50% 48%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%);
   }
-  .fw-intro-black {
-    position: absolute; inset: 0; background: #000; pointer-events: none;
-    transition: opacity 1000ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
+  .fw-intro-black { position: absolute; inset: 0; background: #000; pointer-events: none; }
   .fw-intro-black.fw-intro-gone { opacity: 0; }
   .fw-intro-loader {
     position: absolute; left: 50%; top: 50%; width: 140px; height: 1px; margin-left: -70px;
@@ -68,7 +89,7 @@ const CSS = `
     font: 500 clamp(26px, 5.5vw, 60px)/1 Inter, -apple-system, 'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif;
     letter-spacing: 0.32em; text-indent: 0.32em; color: #EAF2FF;
     text-shadow: 0 0 28px rgba(168, 200, 255, 0.45);
-    opacity: 0; transition: opacity 700ms ease;
+    opacity: 0; transition: opacity ${T.reducedMotion.signIn * 1000}ms ease;
   }
   .fw-intro-static.fw-intro-show { opacity: 1; }
   .fw-intro-skip {
@@ -124,6 +145,8 @@ function run() {
 
   let finished = false;
   let controller = null;
+  let master = null;
+  let firstFrameAt = 0;
   const timers = [];
   const later = (fn, ms) => timers.push(setTimeout(fn, ms));
 
@@ -133,15 +156,16 @@ function run() {
   window.addEventListener('keydown', onKey);
   skip.addEventListener('click', () => finish(true));
 
-  function showSkip() {
-    later(() => skip.classList.add('fw-intro-show'), 1000);
-  }
+  const showSkip = () => skip.classList.add('fw-intro-show');
 
+  // Skip / Esc, errors and the reduced-motion version: CSS fade of the overlay, then clean up.
   function finish(fast) {
     if (finished) return;
     finished = true;
+    if (master) master.pause();
     timers.forEach(clearTimeout);
     window.removeEventListener('keydown', onKey);
+    host.style.transition = ''; // hand the opacity back to the CSS fade (it continues from the current value)
     // GPU-composited cross-fade of the overlay; the 3D scene keeps rendering until it completes.
     host.classList.add('fw-intro-leaving');
     if (fast) host.classList.add('fw-intro-leaving-fast');
@@ -174,33 +198,58 @@ function run() {
     staticSign.textContent = SIGN_TEXT;
     staticSign.hidden = false;
     requestAnimationFrame(() => requestAnimationFrame(() => staticSign.classList.add('fw-intro-show')));
-    showSkip();
-    later(() => finish(false), 1900);
+    later(showSkip, 0);
+    later(() => finish(false), (T.reducedMotion.signIn + T.reducedMotion.hold) * 1000);
     return;
   }
 
   // No separate WebGL probe: creating the renderer fails (and we skip to the site) if WebGL is unavailable.
   later(() => { if (!controller) finish(true); }, LOAD_TIMEOUT_MS);
 
-  import('./lobby-scene.js')
-    .then((mod) => mod.createLobbyScene({
-      canvas,
-      text: SIGN_TEXT,
-      onPrepareHandoff: () => host.classList.add('fw-intro-prepare'),
-      onHandoff: () => finish(false),
-    }))
-    .then((ctrl) => {
+  Promise.all([import(GSAP_URL), import('./lobby-scene.js')])
+    .then(([{ gsap }, mod]) => Promise.all([gsap, mod.createLobbyScene({ canvas, text: SIGN_TEXT })]))
+    .then(([gsap, ctrl]) => {
       if (finished) { ctrl.dispose(); return; }
       controller = ctrl;
+      master = buildMasterTimeline(gsap, ctrl);
       loader.classList.add('fw-intro-gone');
       host.classList.add('fw-intro-playing');
+      host.style.transition = 'none'; // the overlay's opacity is on the timeline now
+      // Black at 0.999 (still looks black): Chrome then composites the WebGL canvas during the hidden
+      // pre-roll, so its first-composite GPU stall happens here and not in the first visible frames.
+      black.style.opacity = '0.999';
+      // Rendering starts behind the black screen (quality pre-roll); the timeline starts after it.
       controller.play(() => {
-        // Timeline starts: fade in from black and offer Skip shortly after.
-        black.classList.add('fw-intro-gone');
-        showSkip();
+        if (!finished) master.play(0);
       });
     })
     .catch(() => finish(true));
+
+  // The whole sequence on one master timeline; its duration is exactly INTRO_TIMINGS.total.
+  function buildMasterTimeline(gsap, ctrl) {
+    const len = ([a, b]) => b - a;
+    // onStart runs on the first frame the timeline renders (the first non-black frame).
+    const tl = gsap.timeline({ paused: true, onStart: () => { firstFrameAt = performance.now(); }, onComplete: complete });
+    tl.fromTo(black, { opacity: 0.999 }, { opacity: 0, duration: len(T.fadeIn), ease: 'power2.inOut', immediateRender: false }, T.fadeIn[0]);
+    ctrl.addToTimeline(tl, T);
+    tl.call(showSkip, null, T.skipButton);
+    // ~1s before the fade: 0.999 lets Chrome paint the site underneath ahead of time.
+    tl.set(host, { opacity: 0.999 }, T.prepare);
+    tl.fromTo(host, { opacity: 0.999 }, { opacity: 0, duration: len(T.handoff), ease: 'power2.inOut', immediateRender: false }, T.handoff[0]);
+    if (Math.abs(tl.duration() - T.total) > 1e-6) console.warn(`[fw-intro] timeline is ${tl.duration()}s, expected ${T.total}s`);
+    return tl;
+  }
+
+  // Natural end: the timeline's cross-fade has already revealed the site.
+  function complete() {
+    if (finished) return;
+    finished = true;
+    const ms = performance.now() - firstFrameAt;
+    console.info(`[fw-intro] first frame -> site fully visible: ${(ms / 1000).toFixed(3)}s (timeline ${master.duration()}s)`);
+    timers.forEach(clearTimeout);
+    window.removeEventListener('keydown', onKey);
+    cleanup();
+  }
 }
 
 // Runs disposal steps only while the browser is idle, a small batch per callback.

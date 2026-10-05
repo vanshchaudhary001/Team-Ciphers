@@ -1,10 +1,13 @@
 /*
- * "First Week" lobby → maze scene (Three.js r169 via jsDelivr ESM builds).
- * Lazy-loaded by intro-lobby.js. Exports createLobbyScene({ canvas, text, onHandoff }).
+ * "First Week" lobby scene (Three.js r169 via jsDelivr ESM builds).
+ * Lazy-loaded by intro-lobby.js. Exports createLobbyScene({ canvas, text }).
  *
- * Everything you might want to tweak is in CONFIG below.
+ * Timing lives in INTRO_TIMINGS in intro-lobby.js: this file only adds its tweens to the caller's
+ * single GSAP master timeline (addToTimeline) and renders on gsap.ticker, so there is one clock.
+ * Look (colours, camera path) is in CONFIG below.
  */
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.169.0/+esm';
+import { gsap } from 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/+esm';
 import { RoomEnvironment } from 'https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/environments/RoomEnvironment.js/+esm';
 import { RoundedBoxGeometry } from 'https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/geometries/RoundedBoxGeometry.js/+esm';
 import { mergeGeometries } from 'https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/utils/BufferGeometryUtils.js/+esm';
@@ -15,22 +18,6 @@ import { UnrealBloomPass } from 'https://cdn.jsdelivr.net/npm/three@0.169.0/exam
 import { OutputPass } from 'https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/postprocessing/OutputPass.js/+esm';
 
 export const CONFIG = {
-  // Timeline, in seconds from the first frame. Every change below is a tween: [start, end].
-  time: {
-    doors: [0.9, 2.1],          // glass doors slide open
-    displays: 2.6,              // first display flickers on (others follow)
-    sign: 4.0,                  // first letter lights
-    signLetterGap: 0.075,       // delay between letters
-    sweep: [4.6, 5.3],          // light sweep across the sign
-    reveal: [5.0, 6.7],         // floor lines spread out from beneath the camera
-    wipe: [5.0, 6.4],           // lobby wipes away on the same centre (slower, wider feather)
-    lobbyLights: [5.2, 6.3],    // lobby lights fade down
-    signGlow: [5.05, 5.9],      // sign glow fades down before the wipe reaches the wall
-    mazeLight: [5.4, 6.6],      // maze light fades up
-    walls: 5.45,                // maze walls start rising (nearest first)
-    prepare: 6.4,               // let the site underneath paint ahead of the cross-fade
-    handoff: 7.4,               // cross-fade into the website starts
-  },
   colors: {
     void: 0x07090d,
     floor: 0x15181d,
@@ -41,8 +28,6 @@ export const CONFIG = {
     warm: 0xffbe86,
     sign: 0xeaf2ff,
     signOff: 0x2a2e35,
-    maze: 0xa8c8ff,
-    mazeWall: 0x1d2128,
     metal: 0xc6c9ce,
     desk: 0x2b2420,
     deskTop: 0xe8e4dd,
@@ -51,29 +36,22 @@ export const CONFIG = {
     displayA: 0x0c2236,
     displayB: 0x2a3d55,
     displayC: 0xd9925b,
-    wipeGlow: 0xbcd6ff,
   },
-  // Camera path: smooth splines through these keys (position + look target)
+  // Camera path: one smooth spline (position + look target), outside the glass doors -> through the
+  // lobby -> stopped in front of the sign wall. The camera moves along it by arc length, so its speed
+  // comes only from the timeline's ease: no speed changes between segments.
   camera: [
-    { t: 0.0, pos: [0.0, 1.65, 11.5], look: [0.0, 1.6, 0.0] },
-    { t: 1.0, pos: [0.0, 1.65, 10.1], look: [0.0, 1.6, -1.0] },
-    { t: 2.5, pos: [0.35, 1.7, 3.4], look: [-0.7, 1.55, -4.0] },
-    { t: 4.0, pos: [0.45, 1.75, -3.3], look: [0.5, 2.25, -10.0] },
-    { t: 5.0, pos: [0.15, 2.0, -5.6], look: [0.0, 2.6, -12.0] },
-    { t: 6.4, pos: [0.0, 3.7, -7.8], look: [0.0, 0.2, -13.8] },
-    { t: 8.2, pos: [0.0, 0.85, -15.2], look: [0.0, 0.75, -25.0] },
+    { pos: [0.0, 1.65, 11.5], look: [0.0, 1.6, 0.0] },
+    { pos: [0.0, 1.65, 8.6], look: [0.0, 1.6, -1.5] },
+    { pos: [0.3, 1.7, 3.4], look: [-0.7, 1.55, -4.0] },
+    { pos: [0.4, 1.8, -2.2], look: [0.4, 2.3, -10.0] },
+    { pos: [0.15, 2.0, -5.6], look: [0.0, 2.6, -12.0] },
   ],
+  pushDistance: 0.6, // metres the camera eases toward the sign during the cross-fade
 };
 
-const MAZE = { cols: 17, rows: 27, cell: 1.0, zNear: 3.0, wallHeight: 1.3, thickness: 0.08, seed: 7 };
-const REVEAL_MAX = 24;      // metres the floor-line reveal radius grows to
-const WIPE_MAX = 12;        // metres the lobby wipe radius grows to
-const WIPE_FEATHER = 5.0;   // soft width of the lobby wipe (metres)
-const LINES_FEATHER = 3.0;  // soft width of the floor-line reveal (metres)
-
-export async function createLobbyScene({ canvas, text = 'FIRST WEEK', onPrepareHandoff = () => {}, onHandoff = () => {} }) {
+export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
   const C = CONFIG.colors;
-  const T = CONFIG.time;
   // Phones/tablets (touch-first) or narrow windows get the lighter version.
   const isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches || window.innerWidth < 700;
 
@@ -103,68 +81,35 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK', onPrepareH
 
   const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.05, 80);
   const extraTextures = [];
-  const lobby = new THREE.Group();       // everything that wipes away
+  const lobby = new THREE.Group();       // lobby pieces (merged static meshes, flutes, displays)
   const staticLobby = new THREE.Group(); // static pieces, merged per material below
   scene.add(lobby);
 
-  // ---------- Lobby wipe: soft radial opacity fade with a faint glowing front ----------
-  // Shares its centre and start time with the floor-line reveal, so the change reads as one motion.
-  const startCenter = new THREE.Vector2(0.15, -5.6);
-  const wipe = {
-    uWipeCenter: { value: startCenter },
-    uWipeRadius: { value: 0 },
-    uWipeFeather: { value: WIPE_FEATHER },
-    uWipeGlow: { value: new THREE.Color(C.wipeGlow).multiplyScalar(isMobile ? 0.5 : 0.28) },
-  };
-  const WIPE_PARS = `
-    varying vec3 vFwPos;
-    uniform vec2 uWipeCenter; uniform float uWipeRadius, uWipeFeather; uniform vec3 uWipeGlow;`;
-  const WIPE_APPLY = `
-    float fwD = distance(vFwPos.xz, uWipeCenter);
-    float fwKeep = smoothstep(uWipeRadius - uWipeFeather, uWipeRadius, fwD);   // 0 = wiped, 1 = untouched
-    float fwBand = (1.0 - abs(fwKeep * 2.0 - 1.0)) * step(0.001, uWipeRadius); // soft glow inside the feather
-    gl_FragColor.rgb += uWipeGlow * fwBand;
-    gl_FragColor.a *= fwKeep;`;
-  const lobbyMaterials = [];
-  function withWipe(material) {
-    material.onBeforeCompile = (shader) => {
-      Object.assign(shader.uniforms, wipe);
-      shader.vertexShader = shader.vertexShader
-        .replace('#include <common>', '#include <common>\nvarying vec3 vFwPos;')
-        .replace('#include <begin_vertex>', '#include <begin_vertex>\n#ifdef USE_INSTANCING\nvFwPos = (modelMatrix * instanceMatrix * vec4(transformed, 1.0)).xyz;\n#else\nvFwPos = (modelMatrix * vec4(transformed, 1.0)).xyz;\n#endif');
-      shader.fragmentShader = shader.fragmentShader
-        .replace('#include <common>', `#include <common>\n${WIPE_PARS}`)
-        .replace('#include <tonemapping_fragment>', `${WIPE_APPLY}\n#include <tonemapping_fragment>`);
-    };
-    material.customProgramCacheKey = () => 'fw-wipe';
+  // Lobby materials render in the transparent pass (alpha stays 1), which keeps the draw order (and so
+  // the look) exactly as before.
+  function lobbyMat(material) {
     material.transparent = true;
-    lobbyMaterials.push(material);
     return material;
-  }
-  // Lobby materials are transparent from the start (alpha stays 1 until the wipe), so the wipe never
-  // swaps shader programs. Only depthWrite changes when it begins — render state, no recompile.
-  function setFadeMode(on) {
-    for (const m of lobbyMaterials) if (m.blending !== THREE.AdditiveBlending) m.depthWrite = !on;
   }
 
   // ---------- Materials ----------
   const mats = {
-    wall: withWipe(new THREE.MeshStandardMaterial({ color: C.wall, roughness: 0.85 })),
-    feature: withWipe(new THREE.MeshStandardMaterial({ color: C.featureWall, roughness: 0.7 })),
-    ceiling: withWipe(new THREE.MeshStandardMaterial({ color: C.ceiling, roughness: 0.9 })),
-    ceilingLight: withWipe(new THREE.MeshBasicMaterial({ color: new THREE.Color(C.ceilingLight).multiplyScalar(3.0) })),
-    warmLight: withWipe(new THREE.MeshBasicMaterial({ color: new THREE.Color(C.warm).multiplyScalar(1.6) })),
-    metal: withWipe(new THREE.MeshStandardMaterial({ color: C.metal, metalness: 1, roughness: 0.3 })),
-    darkMetal: withWipe(new THREE.MeshStandardMaterial({ color: 0x1b1d21, metalness: 0.6, roughness: 0.45 })),
-    desk: withWipe(new THREE.MeshStandardMaterial({ color: C.desk, roughness: 0.4 })),
-    deskTop: withWipe(new THREE.MeshStandardMaterial({ color: C.deskTop, roughness: 0.18 })),
-    pool: withWipe(new THREE.MeshBasicMaterial({ map: poolTexture(70), color: new THREE.Color(C.warm).multiplyScalar(0.55), blending: THREE.AdditiveBlending, depthWrite: false, fog: false })),
-    floorPool: withWipe(new THREE.MeshBasicMaterial({ map: poolTexture(128), color: new THREE.Color(C.warm).multiplyScalar(0.35), blending: THREE.AdditiveBlending, depthWrite: false, fog: false })),
-    pot: withWipe(new THREE.MeshStandardMaterial({ color: C.pot, roughness: 0.9 })),
-    soil: withWipe(new THREE.MeshStandardMaterial({ color: 0x1a1512, roughness: 1 })),
-    plant: withWipe(new THREE.MeshStandardMaterial({ color: C.plant, roughness: 0.65 })),
+    wall: lobbyMat(new THREE.MeshStandardMaterial({ color: C.wall, roughness: 0.85 })),
+    feature: lobbyMat(new THREE.MeshStandardMaterial({ color: C.featureWall, roughness: 0.7 })),
+    ceiling: lobbyMat(new THREE.MeshStandardMaterial({ color: C.ceiling, roughness: 0.9 })),
+    ceilingLight: lobbyMat(new THREE.MeshBasicMaterial({ color: new THREE.Color(C.ceilingLight).multiplyScalar(3.0) })),
+    warmLight: lobbyMat(new THREE.MeshBasicMaterial({ color: new THREE.Color(C.warm).multiplyScalar(1.6) })),
+    metal: lobbyMat(new THREE.MeshStandardMaterial({ color: C.metal, metalness: 1, roughness: 0.3 })),
+    darkMetal: lobbyMat(new THREE.MeshStandardMaterial({ color: 0x1b1d21, metalness: 0.6, roughness: 0.45 })),
+    desk: lobbyMat(new THREE.MeshStandardMaterial({ color: C.desk, roughness: 0.4 })),
+    deskTop: lobbyMat(new THREE.MeshStandardMaterial({ color: C.deskTop, roughness: 0.18 })),
+    pool: lobbyMat(new THREE.MeshBasicMaterial({ map: poolTexture(70), color: new THREE.Color(C.warm).multiplyScalar(0.55), blending: THREE.AdditiveBlending, depthWrite: false, fog: false })),
+    floorPool: lobbyMat(new THREE.MeshBasicMaterial({ map: poolTexture(128), color: new THREE.Color(C.warm).multiplyScalar(0.35), blending: THREE.AdditiveBlending, depthWrite: false, fog: false })),
+    pot: lobbyMat(new THREE.MeshStandardMaterial({ color: C.pot, roughness: 0.9 })),
+    soil: lobbyMat(new THREE.MeshStandardMaterial({ color: 0x1a1512, roughness: 1 })),
+    plant: lobbyMat(new THREE.MeshStandardMaterial({ color: C.plant, roughness: 0.65 })),
   };
-  // Glass: clear, reflective and lightweight (no transmission pass). It is behind the camera before the wipe.
+  // Glass: clear, reflective and lightweight (no transmission pass).
   const glassMat = new THREE.MeshStandardMaterial({ color: 0xe8f0f2, roughness: 0.03, metalness: 0, transparent: true, opacity: 0.07, envMapIntensity: 0.7, depthWrite: false });
 
   const mesh = (geo, mat, x, y, z, parent = staticLobby, shadows = true) => {
@@ -292,18 +237,16 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK', onPrepareH
     box(0.06, 1.45, 2.5, mats.darkMetal, -5.93, 2.1, zc, 0.02);
     const mat = new THREE.ShaderMaterial({
       uniforms: {
-        ...wipe,
         uTime: { value: 0 }, uPower: { value: 0 },
         uA: { value: new THREE.Color(C.displayA) }, uB: { value: new THREE.Color(C.displayB) }, uC: { value: new THREE.Color(C.displayC) },
         uSeed: { value: i * 3.7 },
       },
       vertexShader: `
-        varying vec2 vUv; varying vec3 vFwPos;
-        void main() { vUv = uv; vFwPos = (modelMatrix * vec4(position, 1.0)).xyz; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+        varying vec2 vUv;
+        void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
       fragmentShader: `
         uniform float uTime, uPower, uSeed; uniform vec3 uA, uB, uC;
         varying vec2 vUv;
-        ${WIPE_PARS}
         void main() {
           float t = uTime + uSeed;
           vec3 col = mix(uA, uB, smoothstep(0.0, 1.0, vUv.y + 0.25 * sin(t * 0.25 + vUv.x * 3.0)));
@@ -313,17 +256,15 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK', onPrepareH
           float vig = smoothstep(0.0, 0.15, vUv.x) * (1.0 - smoothstep(0.85, 1.0, vUv.x)) * smoothstep(0.0, 0.15, vUv.y) * (1.0 - smoothstep(0.85, 1.0, vUv.y));
           col = (col * (0.55 + 0.45 * vig) + lines + scan) * uPower * 1.25;
           gl_FragColor = vec4(col, 1.0);
-          ${WIPE_APPLY}
           #include <tonemapping_fragment>
           #include <colorspace_fragment>
         }`,
     });
     mat.transparent = true;
-    lobbyMaterials.push(mat);
     const screen = mesh(new THREE.PlaneGeometry(2.36, 1.32), mat, -5.89, 2.1, zc, lobby, false);
     screen.rotation.y = Math.PI / 2;
     screen.renderOrder = 1;
-    displays.push({ mat, start: T.displays + i * 0.35 });
+    displays.push({ mat });
   }
 
   // ---------- Merge the static lobby: one mesh per material (far fewer draw calls) ----------
@@ -340,7 +281,6 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK', onPrepareH
     b.geos.push(g);
     b.cast = b.cast || o.castShadow;
   });
-  // While fading, lobby pieces don't write depth, so they draw after the (transparent) floor.
   flutes.renderOrder = 1;
   for (const [material, b] of buckets) {
     const geometry = mergeGeometries(b.geos, false);
@@ -361,7 +301,6 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK', onPrepareH
   const signOff = new THREE.Color(C.signOff);
   const signOn = new THREE.Color(C.sign).multiplyScalar(2.6);
   const letters = buildSign(text);
-  const SIGN_DIST = Math.hypot(0 - startCenter.x, -11.86 - startCenter.y); // sign distance from the wipe centre
   const signLight = new THREE.PointLight(C.sign, 0, 9, 2);
   signLight.position.set(0, 2.9, -11.2);
   scene.add(signLight);
@@ -377,7 +316,6 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK', onPrepareH
     const group = new THREE.Group();
     group.position.set(0, 2.95, -11.86); // just in front of the wall flutes
     scene.add(group);
-    let index = 0;
     for (const g of glyphs) {
       if (g.ch !== ' ') {
         const c = document.createElement('canvas');
@@ -398,8 +336,7 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK', onPrepareH
         m.position.x = x + g.w / 2;
         m.renderOrder = 3;
         group.add(m);
-        out.push({ mat, x: m.position.x, start: T.sign + index * T.signLetterGap });
-        index++;
+        out.push({ mat, x: m.position.x });
       }
       x += g.w + TRACK;
     }
@@ -417,92 +354,13 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK', onPrepareH
   spot.shadow.bias = -0.0005;
   spot.shadow.normalBias = 0.02;
   scene.add(spot, spot.target);
-  const fills = [];
   const addSpot = (color, intensity, pos, target, angle) => {
     const l = new THREE.SpotLight(color, intensity, 9, angle, 0.9, 1.6);
     l.position.set(...pos);
     l.target.position.set(...target);
-    l.userData.base = intensity;
     scene.add(l, l.target);
-    fills.push(l);
   };
   for (const x of [-3, 3]) addSpot(0xf2f4f8, 22, [x, 4.45, -10.9], [x, 0.9, -12], 0.62);
-  const mazeLight = new THREE.DirectionalLight(0xdbe6ff, 0);
-  mazeLight.position.set(-3, 8, 2);
-  scene.add(mazeLight);
-
-  // ---------- Maze: glowing floor lines + rising walls (one InstancedMesh each) ----------
-  const maze = generateMaze(MAZE.cols, MAZE.rows, MAZE.seed);
-  const zFar = MAZE.zNear - MAZE.rows * MAZE.cell;
-
-  const linesTex = drawMazeLines(maze);
-  extraTextures.push(linesTex);
-  const linesMat = new THREE.ShaderMaterial({
-    uniforms: {
-      uTex: { value: linesTex }, uRadius: { value: 0 }, uCenter: { value: startCenter }, uFeather: { value: LINES_FEATHER },
-      uColor: { value: new THREE.Color(C.maze) }, uOpacity: { value: isMobile ? 1 : 0.55 },
-    },
-    vertexShader: `
-      varying vec2 vUv; varying vec3 vW;
-      void main() { vUv = uv; vW = (modelMatrix * vec4(position, 1.0)).xyz; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
-    fragmentShader: `
-      uniform sampler2D uTex; uniform float uRadius, uOpacity, uFeather; uniform vec2 uCenter; uniform vec3 uColor;
-      varying vec2 vUv; varying vec3 vW;
-      void main() {
-        float line = texture2D(uTex, vUv).r;
-        float d = distance(vW.xz, uCenter);
-        float on = step(0.001, uRadius);
-        float reveal = (1.0 - smoothstep(uRadius - uFeather, uRadius, d)) * on;          // soft, wide falloff
-        float front = exp(-pow((d - uRadius + uFeather * 0.5) / uFeather, 2.0)) * on;  // gentle leading glow
-        vec3 col = uColor * line * (reveal * 1.6 + front * 0.9);
-        gl_FragColor = vec4(col * uOpacity, 1.0);
-        #include <tonemapping_fragment>
-        #include <colorspace_fragment>
-      }`,
-    transparent: true,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-  });
-  const linesPlane = new THREE.Mesh(new THREE.PlaneGeometry(MAZE.cols * MAZE.cell, MAZE.rows * MAZE.cell), linesMat);
-  linesPlane.rotation.x = -Math.PI / 2;
-  linesPlane.position.set(0, 0.005, (MAZE.zNear + zFar) / 2);
-  linesPlane.renderOrder = 2;
-  scene.add(linesPlane);
-
-  const segments = mazeSegments(maze);
-  const wallMat = new THREE.MeshStandardMaterial({ color: C.mazeWall, roughness: 0.38, metalness: 0.25 });
-  const capMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(C.maze).multiplyScalar(isMobile ? 3.2 : 1.9), transparent: true, opacity: 0 });
-  const walls = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), wallMat, segments.length);
-  const caps = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), capMat, segments.length);
-  walls.receiveShadow = true;
-  walls.frustumCulled = false;
-  caps.frustumCulled = false;
-  scene.add(walls, caps);
-  let wallsDoneAt = 0;
-  for (const s of segments) {
-    s.delay = Math.hypot(s.x - startCenter.x, s.z - startCenter.y) * 0.045;
-    wallsDoneAt = Math.max(wallsDoneAt, s.delay);
-  }
-  wallsDoneAt += T.walls + 0.8;
-  const dummy = new THREE.Object3D();
-  function updateWalls(t) {
-    for (let i = 0; i < segments.length; i++) {
-      const s = segments[i];
-      const k = easeOutCubic(clamp01((t - T.walls - s.delay) / 0.75));
-      const h = Math.max(0.0005, MAZE.wallHeight * k);
-      dummy.position.set(s.x, h / 2, s.z);
-      dummy.rotation.set(0, s.alongZ ? Math.PI / 2 : 0, 0);
-      dummy.scale.set(MAZE.cell + MAZE.thickness, h, MAZE.thickness);
-      dummy.updateMatrix();
-      walls.setMatrixAt(i, dummy.matrix);
-      dummy.position.y = h + 0.006;
-      dummy.scale.set(MAZE.cell + MAZE.thickness, 0.012, MAZE.thickness + 0.006);
-      dummy.updateMatrix();
-      caps.setMatrixAt(i, dummy.matrix);
-    }
-    walls.instanceMatrix.needsUpdate = true;
-    caps.instanceMatrix.needsUpdate = true;
-  }
 
   // ---------- Post-processing (created once, never rebuilt; only values change) ----------
   let composer = null, bloom = null;
@@ -519,12 +377,12 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK', onPrepareH
   }
   const render = () => (composer ? composer.render() : renderer.render(scene, camera));
 
-  // ---------- Camera splines with eased, C1-continuous timing ----------
+  // ---------- Camera spline ----------
   const keys = CONFIG.camera;
   const posCurve = new THREE.CatmullRomCurve3(keys.map((k) => new THREE.Vector3(...k.pos)), false, 'centripetal');
   const lookCurve = new THREE.CatmullRomCurve3(keys.map((k) => new THREE.Vector3(...k.look)), false, 'centripetal');
-  const uAt = monotoneCubic(keys.map((k) => k.t), keys.map((_, i) => i / (keys.length - 1)));
   const tmpLook = new THREE.Vector3();
+  const tmpDir = new THREE.Vector3();
 
   function fit() {
     const w = window.innerWidth, h = window.innerHeight, aspect = w / h;
@@ -537,90 +395,84 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK', onPrepareH
   fit();
   window.addEventListener('resize', fit);
 
-  // ---------- One timeline: every value is a pure function of t ----------
-  let rafId = 0, handedOff = false, prepared = false, elapsed = 0, fadeMode = false, lastNow = 0, warming = true;
-  const adaptive = { frames: 0, start: 0, checked: false };
+  // ---------- Animated state: written only by tweens on the caller's master timeline ----------
+  // Ramps (displays, letters) are linear 0..1 over their duration; the flicker is a function of that.
+  const state = {
+    cam: 0,   // 0..1 along the camera spline (arc length)
+    door: 0,  // 0 closed .. 1 open
+    push: 0,  // 0..1 of CONFIG.pushDistance toward the sign
+    sweep: 0, // light sweep across the sign
+    displays: displays.map(() => ({ p: 0 })),
+    letters: letters.map(() => ({ p: 0 })),
+  };
+  let timeline = null;
+  let displayRamp = 0.45, letterRamp = 0.22;
 
-  function update(t) {
-    const u = uAt(t);
-    camera.position.copy(posCurve.getPoint(u));
-    camera.lookAt(lookCurve.getPoint(u, tmpLook));
-
-    const door = power3InOut(span(t, T.doors));
-    doorL.position.x = -0.61 - 1.25 * door;
-    doorR.position.x = 0.61 + 1.25 * door;
-
-    for (const d of displays) {
-      d.mat.uniforms.uTime.value = t;
-      const k = t - d.start;
-      d.mat.uniforms.uPower.value = k <= 0 ? 0 : k < 0.45 ? flicker(k) * smoothstep01(k / 0.45) : 1;
+  function apply() {
+    const u = state.cam;
+    camera.position.copy(posCurve.getPointAt(u));
+    lookCurve.getPoint(posCurve.getUtoTmapping(u), tmpLook);
+    if (state.push > 0) {
+      tmpDir.subVectors(tmpLook, camera.position).normalize().multiplyScalar(CONFIG.pushDistance * state.push);
+      camera.position.add(tmpDir);
+      tmpLook.add(tmpDir);
     }
+    camera.lookAt(tmpLook);
 
-    // Sign: letters light in sequence, a light sweep passes, then the glow tweens down and the letters fade.
-    const sweepT = span(t, T.sweep);
-    const sweepX = THREE.MathUtils.lerp(-3.2, 3.2, power3InOut(sweepT));
-    const glow = 1 - power2InOut(span(t, T.signGlow));
-    // Letters fade exactly as the wall behind them is wiped (same formula as the wipe shader).
-    const wipeR = WIPE_MAX * power2InOut(span(t, T.wipe));
-    const letterAlpha = wipeR > 0 ? smoothstep01((SIGN_DIST - (wipeR - WIPE_FEATHER)) / WIPE_FEATHER) : 1;
+    doorL.position.x = -0.61 - 1.25 * state.door;
+    doorR.position.x = 0.61 + 1.25 * state.door;
+
+    const time = timeline ? timeline.time() : 0;
+    displays.forEach((d, i) => {
+      const p = state.displays[i].p;
+      d.mat.uniforms.uTime.value = time;
+      d.mat.uniforms.uPower.value = p <= 0 ? 0 : p < 1 ? flicker(p * displayRamp) * smoothstep01(p) : 1;
+    });
+
+    // Sign: letters light in sequence, then a light sweep passes across them.
+    const sweepX = THREE.MathUtils.lerp(-3.2, 3.2, state.sweep);
+    const sweeping = state.sweep > 0 && state.sweep < 1;
     let lit = 0;
-    for (const l of letters) {
-      const k = t - l.start;
-      const on = k <= 0 ? 0 : k < 0.22 ? flicker(k * 1.6) * (k / 0.22) : 1;
-      const sweep = sweepT > 0 && sweepT < 1 ? Math.exp(-Math.pow((l.x - sweepX) / 0.45, 2)) * 0.6 : 0;
-      l.mat.color.copy(signOff).lerp(signOn, on * glow).multiplyScalar(1 + sweep * glow);
-      l.mat.opacity = letterAlpha;
+    letters.forEach((l, i) => {
+      const p = state.letters[i].p;
+      const on = p <= 0 ? 0 : p < 1 ? flicker(p * letterRamp * 1.6) * p : 1;
+      const sweep = sweeping ? Math.exp(-Math.pow((l.x - sweepX) / 0.45, 2)) * 0.6 : 0;
+      l.mat.color.copy(signOff).lerp(signOn, on).multiplyScalar(1 + sweep);
       lit += on;
-    }
+    });
     const litK = lit / letters.length;
-    signLight.intensity = 9 * litK * glow;
-
-    // Floor lines and the lobby wipe start together from beneath the camera.
-    linesMat.uniforms.uRadius.value = REVEAL_MAX * power2InOut(span(t, T.reveal));
-    wipe.uWipeRadius.value = wipeR;
-    if (!fadeMode && t >= T.wipe[0]) {
-      fadeMode = true;
-      setFadeMode(true);
-      facade.visible = false; // behind the camera by now
-    }
-    lobby.visible = t < T.wipe[1]; // fully transparent by the time it's hidden
-
-    const lobbyLights = 1 - power2InOut(span(t, T.lobbyLights));
-    spot.intensity = 70 * lobbyLights;
-    for (const l of fills) l.intensity = l.userData.base * lobbyLights;
-    const mazeK = power2InOut(span(t, T.mazeLight));
-    mazeLight.intensity = 0.8 * mazeK;
-
-    walls.visible = caps.visible = t >= T.walls; // flat walls would show through the glossy floor
-    if (t >= T.walls && t <= wallsDoneAt) updateWalls(t);
-    capMat.opacity = power2InOut(clamp01((t - T.walls - 0.2) / 0.9));
-
-    if (bloom) bloom.strength = (0.55 + 0.15 * litK * glow) * (1 - 0.4 * mazeK);
-    if (warming) return; // warm-up frames never fire the hand-off callbacks
-    if (!prepared && t >= T.prepare) {
-      prepared = true;
-      onPrepareHandoff();
-    }
-    if (!handedOff && t >= T.handoff) {
-      handedOff = true;
-      onHandoff();
-    }
+    signLight.intensity = 9 * litK;
+    if (bloom) bloom.strength = 0.55 + 0.15 * litK;
   }
 
+  // Adds every scene tween to the master timeline. T = INTRO_TIMINGS (seconds).
+  function addToTimeline(tl, T) {
+    timeline = tl;
+    displayRamp = T.displayRamp;
+    letterRamp = T.signLetterRamp;
+    const len = ([a, b]) => b - a;
+    tl.to(state, { cam: 1, duration: len(T.camera), ease: T.cameraEase }, T.camera[0]);
+    tl.to(state, { door: 1, duration: len(T.doors), ease: 'power3.inOut' }, T.doors[0]);
+    T.displays.forEach((start, i) => {
+      if (state.displays[i]) tl.to(state.displays[i], { p: 1, duration: T.displayRamp, ease: 'none' }, start);
+    });
+    state.letters.forEach((l, i) => tl.to(l, { p: 1, duration: T.signLetterRamp, ease: 'none' }, T.sign + i * T.signLetterGap));
+    tl.to(state, { sweep: 1, duration: len(T.sweep), ease: 'power3.inOut' }, T.sweep[0]);
+    tl.to(state, { push: 1, duration: len(T.handoff), ease: 'power2.inOut' }, T.handoff[0]);
+  }
+
+  // ---------- Render loop on gsap.ticker (same tick that advances the timeline, after it) ----------
+  const adaptive = { frames: 0, start: 0, checked: false };
   let onStarted = () => {};
-  function tick(now) {
-    rafId = requestAnimationFrame(tick);
+  let ticking = false;
+  function tick() {
     if (!adaptive.checked) {
-      // Pre-roll behind the black screen: render the first frame to measure fps, then decide quality.
+      // Pre-roll behind the black screen: render frames to measure fps, then decide quality.
       render();
-      adaptQuality(now);
+      adaptQuality(performance.now());
       return;
     }
-    // Advance only on drawn frames (capped), so a backgrounded tab resumes where it left off.
-    const dt = lastNow ? Math.min((now - lastNow) / 1000, 0.05) : 0;
-    lastNow = now;
-    elapsed += dt;
-    update(elapsed);
+    apply();
     render();
   }
 
@@ -643,12 +495,19 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK', onPrepareH
     }
     onStarted();
   }
+  function stopTicker() {
+    if (ticking) gsap.ticker.remove(tick);
+    ticking = false;
+  }
 
   // ---------- Warm-up: compile every program without blocking, then render representative frames ----------
-  update(0);
-  updateWalls(T.walls + 10);           // full-height walls so the maze programs compile too
-  walls.visible = caps.visible = true;
-  facade.visible = lobby.visible = true;
+  function setAll(cam, door, push, sweep, on) {
+    Object.assign(state, { cam, door, push, sweep });
+    state.displays.forEach((d) => { d.p = on; });
+    state.letters.forEach((l) => { l.p = on; });
+    apply();
+  }
+  setAll(0, 0, 0, 0, 0);
   // Compile for the target we actually draw into: with post-processing that's the composer's render
   // target (linear, no tone mapping), not the canvas. Compiling for the canvas would build unused variants
   // and leave the real ones to compile synchronously on the first frame.
@@ -656,38 +515,33 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK', onPrepareH
   await renderer.compileAsync(scene, camera); // parallel shader compile; the loading line keeps animating
   renderer.setRenderTarget(null);
   renderer.shadowMap.needsUpdate = true;      // bake the static shadow map once
-  // Draw every object once (even off-screen ones) so each program's first use — uniform lookups are
-  // synchronous GPU round-trips — happens here behind the loading line, not in the first animated frames.
+  // Draw every object once (even off-screen ones) so each program's first use (uniform lookups are
+  // synchronous GPU round-trips) happens here behind the loading line, not in the first animated frames.
   const culled = [];
   scene.traverse((o) => { if (o.isMesh && o.frustumCulled) { o.frustumCulled = false; culled.push(o); } });
-  render();                                   // uploads + post-processing passes, lobby state
-  update(6.6);
-  render();                                   // maze state (walls, caps, lines, bloom levels)
+  render();                                   // uploads + post-processing passes, opening state
+  setAll(0.6, 1, 0, 0.5, 1);
+  render();                                   // mid-lobby, displays on, sign lit (bloom levels)
+  setAll(1, 1, 1, 1, 1);
+  render();                                   // final framing on the sign
   culled.forEach((o) => { o.frustumCulled = true; });
-  updateWalls(0);
-  fadeMode = false;
-  setFadeMode(false);
-  facade.visible = true;
-  handedOff = false;
-  prepared = false;
-  warming = false;
-  update(0);
+  setAll(0, 0, 0, 0, 0);
   render();
 
   return {
-    // onStart fires after the short quality pre-roll, when the timeline actually begins.
+    addToTimeline,
+    // Starts rendering; onStart fires after the short quality pre-roll (still black), when the caller
+    // should start the master timeline.
     play(onStart) {
       onStarted = onStart || (() => {});
-      rafId = requestAnimationFrame(tick);
+      if (!ticking) gsap.ticker.add(tick);
+      ticking = true;
     },
-    stop() {
-      cancelAnimationFrame(rafId);
-      rafId = 0;
-    },
+    stop: stopTicker,
     // GPU clean-up as many small steps, so the caller can spread them over idle time.
     // (Deleting everything in one go stalled the GPU process for ~1.7s and froze the page.)
     disposeSteps() {
-      cancelAnimationFrame(rafId);
+      stopTicker();
       window.removeEventListener('resize', fit);
       const steps = [];
       const geometries = new Set(), materials = new Set(), textures = new Set(extraTextures);
@@ -733,86 +587,9 @@ function poolTexture(centerY = 70) {
   return tex;
 }
 
-// ---------- Maze helpers ----------
-function generateMaze(cols, rows, seed) {
-  const rand = mulberry32(seed);
-  // east[r][c]: wall between (c,r) and (c+1,r); south[r][c]: wall between (c,r) and (c,r+1)
-  const east = Array.from({ length: rows }, () => Array(cols).fill(true));
-  const south = Array.from({ length: rows }, () => Array(cols).fill(true));
-  const seen = Array.from({ length: rows }, () => Array(cols).fill(false));
-  const mid = Math.floor(cols / 2);
-  const stack = [[mid, 8]];
-  seen[8][mid] = true;
-  while (stack.length) {
-    const [c, r] = stack[stack.length - 1];
-    const options = [[1, 0], [-1, 0], [0, 1], [0, -1]]
-      .map(([dc, dr]) => [c + dc, r + dr, dc, dr])
-      .filter(([nc, nr]) => nc >= 0 && nc < cols && nr >= 0 && nr < rows && !seen[nr][nc]);
-    if (!options.length) { stack.pop(); continue; }
-    const [nc, nr, dc, dr] = options[Math.floor(rand() * options.length)];
-    if (dc === 1) east[r][c] = false;
-    if (dc === -1) east[r][nc] = false;
-    if (dr === 1) south[r][c] = false;
-    if (dr === -1) south[nr][c] = false;
-    seen[nr][nc] = true;
-    stack.push([nc, nr]);
-  }
-  // A straight corridor down the middle for the camera to fly into.
-  for (let r = 7; r < rows - 1; r++) south[r][mid] = false;
-  return { cols, rows, east, south };
-}
-
-function mazeSegments({ cols, rows, east, south }) {
-  const out = [];
-  const cx = (c) => -((cols * MAZE.cell) / 2) + (c + 0.5) * MAZE.cell;
-  const cz = (r) => MAZE.zNear - (r + 0.5) * MAZE.cell;
-  for (let r = 0; r < rows; r++) {
-    out.push({ x: cx(0) - MAZE.cell / 2, z: cz(r), alongZ: true });        // left boundary
-    for (let c = 0; c < cols; c++) {
-      if (east[r][c]) out.push({ x: cx(c) + MAZE.cell / 2, z: cz(r), alongZ: true });
-      if (r === 0) out.push({ x: cx(c), z: cz(0) + MAZE.cell / 2, alongZ: false }); // near boundary
-      if (south[r][c]) out.push({ x: cx(c), z: cz(r) - MAZE.cell / 2, alongZ: false });
-    }
-  }
-  return out;
-}
-
-function drawMazeLines(maze) {
-  const S = 60; // px per metre
-  const c = document.createElement('canvas');
-  c.width = maze.cols * S;
-  c.height = maze.rows * S;
-  const g = c.getContext('2d');
-  g.fillStyle = '#000';
-  g.fillRect(0, 0, c.width, c.height);
-  g.strokeStyle = '#fff';
-  g.lineWidth = 7;
-  g.lineCap = 'round';
-  g.shadowColor = '#fff';
-  g.shadowBlur = 18;
-  const zFar = MAZE.zNear - maze.rows * MAZE.cell;
-  const left = -(maze.cols * MAZE.cell) / 2;
-  const px = (x) => (x - left) * S;
-  const py = (z) => (z - zFar) * S; // canvas top = far end (v = 1 after flipY)
-  g.beginPath();
-  for (const s of mazeSegments(maze)) {
-    const half = MAZE.cell / 2;
-    if (s.alongZ) { g.moveTo(px(s.x), py(s.z - half)); g.lineTo(px(s.x), py(s.z + half)); }
-    else { g.moveTo(px(s.x - half), py(s.z)); g.lineTo(px(s.x + half), py(s.z)); }
-  }
-  g.stroke();
-  const tex = new THREE.CanvasTexture(c);
-  tex.anisotropy = 8;
-  return tex;
-}
-
-// ---------- Timing helpers (power2/power3 in-out are the same curves as GSAP's) ----------
+// ---------- Helpers ----------
 function clamp01(x) { return Math.min(1, Math.max(0, x)); }
-function span(t, [a, b]) { return clamp01((t - a) / (b - a)); }
 function smoothstep01(x) { const k = clamp01(x); return k * k * (3 - 2 * k); }
-function easeOutCubic(x) { return 1 - Math.pow(1 - x, 3); }
-function power2InOut(x) { return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
-function power3InOut(x) { return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
 function flicker(k) { return Math.sin(k * 61.0) * Math.sin(k * 23.0 + 1.3) > -0.15 ? 1 : 0.25; }
 
 function mulberry32(a) {
@@ -821,27 +598,5 @@ function mulberry32(a) {
     let t = Math.imul(a ^ (a >>> 15), 1 | a);
     t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-// Monotone cubic (Fritsch–Carlson) through (xs, ys): smooth, no overshoot, starts from rest.
-function monotoneCubic(xs, ys) {
-  const n = xs.length, d = [], m = new Array(n);
-  for (let i = 0; i < n - 1; i++) d[i] = (ys[i + 1] - ys[i]) / (xs[i + 1] - xs[i]);
-  m[0] = 0;
-  m[n - 1] = d[n - 2];
-  for (let i = 1; i < n - 1; i++) m[i] = d[i - 1] * d[i] <= 0 ? 0 : (d[i - 1] + d[i]) / 2;
-  for (let i = 0; i < n - 1; i++) {
-    if (d[i] === 0) { m[i] = m[i + 1] = 0; continue; }
-    const a = m[i] / d[i], b = m[i + 1] / d[i], s = a * a + b * b;
-    if (s > 9) { const tau = 3 / Math.sqrt(s); m[i] = tau * a * d[i]; m[i + 1] = tau * b * d[i]; }
-  }
-  return (x) => {
-    if (x <= xs[0]) return ys[0];
-    if (x >= xs[n - 1]) return ys[n - 1];
-    let i = 0;
-    while (x > xs[i + 1]) i++;
-    const h = xs[i + 1] - xs[i], t = (x - xs[i]) / h, t2 = t * t, t3 = t2 * t;
-    return (2 * t3 - 3 * t2 + 1) * ys[i] + (t3 - 2 * t2 + t) * h * m[i] + (-2 * t3 + 3 * t2) * ys[i + 1] + (t3 - t2) * h * m[i + 1];
   };
 }
