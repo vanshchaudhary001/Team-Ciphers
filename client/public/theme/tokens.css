@@ -1,0 +1,191 @@
+/* ==========================================================================
+   IVORY INK — design tokens (the single source of truth for colour, type,
+   radius, spacing, shadow and motion). Loaded after styles.css, so these
+   values win; the older token names at the bottom are mapped onto them so
+   every existing var(--…) reference picks up the new theme.
+   ========================================================================== */
+:root {
+  /* ---- Colour ---- */
+  --ivory-50: #FAF8F3;   /* raised surfaces, cards */
+  --ivory-100: #F3EFE7;  /* page background */
+  --ivory-200: #E9E3D7;  /* sunken areas, divider fills */
+  --ivory-300: #D8D0C1;  /* strong borders */
+  --ink-900: #141210;    /* headlines, primary buttons */
+  --ink-700: #2B2824;    /* body text */
+  --ink-500: #6F685D;    /* secondary text (AA on ivory-50/100) */
+  --ink-400: #9A9286;    /* placeholders only (decorative contrast) */
+  --line: rgba(20, 18, 16, 0.12);        /* hairline borders */
+  --line-strong: rgba(20, 18, 16, 0.22);
+
+  --success: #3F6B4E;
+  --warning: #8A6A1F;
+  --danger: #9B3B32;
+  --success-vivid: #2E8A57;  /* verification marks + done states: clearly green, 3:1+ on ivory */
+  --success-tint: #E2EFE6;
+  --gold: #C9A24A;           /* muted gold: logo spark, pending tasks, icon accents */
+  --gold-soft: #D4B26A;      /* gold on ink (progress ring) */
+  --gold-tint: rgba(201, 162, 74, 0.12);
+  --surface-warm: #ECE5D7;   /* info cards that need to sit apart from the page */
+  /* robot / assistant accents (muted, complement cream + ink) */
+  --accent-gold: #C9A24A;
+  --accent-terracotta: #C46A4E;
+  --accent-sage: #7F9E7C;
+  --accent-slate: #6F8BA8;
+  --success-bg: #E7EBE2;
+  --warning-bg: #F1EBDC;
+  --danger-bg: #F2E4DF;
+
+  /* ---- Type ---- */
+  --font-display: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-mono: var(--font-sans); /* JetBrains Mono retired: no genuine code in the UI */
+  --eyebrow-size: 11px;
+  --eyebrow-tracking: 0.3em;
+
+  /* ---- Shape + spacing (8px scale) ---- */
+  --radius-pill: 999px;
+  --radius-card: 18px;
+  --radius-input: 12px;
+  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-4: 32px;
+  --space-5: 40px; --space-6: 48px; --space-8: 64px; --space-10: 80px; --space-12: 96px;
+
+  /* ---- Shadows (soft and warm, never grey-blue) ---- */
+  --shadow-card: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 12px 40px -12px rgba(20, 18, 16, 0.18);
+  --shadow-hover: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 20px 50px -16px rgba(20, 18, 16, 0.24);
+  --shadow-raised: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 24px 64px -16px rgba(20, 18, 16, 0.22);
+  --shadow-ink-btn: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 8px 20px -8px rgba(20, 18, 16, 0.45);
+  --shadow-deboss: inset 0 1px 3px rgba(20, 18, 16, 0.08), inset 0 -1px 0 rgba(255, 255, 255, 0.7);
+  --focus-ring: 0 0 0 2px var(--ivory-50), 0 0 0 4px var(--ink-900);
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur: 200ms;
+  --dur-slow: 250ms;
+
+  /* ======================================================================
+     Older token names → Ivory Ink (navy, copper and green are retired)
+     ====================================================================== */
+  --navy-950: var(--ink-900);
+  --navy-900: var(--ink-900);
+  --navy-800: var(--ink-900);
+  --navy-700: var(--ink-900);
+  --navy-600: var(--ink-700);
+  --navy-100: var(--ivory-200);
+  --navy-50: var(--ivory-200);
+
+  --bg-page: var(--ivory-100);
+  --surface: var(--ivory-50);
+  --surface-subtle: var(--ivory-50);
+  --surface-muted: var(--ivory-200);
+  --border: var(--line);
+  --border-strong: var(--ivory-300);
+  --text-primary: var(--ink-700);
+  --text-secondary: var(--ink-500);
+  --text-muted: var(--ink-500);
+  --text-placeholder: var(--ink-400);
+
+  --copper-50: var(--ivory-200);
+  --copper-100: var(--ivory-200);
+  --copper-200: var(--ivory-300);
+  --copper-300: var(--ivory-300);
+  --copper-400: var(--ink-500);
+  --copper-500: var(--ink-900);
+  --copper-600: var(--ink-700);
+  --copper-700: var(--ink-900);
+  --copper-800: var(--ink-900);
+  --copper-900: var(--ink-900);
+  --btn-primary-gradient: var(--ink-900);
+  --copper-gradient: var(--ink-900);
+  --copper-gradient-strong: var(--ink-900);
+  --copper-gradient-light: linear-gradient(100deg, var(--ink-900), var(--ink-500));
+  --copper-border-soft: var(--line);
+  --copper-border-strong: var(--ivory-300);
+  --copper-shadow-soft: var(--shadow-card);
+  --copper-shadow-hover: var(--shadow-hover);
+  --copper-focus-ring: var(--focus-ring);
+  --copper-line: var(--line);
+
+  --success-border: rgba(63, 107, 78, 0.28);
+  --warning-border: rgba(138, 106, 31, 0.28);
+  --error: var(--danger);
+  --error-bg: var(--danger-bg);
+  --error-border: rgba(155, 59, 50, 0.28);
+  --info: var(--ink-700);
+  --info-bg: var(--ivory-200);
+  --status-success: var(--success);
+  --status-warning: var(--warning);
+  --status-error: var(--danger);
+
+  --warm-text: var(--ink-700);
+  --warm-muted: var(--ink-500);
+  --warm-surface: var(--ivory-50);
+  --warm-offwhite: var(--ivory-50);
+  --warm-placeholder: var(--ink-400);
+  --warm-scrim: none;
+
+  --shadow-raised-half: var(--shadow-hover);
+  --shadow-sm: var(--shadow-card);
+  --shadow-md: var(--shadow-card);
+  --shadow-lg: var(--shadow-raised);
+  --shadow-xl: var(--shadow-raised);
+  --shadow-card-hover: var(--shadow-hover);
+
+  --bg-surface: var(--ivory-100);
+  --surface-container-lowest: var(--ivory-50);
+  --surface-container-low: var(--ivory-200);
+  --surface-container: var(--ivory-200);
+  --surface-container-high: var(--ivory-300);
+  --surface-container-highest: var(--ivory-300);
+  --stitch-primary: var(--ink-900);
+  --stitch-primary-container: var(--ink-700);
+  --stitch-on-primary: var(--ivory-50);
+  --stitch-primary-glow: rgba(20, 18, 16, 0.18);
+  --stitch-secondary: var(--ink-700);
+  --stitch-secondary-accent: var(--ink-700);
+  --stitch-secondary-container: var(--ivory-200);
+  --stitch-outline: var(--ink-500);
+  --stitch-outline-variant: var(--ivory-300);
+  --stitch-outline-subtle: var(--line);
+  --stitch-on-surface: var(--ink-700);
+  --stitch-on-surface-variant: var(--ink-500);
+
+  --color-primary: var(--ink-900);
+  --color-primary-hover: var(--ink-700);
+  --color-primary-light: var(--ivory-200);
+  --color-primary-border: var(--ivory-300);
+  --color-primary-glow: rgba(20, 18, 16, 0.18);
+  --color-slate-50: var(--ivory-50);
+  --color-slate-100: var(--ivory-200);
+  --color-slate-200: var(--line);
+  --color-slate-300: var(--ivory-300);
+  --color-slate-400: var(--ink-500);
+  --color-slate-500: var(--ink-500);
+  --color-slate-600: var(--ink-500);
+  --color-slate-700: var(--ink-700);
+  --color-slate-800: var(--ink-700);
+  --color-slate-900: var(--ink-900);
+  --color-emerald-50: var(--success-bg);
+  --color-emerald-100: var(--success-bg);
+  --color-emerald-500: var(--success);
+  --color-emerald-600: var(--success);
+  --color-emerald-700: var(--success);
+  --color-amber-50: var(--warning-bg);
+  --color-amber-100: var(--warning-bg);
+  --color-amber-500: var(--warning);
+  --color-amber-600: var(--warning);
+  --color-blue-50: var(--ivory-200);
+  --color-blue-500: var(--ink-700);
+  --color-blue-600: var(--ink-900);
+  --color-purple-50: var(--ivory-200);
+  --color-purple-500: var(--ink-700);
+  --color-purple-600: var(--ink-700);
+
+  --radius-sm: 8px;
+  --radius-md: var(--radius-input);
+  --radius-lg: var(--radius-card);
+  --radius-xl: var(--radius-card);
+  --radius-full: var(--radius-pill);
+  --transition-fast: var(--dur-fast) var(--ease);
+  --transition-normal: var(--dur) var(--ease);
+}

@@ -19,21 +19,21 @@ import { OutputPass } from 'https://cdn.jsdelivr.net/npm/three@0.169.0/examples/
 
 export const CONFIG = {
   colors: {
-    void: 0x07090d,
-    floor: 0x15181d,
-    wall: 0xd8d4cd,
-    featureWall: 0x29251f,
-    ceiling: 0x0e1014,
-    ceilingLight: 0xfff4e8, // very slightly warm so the strips don't clash with the copper sign
-    warm: 0xffbe86,
-    metal: 0xc6c9ce,
-    desk: 0x2b2420,
-    deskTop: 0xe8e4dd,
-    plant: 0x2e4636,
-    pot: 0xb9b2a8,
-    displayA: 0x0c2236,
-    displayB: 0x2a3d55,
-    displayC: 0xd9925b,
+    void: 0xf3efe7,         // ivory air (background + fog)
+    floor: 0xe9e3d7,        // glossy pale floor
+    wall: 0xf7f3ec,
+    featureWall: 0xece6da,  // pale slatted wall
+    ceiling: 0xf5f1ea,
+    ceilingLight: 0xfffaf2, // soft daylight strips
+    warm: 0xfff1de,
+    metal: 0xd8d0c1,
+    desk: 0xe2dacb,
+    deskTop: 0xfaf8f3,
+    plant: 0x5c6b5a,
+    pot: 0xe9e3d7,
+    displayA: 0x2b2824,
+    displayB: 0x6f685d,
+    displayC: 0xd8d0c1,
   },
   // Camera path: one smooth spline (position + look target), outside the glass doors -> through the
   // lobby -> stopped in front of the sign wall. The camera moves along it by arc length, so its speed
@@ -45,20 +45,22 @@ export const CONFIG = {
     { pos: [0.4, 1.8, -2.2], look: [0.4, 2.3, -10.0] },
     { pos: [0.15, 2.0, -5.6], look: [0.0, 2.6, -12.0] },
   ],
-  pushDistance: 0.6, // metres the camera drifts toward the sign during the hold + cross-fade
-  // "FIRST WEEK" sign lighting (warm copper / amber; matches the site's Navy + Copper theme)
+  pushDistance: -0.9, // metres: negative = the camera eases back from the wall during the hold + cross-fade
+  // "FIRST WEEK" sign: ink letters that "ink in" on the pale wall (Ivory Ink theme)
   sign: {
-    face: 0xe8a465,        // letter face: warm amber-copper
-    core: 0xffd9a8,        // hot core along the centre of each stroke (soft warm white-amber)
-    offLevel: 0.2,         // unlit: the same colours at 20% = dim copper
-    onLevel: 2.6,          // lit: HDR level (ACES tone mapping rolls it off without clipping)
-    spill: 0xc27c3d,       // light spill on the wall behind and the floor reflection
-    spillIntensity: 5,     // low (the old white spill was 9)
-    bloomTint: 0xb87333,   // copper tint of the glow halo
-    bloomTintMix: 0.55,    // how far the halo tint moves from white to copper once the sign is lit
-    bloomStrength: [0.55, 0.49], // [lobby before the sign, sign fully lit] (lit was 0.70: ~30% lower)
-    bloomRadius: [0.5, 0.7],     // wider, softer halo once lit
-    flickerLetters: [2, 6],      // letters (index, spaces skipped) that flicker once while warming up
+    face: 0xffffff,        // glyph mask (white); the colour comes from inkOff → inkOn below
+    core: 0xffffff,
+    inkOff: 0xdcd5c8,      // before: a faint pencil-grey impression on the wall
+    inkOn: 0x141210,       // after: ink-900
+    offLevel: 0,           // (unused for ink letters)
+    onLevel: 1,
+    spill: 0xffffff,
+    spillIntensity: 0,     // ink doesn't emit light
+    bloomTint: 0xffffff,
+    bloomTintMix: 0,
+    bloomStrength: [0.1, 0.1],   // just a whisper of glow on the daylight strips
+    bloomRadius: [0.4, 0.4],
+    flickerLetters: [],
   },
 };
 
@@ -74,7 +76,7 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
   renderer.setSize(window.innerWidth, window.innerHeight, false);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.35;
+  renderer.toneMappingExposure = 1.22;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = isMobile ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap;
   renderer.shadowMap.autoUpdate = false; // shadows are static: the map is rendered once during warm-up
@@ -84,7 +86,7 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(C.void);
-  scene.fog = new THREE.FogExp2(C.void, 0.045);
+  scene.fog = new THREE.FogExp2(C.void, 0.016);
 
   const pmrem = new THREE.PMREMGenerator(renderer);
   const envRT = pmrem.fromScene(new RoomEnvironment(), 0.04);
@@ -142,7 +144,7 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
       clipBias: 0.003,
       textureWidth: Math.round(window.innerWidth * dpr * 0.5),
       textureHeight: Math.round(window.innerHeight * dpr * 0.5),
-      color: 0xa9b0ba,
+      color: 0xe9e3d7,
     });
     reflector.rotation.x = -Math.PI / 2;
     reflector.position.set(0, 0, -8);
@@ -311,6 +313,7 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
     : Promise.resolve();
   await fontReady;
   const S = CONFIG.sign;
+  const inkOff = new THREE.Color(S.inkOff), inkOn = new THREE.Color(S.inkOn);
   const letters = buildSign(text);
   const signLight = new THREE.PointLight(S.spill, 0, 9, 2);
   signLight.position.set(0, 2.9, -11.2);
@@ -355,7 +358,7 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
         m.position.x = x + g.w / 2;
         m.renderOrder = 3;
         group.add(m);
-        out.push({ mat, x: m.position.x });
+        out.push({ mat, x: m.position.x, mesh: m });
       }
       x += g.w + TRACK;
     }
@@ -363,9 +366,9 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
   }
 
   // ---------- Lights (a fixed set for the whole timeline; only intensities change) ----------
-  const hemi = new THREE.HemisphereLight(0xdfe6f0, 0x1a1c20, 0.5);
+  const hemi = new THREE.HemisphereLight(0xffffff, 0xe9e3d7, 1.6); // soft daylight
   scene.add(hemi);
-  const spot = new THREE.SpotLight(0xf3f1ec, 70, 14, 1.05, 1, 1.6); // the only shadow-casting light
+  const spot = new THREE.SpotLight(0xfff8ee, 34, 14, 1.05, 1, 1.6); // the only shadow-casting light (soft)
   spot.position.set(0, 4.5, -1.5);
   spot.target.position.set(0, 0, -2.5);
   spot.castShadow = true;
@@ -379,7 +382,7 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
     l.target.position.set(...target);
     scene.add(l, l.target);
   };
-  for (const x of [-3, 3]) addSpot(0xf2f4f8, 22, [x, 4.45, -10.9], [x, 0.9, -12], 0.62);
+  for (const x of [-3, 3]) addSpot(0xfffaf2, 10, [x, 4.45, -10.9], [x, 0.9, -12], 0.62);
 
   // ---------- Post-processing (created once, never rebuilt; only values change) ----------
   let composer = null, bloom = null;
@@ -390,7 +393,7 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
     composer.setSize(window.innerWidth, window.innerHeight);
     composer.addPass(new RenderPass(scene, camera));
     // Bloom starts from a half-resolution mip; a wide smoothWidth lets glow fade instead of snapping off.
-    bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth / 2, window.innerHeight / 2), 0.55, 0.5, 0.82);
+    bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth / 2, window.innerHeight / 2), 0.1, 0.4, 0.95);
     bloom.highPassUniforms.smoothWidth.value = 0.45;
     composer.addPass(bloom);
     // Copper halo tint, normalised to its brightest channel (blended in as the sign lights).
@@ -462,7 +465,7 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
       const p = state.letters[i].p;
       const on = flickerLetters.has(i) && p > 0.42 && p < 0.52 ? p * 0.55 : p; // one subtle dip, no strobing
       const sweep = sweeping ? Math.exp(-Math.pow((l.x - sweepX) / 0.45, 2)) * 0.6 : 0;
-      l.mat.color.setScalar(THREE.MathUtils.lerp(S.offLevel, S.onLevel, on) * (1 + sweep));
+      l.mat.color.copy(inkOff).lerp(inkOn, Math.min(1, on + sweep * 0.15));
       lit += on;
     });
     const litK = lit / letters.length;
@@ -557,7 +560,27 @@ export async function createLobbyScene({ canvas, text = 'FIRST WEEK' }) {
   setAll(0, 0, 0, 0, 0);
   render();
 
+  // Screen rectangle (CSS px) of the lettering, for the DOM hand-off into the hero eyebrow.
+  const _v = new THREE.Vector3();
+  function signScreenRect() {
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    const w = canvas.clientWidth || window.innerWidth, h = canvas.clientHeight || window.innerHeight;
+    for (const l of letters) {
+      const g = l.mesh.geometry; if (!g.boundingBox) g.computeBoundingBox();
+      const bb = g.boundingBox;
+      for (const [x, y] of [[bb.min.x, bb.min.y], [bb.max.x, bb.max.y], [bb.min.x, bb.max.y], [bb.max.x, bb.min.y]]) {
+        _v.set(x, y, 0).applyMatrix4(l.mesh.matrixWorld).project(camera);
+        const sx = (_v.x + 1) / 2 * w, sy = (1 - _v.y) / 2 * h;
+        minX = Math.min(minX, sx); maxX = Math.max(maxX, sx); minY = Math.min(minY, sy); maxY = Math.max(maxY, sy);
+      }
+    }
+    return { left: minX, top: minY, width: maxX - minX, height: maxY - minY };
+  }
+  function hideSign() { for (const l of letters) l.mesh.visible = false; }
+
   return {
+    signScreenRect,
+    hideSign,
     addToTimeline,
     // Starts rendering; onStart fires after the short quality pre-roll (still black), when the caller
     // should start the master timeline.

@@ -56,7 +56,7 @@ const CSS = `
     z-index: 2147483000;
     display: block;
     visibility: visible;
-    background: #05070B;
+    background: #F3EFE7; /* ivory paper */
     /* While loading: 0.999 so Chrome paints the site underneath now (an opaque overlay lets it skip
        that, and the whole site would then paint at once during the hand-off). */
     opacity: 0.999;
@@ -72,39 +72,39 @@ const CSS = `
   .fw-intro-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .fw-intro-vignette {
     position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(ellipse 75% 70% at 50% 48%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%);
+    background: radial-gradient(ellipse 75% 70% at 50% 48%, rgba(20,18,16,0) 60%, rgba(20,18,16,0.10) 100%);
   }
-  .fw-intro-black { position: absolute; inset: 0; background: #000; pointer-events: none; }
+  .fw-intro-black { position: absolute; inset: 0; background: #F3EFE7; pointer-events: none; } /* fades in from paper */
   .fw-intro-black.fw-intro-gone { opacity: 0; }
   .fw-intro-loader {
     position: absolute; left: 50%; top: 50%; width: 140px; height: 1px; margin-left: -70px;
-    background: rgba(235, 240, 248, 0.12); overflow: hidden; transition: opacity 400ms ease;
+    background: rgba(20, 18, 16, 0.10); overflow: hidden; transition: opacity 400ms ease;
   }
   .fw-intro-loader::after {
     content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 40%;
-    background: linear-gradient(90deg, rgba(235,240,248,0), rgba(235,240,248,0.85), rgba(235,240,248,0));
+    background: linear-gradient(90deg, rgba(20,18,16,0), rgba(20,18,16,0.6), rgba(20,18,16,0));
     animation: fw-intro-load 1.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
   .fw-intro-loader.fw-intro-gone { opacity: 0; }
   @keyframes fw-intro-load { from { transform: translateX(-100%); } to { transform: translateX(260%); } }
   .fw-intro-static {
     position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-    font: 500 clamp(26px, 5.5vw, 60px)/1 Inter, -apple-system, 'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif;
-    letter-spacing: 0.32em; text-indent: 0.32em; color: #FFD9A8;
-    text-shadow: 0 0 2px #E8A465, 0 0 10px rgba(232, 164, 101, 0.75), 0 0 32px rgba(184, 115, 51, 0.55);
+    font: 500 clamp(26px, 5.5vw, 60px)/1 'Inter Tight', Inter, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    letter-spacing: 0.32em; text-indent: 0.32em; color: #141210;
     opacity: 0; transition: opacity ${T.reducedMotion.signIn * 1000}ms ease;
   }
   .fw-intro-static.fw-intro-show { opacity: 1; }
   .fw-intro-skip {
     position: absolute; right: 20px; bottom: 20px; padding: 8px 15px;
-    font: 500 12px/1 Inter, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; letter-spacing: 0.06em;
-    color: rgba(235, 240, 248, 0.82); background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 999px; cursor: pointer;
+    font: 500 12px/1 'Inter Tight', Inter, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; letter-spacing: 0.02em;
+    color: #141210; background: #FAF8F3;
+    border: 1px solid rgba(20, 18, 16, 0.12); border-radius: 999px; cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 6px 18px -8px rgba(20, 18, 16, 0.25);
     opacity: 0; pointer-events: none; transition: opacity 600ms ease, background 200ms ease, color 200ms ease;
   }
   .fw-intro-skip.fw-intro-show { opacity: 1; pointer-events: auto; }
-  .fw-intro-skip:hover { color: #FFFFFF; background: rgba(255, 255, 255, 0.12); }
-  .fw-intro-skip:focus-visible { outline: 2px solid rgba(235, 240, 248, 0.85); outline-offset: 2px; }
+  .fw-intro-skip:hover { background: #FFFFFF; border-color: rgba(20, 18, 16, 0.3); }
+  .fw-intro-skip:focus-visible { outline: none; box-shadow: 0 0 0 2px #FAF8F3, 0 0 0 4px #141210; }
   @media (max-width: 600px) { .fw-intro-skip { right: 16px; bottom: 16px; } }
 `;
 
@@ -129,7 +129,7 @@ function run() {
       <div class="fw-intro-black"></div>
       <div class="fw-intro-loader"></div>
     </div>
-    <button class="fw-intro-skip" type="button" aria-label="Skip intro">Skip</button>
+    <button class="fw-intro-skip" type="button" aria-label="Skip intro">Skip intro</button>
   `;
   const $ = (sel) => shadow.querySelector(sel);
   const canvas = $('.fw-intro-canvas');
@@ -144,6 +144,10 @@ function run() {
   html.classList.remove(COVER_CLASS);
   window.__fwIntroStarted = true; // tells the <head> failsafe the intro is in charge
   const heroImages = decodeHeroImages();
+  const eyebrow = document.getElementById('hero-eyebrow');
+  if (eyebrow) eyebrow.classList.add('ii-awaiting-letters');
+  let flying = null;
+  const releaseEyebrow = () => { if (eyebrow) eyebrow.classList.remove('ii-awaiting-letters'); if (flying) { flying.remove(); flying = null; } };
   try { sessionStorage.setItem(SESSION_KEY, '1'); } catch (e) { /* storage unavailable */ }
 
   let finished = false;
@@ -183,6 +187,7 @@ function run() {
     controller = null;
     if (ctrl) ctrl.stop();
     host.remove();
+    releaseEyebrow();
     // The scrollbar gutter was reserved during the intro, so releasing the lock doesn't change the layout width.
     html.classList.remove(PENDING_CLASS, COVER_CLASS);
     const boot = document.getElementById('fw-intro-boot-style');
@@ -239,8 +244,33 @@ function run() {
     // ~1s before the fade: 0.999 lets Chrome paint the site underneath ahead of time.
     tl.set(host, { opacity: 0.999 }, T.prepare);
     tl.fromTo(host, { opacity: 0.999 }, { opacity: 0, duration: len(T.handoff), ease: 'power2.inOut', immediateRender: false }, T.handoff[0]);
+    // The FIRST WEEK letters lift off the wall and settle into the hero eyebrow while the page fades in.
+    tl.call(() => flyLetters(gsap, ctrl, len(T.handoff)), null, T.handoff[0]);
     if (Math.abs(tl.duration() - T.total) > 1e-6) console.warn(`[fw-intro] timeline is ${tl.duration()}s, expected ${T.total}s`);
     return tl;
+  }
+
+  function flyLetters(gsap, ctrl, duration) {
+    const target = eyebrow && eyebrow.querySelector('.eyebrow-lead');
+    const from = ctrl.signScreenRect && ctrl.signScreenRect();
+    if (!target || !from || !(from.width > 0)) { releaseEyebrow(); return; }
+    const cs = getComputedStyle(target);
+    const el = document.createElement('div');
+    el.setAttribute('aria-hidden', 'true');
+    el.textContent = target.textContent;
+    Object.assign(el.style, {
+      position: 'fixed', left: '0', top: '0', zIndex: '2147483001', pointerEvents: 'none', whiteSpace: 'nowrap',
+      font: cs.font, letterSpacing: cs.letterSpacing, textTransform: cs.textTransform, color: '#141210',
+      transformOrigin: '0 0', willChange: 'transform',
+    });
+    document.body.appendChild(el);
+    flying = el;
+    const r0 = el.getBoundingClientRect();
+    const to = target.getBoundingClientRect();
+    const s0 = from.width / r0.width;
+    gsap.set(el, { x: from.left, y: from.top + (from.height - r0.height * s0) / 2, scale: s0 });
+    ctrl.hideSign();
+    gsap.to(el, { x: to.left, y: to.top, scale: 1, color: cs.color, duration, ease: 'power3.inOut', onComplete: releaseEyebrow });
   }
 
   // Natural end: the timeline's cross-fade has already revealed the site.

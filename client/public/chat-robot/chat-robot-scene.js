@@ -1,6 +1,9 @@
 /*
  * Dancing 3D chat robot (Three.js r169 via jsDelivr ESM builds). Lazy-loaded by chat-robot.js.
- * createRobot({ canvas, reducedMotion }) -> controller.
+ * createRobot({ canvas, reducedMotion, accentPeriod, accentLimbs }) -> controller.
+ *   accentPeriod  seconds each accent colour is shown (default 2)
+ *   accentLimbs   also tint the arms, legs and neck with the accent (the small header robot uses this)
+ *   tight         frame the robot closely (no headroom for drop-ins), for small slots
  *
  * Tweak points: COLORS, BPM, DANCES (keyframes in beats), and the idle values in idlePose().
  */
@@ -9,12 +12,12 @@ import { RoomEnvironment } from 'https://cdn.jsdelivr.net/npm/three@0.169.0/exam
 import { RoundedBoxGeometry } from 'https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/geometries/RoundedBoxGeometry.js/+esm';
 
 export const COLORS = {
-  body: 0xb87333,       // muted copper (copper-500)
-  joint: 0x7d4720,      // copper-700 for joints, rings, soles
-  screen: 0x0a1424,     // glossy navy-950 face screen
-  limb: 0x16294a,       // navy-800 limbs and neck
-  eye: '#ffd9a8',       // warm white-amber eye glow (canvas colour)
-  eyeCore: '#fff6ea',   // bright eye core
+  body: 0xf5f1ea,       // glossy ivory
+  joint: 0x2b2824,      // ink-700 joints, rings, soles
+  screen: 0x141210,     // glossy ink face screen
+  limb: 0x141210,       // ink limbs and neck
+  eye: '#fff1de',       // soft warm-white eye glow (canvas colour)
+  eyeCore: '#ffffff',   // bright eye core
 };
 export const BPM = 120;
 const BEAT = 60 / BPM;
@@ -114,7 +117,7 @@ const CHANNELS = ['rootY', 'rootRotY', 'rootRotZ', 'squash', 'hipsZ', 'hipsY', '
   'lShX', 'lShZ', 'lElX', 'lElZ', 'rShX', 'rShZ', 'rElX', 'rElZ', 'lThX', 'lThZ', 'lKnX', 'rThX', 'rThZ', 'rKnX'];
 const REST = { lShZ: 0.12, rShZ: 0.12, lElX: -0.25, rElX: -0.25, lKnX: 0.05, rKnX: 0.05 };
 
-export async function createRobot({ canvas, reducedMotion = false }) {
+export async function createRobot({ canvas, reducedMotion = false, accentPeriod = 2, accentLimbs = false, tight = false }) {
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'low-power', premultipliedAlpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -128,16 +131,16 @@ export async function createRobot({ canvas, reducedMotion = false }) {
   const envRT = pmrem.fromScene(new RoomEnvironment(), 0.04);
   scene.environment = envRT.texture;
   scene.environmentIntensity = 0.9;
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x404858, 0.6));
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xd8d0c1, 0.7));
   const key = new THREE.DirectionalLight(0xffffff, 1.6);
   key.position.set(2.5, 4, 5);
-  const rim = new THREE.DirectionalLight(0xffd2a8, 1.0);
+  const rim = new THREE.DirectionalLight(0xfff4e6, 1.0);
   rim.position.set(-3, 3, -3);
   scene.add(key, rim);
 
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 50);
-  camera.position.set(0, 1.45, 7.2);
-  camera.lookAt(0, 1.3, 0);
+  camera.position.set(0, tight ? 1.4 : 1.45, tight ? 5.5 : 7.2);
+  camera.lookAt(0, tight ? 1.32 : 1.3, 0);
 
   // ---------- Materials ----------
   const plastic = (color) => new THREE.MeshPhysicalMaterial({ color, roughness: 0.28, clearcoat: 0.8, clearcoatRoughness: 0.1 });
@@ -147,6 +150,11 @@ export async function createRobot({ canvas, reducedMotion = false }) {
     screen: new THREE.MeshPhysicalMaterial({ color: COLORS.screen, roughness: 0.12, clearcoat: 1.0, clearcoatRoughness: 0.04, metalness: 0.2 }),
     limb: new THREE.MeshStandardMaterial({ color: COLORS.limb, roughness: 0.42, metalness: 0.35 }),
   };
+  // Muted accents that complement cream + ink; the joints drift through them every ~2s.
+  const ACCENTS = ['#c9a24a', '#c46a4e', '#7f9e7c', '#6f8ba8'].map((c) => new THREE.Color(c));
+  const accentNow = ACCENTS[0].clone();
+  M.joint.color.copy(ACCENTS[0]);
+  if (accentLimbs) M.limb.color.copy(ACCENTS[0]);
   const add = (parent, geo, mat, x = 0, y = 0, z = 0) => {
     const m = new THREE.Mesh(geo, mat);
     m.position.set(x, y, z);
@@ -262,8 +270,8 @@ export async function createRobot({ canvas, reducedMotion = false }) {
   const eyes = { expr: 'normal', until: 0, blink: 0, lookX: 0, lookY: 0, spin: 0, dirty: true };
   function glowDisc(x, y, r, sy = 1) {
     const g = eyeCtx.createRadialGradient(x, y, 0, x, y, r * 1.9);
-    g.addColorStop(0, 'rgba(255,217,168,0.4)');
-    g.addColorStop(1, 'rgba(232,164,101,0)');
+    g.addColorStop(0, 'rgba(255,241,222,0.35)');
+    g.addColorStop(1, 'rgba(255,241,222,0)');
     eyeCtx.fillStyle = g;
     eyeCtx.fillRect(x - r * 2, y - r * 2, r * 4, r * 4);
     eyeCtx.save();
@@ -278,14 +286,14 @@ export async function createRobot({ canvas, reducedMotion = false }) {
   function strokeEye(path) {
     eyeCtx.save();
     eyeCtx.lineCap = 'round'; eyeCtx.lineJoin = 'round';
-    eyeCtx.shadowColor = 'rgba(255,217,168,0.7)'; eyeCtx.shadowBlur = 10;
+    eyeCtx.shadowColor = 'rgba(255,241,222,0.6)'; eyeCtx.shadowBlur = 10;
     eyeCtx.strokeStyle = COLORS.eye; eyeCtx.lineWidth = 9;
     path(); eyeCtx.stroke();
     eyeCtx.restore();
   }
   function fillShape(path, color = COLORS.eye) {
     eyeCtx.save();
-    eyeCtx.shadowColor = 'rgba(255,217,168,0.7)'; eyeCtx.shadowBlur = 12;
+    eyeCtx.shadowColor = 'rgba(255,241,222,0.6)'; eyeCtx.shadowBlur = 12;
     eyeCtx.fillStyle = color;
     path(); eyeCtx.fill();
     eyeCtx.restore();
@@ -376,11 +384,12 @@ export async function createRobot({ canvas, reducedMotion = false }) {
   function idlePose(t, out) {
     for (const c of CHANNELS) out[c] = REST[c] || 0;
     if (reducedMotion) return;
-    out.rootY = Math.sin(t * 2.1) * 0.035;
-    out.hipsZ = Math.sin(t * 0.9) * 0.04;
+    out.rootY = Math.sin(t * 2.6) * 0.045;
+    out.hipsZ = Math.sin(t * 1.3) * 0.07;
+    out.headX = Math.sin(t * 5.2) * 0.035;
     out.torsoX = Math.sin(t * 2.1 + 0.6) * 0.02;
-    out.lShX = Math.sin(t * 2.1) * 0.06;
-    out.rShX = -Math.sin(t * 2.1) * 0.06;
+    out.lShX = Math.sin(t * 2.6) * 0.16;
+    out.rShX = -Math.sin(t * 2.6) * 0.16;
     out.rootRotY = Math.sin(t * 0.25) * 0.61 + st.revolveSpin; // ±35° revolve (+ occasional full spin)
     out.headZ = Math.sin(t * 0.7) * 0.04 + st.curious * 0.22;
   }
@@ -581,6 +590,20 @@ export async function createRobot({ canvas, reducedMotion = false }) {
     }
     if (eyes.expr === 'spiral') { eyes.spin += dt * 9; eyes.dirty = true; }
     if (eyes.dirty) { drawEyes(); eyes.dirty = false; }
+
+    // Accent colour: hold ~1.5s, ease into the next over ~0.5s, with a soft glow pulse at each change
+    if (!reducedMotion) {
+      const n = ACCENTS.length, ph = t / accentPeriod, i = Math.floor(ph) % n, f = ph - Math.floor(ph);
+      const k = f < 0.75 ? 0 : easeInOut((f - 0.75) / 0.25);
+      accentNow.copy(ACCENTS[i]).lerp(ACCENTS[(i + 1) % n], k);
+      M.joint.color.copy(accentNow);
+      const pulse = f > 0.75 ? Math.sin(Math.PI * (f - 0.75) / 0.25) : 0;
+      M.joint.emissive.copy(accentNow).multiplyScalar(0.12 + 0.25 * pulse);
+      if (accentLimbs) {
+        M.limb.color.copy(accentNow);
+        M.limb.emissive.copy(accentNow).multiplyScalar(0.1 + 0.2 * pulse);
+      }
+    }
 
     applyPose(pose);
   }
