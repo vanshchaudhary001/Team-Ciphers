@@ -500,24 +500,240 @@ function cpSearch(c, query) {
   }).filter((d) => d.score >= 2).sort((a, b) => b.score - a.score).slice(0, 4);
 }
 
-// The server-side NVIDIA NIM copilot, grounded with the retrieved snippets. Resolves to null if unavailable.
-async function cpAskModel(c, query, intent, hits) {
+// ---------------------------------------------------------------- conversation memory (task follow-ups)
+// The chat remembers the task it last explained and the recent turns, so follow-ups such as
+// "I didn't understand step 3", "explain the second step", "next step" or "explain it more simply"
+// are answered about that task instead of falling through to "I couldn't find that".
+const cpConv = { task: null, lastStep: null, history: [] };
+window.cpConversation = cpConv;
+
+function cpPlain(html) {
+  const txt = String(html == null ? '' : html)
+    .replace(/<pre[^>]*>([\s\S]*?)<\/pre>/gi, ' `$1` ')
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/<\/(p|li|div|h\d|article|header)>/gi, '. ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+    .replace(/\*\*(.+?)\*\*/g, '$1');
+  return txt.replace(/\s+/g, ' ').replace(/(\.\s*){2,}/g, '. ').trim();
+}
+
+// Called by getExplainTaskResponseHtml() (index.html) every time a task is explained.
+function cpSetCurrentTask(t) {
+  if (!t || !t.taskId) return;
+  const stepsHtml = Array.isArray(t.steps) ? t.steps : [];
+  if (!cpConv.task || cpConv.task.taskId !== t.taskId) cpConv.lastStep = null;
+  cpConv.task = {
+    taskId: String(t.taskId),
+    title: cpPlain(t.title),
+    day: t.day || '',
+    duration: t.duration || '',
+    department: t.department || '',
+    description: cpPlain(t.description),
+    objective: cpPlain(t.objective),
+    prerequisites: cpPlain(t.prerequisites),
+    verification: cpPlain(t.verification),
+    supervisor: cpPlain(t.supervisor),
+    troubleshooting: (Array.isArray(t.troubleshooting) ? t.troubleshooting : []).map(cpPlain).filter(Boolean),
+    stepsHtml,
+    steps: stepsHtml.map(cpPlain),
+  };
+}
+window.cpSetCurrentTask = cpSetCurrentTask;
+
+// Called by runCopilotResponseWithThinking() (index.html) after every answer.
+function cpRecordTurn(userText, answerHtml) {
+  if (userText) cpConv.history.push({ role: 'user', content: String(userText).slice(0, 500) });
+  let text;
+  const t = cpConv.task;
+  if (t && /data-ca-view="task"/.test(String(answerHtml || ''))) {
+    text = `I explained the task "${t.title}". Its steps are: ` + t.steps.map((s, i) => `${i + 1}. ${s}`).join(' ');
+  } else {
+    text = cpPlain(answerHtml);
+  }
+  if (text) cpConv.history.push({ role: 'assistant', content: text.slice(0, 900) });
+  if (cpConv.history.length > 12) cpConv.history.splice(0, cpConv.history.length - 12);
+}
+window.cpRecordTurn = cpRecordTurn;
+
+// Loads a task into memory without showing its card (for "step 2 of task 5").
+function cpLoadTask(taskId) {
+  try { if (typeof getExplainTaskResponseHtml === 'function') getExplainTaskResponseHtml(taskId); } catch (e) { /* ignore */ }
+  return cpConv.task && String(cpConv.task.taskId).replace(/\D/g, '').replace(/^0+/, '') === String(taskId).replace(/\D/g, '').replace(/^0+/, '') ? cpConv.task : null;
+}
+
+const CP_ORDINALS = {
+  first: 1, one: 1, '1st': 1, second: 2, two: 2, '2nd': 2, third: 3, three: 3, '3rd': 3,
+  fourth: 4, four: 4, '4th': 4, fifth: 5, five: 5, '5th': 5, sixth: 6, six: 6, '6th': 6,
+  seventh: 7, seven: 7, '7th': 7, eighth: 8, eight: 8, '8th': 8, ninth: 9, nine: 9, '9th': 9,
+  tenth: 10, ten: 10, '10th': 10,
+};
+const CP_NUMWORD = '(\\d{1,2}|' + Object.keys(CP_ORDINALS).join('|') + ')';
+const cpToNum = (w) => (/^\d+$/.test(w) ? parseInt(w, 10) : CP_ORDINALS[w] || null);
+
+// "step 3", "step no 3", "step-3", "3rd step", "third step", "step third", "point 2", "last step", "next step"...
+function cpStepRef(s) {
+  let m = s.match(new RegExp('\\b(?:step|point)s?[ -]?(?:no |number |# ?)?' + CP_NUMWORD + '\\b'))
+    || s.match(new RegExp('\\b' + CP_NUMWORD + ' (?:step|point)\\b'));
+  if (m) { const n = cpToNum(m[1]); if (n) return { kind: 'num', n }; }
+  if (/\b(last|final) (step|point)\b/.test(s)) return { kind: 'last' };
+  if (/\bnext (step|point)\b/.test(s)) return { kind: 'next' };
+  if (/\b(previous|prev|earlier) (step|point)\b|\bstep before\b/.test(s)) return { kind: 'prev' };
+  if (/\b(this|that|same) (step|point)\b/.test(s)) return { kind: 'same' };
+  return null;
+}
+
+const CP_CONFUSED = /\b(did not (understand|get)|do not (understand|get)|not (able to |getting |understanding )?understand|cannot understand|could not understand|not clear|unclear|confus\w*|explain (it |this |that |the task |this task )?(again|more|better|simply|properly|in detail|in simple|in easy)|elaborate|more detail\w*|in detail|simpler|simple words|easy words|easy language|layman|what does (this|that|it) mean|meaning of (this|that)|give (me )?(an )?example|samajh|samjh|samjha|samjhao|samjhaao)\b/;
+
+function cpStepCount(task) { return (task && task.steps && task.steps.length) || 0; }
+
+function cpResolveStep(task, ref) {
+  const n = cpStepCount(task);
+  if (ref.kind === 'num') return ref.n;
+  if (ref.kind === 'last') return n;
+  if (ref.kind === 'next') return cpConv.lastStep ? cpConv.lastStep + 1 : 1;
+  if (ref.kind === 'prev') return cpConv.lastStep ? cpConv.lastStep - 1 : 1;
+  return cpConv.lastStep || 1;
+}
+
+const cpAsk = (label, q, primary) => ({ label, primary, onclick: `askCopilotDirect(decodeURIComponent('${cpArg(q)}'))` });
+
+function cpStepNav(task, idx) {
+  const n = cpStepCount(task);
+  return cpActions([
+    idx > 1 ? cpAsk(`← Step ${idx - 1}`, `Explain step ${idx - 1}`) : null,
+    idx < n ? cpAsk(`Step ${idx + 1} →`, `Explain step ${idx + 1}`, true) : null,
+    { label: 'Whole task', onclick: `askCopilotToExplainTask('${cpEsc(task.taskId)}')` },
+  ]);
+}
+
+// Offline explanation of one step, used when the AI model is unavailable.
+function cpStepFallback(c, task, idx) {
+  const step = task.steps[idx - 1] || '';
+  const cap = (x) => x.charAt(0).toUpperCase() + x.slice(1);
+  // Break the step into clauses ("do A; then do B") or, for "Review A, B, C and D for X", into its items.
+  let intro = '';
+  let parts = step.split(/;\s+|\.\s+(?=[A-Z])|,?\s+and then\s+|,\s+then\s+/).map((x) => x.trim().replace(/[.]+$/, '')).filter((x) => x.length > 3);
+  if (parts.length === 1 && (step.match(/,/g) || []).length >= 2) {
+    const m = step.replace(/[.]+$/, '').match(/^(\S+)\s+(?:the\s+|your\s+|all\s+)?(.+?)(\s+(?:for|within|relevant to|in|across)\s+.+)?$/);
+    const items = m ? m[2].split(/,\s*(?:and\s+|or\s+)?|\s+and\s+/).map((x) => x.trim()).filter((x) => x.length > 2) : [];
+    if (m && items.length >= 3) { intro = `${cap(m[1])} each of these${m[3] ? ` (${m[3].trim()})` : ''}:`; parts = items; }
+  }
+  const prev = idx > 1 ? task.steps[idx - 2] : '';
+  const next = idx < task.steps.length ? task.steps[idx] : '';
+  const short = (x) => cpEsc(x.length > 110 ? x.slice(0, 107).replace(/\s+\S*$/, '') + '…' : x);
+  const buddy = c.emp && c.emp.buddy && c.emp.buddy.name;
+  const lead = c.leadmgr && c.leadmgr.name;
+  return `
+    ${parts.length >= 2 ? `<p class="ca-label">Do it in small parts</p>${intro ? `<p>${cpEsc(intro)}</p>` : ''}<ol class="ca-steps">${parts.map((p) => `<li>${cpEsc(cap(p))}</li>`).join('')}</ol>` : `<p>${cpEsc(step)}</p>`}
+    ${prev || next ? `<p class="ca-label">Where this fits</p><ul class="ca-list">
+      ${prev ? `<li><strong>Before this</strong> (step ${idx - 1}): ${short(prev)}</li>` : '<li>This is the <strong>first step</strong>, so you can start here.</li>'}
+      ${next ? `<li><strong>After this</strong> (step ${idx + 1}): ${short(next)}</li>` : '<li>This is the <strong>last step</strong>. After it, check the result below.</li>'}
+    </ul>` : ''}
+    ${task.objective ? `<p class="ca-label">Why it matters</p><p>${short(task.objective)}</p>` : ''}
+    ${!next && task.verification ? `<p class="ca-label">How you'll know it's done</p><p>${cpEsc(task.verification)}</p>` : ''}
+    <p class="ca-label">Still not clear?</p>
+    <p>Ask ${buddy ? `your buddy <strong>${cpEsc(buddy)}</strong>` : 'your buddy'}${lead ? ` or your lead <strong>${cpEsc(lead)}</strong>` : ' or your lead'} to show you this step. It usually takes them a few minutes.</p>`;
+}
+
+async function cpStepAnswer(c, task, idx, query, simpler) {
+  const n = cpStepCount(task);
+  if (!n) return cpTaskSimpler(c, task, query);
+  if (idx < 1 || idx > n) {
+    return `<div class="ca">
+      ${caHead(`This task has ${n} step${n === 1 ? '' : 's'}`, { eyebrow: cpEsc(task.title) })}
+      <p class="ca-lead">There's no step ${idx}. Pick the step you want me to explain:</p>
+      <ol class="ca-steps">${task.steps.map((s, i) => `<li>${cpEsc(s.length > 120 ? s.slice(0, 117) + '…' : s)}</li>`).join('')}</ol>
+      ${cpActions(task.steps.slice(0, 8).map((_, i) => cpAsk(`Step ${i + 1}`, `Explain step ${i + 1}`)))}
+    </div>`;
+  }
+  cpConv.lastStep = idx;
+  const model = await cpAskModel(c, query, 'task_step', [], { mode: simpler ? 'explain_step_simpler' : 'explain_step', focusStep: idx });
+  const stepHtml = typeof caInline === 'function' ? caInline(task.stepsHtml[idx - 1] || cpEsc(task.steps[idx - 1])) : cpEsc(task.steps[idx - 1]);
+  return `<div class="ca" data-ca-view="step">
+    ${caHead(`Step ${idx} of ${n}`, { eyebrow: cpEsc(task.title), badge: simpler ? 'Simpler' : '' })}
+    <article class="ca-card"><p class="ca-eyebrow">The step</p><p>${stepHtml}</p></article>
+    <p class="ca-label">${simpler ? 'In simpler words' : 'What this means'}</p>
+    ${model ? `<div class="ca-prose">${caMarkdown(model)}</div>` : cpStepFallback(c, task, idx)}
+    ${cpStepNav(task, idx)}
+  </div>`;
+}
+
+async function cpTaskSimpler(c, task, query) {
+  const model = await cpAskModel(c, query, 'task_followup', [], { mode: 'explain_task_simple' });
+  const n = cpStepCount(task);
+  const body = model
+    ? `<div class="ca-prose">${caMarkdown(model)}</div>`
+    : `<p class="ca-lead">Here's the task in short. Tell me which step is unclear and I'll break it down.</p>
+       ${task.objective ? `<p><strong>Goal:</strong> ${cpEsc(task.objective)}</p>` : ''}
+       <ol class="ca-steps">${task.steps.map((s) => `<li>${cpEsc(s.split(/[.;]\s/)[0])}</li>`).join('')}</ol>`;
+  return `<div class="ca" data-ca-view="task-simple">
+    ${caHead("Let's go through it again", { eyebrow: cpEsc(task.title) })}
+    ${body}
+    ${n ? `<p class="ca-label">Which step should I explain?</p>${cpActions(task.steps.slice(0, 8).map((_, i) => cpAsk(`Step ${i + 1}`, `Explain step ${i + 1}`)))}` : ''}
+  </div>`;
+}
+
+// Returns answer HTML for a follow-up about the current task, or null if the question isn't one.
+async function cpTaskFollowUp(c, query, s, intent) {
+  const ref = cpStepRef(s);
+  const confused = CP_CONFUSED.test(s);
+  if (!ref && !confused) return null;
+
+  // "step 2 of task 5" → switch to that task first
+  let task = cpConv.task;
+  const named = /\btask\b|\bt0*\d/.test(s) ? cpTaskRef(s, c.tasks || []) : null;
+  if (named && (!task || String(named.taskId) !== task.taskId)) task = cpLoadTask(named.taskId) || task;
+
+  if (!task) {
+    if (!ref) return null; // plain "I'm confused" with no task open → normal flow
+    const pending = (c.tasks || []).filter((t) => t.status !== 'Completed').slice(0, 5);
+    return `<div class="ca">
+      ${caHead('Which task do you mean?', { eyebrow: 'Task steps' })}
+      <p class="ca-lead">Open a task with <strong>Ask Copilot</strong> first, or ask like <em>"explain step 2 of task 4"</em>.</p>
+      ${pending.length ? cpTaskList(pending) : ''}
+    </div>`;
+  }
+
+  // A confused remark that clearly belongs to another topic (tool, policy, person) is not a task follow-up.
+  if (!ref && !['unknown', 'lost', 'task_howto', 'greeting', 'thanks', 'out_of_scope'].includes(intent)) return null;
+
+  if (ref) return cpStepAnswer(c, task, cpResolveStep(task, ref), query, confused);
+  if (cpConv.lastStep) return cpStepAnswer(c, task, cpConv.lastStep, query, true);
+  return cpTaskSimpler(c, task, query);
+}
+
+// The server-side NVIDIA NIM copilot, grounded with the retrieved snippets, the task the employee is on
+// and the recent conversation. Resolves to null if unavailable.
+async function cpAskModel(c, query, intent, hits, opts = {}) {
   try {
     if (typeof getApiBaseUrl !== 'function') return null;
     const ctl = new AbortController();
-    const timer = setTimeout(() => ctl.abort(), 6000);
+    const timer = setTimeout(() => ctl.abort(), opts.mode ? 20000 : 15000);
+    const t = cpConv.task;
     const res = await fetch(`${getApiBaseUrl()}/api/v1/ai/nvidia-copilot`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl.signal,
       body: JSON.stringify({
         query, intent, company: cpCompanyName(c), role: c.emp.fullTitle || c.emp.role, employeeId: c.emp.employeeId,
+        buddyName: c.emp.buddy && c.emp.buddy.name, hrName: c.emp.hr && c.emp.hr.name,
         retrieved: hits.map((h) => ({ source: h.kind, title: h.title, text: h.text.slice(0, 600) })),
-        contacts: Object.values(c.company.contacts || {}).map((x) => ({ team: x.team, person: x.person, phone: x.phone, email: x.email, covers: x.covers })),
+        contacts: Object.values((c.company && c.company.contacts) || {}).map((x) => ({ team: x.team, person: x.person, phone: x.phone, email: x.email, covers: x.covers })),
+        history: cpConv.history.slice(-6),
+        mode: opts.mode, focusStep: opts.focusStep,
+        taskContext: t ? {
+          taskId: t.taskId, title: t.title, day: t.day, duration: t.duration, department: t.department,
+          description: t.description.slice(0, 600), objective: t.objective.slice(0, 600), prerequisites: t.prerequisites.slice(0, 500),
+          steps: t.steps.map((x) => x.slice(0, 500)), verification: t.verification.slice(0, 400), supervisor: t.supervisor.slice(0, 300),
+          troubleshooting: t.troubleshooting.slice(0, 3).map((x) => x.slice(0, 300)),
+        } : undefined,
       }),
     });
     clearTimeout(timer);
     if (!res.ok) return null;
     const data = await res.json();
     const ans = data && (data.data?.answer || data.answer);
+    if (data && data.data && data.data.fallback) return null; // the model did not answer; use our own explanation
     return ans && !/onboarding scope guard/i.test(data.data?.model || '') ? ans : null;
   } catch (e) { return null; }
 }
@@ -525,8 +741,15 @@ async function cpAskModel(c, query, intent, hits) {
 // Entry point used by the chat: returns the answer HTML.
 async function copilotRespond(query) {
   const c = cpCtx();
+  const s = cpNorm(query);
+  let x = null;
+  try { x = copilotClassify(query); } catch (e) { x = { intent: 'unknown' }; }
+  // Follow-ups about the task that was just explained ("I didn't understand step 3", "next step", ...)
+  if (x.intent !== 'out_of_scope') {
+    const followUp = await cpTaskFollowUp(c, query, s, x.intent);
+    if (followUp) return followUp;
+  }
   if (!c.company || !c.company.procedures) return CP_ANSWERS.not_found(c, {});
-  const x = copilotClassify(query);
   const fn = CP_ANSWERS[x.intent];
   if (fn && x.intent !== 'unknown') {
     try { return fn(c, x, query); } catch (e) { console.warn('[assistant]', x.intent, e); }

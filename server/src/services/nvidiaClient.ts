@@ -13,6 +13,44 @@ export interface ScopeEvaluation {
   response: string;
 }
 
+export function cleanHistory(history: any): ChatMessage[] {
+  if (!Array.isArray(history)) return [];
+  return history
+    .filter((m: any) => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string' && m.content.trim())
+    .slice(-6)
+    .map((m: any) => ({ role: m.role as 'user' | 'assistant', content: String(m.content).slice(0, 900) }));
+}
+
+export function hasTaskSteps(taskContext: any): boolean {
+  return !!(taskContext && typeof taskContext === 'object' && Array.isArray(taskContext.steps) && taskContext.steps.length);
+}
+
+// Describes the task the employee is working on and how to teach it, step by step.
+export function buildTaskPrompt(taskContext: any, mode?: string, focusStep?: number | string): string {
+  const t = taskContext || {};
+  const str = (v: any, n: number) => String(v == null ? '' : v).slice(0, n);
+  const steps = (Array.isArray(t.steps) ? t.steps : []).slice(0, 15).map((s: any, i: number) => `${i + 1}. ${str(s, 500)}`).join('\n');
+  let p = `\n\nThe employee is working on this onboarding task and may ask follow-up questions about it:
+Task: ${str(t.title, 200)}${t.taskId ? ` (${str(t.taskId, 20)}` : ''}${t.day ? `, ${str(t.day, 20)}` : ''}${t.duration ? `, ${str(t.duration, 30)}` : ''}${t.taskId ? ')' : ''}
+${t.description ? `Description: ${str(t.description, 600)}\n` : ''}${t.objective ? `Why it matters: ${str(t.objective, 600)}\n` : ''}${t.prerequisites ? `Before you start: ${str(t.prerequisites, 500)}\n` : ''}Steps:
+${steps}
+${t.verification ? `How to know it is done: ${str(t.verification, 400)}\n` : ''}${t.supervisor ? `Check-in with the lead: ${str(t.supervisor, 300)}\n` : ''}${Array.isArray(t.troubleshooting) && t.troubleshooting.length ? `If something goes wrong: ${t.troubleshooting.slice(0, 3).map((x: any) => str(x, 300)).join(' | ')}\n` : ''}
+Teaching rules:
+1. Questions about this task are in scope. "Step 3", "the third step", "3rd point", "next step", "it" or "this step" refer to the numbered Steps above and to the earlier conversation.
+2. When asked about a step, explain THAT step only. Give: what it means in plain, simple English; how to do it as 3-5 short, concrete actions (numbered); why it matters for this task; how they will know it is done. Add one common mistake to avoid if useful.
+3. If the employee says they did not understand, do not repeat the step text. Use simpler words, shorter sentences and one small everyday example.
+4. Use only the details in this task, the company information and the contacts given. Do not invent URLs, tool names, people, phone numbers or policies. If a specific detail is not given, say they should confirm it with their buddy or lead.
+5. Be warm and direct. Start with the answer (no "Sure!" or "Great question"). Keep it under about 180 words.`;
+  const n = parseInt(String(focusStep ?? ''), 10);
+  if (n && Array.isArray(t.steps) && t.steps[n - 1]) {
+    p += `\n\nThe employee is asking about Step ${n} of ${t.steps.length}: "${str(t.steps[n - 1], 500)}"`;
+    if (mode === 'explain_step_simpler') p += '\nThey found it hard to understand, so explain it in the simplest possible way.';
+  } else if (mode === 'explain_task_simple') {
+    p += '\n\nThe employee did not understand the task. Explain the whole task again in very simple words: one sentence on the goal, then one short plain line per step (numbered the same way), then ask which step they want explained in more detail.';
+  }
+  return p;
+}
+
 export function classifyQueryScope(query: string, context?: any): ScopeEvaluation {
   const q = (query || '').trim();
   const lower = q.toLowerCase();
@@ -105,9 +143,14 @@ export function classifyQueryScope(query: string, context?: any): ScopeEvaluatio
     };
   }
 
+  // A follow-up while the employee has a task open ("I didn't understand step 3") is about that task.
+  if (hasTaskSteps(context?.taskContext)) {
+    return { classification: 'IN_SCOPE', response: '' };
+  }
+
   // 4. Positive In-Scope Indicators
   const hasTaskOrChecklist =
-    /(task|checklist|roadmap|todo|to-do|complete|completed|pending|cleared|assign|priority|critical|urgent|day\s*[1-5]|today|tomorrow|this\s+week|first\s+week|first-week|milestone|module|training|compliance|security|handbook|sso|mfa|laptop|equipment|vpn|docker|github|ide|workspace|unstick|blocker|blocked|stuck)/i.test(
+    /(task|step|checklist|roadmap|todo|to-do|complete|completed|pending|cleared|assign|priority|critical|urgent|day\s*[1-5]|today|tomorrow|this\s+week|first\s+week|first-week|milestone|module|training|compliance|security|handbook|sso|mfa|laptop|equipment|vpn|docker|github|ide|workspace|unstick|blocker|blocked|stuck)/i.test(
       lower
     );
   const hasPeopleOrRole =
@@ -174,9 +217,8 @@ export class NvidiaClient {
   private defaultModel: string;
 
   constructor() {
-    this.apiKey =
-      process.env.NVIDIA_API_KEY ||
-      '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';
+    // Set NVIDIA_API_KEY in server/.env (never commit the key).
+    this.apiKey = process.env.NVIDIA_API_KEY || '';
     this.baseUrl = process.env.NVIDIA_BASE_URL || 'https://integrate.api.nvidia.com/v1';
     this.defaultModel = process.env.NVIDIA_MODEL || 'meta/llama-3.2-11b-vision-instruct';
   }
@@ -189,6 +231,10 @@ export class NvidiaClient {
     maxTokens: number = 350,
     temperature: number = 0.5
   ): Promise<string | null> {
+    if (!this.apiKey) {
+      logger.error('[NVIDIA AI] NVIDIA_API_KEY is not set; skipping model call');
+      return null;
+    }
     try {
       logger.info(`[NVIDIA AI] Querying model ${this.defaultModel} via ${this.baseUrl}`);
 
@@ -248,12 +294,21 @@ export class NvidiaClient {
       retrieved?: { source: string; title: string; text: string }[];
       /** The company's real support contacts (IT, HR, security, ...). */
       contacts?: { team: string; person?: string; phone?: string; email?: string; covers?: string }[];
+      /** Recent chat turns, oldest first. */
+      history?: { role: string; content: string }[];
+      /** The task the employee has open: title, objective, numbered steps, definition of done. */
+      taskContext?: any;
+      /** explain_step | explain_step_simpler | explain_task_simple */
+      mode?: string;
+      /** 1-based step number the employee is asking about. */
+      focusStep?: number;
     }
   ): Promise<{
     answer: string;
     model: string;
     poweredBy: string;
     suggestedAction?: string;
+    fallback?: boolean;
   }> {
     // Step 1: Pre-inference Scope Evaluation Guardrail
     const scopeCheck = classifyQueryScope(query, context);
@@ -326,17 +381,34 @@ Answering rules:
 5. When someone else must act (access, payroll, equipment), say who to contact and how.${context.intent ? `\nDetected intent: ${context.intent}.` : ''}`;
     }
 
+    const hasTask = hasTaskSteps(context?.taskContext);
+    if (hasTask) {
+      systemPrompt += buildTaskPrompt(context!.taskContext, context?.mode, context?.focusStep);
+    }
+    const teaching = hasTask && /^explain_/.test(String(context?.mode || ''));
+
     const messages: ChatMessage[] = [
       { role: 'system', content: systemPrompt },
-      { role: 'user', content: query },
+      ...cleanHistory(context?.history),
+      { role: 'user', content: String(query).slice(0, 1000) },
     ];
 
-    const aiResponse = await this.generateCompletion(messages, 300, 0.3);
+    const aiResponse = await this.generateCompletion(messages, teaching ? 700 : 450, 0.3);
 
     if (aiResponse) {
       return {
         answer: aiResponse,
         model: this.defaultModel,
+        poweredBy: 'AI Onboarding Copilot',
+      };
+    }
+
+    // A task follow-up the model could not answer: let the chat use its own step-by-step explanation.
+    if (hasTask) {
+      return {
+        answer: '',
+        fallback: true,
+        model: 'unavailable',
         poweredBy: 'AI Onboarding Copilot',
       };
     }

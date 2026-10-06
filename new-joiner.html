@@ -892,7 +892,7 @@
 
         // Try backend endpoint first
         try {
-          const apiUrl = window.location.port === '3000' ? '/api/v1/ai/nvidia-copilot' : 'http://localhost:5001/api/v1/ai/nvidia-copilot';
+          const apiUrl = (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' || window.location.port === '3000') ? '/api/v1/ai/nvidia-copilot' : 'http://localhost:5001/api/v1/ai/nvidia-copilot';
           const res = await fetch(apiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

@@ -4719,6 +4719,9 @@
     let liveTasksList = [];
 
     function getApiBaseUrl() {
+      if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        return '';
+      }
       return (window.location.port === '3000') ? '' : 'http://localhost:5001';
     }
 
@@ -7034,6 +7037,10 @@
 
       // Render finalized assistant bubble
       appendChatBubble('assistant', answerHtml);
+      // Keep the conversation so follow-up questions have context (public/copilot/assistant.js)
+      if (typeof window.cpRecordTurn === 'function') {
+        try { window.cpRecordTurn(userDisplayText, answerHtml); } catch (e) { /* optional */ }
+      }
 
       isCopilotThinking = false;
       if (sendBtn) sendBtn.disabled = false;
@@ -7445,6 +7452,18 @@
       const meta = [tId, task.day || 'Day 1', task.duration || '45 mins'].map((x) => escapeHtml(String(x))).join(' · ');
       const desc = task.description || task.desc || '';
 
+      // Remember this task so follow-ups like "I didn't understand step 3" are answered about it
+      // (public/copilot/assistant.js).
+      if (typeof window.cpSetCurrentTask === 'function') {
+        try {
+          window.cpSetCurrentTask({
+            taskId: tId, title: tTitle, description: desc, day: task.day, duration: task.duration, department: task.department,
+            objective: detail.objective, prerequisites: detail.prerequisites, steps: detail.steps || [],
+            verification: detail.verification, supervisor: detail.supervisor, troubleshooting: detail.troubleshooting || []
+          });
+        } catch (e) { /* memory is optional */ }
+      }
+
       return `
         <div class="ca" data-ca-view="task" data-ca-task="${escapeHtml(String(taskId))}">
           ${caHead(escapeHtml(tTitle), { eyebrow: meta, badge: isDone ? 'Completed' : 'To do', tone: isDone ? 'ok' : 'warn' })}
@@ -7457,6 +7476,7 @@
 
           <p class="ca-label">Steps</p>
           <ol class="ca-steps">${steps}</ol>
+          <p class="ca-hint" style="font-size: 12px; color: var(--text-muted, #8a8178); margin: 4px 0 10px;">Stuck on a step? Ask me, e.g. <em>"I didn't understand step 2"</em>.</p>
 
           <article class="ca-card is-ok">
             <p class="ca-eyebrow">How you'll know it's done</p>

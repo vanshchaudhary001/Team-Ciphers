@@ -12,7 +12,7 @@ const router = Router();
  */
 router.post('/nvidia-copilot', async (req: Request, res: Response) => {
   try {
-    const { query, employeeId, role, company, branch, buddyName, hrName, currentBlocker, pendingTasks, intent, retrieved, contacts } = req.body;
+    const { query, employeeId, role, company, branch, buddyName, hrName, currentBlocker, pendingTasks, intent, retrieved, contacts, history, taskContext, mode, focusStep } = req.body;
 
     if (!query || String(query).trim().length === 0) {
       return res.status(400).json({ success: false, error: 'A query is required' });
@@ -44,6 +44,10 @@ router.post('/nvidia-copilot', async (req: Request, res: Response) => {
       intent: typeof intent === 'string' ? intent : undefined,
       retrieved: Array.isArray(retrieved) ? retrieved.slice(0, 6) : undefined,
       contacts: Array.isArray(contacts) ? contacts.slice(0, 8) : undefined,
+      history: Array.isArray(history) ? history.slice(-6) : undefined,
+      taskContext: taskContext && typeof taskContext === 'object' ? taskContext : undefined,
+      mode: typeof mode === 'string' ? mode : undefined,
+      focusStep: Number.isFinite(Number(focusStep)) ? Number(focusStep) : undefined,
     });
 
     return res.json({

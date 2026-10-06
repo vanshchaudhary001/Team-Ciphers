@@ -44,7 +44,7 @@
       
       // Try Backend API
       try {
-        var apiBase = (window.location.port === '3000') ? '' : 'http://localhost:5001';
+        var apiBase = (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' || window.location.port === '3000') ? '' : 'http://localhost:5001';
         var apiRes = await fetch(apiBase + '/api/v1/org/positions/' + posId + '/tasks');
         if (apiRes.ok) {
           var apiData = await apiRes.json();
