@@ -242,6 +242,12 @@ export class NvidiaClient {
       hrName?: string;
       datasetContext?: string;
       employeeData?: any;
+      /** Intent detected by the client ("unknown" when no rule matched). */
+      intent?: string;
+      /** Company Library / Policies / IT procedure snippets the client retrieved for this question. */
+      retrieved?: { source: string; title: string; text: string }[];
+      /** The company's real support contacts (IT, HR, security, ...). */
+      contacts?: { team: string; person?: string; phone?: string; email?: string; covers?: string }[];
     }
   ): Promise<{
     answer: string;
@@ -302,6 +308,22 @@ STRICT SCOPE POLICY:
 - Assigned HR Partner: ${hrName}
 ${context?.currentBlocker ? `- Active Blocker: ${context.currentBlocker}` : ''}
 ${context?.pendingTasks ? `- Pending Tasks: ${context.pendingTasks.join(', ')}` : ''}`;
+    }
+
+    // Grounding from the client: answer the actual question from the company's own data only.
+    if (context?.retrieved?.length || context?.contacts?.length) {
+      const snippets = (context.retrieved || []).slice(0, 6)
+        .map((r, i) => `[${i + 1}] (${r.source}) ${r.title}: ${String(r.text).slice(0, 600)}`).join('\n');
+      const contacts = (context.contacts || [])
+        .map((c) => `- ${c.team}${c.person ? ` (${c.person})` : ''}${c.phone ? `, ${c.phone}` : ''}${c.email ? `, ${c.email}` : ''}${c.covers ? `: ${c.covers}` : ''}`).join('\n');
+      systemPrompt += `\n\nCompany information retrieved for this question:\n${snippets || '(nothing matched)'}\n\nSupport contacts:\n${contacts}
+
+Answering rules:
+1. Work out what the employee is actually asking, then answer only that, in a few short sentences or steps.
+2. Do NOT list the onboarding checklist, Day 1/Day 2 tasks or the role description unless the question is about them.
+3. Use only the company information and contacts above. Never invent procedures, contacts, phone numbers or policies.
+4. If the information above does not answer the question, say you couldn't find it, and suggest the best next step: the company Library, Policies, the employee's Lead & Manager, HR or IT (name the right contact from the list).
+5. When someone else must act (access, payroll, equipment), say who to contact and how.${context.intent ? `\nDetected intent: ${context.intent}.` : ''}`;
     }
 
     const messages: ChatMessage[] = [

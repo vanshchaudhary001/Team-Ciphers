@@ -48,6 +48,10 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500&display=swap"
     rel="stylesheet">
+  <!-- Closest available typefaces to each company's own wordmark (company names only) -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,800&family=Inter:wght@600;700&family=Manrope:wght@700&family=Nunito+Sans:wght@700&family=Open+Sans:wght@600&family=Outfit:wght@500&family=Plus+Jakarta+Sans:wght@600&family=Space+Grotesk:wght@600&display=swap"
+    rel="stylesheet">
   <link
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     rel="stylesheet" />
@@ -1553,7 +1557,7 @@
             <span class="company-category-chip featured-chip">Featured · Cloud and AI</span>
           </div>
           <div class="company-card-body">
-            <div class="company-name">Microsoft Corporation</div>
+            <div class="company-name" data-brand="microsoft">Microsoft Corporation</div>
             <div class="company-meta">India / Redmond · @microsoft.in</div>
           </div>
           <div class="company-card-footer">
@@ -1581,7 +1585,7 @@
             <span class="company-category-chip">Cloud and AI</span>
           </div>
           <div class="company-card-body">
-            <div class="company-name">Google (Alphabet Inc.)</div>
+            <div class="company-name" data-brand="google">Google (Alphabet Inc.)</div>
             <div class="company-meta">Mountain View HQ · @google.com</div>
           </div>
           <div class="company-card-footer">
@@ -1610,7 +1614,7 @@
             <span class="company-category-chip">Cloud and retail</span>
           </div>
           <div class="company-card-body">
-            <div class="company-name">Amazon Web Services</div>
+            <div class="company-name" data-brand="amazon">Amazon Web Services</div>
             <div class="company-meta">Seattle HQ · @amazon.com</div>
           </div>
           <div class="company-card-footer">
@@ -1632,7 +1636,7 @@
             <span class="company-category-chip">Hardware and OS</span>
           </div>
           <div class="company-card-body">
-            <div class="company-name">Apple Inc.</div>
+            <div class="company-name" data-brand="apple">Apple Inc.</div>
             <div class="company-meta">Cupertino HQ · @apple.com</div>
           </div>
           <div class="company-card-footer">
@@ -1655,7 +1659,7 @@
             <span class="company-category-chip">AI and chips</span>
           </div>
           <div class="company-card-body">
-            <div class="company-name">NVIDIA Corporation</div>
+            <div class="company-name" data-brand="nvidia">NVIDIA Corporation</div>
             <div class="company-meta">Santa Clara HQ · @nvidia.com</div>
           </div>
           <div class="company-card-footer">
@@ -1679,7 +1683,7 @@
             <span class="company-category-chip">Fintech and payments</span>
           </div>
           <div class="company-card-body">
-            <div class="company-name">Stripe Inc.</div>
+            <div class="company-name" data-brand="stripe">Stripe, Inc.</div>
             <div class="company-meta">San Francisco HQ · @stripe.com</div>
           </div>
           <div class="company-card-footer">
@@ -1703,7 +1707,7 @@
             <span class="company-category-chip">CRM and cloud</span>
           </div>
           <div class="company-card-body">
-            <div class="company-name">Salesforce</div>
+            <div class="company-name" data-brand="salesforce">Salesforce</div>
             <div class="company-meta">San Francisco HQ · @salesforce.com</div>
           </div>
           <div class="company-card-footer">
@@ -1728,7 +1732,7 @@
             <span class="company-category-chip">Enterprise ERP</span>
           </div>
           <div class="company-card-body">
-            <div class="company-name">TechNova Systems</div>
+            <div class="company-name" data-brand="technova">TechNova Systems</div>
             <div class="company-meta">Austin HQ · @technova.io</div>
           </div>
           <div class="company-card-footer">
@@ -1752,7 +1756,7 @@
             <span class="company-category-chip">Global Finance</span>
           </div>
           <div class="company-card-body">
-            <div class="company-name">Finwise Global</div>
+            <div class="company-name" data-brand="finwise">Finwise Global</div>
             <div class="company-meta">New York HQ · @finwise.global</div>
           </div>
           <div class="company-card-footer">
@@ -1776,7 +1780,7 @@
             <span class="company-category-chip">Healthcare AI</span>
           </div>
           <div class="company-card-body">
-            <div class="company-name">MedCore Systems</div>
+            <div class="company-name" data-brand="medcore">MedCore Systems</div>
             <div class="company-meta">Boston HQ · @medcore-systems.com</div>
           </div>
           <div class="company-card-footer">
@@ -1825,7 +1829,7 @@
                   <rect x="11" y="11" width="9" height="9" fill="#FFB900" />
                 </svg>
               </div>
-              <span id="dept-card-company-name" style="font-size: 1.25rem; font-weight: 500; color: var(--navy-900); letter-spacing: -0.01em;">Microsoft</span>
+              <span id="dept-card-company-name" data-brand="microsoft" style="font-size: 1.25rem; font-weight: 500; color: var(--navy-900); letter-spacing: -0.01em;">Microsoft</span>
             </div>
             
             <div id="dept-card-verified-badge" style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; background: var(--success-bg); border: 1px solid var(--success-border); border-radius: 9999px; font-size: 0.74rem; font-weight: 500; color: var(--success);">
@@ -1913,6 +1917,18 @@
           </form>
 
         </div>
+      </div>
+
+      <!-- Company resources: Library + Policies (public/company/company-resources.js) -->
+      <div class="company-resource-links" aria-label="Company resources">
+        <button type="button" class="company-resource-link" onclick="openCompanyResources('library')">
+          <span class="company-resource-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5v13"/></svg></span>
+          <span class="company-resource-text"><span class="company-resource-title">Library</span><span class="company-resource-sub">Forms, handbooks, IT guides and useful links</span></span>
+        </button>
+        <button type="button" class="company-resource-link" onclick="openCompanyResources('policies')">
+          <span class="company-resource-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7.5 3v5.5c0 4.5-3.2 8.2-7.5 9.5-4.3-1.3-7.5-5-7.5-9.5V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+          <span class="company-resource-text"><span class="company-resource-title">Policies</span><span class="company-resource-sub">What every employee needs to know</span></span>
+        </button>
       </div>
 
       <!-- Section Divider to 18 Organizational Departments -->
@@ -2030,7 +2046,7 @@
           Select your role level in <span id="roles-hero-team-title" class="highlight">Team</span>
         </h2>
         <p class="hero-subtitle">
-          Choose whether you are joining as an <strong>Associate</strong>, <strong>Lead</strong>, or <strong>Manager</strong>. The exact position title from the official Word document will be assigned to your workspace.
+          Choose whether you are joining as an <strong>Associate</strong>, <strong>Lead &amp; Manager</strong>, or <strong>Supervisor</strong>. The exact position title from the official Word document will be assigned to your workspace.
         </p>
       </div>
 
@@ -2302,6 +2318,8 @@
                 <span class="hero-meta-chip">🆔 <span class="hero-chip-label">Emp ID:</span> <strong>MSFT-2026-8841</strong></span>
                 <span class="hero-meta-chip">🤝 <span class="hero-chip-label">Buddy Mentor:</span> <strong>Rahul Pandey</strong></span>
                 <span class="hero-meta-chip">💼 <span class="hero-chip-label">HR Partner:</span> <strong>Priya Sharma</strong></span>
+                <button type="button" class="hero-meta-chip hero-chip-link" onclick="openCompanyResources('library')">📚 <span class="hero-chip-value">Library</span></button>
+                <button type="button" class="hero-meta-chip hero-chip-link" onclick="openCompanyResources('policies')">🛡️ <span class="hero-chip-value">Policies</span></button>
               </div>
             </div>
 
@@ -2678,7 +2696,7 @@
     <div class="tm-panel-head">
       <div class="tm-filters" role="group" aria-label="Filter people by role">
         <button id="sub-filter-all" class="persona-pill-btn active" onclick="filterMgmtSubordinatesByRole('ALL')">Everyone <span id="count-sub-all" class="tm-count">0</span></button>
-        <button id="sub-filter-lead" class="persona-pill-btn" onclick="filterMgmtSubordinatesByRole('LEAD')">Leads <span id="count-sub-leads" class="tm-count">0</span></button>
+        <button id="sub-filter-lead" class="persona-pill-btn" onclick="filterMgmtSubordinatesByRole('LEAD')">Lead &amp; Managers <span id="count-sub-leads" class="tm-count">0</span></button>
         <button id="sub-filter-assoc" class="persona-pill-btn" onclick="filterMgmtSubordinatesByRole('ASSOCIATE')">Associates <span id="count-sub-assocs" class="tm-count">0</span></button>
       </div>
       <label class="tm-search">
@@ -4194,7 +4212,7 @@
 
     function getTaskStatusStore() {
       try {
-        const saved = localStorage.getItem('startsmart_task_status_v3');
+        const saved = localStorage.getItem('startsmart_task_status_v4');
         return saved ? JSON.parse(saved) : {};
       } catch (e) {
         return {};
@@ -4203,7 +4221,7 @@
 
     function saveTaskStatusStore(store) {
       try {
-        localStorage.setItem('startsmart_task_status_v3', JSON.stringify(store));
+        localStorage.setItem('startsmart_task_status_v4', JSON.stringify(store));
       } catch (e) { }
     }
 
@@ -5025,6 +5043,7 @@
       const cardTitleEl = document.getElementById('dept-card-company-name');
       if (cardTitleEl) {
         cardTitleEl.textContent = comp.name || 'Microsoft';
+        cardTitleEl.dataset.brand = companyKey;
       }
 
       // Dynamic Verification Badge
@@ -5322,7 +5341,7 @@
       }
 
       // If email has aarav or executive assistant and no matchedPos yet
-      if (!matchedPos && (email.toLowerCase().includes('aarav') || email.toLowerCase().includes('executive.assistant')) && orgData && orgData.departments) {
+      if (!matchedPos && (/^(aarav|priya|rahul)\./.test(email.toLowerCase()) || email.toLowerCase().includes('executive.assistant')) && orgData && orgData.departments) {
         const adminDept = orgData.departments.find(d => d.code === 'DEP_01' || d.name.toLowerCase().includes('administration'));
         if (adminDept && adminDept.branches[0]?.subBranches[0]?.teams[0]?.positions[0]) {
           matchedDept = adminDept;
@@ -5338,7 +5357,7 @@
         currentSelectedBranch = matchedBranch;
         currentSelectedSubBranch = matchedSubBranch;
         currentSelectedTeam = matchedTeam;
-        currentSelectedPosition = matchedPos;
+        currentSelectedPosition = typeof teamSlotForEmail === 'function' ? teamSlotForEmail(matchedTeam, email, matchedPos) : matchedPos;
       }
 
       try {
@@ -5485,76 +5504,6 @@
     }
 
     // Render Role Levels (Associate, Lead, Manager, CEO) for the selected team
-    function renderRoleLevelSelection() {
-      if (!currentSelectedTeam) return;
-      const container = document.getElementById('role-levels-grid');
-      if (!container) return;
-
-      const positions = currentSelectedTeam.positions;
-
-      const roleCardsHtml = positions.map(pos => {
-        const level = pos.roleLevel;
-        const levelCls = (level || 'associate').toLowerCase();
-        let tierLabel = 'Entry - Mid Level (L1-L3)';
-        let tierIcon = 'person';
-        let bullet1 = 'Executes core squad deliverables, hands-on development & tasks';
-        let bullet2 = 'Paired with Senior Mentor Buddy for Day 1 ramp-up';
-
-        if (level === 'Lead') {
-          tierLabel = 'Senior - Lead Level (L4-L6)';
-          tierIcon = 'military_tech';
-          bullet1 = 'Technical leadership, architecture reviews & peer mentorship';
-          bullet2 = 'Owns sprint deliverables, code quality and security gates';
-        } else if (level === 'Manager') {
-          tierLabel = 'Leadership - Director Level (M1-M3)';
-          tierIcon = 'manage_accounts';
-          bullet1 = 'People management, roadmap execution & team staffing';
-          bullet2 = 'HR performance evaluation, budget and strategy oversight';
-        } else if (pos.isCeo || level === 'CEO') {
-          tierLabel = 'Executive C-Suite';
-          tierIcon = 'crown';
-          bullet1 = 'Enterprise vision, corporate governance & executive leadership';
-          bullet2 = 'Direct board reporting and organization-wide strategy';
-        }
-
-        return `
-          <div class="role-level-selection-card role-${levelCls}" onclick="selectRoleLevel('${pos.roleLevel}', '${pos.id}')">
-            <div>
-              <div class="role-level-tier-badge">
-                <span class="material-symbols-outlined" style="font-size: 15px;">${tierIcon}</span>
-                <span>${tierLabel}</span>
-              </div>
-              <div class="role-position-exact-title">${pos.fullTitle || (pos.roleLevel + ' - ' + pos.title)}</div>
-              <div class="role-position-path-tag">
-                📍 <strong>ID:</strong> ${pos.id} · ${pos.roleTier} Tier
-              </div>
-
-              <ul class="role-position-bullets">
-                <li>
-                  <span class="material-symbols-outlined" style="font-size: 16px; color: var(--success);">check_circle</span>
-                  <span>${bullet1}</span>
-                </li>
-                <li>
-                  <span class="material-symbols-outlined" style="font-size: 16px; color: var(--success);">check_circle</span>
-                  <span>${bullet2}</span>
-                </li>
-                <li>
-                  <span class="material-symbols-outlined" style="font-size: 16px; color: var(--success);">check_circle</span>
-                  <span>Tailored onboarding checklist & AI Copilot prompts</span>
-                </li>
-              </ul>
-            </div>
-
-            <button type="button" class="role-select-action-btn">
-              <span>Select ${String(pos.roleLevel).toLowerCase()} position</span>
-              <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
-            </button>
-          </div>
-        `;
-      }).join('');
-
-      container.innerHTML = roleCardsHtml;
-    }
 
     // Step 2C Action: Select a role level -> Routes to Step 3 (Sign In with Position Context)
     
@@ -5603,80 +5552,6 @@
       return null;
     }
 
-    function selectRoleLevel(roleLevel, posId) {
-      if (!currentSelectedTeam) return;
-      const pos = currentSelectedTeam.positions.find(p => p.id === posId || p.roleLevel === roleLevel);
-      if (!pos) return;
-
-      currentSelectedPosition = pos;
-      // Pre-fetch 30 authoritative tasks into memory cache
-      fetchAuthoritativeTasksForPosition(pos.id, pos);
-      const comp = companiesDatabase[currentSelectedCompany] || companiesDatabase.microsoft;
-      const domain = comp.domain ? comp.domain.replace('@', '') : 'microsoft.in';
-      const cleanTitle = pos.title.toLowerCase().replace(/[^a-z0-9]+/g, '.').replace(/^\.|\.$/g, '');
-      const firstName = pos.roleLevel === 'Lead' ? 'priya' : (pos.roleLevel === 'Manager' ? 'rahul' : 'aarav');
-      const fullEmail = `${firstName}.${cleanTitle}@${domain}`;
-
-      // 1. Update Target Position Confirmation Banner on Sign-in page
-      const banner = document.getElementById('signin-target-position-banner');
-      if (banner) {
-        banner.style.display = 'flex';
-        const titleEl = document.getElementById('signin-target-position-title');
-        if (titleEl) titleEl.textContent = `🎯 Selected Position: ${pos.fullTitle || (pos.roleLevel + ' - ' + pos.title)}`;
-        const pathEl = document.getElementById('signin-target-hierarchy-path');
-        const branchName = currentSelectedBranch ? currentSelectedBranch.name : (currentSelectedDept ? currentSelectedDept.name : '');
-        if (pathEl) pathEl.textContent = `Hierarchy: ${comp.name} > ${currentSelectedDept.name} > ${branchName} > ${currentSelectedTeam.name} > ${pos.roleLevel}`;
-      }
-
-      // 2. Update Sign In Header & Tenant Badges
-      const breadcrumb = document.getElementById('signin-breadcrumb-company');
-      if (breadcrumb) breadcrumb.textContent = comp.name;
-      const pill = document.getElementById('signin-company-pill');
-      if (pill) pill.textContent = comp.fullName;
-      const title = document.getElementById('signin-company-title');
-      if (title) title.textContent = comp.name;
-      const tenantBadge = document.getElementById('signin-tenant-badge-name');
-      if (tenantBadge) tenantBadge.textContent = comp.fullName;
-      const tenantId = document.getElementById('signin-tenant-id');
-      if (tenantId) tenantId.textContent = `Tenant ID: ${currentSelectedCompany}-corp-in-prod`;
-      const ssoBtn = document.getElementById('signin-sso-btn-text');
-      if (ssoBtn) ssoBtn.textContent = `Continue with ${comp.name} SSO`;
-      const submitBtn = document.getElementById('signin-btn-text');
-      if (submitBtn) submitBtn.textContent = `Sign In as ${pos.roleLevel} (${pos.title})`;
-
-      // 3. Update Logo
-      const logoBox = document.getElementById('tenant-logo-container');
-      if (logoBox) {
-        logoBox.innerHTML = companyLogosSvg[currentSelectedCompany] || companyLogosSvg.microsoft;
-      }
-
-      // 4. Pre-fill email and password
-      const emailInput = document.getElementById('signin-email');
-      const passwordInput = document.getElementById('signin-password');
-      if (emailInput) {
-        emailInput.value = fullEmail;
-        emailInput.placeholder = fullEmail;
-      }
-      if (passwordInput) {
-        passwordInput.value = 'demo1234';
-      }
-
-      // 5. Update Detected Role Badge
-      const badge = document.getElementById('signin-detected-badge');
-      const detTitle = document.getElementById('detected-role-title');
-      const detDesc = document.getElementById('detected-role-desc');
-      const formattedName = firstName.charAt(0).toUpperCase() + firstName.slice(1) + (firstName === 'priya' ? ' Nair' : (firstName === 'rahul' ? ' Kapoor' : ' Sharma'));
-      
-      if (badge) badge.className = 'role-detect-badge joiner';
-      if (detTitle) detTitle.textContent = `Detected role: ${pos.roleLevel} - ${pos.title}`;
-      if (detDesc) detDesc.textContent = `Identified: ${formattedName} (${pos.fullTitle}) · ${currentSelectedDept.name} (${currentSelectedTeam.name}) · Routes to 70/30 Workspace`;
-
-      // 6. Dynamically render 1-click test credentials for this exact team
-      renderDynamicSigninPersonas(pos, domain);
-
-      showNotification(`Selected: ${pos.fullTitle}`);
-      goToStep('step-signin');
-    }
 
     // Original selectCompany fallback wrapper
     function legacySelectCompany(companyKey) {
@@ -5746,117 +5621,8 @@
     // 1-Click Persona Filler
     
     // Helper to dynamically render test persona credentials matching selected team
-    function renderDynamicSigninPersonas(selectedPos, domain) {
-      const personaSection = document.getElementById('microsoft-persona-section');
-      if (!personaSection || !currentSelectedTeam) return;
-
-      personaSection.style.display = 'block';
-      const teamPositions = currentSelectedTeam.positions;
-      const assocPos = teamPositions.find(p => p.roleLevel === 'Associate') || selectedPos;
-      const leadPos = teamPositions.find(p => p.roleLevel === 'Lead');
-      const mgrPos = teamPositions.find(p => p.roleLevel === 'Manager');
-
-      const assocTitleClean = assocPos.title.toLowerCase().replace(/[^a-z0-9]+/g, '.').replace(/^\.|\.$/g, '');
-      const assocEmail = `aarav.${assocTitleClean}@${domain}`;
-
-      let leadEmail = '';
-      if (leadPos) {
-        const leadTitleClean = leadPos.title.toLowerCase().replace(/[^a-z0-9]+/g, '.').replace(/^\.|\.$/g, '');
-        leadEmail = `priya.${leadTitleClean}@${domain}`;
-      }
-
-      let mgrEmail = '';
-      if (mgrPos) {
-        const mgrTitleClean = mgrPos.title.toLowerCase().replace(/[^a-z0-9]+/g, '.').replace(/^\.|\.$/g, '');
-        mgrEmail = `rahul.${mgrTitleClean}@${domain}`;
-      }
-
-      let pillsHtml = `
-        <div class="persona-section-label" style="font-weight: 500; color: var(--navy-900); margin-bottom: 8px;">
-          ⚡ 1-Click Credentials for ${escapeHtml(currentSelectedTeam.name)} (${escapeHtml(currentSelectedDept.name)}):
-        </div>
-        <div class="persona-quick-pills">
-          <button type="button" class="persona-pill-btn" style="${selectedPos.roleLevel === 'Associate' ? 'border: 2px solid var(--border-strong); background: var(--navy-50); font-weight: 500;' : ''}"
-            onclick="applyPersonaCredential('${assocEmail}', 'demo1234', '${assocPos.id}')">
-            🟢 Aarav Sharma (${escapeHtml(assocPos.fullTitle)} · ${assocPos.id})
-          </button>
-      `;
-
-      if (leadPos) {
-        pillsHtml += `
-          <button type="button" class="persona-pill-btn" style="${selectedPos.roleLevel === 'Lead' ? 'border: 2px solid var(--navy-600); background: var(--navy-50); font-weight: 500;' : ''}"
-            onclick="applyPersonaCredential('${leadEmail}', 'demo1234', '${leadPos.id}')">
-            🟣 Priya Nair (${escapeHtml(leadPos.fullTitle)} · ${leadPos.id})
-          </button>
-        `;
-      }
-
-      if (mgrPos) {
-        pillsHtml += `
-          <button type="button" class="persona-pill-btn" style="${selectedPos.roleLevel === 'Manager' ? 'border: 2px solid var(--warning); background: var(--warning-bg); font-weight: 500;' : ''}"
-            onclick="applyPersonaCredential('${mgrEmail}', 'demo1234', '${mgrPos.id}')">
-            🔵 Rahul Kapoor (${escapeHtml(mgrPos.fullTitle)} · ${mgrPos.id})
-          </button>
-        `;
-      }
-
-      pillsHtml += `
-          <button type="button" class="persona-pill-btn" onclick="applyPersonaCredential('hr@${domain}', 'demo1234', null, 'hr')">
-            👤 Priya Sharma (HR People Partner · ${escapeHtml(currentSelectedDept.name)})
-          </button>
-          <button type="button" class="persona-pill-btn" onclick="applyPersonaCredential('buddy@${domain}', 'demo1234', null, 'buddy')">
-            🤝 Rahul Pandey (Assigned Senior Buddy Mentor)
-          </button>
-        </div>
-      `;
-
-      personaSection.innerHTML = pillsHtml;
-    }
 
     // Interactive Handler when user clicks a persona credential button
-    function applyPersonaCredential(email, password, posId, roleOverride) {
-      const emailInput = document.getElementById('signin-email');
-      const passwordInput = document.getElementById('signin-password');
-      if (emailInput) emailInput.value = email;
-      if (passwordInput) passwordInput.value = password;
-
-      if (posId && currentSelectedTeam) {
-        const found = currentSelectedTeam.positions.find(p => p.id === posId);
-        if (found) {
-          currentSelectedPosition = found;
-          const bannerTitle = document.getElementById('signin-target-position-title');
-          if (bannerTitle) bannerTitle.textContent = `🎯 Selected Position: ${found.fullTitle}`;
-          const submitBtn = document.getElementById('signin-btn-text');
-          if (submitBtn) submitBtn.textContent = `Sign In as ${found.roleLevel} (${found.title})`;
-        }
-      }
-
-      if (roleOverride === 'hr') {
-        const badge = document.getElementById('signin-detected-badge');
-        const detTitle = document.getElementById('detected-role-title');
-        const detDesc = document.getElementById('detected-role-desc');
-        const submitBtn = document.getElementById('signin-btn-text');
-        if (badge) badge.className = 'role-detect-badge hr';
-        if (detTitle) detTitle.textContent = 'Detected role: HR People Partner';
-        if (detDesc) detDesc.textContent = `HR Operations Lead for ${currentSelectedDept ? currentSelectedDept.name : 'Organization'} · Routes to HR Command`;
-        if (submitBtn) submitBtn.textContent = 'Sign in to HR';
-        return;
-      }
-
-      if (roleOverride === 'buddy') {
-        const badge = document.getElementById('signin-detected-badge');
-        const detTitle = document.getElementById('detected-role-title');
-        const detDesc = document.getElementById('detected-role-desc');
-        const submitBtn = document.getElementById('signin-btn-text');
-        if (badge) badge.className = 'role-detect-badge buddy';
-        if (detTitle) detTitle.textContent = 'Detected role: Onboarding Buddy';
-        if (detDesc) detDesc.textContent = `Assigned Peer Mentor for ${currentSelectedTeam ? currentSelectedTeam.name : 'Team'} · Routes to Buddy Dashboard`;
-        if (submitBtn) submitBtn.textContent = 'Sign in to buddy portal';
-        return;
-      }
-
-      handleEmailInput(email);
-    }
   
     function fillPersona(email, password) {
       document.getElementById('signin-email').value = email;
@@ -6032,7 +5798,8 @@
       const email = emailInput ? emailInput.value.trim() : '';
       const password = passwordInput ? passwordInput.value : '';
 
-      if (currentSelectedPosition && currentSelectedDept && currentSelectedTeam && email) {
+      const signInAlias = (email.split('@')[0] || '').toLowerCase();
+      if (currentSelectedPosition && currentSelectedDept && currentSelectedTeam && email && !/^(hr|buddy|admin)(\.|$)/.test(signInAlias)) {
         const rawAlias = (email.split('@')[0] || 'aarav').toLowerCase();
         let formattedName = 'Aarav Sharma';
         if (rawAlias.startsWith('priya')) formattedName = 'Priya Nair';
@@ -6056,7 +5823,7 @@
         if (submitBtnText) submitBtnText.textContent = 'Loading 30 Authoritative Tasks...';
 
         // Fetch 30 authoritative tasks from dataset
-        let posTaskData = await fetchAuthoritativeTasksForPosition(posId, currentSelectedPosition);
+        let posTaskData = await fetchAuthoritativeTasksForPosition(currentSelectedPosition.taskPosId || posId, currentSelectedPosition.basePosition || currentSelectedPosition);
         if (submitBtnText) submitBtnText.textContent = origBtnText;
 
         const rawTasks = (posTaskData && posTaskData.tasks && posTaskData.tasks.length > 0) ? posTaskData.tasks : [];
@@ -6238,6 +6005,7 @@
       } else if (detection.role === 'hr') {
         await renderLiveHRPortal(detection.user);
         goToStep('step-hr-portal');
+        if (typeof teamOnSignIn === 'function') teamOnSignIn('hr');
       } else if (detection.role === 'buddy') {
         renderBuddyPortal(detection.user);
         goToStep('step-buddy-portal');
@@ -6359,30 +6127,30 @@
       const subMgmtBtn = document.getElementById('tab-subordinate-management-btn');
 
       if (roleNav) {
-        const rLevel = (data.employee.roleLevel || data.employee.role || '').toLowerCase();
-        const isMgr = rLevel.includes('manager') || rLevel === 'ceo' || rLevel.includes('director');
-        const isLd = rLevel.includes('lead') || rLevel.includes('senior');
+        const rKey = typeof teamRoleKey === 'function' && data.employee.positionId ? teamRoleKey(data.employee.roleLevel) : 'associate';
+        const isMgr = rKey === 'supervisor';
+        const isLd = rKey === 'leadmgr';
 
         if (isMgr || isLd) {
           roleNav.style.display = 'flex';
           if (isMgr) {
             if (roleBadge) {
-              roleBadge.textContent = 'Manager workspace';
+              roleBadge.textContent = 'Supervisor workspace';
               roleBadge.style.background = '#141210';
             }
             if (roleScope) {
-              roleScope.textContent = 'Leads and associates in your team';
+              roleScope.textContent = 'Lead & Managers and associates in your team';
             }
-            if (subMgmtBtn) subMgmtBtn.textContent = 'Team task management';
+            if (subMgmtBtn) { subMgmtBtn.textContent = 'Team task management'; if (typeof teamRenderReviewBadges === 'function') teamRenderReviewBadges(); }
           } else {
             if (roleBadge) {
-              roleBadge.textContent = 'Lead workspace';
+              roleBadge.textContent = 'Lead & Manager workspace';
               roleBadge.style.background = '#2B2824';
             }
             if (roleScope) {
-              roleScope.textContent = 'Your direct reports';
+              roleScope.textContent = 'Your associates';
             }
-            if (subMgmtBtn) subMgmtBtn.textContent = 'Team task management';
+            if (subMgmtBtn) { subMgmtBtn.textContent = 'Team task management'; if (typeof teamRenderReviewBadges === 'function') teamRenderReviewBadges(); }
           }
         } else {
           // Associate is strictly execution-only (Section 10)
@@ -6474,8 +6242,11 @@
         } else {
           tasks.forEach(t => {
             const isDone = t.status === 'Completed';
+            const isReview = t.status === 'Pending Review';
+            const isRejected = t.status === 'Rejected';
+            const rv = t.review || null;
             const card = document.createElement('div');
-            card.className = `manual-task-card ${isDone ? 'is-done' : ''}`;
+            card.className = `manual-task-card ${isDone ? 'is-done' : ''}${isReview ? ' is-review' : ''}${isRejected ? ' is-rejected' : ''}`;
             card.id = `manual-task-card-${t.taskId}`;
             card.dataset.status = isDone ? 'done' : 'pending';
             card.dataset.day = t.day || 'Day 1';
@@ -6501,21 +6272,25 @@
             ` : '';
 
             card.innerHTML = `
-              <button class="manual-task-check-btn" onclick="toggleLiveTask('${t.progressId}', '${t.status}', '${t.taskId}')" title="${isDone ? 'Mark as pending' : 'Mark as complete'}">
-                ${isDone ? '✓' : ''}
+              <button class="manual-task-check-btn" onclick="toggleLiveTask('${t.progressId}', '${t.status}', '${t.taskId}')" title="${isDone ? 'Completed' : isReview ? 'Pending review' : isRejected ? 'Changes requested: resubmit your proof' : 'Complete and upload proof'}" aria-label="${isDone ? 'Completed' : isReview ? 'Pending review' : isRejected ? 'Changes requested' : 'Complete task'}">
+                ${isDone ? '✓' : isReview ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2"/></svg>' : isRejected ? '!' : ''}
               </button>
               <div class="manual-task-info">
-                <div class="manual-task-badges"><span class="eyebrow task-meta">${t.day} · ${toSentenceCase(String(t.department || 'General'))}${t.priority === 'High' ? ' · High priority' : ''}${mandatoryHtml ? ' · Required' : ''}</span></div>
+                <div class="manual-task-badges"><span class="eyebrow task-meta">${t.day} · ${toSentenceCase(String(t.department || 'General'))}${t.priority === 'High' ? ' · High priority' : ''}${mandatoryHtml ? ' · Required' : ''}${isReview ? ' · In review' : ''}${isRejected ? ' · Changes requested' : ''}</span></div>
                 <div class="manual-task-title" style="font-size: 1rem; font-weight: 500; margin-top: 6px; color: var(--color-slate-900);">${escapeHtml(t.taskName)}</div>
                 ${t.assignedByName ? `<div class="task-assigned-chip">Added by ${escapeHtml(t.assignedByName)} · ${escapeHtml(t.assignedByRole || '')}</div>` : ''}
                 <div class="manual-task-desc" style="font-size: 0.82rem; color: var(--color-slate-600); margin-top: 4px;">
                   ${escapeHtml(t.description || (t.taskName + ' - Scheduled for ' + t.day + ' under ' + t.department + ' onboarding track.')).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')}
                 </div>
                 ${resourceHtml}
+                ${isReview ? `<div class="task-review-note is-review">Submitted for review${rv && rv.submittedAt ? ' ' + new Date(rv.submittedAt).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : ''} · waiting for ${escapeHtml(typeof teamReviewerLabel === 'function' ? teamReviewerLabel() : 'your reviewer')}</div>` : ''}
+                ${isRejected && rv ? `<div class="task-review-note is-rejected"><strong>Changes requested by ${escapeHtml(rv.reviewedBy ? rv.reviewedBy.name : 'your reviewer')}:</strong> ${escapeHtml(rv.feedback || '')}</div>` : ''}
+                ${isDone && rv && rv.reviewedBy ? `<div class="task-review-note is-approved">Approved by ${escapeHtml(rv.reviewedBy.name)} (${escapeHtml(rv.reviewedBy.roleLevel)})</div>` : ''}
+                ${isDone && t.autoVerified ? `<div class="task-review-note is-approved">Verified by IT during account setup</div>` : ''}
               </div>
               <div class="manual-task-actions">
-                <button class="btn-task-toggle ${isDone ? 'done-state' : 'pending-state'}" onclick="toggleLiveTask('${t.progressId}', '${t.status}', '${t.taskId}')">
-                  ${isDone ? '✓ Completed' : 'Mark complete'}
+                <button class="btn-task-toggle ${isDone ? 'done-state' : isReview ? 'review-state' : 'pending-state'}" onclick="toggleLiveTask('${t.progressId}', '${t.status}', '${t.taskId}')">
+                  ${isDone ? '✓ Completed' : isReview ? 'In review' : isRejected ? 'Resubmit proof' : 'Mark complete'}
                 </button>
                 <button class="btn-task-explain" onclick="askCopilotToExplainTask('${t.taskId}')" title="Ask assistant for step-by-step guidance">
                   <span>Ask assistant</span>
@@ -6571,7 +6346,9 @@
       }
     }
 
-    async function toggleLiveTask(progressId, currentStatus, taskId) {
+    // Direct status change. Used for Supervisors' own tasks; everyone else completes through proof + review
+    // (toggleLiveTask in team.js).
+    async function setLiveTaskStatus(progressId, currentStatus, taskId) {
       const nextStatus = currentStatus === 'Completed' ? 'Pending' : 'Completed';
       const isNowDone = (nextStatus === 'Completed');
 
@@ -7360,21 +7137,29 @@
           ${purpose ? `<p class="ca-note">${purpose}</p>` : ''}
         </article>`;
     }
+    // Task row: Pending → Complete (proof upload), Pending review → In review, Changes requested → Resubmit.
     function caTaskRow(t, idx) {
-      const isDone = t.status === 'Completed' || !!t.done;
+      const isDone = t.status === 'Completed' || (!!t.done && !t.status);
+      const isReview = t.status === 'Pending Review';
+      const isRejected = t.status === 'Rejected';
       const tId = t.taskId || t.id || (idx + 1);
       const name = t.taskName || t.title || ('Task ' + tId);
       const pr = String(t.priority || 'High');
+      const state = isDone ? 'Completed' : isReview ? 'Pending review' : isRejected ? 'Changes requested' : `${escapeHtml(pr)} priority`;
+      let action = `<button type="button" class="ca-btn is-sm is-primary" onclick="caToggleTask(this, '${t.progressId || ('P_' + tId)}', 'Pending', '${tId}')">Complete</button>`;
+      if (isReview) action = `<button type="button" class="ca-btn is-sm" onclick="openProofModal('${tId}')">In review</button>`;
+      if (isRejected) action = `<button type="button" class="ca-btn is-sm is-primary" onclick="openProofModal('${tId}')">Resubmit</button>`;
+      if (isDone) action = '';
       return `
-        <li class="ca-task${isDone ? ' is-done' : ''}">
-          <span class="ca-task-dot" role="img" aria-label="${isDone ? 'Completed' : 'Pending'}">${isDone ? '✓' : ''}</span>
+        <li class="ca-task${isDone ? ' is-done' : ''}${isReview ? ' is-review' : ''}${isRejected ? ' is-rejected' : ''}">
+          <span class="ca-task-dot" role="img" aria-label="${isDone ? 'Completed' : isReview ? 'Pending review' : isRejected ? 'Changes requested' : 'Pending'}">${isDone ? '✓' : isReview ? '…' : isRejected ? '!' : ''}</span>
           <span class="ca-task-main">
             <span class="ca-task-name" title="${escapeHtml(name)}">${escapeHtml(name)}</span>
-            <span class="ca-task-meta">${escapeHtml(String(tId))} · <span class="ca-pri is-${escapeHtml(pr.toLowerCase())}">${escapeHtml(pr)} priority</span></span>
+            <span class="ca-task-meta">${escapeHtml(String(t.day || tId))} · <span class="ca-pri is-${isRejected ? 'high' : isReview ? 'medium' : escapeHtml(pr.toLowerCase())}">${state}</span></span>
           </span>
           <span class="ca-task-actions">
             <button type="button" class="ca-btn is-sm" onclick="explainTaskById('${tId}')">Explain</button>
-            <button type="button" class="ca-btn is-sm${isDone ? '' : ' is-primary'}" onclick="caToggleTask(this, '${t.progressId || ('P_' + tId)}', '${isDone ? 'Completed' : 'Pending'}', '${tId}')">${isDone ? 'Reopen' : 'Done'}</button>
+            ${action}
           </span>
         </li>`;
     }
@@ -8146,167 +7931,10 @@
       const input = document.getElementById('chatbot-input');
       const query = input.value.trim();
       if (!query || isCopilotThinking) return;
-
       input.value = '';
-      const lower = query.toLowerCase();
-
-      // Guardrail: Evaluate Scope before execution
-      const scopeEval = classifyOnboardingQueryScope(query);
-      if (scopeEval.classification === 'OUT_OF_SCOPE' || scopeEval.classification === 'AMBIGUOUS') {
-        const outOfScope = scopeEval.classification === 'OUT_OF_SCOPE';
-        return runCopilotResponseWithThinking(query, () => `
-          <div class="ca">
-            <div class="ca-prose">${caMarkdown(scopeEval.response)}</div>
-            ${outOfScope ? '<p class="ca-note">I can help with your first-week tasks, team contacts and department resources.</p>' : ''}
-            ${caActions([
-              ["Today's tasks", "askCopilotDirect('What do I need to complete today?')"],
-              ['IT help', "askCopilotDirect('Who should I contact for IT help?')"],
-              ['My manager', "askCopilotDirect('Who is my reporting manager?')"],
-              ['My progress', "askCopilotDirect('What is my onboarding progress?')"]
-            ])}
-          </div>
-        `);
-      }
-
-      // Comprehensive role-aware natural language query routing
-      if (lower.includes('salary') || lower.includes('compensation') || lower.includes('peer review') || lower.includes('confidential performance')) {
-        return runCopilotResponseWithThinking(query, getRbacRestrictedResponseHtml);
-      }
-
-      if (lower.includes('manager') || lower.includes('reporting manager') || lower.includes('who is my manager') || lower.includes('my manager')) {
-        return runCopilotResponseWithThinking(query, getReportingManagerResponseHtml);
-      }
-
-      if (lower.includes('lead') || lower.includes('reporting lead') || lower.includes('who is my lead') || lower.includes('my lead')) {
-        return runCopilotResponseWithThinking(query, getReportingLeadResponseHtml);
-      }
-
-      if (lower.includes('progress') || lower.includes('how much') || lower.includes('completed') || lower.includes('completion rate')) {
-        return runCopilotResponseWithThinking(query, getOnboardingProgressResponseHtml);
-      }
-
-      if (lower.includes('week') || lower.includes('this week') || lower.includes('5 day') || lower.includes('remaining tasks') || lower.includes('all tasks')) {
-        return runCopilotResponseWithThinking(query, getWeeklyPlanResponseHtml);
-      }
-
-      if (lower.includes('resource') || lower.includes('department resource') || lower.includes('wiki') || lower.includes('docs') || lower.includes('repo')) {
-        return runCopilotResponseWithThinking(query, getDepartmentResourcesResponseHtml);
-      }
-
-      if (lower.includes('highest') || lower.includes('priority') || lower.includes('critical task') || lower.includes('urgent')) {
-        return runCopilotResponseWithThinking(query, getHighestPriorityTaskResponseHtml);
-      }
-
-      if (lower.includes('associates progressing') || lower.includes('associate tasks') || lower.includes('my associates')) {
-        return runCopilotResponseWithThinking(query, getLeadAssociateProgressResponseHtml);
-      }
-
-      if (lower.includes('team progressing') || lower.includes('associates behind') || lower.includes('leads working')) {
-        return runCopilotResponseWithThinking(query, getManagerTeamProgressResponseHtml);
-      }
-
-
-      // Route natural language queries intelligently with realistic thinking delay
-      if (lower.includes('what i have to do') || lower.includes('what do i have to do') || lower.includes('what to do') || lower.includes('what should i do') || lower.includes('what are my tasks') || lower.includes('what is my work') || lower.includes('what do i do') || lower.includes('my tasks')) {
-        return runCopilotResponseWithThinking(query, getWhatIHaveToDoResponseHtml);
-        return;
-      }
-
-      if (lower.includes('confus') || lower.includes('not sure') || lower.includes('dont know') || lower.includes("don't know") || lower.includes('dont understand') || lower.includes("don't understand") || lower.includes('lost') || lower.includes('clarify')) {
-        return runCopilotResponseWithThinking(query, getConfusionResolutionResponseHtml);
-        return;
-      }
-
-      if (lower.includes('contact') || lower.includes('phone') || lower.includes('call') || lower.includes('directory') || lower.includes('number') || lower.includes('who to call') || lower.includes('who to contact')) {
-        return runCopilotResponseWithThinking(query, getContactDirectoryResponseHtml);
-        return;
-      }
-
-      if (lower.includes('checklist') || (lower.includes('show') && lower.includes('task')) || lower.includes('today') || lower.includes('complete today') || lower.includes('day 1 tasks')) {
-        return runCopilotResponseWithThinking(query, getChecklistResponseHtml);
-        return;
-      }
-
-      // Check if user specifically asks to explain a task: e.g. "explain task 1", "explain T014", "how to do task 3", "what is task 2"
-      const taskNumMatch = lower.match(/(?:explain|what is|tell me about|how to do|help with|details of)?\s*(?:task\s*#?\s*|t\s*)(\d+)/);
-      if (taskNumMatch && (lower.includes('explain') || lower.includes('what') || lower.includes('how') || lower.includes('task') || lower.includes('help'))) {
-        const taskIdNum = parseInt(taskNumMatch[1], 10);
-        return runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(taskIdNum));
-        return;
-      }
-
-      // Check by task name keywords if user asks to explain a topic
-      const allTasks = (currentLiveDashboard && currentLiveDashboard.tasks) ? currentLiveDashboard.tasks : (ALL_40_TASKS || []);
-      const matchedTask = allTasks.find(t => {
-        const nameLower = (t.taskName || t.title || '').toLowerCase();
-        if (lower.includes('sso') || lower.includes('account')) return t.taskId === 'T001';
-        if (lower.includes('mfa') || lower.includes('authenticator')) return t.taskId === 'T002';
-        if (lower.includes('handbook')) return t.taskId === 'T004';
-        if (lower.includes('security training') || lower.includes('cyber')) return t.taskId === 'T005';
-        if (lower.includes('github') || lower.includes('repo')) return nameLower.includes('github') || t.taskId === 'T014';
-        if (lower.includes('ide') || lower.includes('editor')) return nameLower.includes('ide') || t.taskId === 'T015';
-        if (lower.includes('docker') || lower.includes('container')) return nameLower.includes('docker') || t.taskId === 'T017';
-        return false;
-      });
-
-      if (matchedTask && (lower.includes('explain') || lower.includes('how') || lower.includes('what') || lower.includes('help') || lower.includes('guide'))) {
-        return runCopilotResponseWithThinking(query, () => getExplainTaskResponseHtml(matchedTask.taskId));
-        return;
-      }
-
-      if (lower.includes('stuck') || lower.includes('blocked') || lower.includes('issue') || lower.includes('problem')) {
-        return runCopilotResponseWithThinking(query, getStuckTroubleshootingResponseHtml);
-        return;
-      }
-
-      // General query: the AI service when it's reachable, otherwise a grounded answer.
-      return runCopilotResponseWithThinking(query, async () => {
-        const currentEmp = currentLiveDashboard?.employee || { name: 'Aarav Sharma', role: 'Software Engineer', buddy: { name: 'Dhruv Agarwal' } };
-        const comp = currentLiveDashboard?.company || { name: 'TechNova' };
-
-        try {
-          const base = getApiBaseUrl();
-          const res = await fetch(`${base}/api/v1/ai/nvidia-copilot`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              query,
-              employeeId: currentLiveEmployeeId,
-              role: currentEmp.role,
-              company: comp.name,
-              buddyName: currentEmp.buddy?.name || 'Dhruv Agarwal',
-              hrName: 'Priya Nair'
-            })
-          });
-
-          if (res.ok) {
-            const data = await res.json();
-            const ans = data.data?.answer || data.answer;
-            if (ans) {
-              return `
-                <div class="ca">
-                  <div class="ca-prose">${caMarkdown(ans)}</div>
-                  ${caActions([["Today's checklist", "handleChatOption('checklist')"], ['Contacts', "handleChatOption('contacts')"]])}
-                </div>`;
-            }
-          }
-        } catch (err) {
-          // offline: use the grounded answer below
-        }
-
-        const buddyName = currentEmp.buddy?.name || 'Dhruv Agarwal';
-        const hrName = currentEmp.hr?.name || 'Priya Nair';
-        return `
-          <div class="ca">
-            <p class="ca-lead">You're in your first week as <strong>${escapeHtml(currentEmp.fullTitle || currentEmp.role)}</strong> at <strong>${escapeHtml(comp.name)}</strong>. I don't have a specific answer to that yet, so here's where to go next:</p>
-            <ul class="ca-list">
-              <li>Check <strong>today's checklist</strong> for what's still pending.</li>
-              <li>Ask your buddy <strong>${escapeHtml(buddyName)}</strong> about anything specific to your team.</li>
-              <li>Contact your HR partner <strong>${escapeHtml(hrName)}</strong> (${caTel('+91 80 6789 89912')}) for policy or paperwork.</li>
-            </ul>
-            ${caActions([["Today's checklist", "handleChatOption('checklist')", true], ['Contacts', "handleChatOption('contacts')"], ['Explain task 1', 'explainTaskById(1)']])}
-          </div>`;
-      });
+      // Understand the question, find the relevant company data, answer it, offer the next action
+      // (public/copilot/assistant.js).
+      return runCopilotResponseWithThinking(query, () => copilotRespond(query));
     }
 
     // ==============================================================
@@ -9142,7 +8770,9 @@
 
   <!-- Robot-face avatar for the assistant (header + message avatars); replaces the "S" letter -->
   <script src="/bot-avatar/bot-avatar.js"></script>
+  <script src="/company/company-resources.js"></script>
   <script src="/team/team.js"></script>
+  <script src="/copilot/assistant.js"></script>
   <script>(function () { var slot = document.getElementById('ii-loading-bot'); if (slot && window.botAvatarHTML) slot.innerHTML = window.botAvatarHTML({ header: true }); })();</script>
   <!-- Minimized-chat 3D robot (files in /chat-robot/); replaces the compact pill only while minimized -->
   <script type="module" src="/chat-robot/chat-robot.js"></script>
