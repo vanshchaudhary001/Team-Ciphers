@@ -4222,6 +4222,15 @@
     function saveTaskStatusStore(store) {
       try {
         localStorage.setItem('startsmart_task_status_v4', JSON.stringify(store));
+        if (typeof window.pushToCloudSync === 'function') {
+          window.pushToCloudSync('startsmart_task_status_v4', store);
+        } else {
+          fetch('/api/sync', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ key: 'task_status', value: store })
+          }).catch(() => {});
+        }
       } catch (e) { }
     }
 
@@ -6608,6 +6617,15 @@
     function saveInAppMessages() {
       try {
         localStorage.setItem('startsmart_in_app_messages', JSON.stringify(inAppMessages));
+        if (typeof window.pushToCloudSync === 'function') {
+          window.pushToCloudSync('startsmart_in_app_messages', inAppMessages);
+        } else {
+          fetch('/api/sync', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ key: 'in_app_messages', value: inAppMessages })
+          }).catch(() => {});
+        }
       } catch (e) { }
     }
 

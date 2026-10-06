@@ -39,8 +39,51 @@ const TEAM_MAX_FILES = 5;
 function teamRead(key, fallback) {
   try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; }
 }
+
+// Multi-Device Cloud Synchronization Engine
+const SYNC_KEY_MAP = {
+  [TEAM_KEYS.messages]: 'team_messages',
+  [TEAM_KEYS.reviews]: 'task_reviews',
+  [TEAM_KEYS.status]: 'task_status',
+  [TEAM_KEYS.plans]: 'team_plans',
+  [TEAM_KEYS.blocks]: 'team_blocks',
+  'startsmart_in_app_messages': 'in_app_messages'
+};
+
+let syncPendingUpdates = {};
+let syncPushTimer = null;
+let lastCloudSyncTimestamp = 0;
+let isSyncing = false;
+
+function pushToCloudSync(key, value) {
+  const syncKey = SYNC_KEY_MAP[key] || key;
+  syncPendingUpdates[syncKey] = value;
+  if (syncPushTimer) clearTimeout(syncPushTimer);
+  syncPushTimer = setTimeout(async () => {
+    const toSend = { ...syncPendingUpdates };
+    syncPendingUpdates = {};
+    try {
+      await fetch('/api/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ updates: toSend })
+      });
+    } catch (err) {
+      console.debug('Cloud sync push failed:', err);
+    }
+  }, 120);
+}
+window.pushToCloudSync = pushToCloudSync;
+
 function teamWrite(key, value) {
-  try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch (e) { teamNotify('Could not save: browser storage is full.'); return false; }
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    pushToCloudSync(key, value);
+    return true;
+  } catch (e) {
+    teamNotify('Could not save: browser storage is full.');
+    return false;
+  }
 }
 const teamEsc = (s) => (typeof escapeHtml === 'function' ? escapeHtml(String(s == null ? '' : s)) : String(s == null ? '' : s));
 const teamText = (s) => teamEsc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
@@ -367,8 +410,32 @@ const ProofDB = {
     if (this.memory.has(id)) return this.memory.get(id);
     try {
       const db = await this.open();
-      return await new Promise((res, rej) => { const r = db.transaction('files').objectStore('files').get(id); r.onsuccess = () => res(r.result || null); r.onerror = () => rej(r.error); });
-    } catch (e) { return null; }
+      const rec = await new Promise((res, rej) => { const r = db.transaction('files').objectStore('files').get(id); r.onsuccess = () => res(r.result || null); r.onerror = () => rej(r.error); });
+      if (rec) return rec;
+    } catch (e) { }
+
+    // Multi-device Cloud Sync fallback for viewing proofs across laptops
+    try {
+      const cloudRes = await fetch(`/api/sync?key=proof_${id}`);
+      if (cloudRes.ok) {
+        const json = await cloudRes.json();
+        if (json && json.data && json.data.dataUrl) {
+          const resBlob = await fetch(json.data.dataUrl);
+          const blob = await resBlob.blob();
+          const rec = { id, name: json.data.name, type: json.data.type, size: json.data.size, blob, at: json.data.at || Date.now() };
+          this.memory.set(id, rec);
+          try {
+            const db = await this.open();
+            const tx = db.transaction('files', 'readwrite');
+            tx.objectStore('files').put(rec);
+          } catch (e) { }
+          return rec;
+        }
+      }
+    } catch (err) {
+      console.debug('Cloud proof fetch failed:', err);
+    }
+    return null;
   },
 };
 const teamFmtSize = (b) => (b > 1024 * 1024 ? (b / 1024 / 1024).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB');
@@ -636,6 +703,25 @@ async function teamSubmitProof() {
     const id = `pf_${me.id}_${task.taskId}_${now}_${i}`;
     await ProofDB.put({ id, name: f.file.name, type: f.file.type || 'application/octet-stream', size: f.file.size, blob: f.file, at: now });
     proofs.push({ id, name: f.file.name, type: f.file.type || 'application/octet-stream', size: f.file.size });
+
+    // Multi-device Cloud Sync: upload proof dataUrl to /api/sync
+    try {
+      const reader = new FileReader();
+      reader.onload = async (ev) => {
+        const dataUrl = ev.target.result;
+        try {
+          await fetch('/api/sync', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              key: `proof_${id}`,
+              value: { id, name: f.file.name, type: f.file.type || 'application/octet-stream', size: f.file.size, at: now, dataUrl }
+            })
+          });
+        } catch (e) { }
+      };
+      reader.readAsDataURL(f.file);
+    } catch (e) { }
   }
   const note = (document.getElementById('tproof-note') || {}).value?.trim() || '';
   const prev = teamReviewOf(me.id, task.taskId) || { history: [], attempts: 0 };
@@ -1659,5 +1745,138 @@ function teamOnSignIn(kind) {
     }
   });
   setInterval(() => { lastUnread = teamTotalUnread(); }, 4000);
+
+  // Multi-Device Cloud Synchronization Loop (Active across separate laptops)
+  async function pollCloudSync() {
+    if (isSyncing) return;
+    isSyncing = true;
+    try {
+      const res = await fetch('/api/sync?t=' + Date.now());
+      if (res.ok) {
+        const data = await res.json();
+        const bundle = data && data.bundle;
+        if (bundle && bundle.updatedAt && bundle.updatedAt > lastCloudSyncTimestamp) {
+          lastCloudSyncTimestamp = bundle.updatedAt;
+          applyCloudBundle(bundle);
+        }
+      }
+    } catch (err) {
+    } finally {
+      isSyncing = false;
+    }
+  }
+
+  function applyCloudBundle(bundle) {
+    const me = teamMe();
+    let messagesChanged = false;
+    let reviewsChanged = false;
+    let statusChanged = false;
+    let plansChanged = false;
+    let blocksChanged = false;
+
+    // Check Messages
+    const inMsgs = bundle.team_messages || bundle[TEAM_KEYS.messages];
+    if (inMsgs) {
+      const cur = localStorage.getItem(TEAM_KEYS.messages);
+      const incoming = JSON.stringify(inMsgs);
+      if (cur !== incoming) {
+        localStorage.setItem(TEAM_KEYS.messages, incoming);
+        messagesChanged = true;
+      }
+    }
+
+    // Check Reviews
+    const inReviews = bundle.task_reviews || bundle[TEAM_KEYS.reviews];
+    if (inReviews) {
+      const cur = localStorage.getItem(TEAM_KEYS.reviews);
+      const incoming = JSON.stringify(inReviews);
+      if (cur !== incoming) {
+        localStorage.setItem(TEAM_KEYS.reviews, incoming);
+        reviewsChanged = true;
+      }
+    }
+
+    // Check Status
+    const inStatus = bundle.task_status || bundle[TEAM_KEYS.status];
+    if (inStatus) {
+      const cur = localStorage.getItem(TEAM_KEYS.status);
+      const incoming = JSON.stringify(inStatus);
+      if (cur !== incoming) {
+        localStorage.setItem(TEAM_KEYS.status, incoming);
+        statusChanged = true;
+      }
+    }
+
+    // Check Plans
+    const inPlans = bundle.team_plans || bundle[TEAM_KEYS.plans];
+    if (inPlans) {
+      const cur = localStorage.getItem(TEAM_KEYS.plans);
+      const incoming = JSON.stringify(inPlans);
+      if (cur !== incoming) {
+        localStorage.setItem(TEAM_KEYS.plans, incoming);
+        plansChanged = true;
+      }
+    }
+
+    // Check Blocks
+    const inBlocks = bundle.team_blocks || bundle[TEAM_KEYS.blocks];
+    if (inBlocks) {
+      const cur = localStorage.getItem(TEAM_KEYS.blocks);
+      const incoming = JSON.stringify(inBlocks);
+      if (cur !== incoming) {
+        localStorage.setItem(TEAM_KEYS.blocks, incoming);
+        blocksChanged = true;
+      }
+    }
+
+    // Check In-App Messages
+    const inApp = bundle.in_app_messages || bundle['startsmart_in_app_messages'];
+    if (inApp) {
+      const cur = localStorage.getItem('startsmart_in_app_messages');
+      const incoming = JSON.stringify(inApp);
+      if (cur !== incoming) {
+        localStorage.setItem('startsmart_in_app_messages', incoming);
+        if (typeof loadInAppMessages === 'function') loadInAppMessages();
+        if (typeof renderHRInbox === 'function') renderHRInbox();
+        if (typeof renderBuddyInbox === 'function') renderBuddyInbox();
+      }
+    }
+
+    // Trigger UI updates
+    if (messagesChanged) {
+      teamRenderMessages();
+      const now = teamTotalUnread();
+      if (me && now > lastUnread) {
+        const store = teamMsgStore();
+        const latest = Object.values(store.threads).filter((t) => t.members.includes(me.id)).flatMap((t) => t.messages).filter((m) => m.from !== me.id).sort((a, b) => b.at - a.at)[0];
+        if (latest) teamNotify(`New message from ${latest.fromName}`);
+      }
+      lastUnread = now;
+    }
+
+    if (reviewsChanged || statusChanged || plansChanged || blocksChanged) {
+      if (me) {
+        const dash = document.getElementById('step-joiner-chatbot');
+        if (dash && dash.style.display !== 'none') {
+          teamRefreshMyDashboard();
+          if (reviewsChanged) teamAnnounceReviewUpdates();
+        } else {
+          teamRenderBlockState();
+        }
+        const mgmt = document.getElementById('step-task-management');
+        if (mgmt && mgmt.style.display !== 'none') {
+          loadSubordinatesList();
+        }
+        teamRenderReviewBadges();
+        if (reviewsChanged) teamRenderReviewsPanel();
+      }
+    }
+  }
+
+  // Poll cloud sync every 2.5s and on window focus
+  setInterval(pollCloudSync, 2500);
+  window.addEventListener('focus', pollCloudSync);
+  setTimeout(pollCloudSync, 400);
+
   teamRenderBadges();
 })();

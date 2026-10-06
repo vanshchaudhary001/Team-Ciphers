@@ -14,6 +14,7 @@ import adminRouter from './routes/admin.js';
 import orgRouter from './routes/org.js';
 import taskManagementRouter from './routes/taskManagement.js';
 import datasetRouter from './routes/datasetRoutes.js';
+import syncRouter from './routes/sync.js';
 import { csvDataLoader } from './services/csvDataLoader.js';
 import { logger } from './utils/logger.js';
 
@@ -79,6 +80,9 @@ app.use('/api/v1/admin', adminRouter);
 // 5 Structured Datasets API (Employees, Tasks, Progress, Resources, Contacts)
 app.use('/api', datasetRouter);
 app.use('/api/v1', datasetRouter);
+
+// Multi-Device Realtime Cloud Synchronization
+app.use('/api/sync', syncRouter);
 
 // Centralized error handling
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
